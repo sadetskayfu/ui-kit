@@ -1,0 +1,57 @@
+@use '@/app/styles/helpers' as *;
+
+.avatar {
+    --height: ;
+    height: var(--height);
+    width: var(--height);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: var(--color-light);
+    @include user-select-off;
+    font-size: 1.3em;
+    box-sizing: content-box;
+    &.default-bg-color {
+        background-color: var(--theme-color-grey-800);
+    }
+}
+
+// Border
+.avatar {
+    &.dark {
+        border: var(--border-weight-hard) solid var(--theme-color-dark);
+    }
+    &.grey {
+        border: var(--border-weight-hard) solid var(--color-grey-500);
+    }
+}
+
+// Sizes
+.avatar {
+    &.small {
+        --height: #{rem(40)};
+    }
+    &.medium {
+        --height: #{rem(60)};
+    }
+    &.large {
+        --height: #{rem(80)};
+    }
+}
+
+// Variants
+.avatar {
+    &.circular {
+        border-radius: 50%;
+    }
+    &.rounded {
+        border-radius: var(--border-radius-small);
+    }
+}
+
+.img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

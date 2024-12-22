@@ -1,0 +1,96 @@
+@use '@/app/styles/helpers' as *;
+
+.alert {
+    --bgColor: ;
+    --fontColor: ;
+    --borderColor: ;
+    background-color: var(--bgColor);
+    color: var(--fontColor);
+    display: flex;
+    align-items: center;
+    padding-inline: rem(20);
+    padding-block: rem(5);
+    gap: rem(20);
+    &.have-action {
+        .content {
+            margin-right: rem(-7);
+        }
+    }
+    svg {
+        color: var(--fontColor);
+    }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+    font-weight: bold;
+}
+
+.actions {
+     display: flex;
+     align-items: center;
+     margin-left: auto;
+     margin-right: rem(-7);
+}
+
+// Border radius
+.alert {
+    &.small {
+        border-radius: var(--border-radius-small);
+    }
+}
+
+// Severity
+.alert {
+    &.success {
+        --bgColor: var(--color-green-50);
+        --fontColor: var(--color-green-800);  
+        --borderColor: var(--border-color-green);
+    }
+    &.info {
+        --bgColor: var(--color-grey-800);
+        --fontColor: var(--font-color-soft);
+        --borderColor: var(--border-color-grey);
+    }
+    &.warning {
+        --bgColor: var(--color-primary-50);
+        --fontColor: var(--color-primary-800);
+        --borderColor: var(--border-color-primary);
+    }
+    &.error {
+        --bgColor: var(--color-red-50);
+        --fontColor: var(--color-red-800);
+        --borderColor: var(--border-color-red);
+    }
+}
+
+// Variants
+.alert {
+    &.outlined {
+        border: var(--border-weight-soft) solid var(--borderColor);
+        background-color: transparent;
+    }
+    &.clear {
+        background-color: transparent;
+    }
+    &.outlined,
+    &.clear {
+        &.success {
+            --fontColor: var(--color-green-500);
+        }
+        &.info {
+            --fontColor: var(--font-color-soft);
+        }
+        &.warning {
+            --fontColor: var(--color-primary-500);
+        }
+        &.error {
+            --fontColor: var(--color-red-500);
+        }
+    }
+}
+

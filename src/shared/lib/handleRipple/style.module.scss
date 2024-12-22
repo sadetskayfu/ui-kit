@@ -1,0 +1,47 @@
+.ripple,
+.ripple-small {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 0%;
+  aspect-ratio: 1;
+  background-color: currentColor;
+  border-radius: 50%;
+}
+
+.ripple {
+  animation: scale 1000ms;
+}
+.ripple-small {
+  animation: scale-small 600ms;
+}
+
+@keyframes scale {
+  0% {
+    width: 0%;
+    opacity: var(--opacity-small);
+  }
+  20% {
+    opacity: var(--opacity-big);
+  }
+  100% {
+    width: 300%;
+    opacity: 0;
+  }
+}
+
+@keyframes scale-small {
+  0% {
+    width: 0%;
+    opacity: var(--opacity-small);
+  }
+  20% {
+    opacity: var(--opacity-big);
+  }
+  100% {
+    width: 110%;
+    opacity: 0;
+  }
+}

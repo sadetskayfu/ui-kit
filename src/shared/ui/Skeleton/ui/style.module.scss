@@ -1,0 +1,43 @@
+.skeleton {
+    --borderRadius: ;
+    display: block;
+    border-radius: var(--borderRadius);
+    position: relative;
+    background-color: var(--theme-color-grey-800);
+    overflow: hidden;
+    height: 1rem;
+    width: 100%;
+    &:before {
+        content: '';
+        position: absolute;
+        height: 100%;
+        width: 0%;
+        border-radius: inherit;
+        animation: blinking 1s ease-in-out infinite;
+    }
+}
+
+// Variants
+.skeleton {
+    &.circular {
+        --borderRadius: 50%;
+    }
+    &.rounded {
+        --borderRadius: var(--border-radius-small);
+    }
+}
+
+@keyframes blinking {
+    0% {
+        width: 0%;
+        background-color: var(--theme-color-grey-800);
+    }
+    50% {
+        width: 100%;
+        background-color: var(--color-grey-500);
+    }
+    100% {
+        width: 100%;
+        background-color: var(--theme-color-grey-800);
+    }
+}

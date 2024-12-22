@@ -1,0 +1,18 @@
+.theme-color-light {
+	--font-color-soft: var(--color-secondary-800);
+    --font-color-hard: var(--color-dark);
+    --font-color-interactive: var(--color-primary-600);
+
+    --theme-color-dark: var(--color-light);
+    --theme-color-grey-900: var(--color-grey-50);
+    --theme-color-grey-800: var(--color-grey-300);
+
+    --theme-color-primary-500: var(--color-primary-600);
+    --theme-color-primary-600: var(--color-primary-500);
+    
+    --border-color-grey: var(--color-grey-50);
+    --border-color-primary: var(--color-primary-50);
+    --border-color-red: var(--color-red-50);
+    --border-color-green: var(--color-green-50);
+}
+ 

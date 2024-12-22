@@ -1,0 +1,130 @@
+@use '@/app/styles/helpers' as *;
+
+.container {
+    --badgeWidth: ;
+    --fontSize: ;
+    --paddingInline: ;
+    --bgColor: ;
+    --color: ;
+    --translate: ;
+    --bottom: ;
+    --top: ;
+    --left: ;
+    --right: ;
+    --border: ;
+    position: relative;
+    display: inline-flex;
+    @include user-select-off;
+    &.visible {
+        .badge {
+            transform: scale(1);
+        }
+    }
+}
+.badge {
+    position: absolute;
+    border-radius: 999px;
+    min-width: var(--badgeWidth);
+    height: var(--badgeWidth);
+    font-size: var(--fontSize);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color);
+    background-color: var(--bgColor);
+    transform: scale(0);
+    translate: var(--translate);
+    transition-duration: 0.2s;
+    padding-inline: var(--paddingInline);
+    top: var(--top);
+    left: var(--left);
+    bottom: var(--bottom);
+    right: var(--right);
+    border: var(--border);
+    font-weight: bold;
+}
+
+// Border
+.container {
+    &.border {
+        --border: var(--border-weight-hard) solid var(--theme-color-dark);
+    }
+}
+
+// Colors
+.container {
+    &.primary {
+        --bgColor: var(--theme-color-primary-500);
+        --color: var(--color-dark);
+    }
+    &.green {
+        --bgColor: var(--color-green-500);
+        --color: var(--color-light);
+    }
+}
+
+// Sizes
+.container {
+    &.small {
+        --badgeWidth: #{rem(12)};
+        --fontSize: #{rem(8)};
+        --paddingInline: #{rem(2)};
+    }
+    &.medium {
+        --badgeWidth: #{rem(20)};
+        --fontSize: #{rem(12)};
+        --paddingInline: #{rem(4)};
+    }
+}
+
+// Position
+.container {
+    // Top-left
+    &.top-left {
+        --translate: -50% -50%;
+        &.square {
+            --top: 0px;
+            --left: 0px;
+        }
+        &.circular {
+            --top: 14%;
+            --left: 14%;
+        }
+    }
+    // Top-right
+    &.top-right {
+        --translate: 50% -50%;
+        &.square {
+            --top: 0px;
+            --right: 0px;
+        }
+        &.circular {
+            --top: 14%;
+            --right: 14%;
+        }
+    }
+    // Bottom-right
+    &.bottom-right {
+        --translate: 50% 50%;
+        &.square {
+            --bottom: 0px;
+            --right: 0px; 
+        }
+        &.circular {
+            --bottom: 14%;
+            --right: 14%;
+        }
+    }
+    // Bottom-left
+    &.bottom-left {
+        --translate: -50% -50%;
+        &.square {
+            --bottom: 0px;
+            --left: 0px;
+        }
+        &.circular {
+            --bottom: 14%;
+            --left: 14%;
+        }
+    }
+}

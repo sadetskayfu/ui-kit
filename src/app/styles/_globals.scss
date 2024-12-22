@@ -1,0 +1,53 @@
+@use 'helpers' as *;
+
+body {
+  font-size: rem(18);
+  font-family: var(--font-family-base);
+  color: var(--font-color-soft);
+  background-color: var(--theme-color-dark);
+}
+
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5 {
+  color: var(--font-color-hard);
+}
+
+h1, .h1,
+h2, .h2,
+h3, .h3 {
+  font-family: var(--font-family-accent);
+  font-weight: 500;
+}
+
+h4, .h4,
+h5, .h5 {
+  font-weight: 600;
+}
+
+h1, .h1 {
+  font-size: fluid-text(70, 30);
+  line-height: 1.2;
+}
+h2, .h2 {
+  font-size: fluid-text(58, 28);
+  line-height: 1.3;
+}
+h3, .h3 {
+  font-size: fluid-text(40, 24);
+}
+h4, .h4 {
+  font-size: fluid-text(26, 18);
+}
+h5, .h5 {
+  font-size: fluid-text(24, 18);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+

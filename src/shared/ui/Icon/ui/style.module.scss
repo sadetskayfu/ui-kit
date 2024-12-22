@@ -1,0 +1,31 @@
+.icon {
+  display: inline-flex;
+  height: 1em;
+  aspect-ratio: 1;
+  svg {
+    fill: currentColor;
+    stroke: currentColor;
+  }
+}
+
+// Sizes
+.icon {
+  &.small-s {
+    font-size: var(--fz-icon-small-s);
+  }
+  &.small-m {
+    font-size: var(--fz-icon-small-m);
+  }
+  &.small-l {
+    font-size: var(--fz-icon-small-l);
+  }
+  &.medium {
+    font-size: var(--fz-icon-medium);
+  }
+  &.large {
+    font-size: var(--fz-icon-large);
+  }
+  &.inherit {
+    font-size: inherit;
+  }
+}

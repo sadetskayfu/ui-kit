@@ -1,0 +1,37 @@
+@use '@/app/styles/helpers' as *;
+
+.avatar-group {
+    display: flex;
+    --borderRadius: ;
+    --space: ;
+    > * {
+        position: relative;
+    }
+}
+
+// Orientation
+.avatar-group {
+    &.vertical {
+        flex-direction: column-reverse;
+        > *:not(:first-child) {
+            margin-bottom: var(--space);
+        }
+    }
+    &.horizontal {
+        flex-direction: row-reverse;
+        > *:not(:first-child) {
+            margin-right: var(--space);
+        }
+    }
+}
+
+// Spacing
+.avatar-group {
+    &.small {
+        --space: #{rem(-8)};
+    }
+    &.medium {
+        --space: #{rem(-12)};
+    }
+}
+

@@ -1,0 +1,102 @@
+@use '@/app/styles/helpers' as *;
+
+.button {
+  --bgColor: transparent;
+  --color: ;
+  --bgColorHover: ;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  border-radius: var(--border-radius-small);
+  text-wrap: nowrap;
+  color: var(--color);
+  background-color: var(--bgColor);
+  transition-duration: 0.2s;
+  @include user-select-off;
+  flex-shrink: 0;
+	&:before {
+		@include underline-focus;
+	}
+  svg {
+    transition-duration: 0.2s;
+  }
+}
+
+// Colors
+.button {
+	&.primary {
+		--color: var(--theme-color-primary-500);
+    --bgColorHover: var(--color-primary-opacity);
+    --borderColor: var(--border-color-primary);
+	};
+	&.dark,
+	&.grey {
+		--color: var(--font-color-soft);
+		--borderColor: var(--border-color-grey);
+    --bgColorHover: var(--color-grey-opacity);
+	}
+}
+
+// Variants
+.button {
+	&.filled {
+		&.primary {
+			--color: var(--color-dark);
+			--bgColor: var(--theme-color-primary-500);
+			--bgColorHover: var(--theme-color-primary-600);
+		}
+		&.dark {
+			--bgColor: var(--theme-color-dark);
+			--bgColorHover: var(--theme-color-grey-900);
+		}
+		&.grey {
+			--bgColor: var(--theme-color-grey-900);
+			--bgColorHover: var(--theme-color-dark);
+		}
+    &.dark,
+    &.grey {
+      border: var(--border-weight-soft) solid var(--borderColor);
+    }
+	}
+  &.outlined {
+    border: var(--border-weight-soft) solid var(--borderColor);
+  }
+}
+
+// Sizes
+.button {
+  &.small {
+    padding-inline: var(--padding-small-l);
+    height: var(--button-height-small-l);
+    gap: rem(5);
+  }
+  &.medium {
+    padding-inline: var(--padding-medium);
+    height: var(--button-height-medium);
+    gap: rem(8);
+  }
+  &.large {
+    padding-inline: var(--padding-large);
+    height: var(--button-height-large);
+    gap: rem(11);
+  }
+}
+
+// Mods
+.button {
+  @include hover {
+    background-color: var(--bgColorHover);
+  }
+	&:focus-visible {
+		&:before {
+			width: 110%;
+		}
+	}
+  &.disabled {
+    opacity: var(--opacity-big);
+    pointer-events: none;
+  }
+}

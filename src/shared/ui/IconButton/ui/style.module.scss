@@ -1,0 +1,145 @@
+@use '@/app/styles/helpers' as *;
+
+.button {
+	--bgColor: transparent;
+	--color: inherit;
+	--bgColorHover: ;
+	--borderColor: ;
+	--height: ;
+	height: var(--height);
+	width: var(--height);
+	@include user-select-off;
+	border: none;
+	cursor: pointer;
+	background-color: var(--bgColor);
+	color: var(--color);
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0px;
+	transition-duration: 0.2s;
+	&:before {
+		@include underline-focus;
+	}
+	svg {
+		transition-duration: 0.2s;
+	}
+}
+
+// Colors
+.button {
+	&.primary {
+		--color: var(--theme-color-primary-500);
+		--borderColor: var(--border-color-primary);
+	}
+	&.dark,
+	&.grey {
+		--color: var(--font-color-soft);
+		--borderColor: var(--border-color-grey);
+	}
+}
+
+// Variants
+.button {
+	&.filled {
+		&:not(.custom-color) {
+			@include hover {
+				background-color: var(--bgColorHover);
+			}
+		}
+		&.primary {
+			--color: var(--color-dark);
+			--bgColor: var(--theme-color-primary-500);
+			--bgColorHover: var(--theme-color-primary-600);
+		}
+		&.dark {
+			--bgColor: var(--theme-color-dark);
+			--bgColorHover: var(--theme-color-grey-900);
+		}
+		&.grey {
+			--bgColor: var(--theme-color-grey-900);
+			--bgColorHover: var(--theme-color-dark);
+		}
+    &.dark,
+    &.grey {
+      border: var(--border-weight-soft) solid var(--borderColor);
+    }
+	}
+  &.outlined {
+    border: var(--border-weight-soft) solid var(--borderColor);
+  }
+	&.clear,
+	&.outlined {
+		&:after {
+			content: '';
+			border-radius: inherit;
+			position: absolute;
+			inset: 0;
+			background-color: currentColor;
+			opacity: 0;
+			transition-duration: inherit;
+		}
+		@include hover {
+			&:after {
+				opacity: 0.1;
+			}
+		}
+	}
+}
+
+// Sizes
+.button {
+	&.small-s {
+		--height: var(--button-height-small-s);
+		font-size: var(--fz-icon-small-s);
+	}
+	&.small-m {
+		--height: var(--button-height-small-m);
+		font-size: var(--fz-icon-small-m);
+	}
+	&.small-l {
+		--height: var(--button-height-small-l);
+		font-size: var(--fz-icon-small-l);
+	}
+	&.medium {
+		--height: var(--button-height-medium);
+		font-size: var(--fz-icon-medium);
+	}
+	&.large {
+		--height: var(--button-height-large);
+		font-size: var(--fz-icon-large);
+	}
+}
+
+// Border radius
+.button {
+	&.rounded {
+		border-radius: var(--border-radius-small);
+	}
+	&.rounded-left {
+		border-radius: var(--border-radius-small) 0 0 var(--border-radius-small);
+	}
+	&.rounded-right {
+		border-radius: 0 var(--border-radius-small) var(--border-radius-small) 0;
+	}
+	&.circular {
+		border-radius: 50%;
+	}
+	&.square {
+		border-radius: 0px;
+	}
+}
+
+// Mods
+.button {
+	&:focus-visible {
+		&:before {
+			width: 110%;
+		}
+	}
+	&.disabled {
+		opacity: var(--opacity-big);
+		pointer-events: none;
+	}
+}

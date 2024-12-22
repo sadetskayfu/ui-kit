@@ -1,0 +1,134 @@
+@use '@/app/styles/helpers' as *;
+
+.chip {
+  --height: ;
+  --bgColor: ;
+  --bgColorHover: ;
+  --borderColor: ;
+  --fontColor: ;
+  --buttonBgColor: var(--fontColor);
+  --buttonFontColor: ;
+  --avatarBgColor: var(--color-grey-500);
+  --buttonHeight: ;
+  --paddingInline: ;
+  --paddingBlock: ;
+  --buttonHeight: calc(var(--height) - var(--paddingInline));
+  --buttonMargin: calc((var(--height) - var(--paddingInline)) / 2);
+  font-size: calc(var(--height) / 2);
+  height: var(--height);
+  padding-block: var(--paddingBlock);
+  border-radius: var(--border-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fontColor);
+  background-color: var(--bgColor);
+  text-wrap: nowrap;
+  cursor: inherit;
+  position: relative;
+  &:after {
+    @include underline-focus;
+  }
+  &:focus-visible {
+    &:after {
+      width: 110%;
+    }
+  }
+  &.clickable {
+    cursor: pointer;
+    border: none;
+    transition-duration: 0.2s;
+    padding-inline: 0px;
+    @include hover {
+      background-color: var(--bgColorHover);
+    }
+  }
+}
+
+.label {
+  padding-inline: var(--paddingInline);
+}
+
+.close-button {
+  height: var(--buttonHeight);
+  width: var(--buttonHeight);
+  font-size: calc(var(--buttonHeight) / 1.75);
+  margin-right: var(--buttonMargin);
+  margin-left: calc(var(--buttonMargin) * -1);
+  background-color: var(--buttonBgColor);
+  color: var(--buttonFontColor);
+  opacity: 0.5;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.avatar {
+  background-color: var(--avatarBgColor);
+  margin-left: var(--paddingBlock);
+  margin-right: calc(var(--buttonMargin) * -1);
+  aspect-ratio: 1;
+}
+
+.icon {
+  font-size: 1em;
+  padding-left: var(--paddingInline);
+  margin-right: calc(var(--buttonMargin) * -1);
+}
+
+// Colors
+.chip {
+    &.secondary {
+      --fontColor: var(--font-color-soft);
+    }
+}
+
+// Variants
+.chip {
+  &.filled {
+    --paddingBlock: #{rem(3)};
+    --buttonFontColor: var(--bgColor);
+    &.primary {
+      --fontColor: var(--color-dark);
+      --bgColor: var(--theme-color-primary-500);
+      --bgColorHover: var(--theme-color-primary-600);
+    }
+    &.secondary {
+      --bgColor: var(--theme-color-grey-800);
+      --bgColorHover: var(--theme-color-grey-900);
+    }
+  }
+  &.outlined {
+    --paddingBlock: #{rem(2)};
+    --bgColor: transparent;
+    --buttonFontColor: var(--theme-color-dark);
+    border: var(--border-weight-soft) solid var(--borderColor);
+    &.primary {
+      --bgColorHover: var(--color-primary-opacity);
+      --borderColor: var(--border-color-primary);
+      --fontColor: var(--theme-color-primary-500);
+    }
+    &.secondary {
+      --bgColorHover: var(--color-grey-opacity);
+      --borderColor: var(--border-color-grey);
+    }
+  }
+}
+
+.chip {
+  &.small {
+    --height: var(--button-height-small-m);
+    --paddingInline: #{rem(12)};
+  }
+  &.medium {
+    --height: var(--button-height-small-l);
+    --paddingInline: #{rem(14)};
+  }
+}
+
+.chip {
+  &.disabled {
+    pointer-events: none;
+    opacity: var(--opacity-big);
+  }
+}
