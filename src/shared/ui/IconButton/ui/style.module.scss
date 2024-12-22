@@ -6,6 +6,7 @@
 	--bgColorHover: ;
 	--borderColor: ;
 	--height: ;
+	--borderRadius: var(--border-radius-m);
 	height: var(--height);
 	width: var(--height);
 	@include user-select-off;
@@ -90,38 +91,53 @@
 
 // Sizes
 .button {
-	&.small-s {
-		--height: var(--button-height-small-s);
-		font-size: var(--fz-icon-small-s);
+	&.small-xx {
+		--height: var(--button-height-xxs);
+		--borderRadius: var(--border-radius-s);
+		font-size: var(--fz-icon-xxs);
 	}
-	&.small-m {
-		--height: var(--button-height-small-m);
-		font-size: var(--fz-icon-small-m);
+	&.small-x {
+		--height: var(--button-height-xs);
+		--borderRadius: var(--border-radius-s);
+		font-size: var(--fz-icon-xs);
 	}
-	&.small-l {
-		--height: var(--button-height-small-l);
-		font-size: var(--fz-icon-small-l);
+	&.small {
+		--height: var(--button-height-s);
+		--borderRadius: var(--border-radius-s);
+		font-size: var(--fz-icon-s);
+		@include laptop {
+			--height: var(--button-height-xs);
+			font-size: var(--fz-icon-xs);
+		}
 	}
 	&.medium {
-		--height: var(--button-height-medium);
-		font-size: var(--fz-icon-medium);
+		--height: var(--button-height-m);
+		font-size: var(--fz-icon-m);
+		@include laptop {
+			--height: var(--button-height-s);
+			font-size: var(--fz-icon-s);
+		}
 	}
 	&.large {
-		--height: var(--button-height-large);
-		font-size: var(--fz-icon-large);
+		--height: var(--button-height-l);
+		font-size: var(--fz-icon-l);
+		@include laptop {
+			--height: var(--button-height-m);
+			font-size: var(--fz-icon-m);
+		}
 	}
 }
 
 // Border radius
 .button {
 	&.rounded {
-		border-radius: var(--border-radius-small);
+		border-radius: var(--borderRadius);
 	}
 	&.rounded-left {
-		border-radius: var(--border-radius-small) 0 0 var(--border-radius-small);
+		border-radius: var(--borderRadius) 0 0 var(--borderRadius);
 	}
 	&.rounded-right {
-		border-radius: 0 var(--border-radius-small) var(--border-radius-small) 0;
+		border-radius: 0 var(--borderRadius) var(--borderRadius) 0;
 	}
 	&.circular {
 		border-radius: 50%;
@@ -139,7 +155,6 @@
 		}
 	}
 	&.disabled {
-		opacity: var(--opacity-big);
-		pointer-events: none;
+		@include disabled;
 	}
 }

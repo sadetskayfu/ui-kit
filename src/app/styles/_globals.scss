@@ -1,7 +1,6 @@
 @use 'helpers' as *;
-
 body {
-  font-size: rem(18);
+  font-size: fluid-text(18, 14);
   font-family: var(--font-family-base);
   color: var(--font-color-soft);
   background-color: var(--theme-color-dark);

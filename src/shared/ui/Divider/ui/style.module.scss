@@ -1,0 +1,19 @@
+@use '@/app/styles/helpers' as *;
+
+.divider {
+    background-color: var(--border-color-grey);
+    border: none;
+}
+
+.divider {
+    &.vertical {
+        height: 100%;
+        width: var(--border-weight-soft);
+        margin-inline: rem(5);
+    }
+    &.horizontal {
+        width: 100%;
+        height: var(--border-weight-soft);
+        margin-block: rem(5);
+    }
+}

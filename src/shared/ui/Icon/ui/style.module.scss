@@ -10,20 +10,20 @@
 
 // Sizes
 .icon {
-  &.small-s {
-    font-size: var(--fz-icon-small-s);
+  &.small-xx {
+    font-size: var(--fz-icon-xxs);
   }
-  &.small-m {
-    font-size: var(--fz-icon-small-m);
+  &.small-x {
+    font-size: var(--fz-icon-xs);
   }
-  &.small-l {
-    font-size: var(--fz-icon-small-l);
+  &.small {
+    font-size: var(--fz-icon-s);
   }
   &.medium {
-    font-size: var(--fz-icon-medium);
+    font-size: var(--fz-icon-m);
   }
   &.large {
-    font-size: var(--fz-icon-large);
+    font-size: var(--fz-icon-l);
   }
   &.inherit {
     font-size: inherit;

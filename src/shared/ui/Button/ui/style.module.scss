@@ -1,22 +1,23 @@
 @use '@/app/styles/helpers' as *;
 
 .button {
+  --height: ;
   --bgColor: transparent;
   --color: ;
   --bgColorHover: ;
+  height: var(--height);
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   border: none;
-  border-radius: var(--border-radius-small);
-  text-wrap: nowrap;
+  white-space: nowrap;
   color: var(--color);
   background-color: var(--bgColor);
+  border-radius: var(--border-radius-m);
   transition-duration: 0.2s;
   @include user-select-off;
-  flex-shrink: 0;
 	&:before {
 		@include underline-focus;
 	}
@@ -68,20 +69,29 @@
 
 // Sizes
 .button {
-  &.small {
-    padding-inline: var(--padding-small-l);
-    height: var(--button-height-small-l);
-    gap: rem(5);
-  }
   &.medium {
-    padding-inline: var(--padding-medium);
-    height: var(--button-height-medium);
-    gap: rem(8);
+    --height: var(--button-height-m);
+    padding-inline: var(--button-padding-inline-m);
+    padding-block: var(--button-padding-block-m);
+    gap: var(--button-gap-m);
+    @include laptop {
+      --height: var(--button-height-s);
+      padding-inline: var(--button-padding-inline-s);
+      padding-block: var(--button-padding-block-s);
+      gap: var(--button-gap-s);
+    }
   }
   &.large {
-    padding-inline: var(--padding-large);
-    height: var(--button-height-large);
-    gap: rem(11);
+    --height: var(--button-height-l);
+    padding-inline: var(--button-padding-inline-l);
+    padding-block: var(--button-padding-block-l);
+    gap: var(--button-gap-l);
+    @include laptop {
+      --height: var(--button-height-m);
+      padding-inline: var(--button-padding-inline-m);
+      padding-block: var(--button-padding-block-m);
+      gap: var(--button-gap-m);
+    }
   }
 }
 
@@ -96,7 +106,6 @@
 		}
 	}
   &.disabled {
-    opacity: var(--opacity-big);
-    pointer-events: none;
+    @include disabled;
   }
 }

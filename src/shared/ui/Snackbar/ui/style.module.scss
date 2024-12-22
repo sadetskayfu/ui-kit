@@ -5,7 +5,7 @@
     --color: var(--font-color-soft);
     position: fixed;
     color: var(--color);
-    border-radius: var(--border-radius-small);
+    border-radius: var(--border-radius-m);
     display: flex;
     align-items:center;
     overflow: hidden;
@@ -16,8 +16,12 @@
 }
 
 .message {
-    margin-inline: rem(15);
-    margin-block: rem(5);
+    margin-inline: var(--button-padding-inline-m);
+    margin-block: var(--button-padding-block-m);
+    @include laptop {
+        margin-inline: var(--button-padding-inline-s);
+        margin-block: var(--button-padding-block-s);
+    }
 }
 
 // Variants

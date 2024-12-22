@@ -10,6 +10,7 @@ const meta: Meta<typeof IconButton> = {
     variant: "filled",
     color: "primary",
     size: "medium",
+    borderRadius: 'circular',
   },
   argTypes: {
     onClick: { action: "clicked" },

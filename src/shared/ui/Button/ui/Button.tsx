@@ -17,7 +17,7 @@ import { Link } from 'react-router-dom'
 
 type ButtonVariant = 'filled' | 'outlined' | 'clear'
 type ButtonColor = 'primary' | 'dark' | 'grey'
-type ButtonSize = 'small' | 'medium' | 'large'
+type ButtonSize = 'medium' | 'large'
 
 type HTMLLinkProps = Omit<
 	LinkHTMLAttributes<HTMLAnchorElement>,
@@ -106,7 +106,6 @@ export const Button = memo(
 
 					handleRipple(rippleWrapperRef)
 				}
-
 				onKeyDown?.()
 			}
 

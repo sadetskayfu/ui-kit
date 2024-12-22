@@ -50,7 +50,7 @@
 	content: '';
 	position: absolute;
 	height: 100%;
-	border-bottom: var(--border-weight-hard) solid var(--color-primary-500);
+	border-bottom: var(--border-weight-hard) solid var(--theme-color-primary-500);
 	border-radius: inherit;
 	bottom: rem(-8);
 }
@@ -65,4 +65,9 @@
 	background-color: currentColor;
 	width: 0%;
 	transition-duration: inherit;
+}
+
+@mixin disabled {
+	opacity: var(--opacity-disabled);
+    pointer-events: none;
 }

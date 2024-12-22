@@ -11,11 +11,11 @@ import { Link } from 'react-router-dom'
 import { AvatarProps } from '@/shared/ui/Avatar'
 import styles from './style.module.scss'
 
-export type ChipVariant = 'filled' | 'outlined'
-export type ChipColor = 'primary' | 'secondary'
-export type ChipSize = 'small' | 'medium'
+type ChipVariant = 'filled' | 'outlined'
+type ChipColor = 'primary' | 'secondary'
+type ChipSize = 'small' | 'medium'
 
-export interface ChipProps {
+interface ChipProps {
 	className?: string
 	variant?: ChipVariant
 	color?: ChipColor

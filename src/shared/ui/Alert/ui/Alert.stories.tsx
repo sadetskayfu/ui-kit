@@ -29,7 +29,7 @@ export const WithTitle: Story = {
 
 export const WithAction: Story = {
   args: {
-    Action: <IconButton size="small-m" color="custom-color" variant="clear"><Icon variant="x-mark"/></IconButton>,
+    Action: <IconButton size="small-xx" color="custom-color" variant="clear"><Icon variant="x-mark"/></IconButton>,
   }
 };
 

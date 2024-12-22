@@ -1,10 +1,12 @@
 @use 'helpers' as *;
-@use './themes/dark';
 
 :root {
+	// Font
 	--font-family-base: 'Inter', 'sans-serif';
     --font-family-accent: 'Kumbh Sans', 'sans-serif';
-	
+	--font-size-small: #{rem(14)};
+
+	// Colors
 	--color-dark: #141414;
     --color-light: #FFF;
 
@@ -29,32 +31,46 @@
 	--color-red-500: #f44336;
 	--color-red-50: #fde1e5;
 
-
+	// Border
 	--border-weight-soft: #{rem(1)};
 	--border-weight-hard: #{rem(2)};
-
-	--border-radius-small: #{rem(8)};
+	--border-radius-s: #{rem(6)};
+	--border-radius-m: #{rem(10)};
 	--border-radius-full: 9999px;
 
-	--opacity-small: 0.8;
-	--opacity-medium: 0.5;
-	--opacity-big: 0.2;
+	// Opacity
+	--opacity-disabled: 0.2;
 
-	--button-height-small-s: #{rem(20)};
-	--button-height-small-m: #{rem(25)};
-	--button-height-small-l: #{rem(30)};
-	--button-height-medium: #{rem(40)};
-	--button-height-large: #{rem(55)};
+	// Icon button xxs
+	--button-height-xxs: #{rem(25)};
 
-	--fz-icon-small-s: calc(var(--button-height-small-s) / 2.25);
-	--fz-icon-small-m: calc(var(--button-height-small-m) / 2.25);
-	--fz-icon-small-l: calc(var(--button-height-small-l) / 2.25);
-	--fz-icon-medium: calc(var(--button-height-medium) / 2.25);
-	--fz-icon-large: calc(var(--button-height-large) / 2.25);
+	// Icon button xs
+	--button-height-xs: #{rem(35)};
 
-	--input-height-small: #{rem(40)};
-	--input-height-medium: #{rem(55)};
-	--input-height-large: #{rem(65)};
+	// Button small
+	--button-height-s: #{rem(45)};
+	--button-padding-inline-s: #{rem(14)};
+	--button-padding-block-s: #{rem(10)};
+	--button-gap-s: #{rem(6)};
+
+	// Button medium
+	--button-height-m: #{rem(55)};
+	--button-padding-inline-m: #{rem(20)};
+	--button-padding-block-m: #{rem(14)};
+	--button-gap-m: #{rem(8)};
+
+	// Button large
+	--button-height-l: #{rem(65)};
+	--button-padding-inline-l: #{rem(24)};
+	--button-padding-block-l: #{rem(18)};
+	--button-gap-l: #{rem(10)};
+
+	// Icon size
+	--fz-icon-xxs: calc(var(--button-height-xxs) / 2);
+	--fz-icon-xs: calc(var(--button-height-xs) / 2);
+	--fz-icon-s: calc(var(--button-height-s) / 2);
+	--fz-icon-m: calc(var(--button-height-m) / 2);
+	--fz-icon-l: calc(var(--button-height-l) / 2);
 
     --padding-small-s: #{rem(7.5)};
 	--padding-small-m: #{rem(10)};

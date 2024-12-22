@@ -1,0 +1,49 @@
+@use '@/app/styles/helpers' as *;
+
+.tooltip-wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    animation: mounting 0.2s;
+    translate: -100% -100%;
+    transform: translateZ(0px);
+    &.unmounting {
+        animation: unmounting 0.2s forwards;
+        pointer-events: none;
+    }
+}
+
+.tooltip {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: rem(30);
+    padding-inline: rem(15);
+    padding-block: rem(10);
+    border-radius: var(--border-radius-s);
+    background-color: var(--theme-color-light);
+    color: var(--theme-color-dark);
+    text-wrap: nowrap;
+}
+
+@keyframes mounting {
+    0% {
+        opacity: 0;
+        transform: scale(0.6);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes unmounting {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.6);
+    }
+}

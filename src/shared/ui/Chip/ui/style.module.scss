@@ -117,18 +117,17 @@
 
 .chip {
   &.small {
-    --height: var(--button-height-small-m);
+    --height: var(--button-height-xxs);
     --paddingInline: #{rem(12)};
   }
   &.medium {
-    --height: var(--button-height-small-l);
-    --paddingInline: #{rem(14)};
+    --height: var(--button-height-xs);
+    --paddingInline: #{rem(16)};
   }
 }
 
 .chip {
   &.disabled {
-    pointer-events: none;
-    opacity: var(--opacity-big);
+    @include disabled;
   }
 }
