@@ -3,12 +3,16 @@ import { createPortal } from 'react-dom'
 
 interface PortalProps {
 	children: ReactNode
-	element?: HTMLElement
+	portalTarget?: HTMLElement | null
 }
 
 export const Portal = (props: PortalProps) => {
 
-	const { children, element = document.querySelector('body')! } = props
+	const { children, portalTarget } = props
 
-	return createPortal(children, element)
+	if(portalTarget) {
+		return createPortal(children, portalTarget)
+	} 
+	
+	return createPortal(children, document.querySelector('body')!)
 }

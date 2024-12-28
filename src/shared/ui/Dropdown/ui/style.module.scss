@@ -1,0 +1,19 @@
+.dropdown {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  &.open {
+    visibility: visible;
+    pointer-events: all;
+    opacity: 1;
+  }
+	&.transition {
+		transition: opacity 0.2s, z-index 0s 0.2s, visibility 0s 0.2s;
+		&.open {
+			transition: opacity 0.2s;
+		}
+	}
+}
+
+

@@ -1,8 +1,9 @@
 @use 'normalize';
 @use 'fonts';
-@use './themes/dark';
-@use './themes/light';
 @use 'variables';
+@use './themes/light';
+@use './themes/dark';
+
 @use 'utils';
 @use 'globals';
 

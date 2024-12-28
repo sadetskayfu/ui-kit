@@ -36,7 +36,7 @@ export const Avatar = memo((props: AvatarProps) => {
 		src,
 		alt,
 		variant = 'circular',
-		border = 'dark',
+		border = 'none',
 		bgColor,
 		imgProps,
 		height,

@@ -10,12 +10,12 @@ const meta: Meta<typeof AvatarGroup> = {
 		spacing: 'medium',
 		orientation: 'vertical',
 		children: [
-			<Avatar />,
-			<Avatar />,
-			<Avatar />,
-			<Avatar />,
-			<Avatar />,
-			<Avatar />,
+			<Avatar border='dark'/>,
+			<Avatar border='dark'/>,
+			<Avatar border='dark'/>,
+			<Avatar border='dark'/>,
+			<Avatar border='dark'/>,
+			<Avatar border='dark'/>,
 		],
 	},
 }
@@ -36,13 +36,13 @@ export const withBadge: Story = {
 		maxAvatars: 4,
 		children: [
 			<Badge isVisible border position="bottom-right" size="small" color="green">
-				<Avatar />
+				<Avatar defaultBgColor border='dark'/>
 			</Badge>,
-			<Avatar />,
-			<Avatar />,
-			<Avatar />,
-			<Avatar />,
-			<Avatar />,
+			<Avatar border='dark'/>,
+			<Avatar border='dark'/>,
+			<Avatar border='dark'/>,
+			<Avatar border='dark'/>,
+			<Avatar border='dark'/>,
 		],
 	},
 }

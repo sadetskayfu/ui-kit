@@ -7,11 +7,13 @@ const meta: Meta<typeof Avatar> = {
   args: {
     size: 'small',
     variant: 'circular',
-    border: 'dark',
+    border: 'none',
+    defaultBgColor: true,
   }
 }
 
 export default meta;
+
 type Story = StoryObj<typeof Avatar>
 
 export const Default: Story = {
@@ -24,5 +26,7 @@ export const WitchImg: Story = {
         alt: 'Cats'
     }
 };
+
+
 
 

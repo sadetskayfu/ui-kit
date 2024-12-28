@@ -2,6 +2,7 @@
 
 .avatar {
 	--height: ;
+	--fontSize: 1.3em;
 	height: var(--height);
 	width: var(--height);
 	display: flex;
@@ -10,7 +11,7 @@
 	overflow: hidden;
 	color: var(--color-light);
 	@include user-select-off;
-	font-size: 1.3em;
+	font-size: var(--fontSize);
 	box-sizing: content-box;
 	&.default-bg-color {
 		background-color: var(--theme-color-grey-800);
@@ -31,18 +32,21 @@
 .avatar {
 	&.small {
 		--height: #{rem(40)};
+		--fontSize: calc(var(--height) / 1.75);
 		@include laptop {
 			--height: #{rem(35)};
 		}
 	}
 	&.medium {
 		--height: #{rem(60)};
+		--fontSize: calc(var(--height) / 1.75);
 		@include laptop {
 			--height: #{rem(50)};
 		}
 	}
 	&.large {
 		--height: #{rem(80)};
+		--fontSize: calc(var(--height) / 1.75);
         @include laptop {
 			--height: #{rem(60)};
 		}

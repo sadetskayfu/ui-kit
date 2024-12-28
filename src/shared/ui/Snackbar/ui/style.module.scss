@@ -1,73 +1,74 @@
 @use '@/app/styles/helpers' as *;
 
 .snackbar {
-    --bgColor: ;
-    --color: var(--font-color-soft);
-    position: fixed;
-    color: var(--color);
-    border-radius: var(--border-radius-m);
-    display: flex;
-    align-items:center;
-    overflow: hidden;
-    animation: mounting 0.3s;
-    &.unmounting {
-        animation: unmounting 0.3s forwards;
-    }
+	--bgColor: ;
+	--color: var(--font-color-soft);
+	position: fixed;
+	color: var(--color);
+	border-radius: var(--border-radius-m);
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+	opacity: 0;
+	animation: mounting 0.3s forwards;
+	&.exit {
+		animation: unmounting 0.3s forwards;
+	}
 }
 
 .message {
-    margin-inline: var(--button-padding-inline-m);
-    margin-block: var(--button-padding-block-m);
-    @include laptop {
-        margin-inline: var(--button-padding-inline-s);
-        margin-block: var(--button-padding-block-s);
-    }
+	margin-inline: var(--button-padding-inline-m);
+	margin-block: var(--button-padding-block-m);
+	@include laptop {
+		margin-inline: var(--button-padding-inline-s);
+		margin-block: var(--button-padding-block-s);
+	}
 }
 
 // Variants
 .snackbar {
-    &.filled {
-        background-color: var(--theme-color-grey-800);
-    }
-    &.clear {
-        background-color: transparent;
-    }
+	&.filled {
+		background-color: var(--theme-color-grey-800);
+	}
+	&.clear {
+		background-color: transparent;
+	}
 }
 
 // Positions
 .snackbar {
-    &.top-left {
-        left: 20px;
-        top: 20px;
-    }
-    &.top-right {
-        right: 20px;
-        top: 20px;
-    }
-    &.bottom-right {
-        right: 20px;
-        bottom: 20px;
-    }
-    &.bottom-left {
-        left: 20px;
-        bottom: 20px;
-    }
+	&.top-left {
+		left: 20px;
+		top: 20px;
+	}
+	&.top-right {
+		right: 20px;
+		top: 20px;
+	}
+	&.bottom-right {
+		right: 20px;
+		bottom: 20px;
+	}
+	&.bottom-left {
+		left: 20px;
+		bottom: 20px;
+	}
 }
 
 @keyframes mounting {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 
 @keyframes unmounting {
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
 }

@@ -17,6 +17,7 @@ const meta: Meta<typeof Button> = {
 }
 
 export default meta;
+
 type Story = StoryObj<typeof Button>
 
 export const Default: Story = {
@@ -43,14 +44,12 @@ export const Disabled: Story = {
 
 export const LinkButton: Story = {
   args: {
-    isLink: true,
     to: '/example'
   }
 };
 
 export const ExternalLinkButton: Story = {
   args: {
-    isExternalLink: true,
-    to: "https://example.com",
+    href: "https://example.com",
   }
 };

@@ -10,10 +10,12 @@ const meta: Meta<typeof Snackbar> = {
   component: Snackbar,
   args: {
     position: 'top-right',
+    variant: 'filled'
   },
 }
 
 export default meta;
+
 type Story = StoryObj<typeof Snackbar>
 
 const SnackbarWrapper = (args: any) => {
@@ -41,7 +43,7 @@ const SnackbarWrapper = (args: any) => {
 export const Default: Story = {
     render: (args) => SnackbarWrapper(args),
     args: {
-        message: 'Default snackbar with message'
+        children: 'Default snackbar with message'
     }
 };
 
@@ -49,7 +51,7 @@ export const AutoHide: Story = {
     render: (args) => SnackbarWrapper(args),
     args: {
         autoHideDuration: 5000,
-        message: 'Default snackbar with auto hide 5s',
+        children: 'Default snackbar with auto hide 5s',
     }
 };
 
@@ -57,6 +59,7 @@ export const CustomContentWithAlert: Story = {
     render: (args) => SnackbarWrapper(args),
     args: {
         children: <Alert variant="filled" severity="success" Icon={<Icon variant="check-mark"/>}>Success Alert</Alert>,
+        variant: 'clear'
     }
 };
 

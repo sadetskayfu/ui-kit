@@ -31,22 +31,7 @@ type IconButtonBorderRadius =
 	| 'circular'
 	| 'square'
 
-type LinkProps = Omit<
-	LinkHTMLAttributes<HTMLAnchorElement>,
-	'href' | 'tabIndex' | 'onKeyDown' | 'onMouseDown' | 'onClick' | 'aria-readonly'
->
-type ButtonProps = Omit<
-	ButtonHTMLAttributes<HTMLButtonElement>,
-	| 'disabled'
-	| 'type'
-	| 'tabIndex'
-	| 'onClick'
-	| 'onKeyDown'
-	| 'onMouseDown'
-	| 'aria-readonly'
->
-
-interface IconButtonProps {
+interface BaseIconButtonProps {
 	className?: string
 	id?: string
 	variant?: IconButtonVariant
@@ -55,17 +40,29 @@ interface IconButtonProps {
 	borderRadius?: IconButtonBorderRadius
 	disabled?: boolean
 	stopFocus?: boolean
-	isLink?: boolean
-	isExternalLink?: boolean
+	stopPropagation?: boolean;
 	to?: string
+	href?: string
 	children: ReactNode
 	type?: 'submit' | 'reset' | 'button' | undefined
 	tabIndex?: number
-	onClick?: () => void
-	onKeyDown?: () => void
-	onMouseDown?: () => void
+	onClick?: (event: React.MouseEvent | React.KeyboardEvent) => void
 	linkProps?: LinkProps
 	buttonProps?: ButtonProps
+}
+
+type LinkProps = Omit<
+	LinkHTMLAttributes<HTMLAnchorElement>,
+	keyof BaseIconButtonProps
+>
+type ButtonProps = Omit<
+	ButtonHTMLAttributes<HTMLButtonElement>,
+	keyof BaseIconButtonProps
+>
+
+interface IconButtonProps extends BaseIconButtonProps {
+	buttonProps?: ButtonProps
+	linkProps?: LinkProps
 }
 
 export const IconButton = forwardRef(
@@ -79,9 +76,9 @@ export const IconButton = forwardRef(
 			className,
 			disabled,
 			stopFocus,
-			isLink,
-			isExternalLink,
-			to = '',
+			stopPropagation,
+			to,
+			href,
 			variant = 'filled',
 			size = 'medium',
 			color = 'primary',
@@ -89,8 +86,6 @@ export const IconButton = forwardRef(
 			type = 'button',
 			tabIndex,
 			onClick,
-			onKeyDown,
-			onMouseDown,
 			linkProps,
 			buttonProps,
 			...otherProps
@@ -102,31 +97,35 @@ export const IconButton = forwardRef(
 			? (ref as React.RefObject<HTMLAnchorElement>)
 			: localLinkRef
 
-		const handleKeyDown = (event: React.KeyboardEvent) => {
+		const handleKeyUp = (event: React.KeyboardEvent) => {
 			if (event.key === 'Enter' || event.key === ' ') {
 				event.preventDefault()
-				event.stopPropagation()
 
-				if (isLink || isExternalLink) {
+				if (to || href) {
 					linkRef.current?.click()
 				} else {
-					onClick?.()
+					onClick?.(event)
 				}
+
 				handleRipple(rippleWrapperRef)
 			}
-			onKeyDown?.()
+		}
+
+		const handleKeyDown = (event: React.KeyboardEvent) => {
+			if(event.key === 'Enter') {
+				event.preventDefault()
+			}
 		}
 
 		const handleMouseDown = (event: React.MouseEvent) => {
 			if (stopFocus) {
 				event.preventDefault()
 			}
-			onMouseDown?.()
 		}
 
 		const handleClick = (event: React.MouseEvent) => {
-			event.stopPropagation()
-			onClick?.()
+			stopPropagation && event.stopPropagation()
+			onClick?.(event)
 			handleRippleMousePosition(rippleWrapperRef, event)
 		}
 
@@ -144,7 +143,7 @@ export const IconButton = forwardRef(
 
 		const localTabIndex = disabled ? -1 : tabIndex
 
-		if (isLink) {
+		if (to) {
 			return (
 				<Link
 					className={classNames(styles['button'], additionalClasses, mods)}
@@ -152,6 +151,7 @@ export const IconButton = forwardRef(
 					to={to}
 					tabIndex={localTabIndex}
 					onClick={handleClick}
+					onKeyUp={handleKeyUp}
 					onKeyDown={handleKeyDown}
 					onMouseDown={handleMouseDown}
 					ref={linkRef}
@@ -164,14 +164,15 @@ export const IconButton = forwardRef(
 			)
 		}
 
-		if (isExternalLink) {
+		if (href) {
 			return (
 				<a
 					className={classNames(styles['button'], additionalClasses, mods)}
 					id={id}
-					href={to}
+					href={href}
 					tabIndex={localTabIndex}
 					onClick={handleClick}
+					onKeyUp={handleKeyUp}
 					onKeyDown={handleKeyDown}
 					onMouseDown={handleMouseDown}
 					ref={linkRef}
@@ -189,6 +190,7 @@ export const IconButton = forwardRef(
 				id={id}
 				type={type}
 				onMouseDown={handleMouseDown}
+				onKeyUp={handleKeyUp}
 				onKeyDown={handleKeyDown}
 				onClick={handleClick}
 				tabIndex={localTabIndex}

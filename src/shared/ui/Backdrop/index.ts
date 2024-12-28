@@ -1,2 +1,2 @@
-export { Backdrop } from "./ui/Backdrop";
+export { Backdrop, type BackdropVariant } from "./ui/Backdrop";
 

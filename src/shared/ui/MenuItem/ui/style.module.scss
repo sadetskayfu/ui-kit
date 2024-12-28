@@ -1,0 +1,61 @@
+@use '@/app/styles/helpers' as *;
+
+.menu-item {
+    --color: var(--font-color-soft);
+    --paddingInline: var(--padding-15);
+    --fzStartIcon: var(--fz-icon-xs);
+    --fzEndIcon: var(--fz-icon-xxs);
+    --paddingLeftDesc: 0px;
+    --paddingRightDesc: 0px;
+    &.with-start-icon {
+        --paddingLeftDesc: calc(var(--fzStartIcon) + var(--paddingInline));
+    };
+    &.with-end-icon {
+        --paddingRightDesc: var(--fzEndIcon);
+    }
+}
+
+.button {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+    padding: var(--paddingInline);
+    column-gap: var(--paddingInline);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: inherit;
+    text-align: start;
+    color: var(--color);
+    &:focus-visible {
+        background-color: var(--color-grey-opacity);
+    }
+    @include hover {
+        background-color: var(--color-grey-opacity);
+    }
+    p {
+        font-size: var(--font-size-small);
+        color: var(--font-color-description);
+        padding-right: var(--paddingRightDesc);
+        padding-left: var(--paddingLeftDesc);
+    }
+}
+
+.title {
+    color: var(--color);
+    display: flex;
+    align-items: center;
+    column-gap: var(--paddingInline);
+    width: 100%;
+}
+
+.start-icon {
+    font-size: var(--fzStartIcon);
+}
+
+.end-icon {
+    margin-left: auto;
+    font-size: var(--fzEndIcon);
+}

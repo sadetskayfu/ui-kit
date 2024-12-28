@@ -20,6 +20,17 @@ export function buildLoaders(isDev: boolean): RuleSetRule[] {
 			filename: 'static/[name].[contenthash][ext]',
 		},
 	}
+	
+	const babelLoader = {
+		test: /\.(js|jsx|ts|tsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+	}
 
-	return [assetLoader, svgLoader, cssLoader, typeScriptLoader]
+	return [assetLoader, svgLoader, cssLoader, babelLoader, typeScriptLoader]
 }

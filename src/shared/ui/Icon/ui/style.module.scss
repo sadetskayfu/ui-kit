@@ -2,9 +2,23 @@
   display: inline-flex;
   height: 1em;
   aspect-ratio: 1;
+  --fill: ;
+  --stroke: ;
   svg {
-    fill: currentColor;
-    stroke: currentColor;
+    fill: var(--fill);
+    stroke: var(--stroke);
+  }
+}
+
+// Colors
+.icon {
+  &.inherit {
+    --fill: currentColor;
+    --stroke: currentColor;
+  }
+  &.primary {
+    --fill: var(--theme-color-primary-500);
+    --stroke: var(--theme-color-primary-500);
   }
 }
 
@@ -24,8 +38,5 @@
   }
   &.large {
     font-size: var(--fz-icon-l);
-  }
-  &.inherit {
-    font-size: inherit;
   }
 }

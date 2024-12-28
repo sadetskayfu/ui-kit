@@ -1,19 +1,19 @@
-import { ReactElement } from 'react'
+import { ReactElement, useRef } from 'react'
 import { classNames } from '@/shared/lib/classNames/classNames'
 import { Portal } from '@/shared/ui/Portal'
+import { Z_INDEX } from '@/shared/constants/zIndex'
 import styles from './style.module.scss'
 
-type BackdropVariant = 'dark' | 'clear'
+export type BackdropVariant = 'dark' | 'clear'
 
 interface BackdropProps {
 	className?: string
 	variant?: BackdropVariant
 	children?: ReactElement
 	isVisible: boolean
-	unmountingAnimation?: boolean
-	mountingAnimation?: boolean
 	onClose?: () => void
 	zIndex?: number
+	mountingAnimation?: boolean
 }
 
 export const Backdrop = (props: BackdropProps) => {
@@ -21,33 +21,31 @@ export const Backdrop = (props: BackdropProps) => {
 		className,
 		children,
 		isVisible,
-		unmountingAnimation,
-		mountingAnimation,
 		onClose,
 		variant = 'dark',
-		zIndex = 1000,
+		mountingAnimation,
+		zIndex = Z_INDEX.BACKDROP,
 	} = props
-
-	const mods: Record<string, boolean | undefined> = {
-		[styles['visible']]: isVisible,
-		[styles['unmounting']]: unmountingAnimation,
-		[styles['mounting']]: mountingAnimation,
-	}
 
 	const additionalClasses: Array<string | undefined> = [
 		className,
 		styles[variant],
 	]
 
+	const mods: Record<string, boolean | undefined> = {
+		[styles['visible']]: isVisible,
+		[styles['mounting-animation']]: mountingAnimation
+	}
+
 	return (
-		<Portal>
-			<div
-				style={{ zIndex: isVisible ? zIndex : -1000 }}
-				onClick={onClose}
-				className={classNames(styles['backdrop'], additionalClasses, mods)}
-			>
-				{children}
-			</div>
-		</Portal>
+			<Portal>
+				<div
+					style={{ zIndex: isVisible ? zIndex : -1000 }}
+					onClick={onClose}
+					className={classNames(styles['backdrop'], additionalClasses, mods)}
+				>
+					{children}
+				</div>
+			</Portal>
 	)
 }

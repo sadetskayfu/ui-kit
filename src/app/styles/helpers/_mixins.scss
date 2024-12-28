@@ -46,14 +46,10 @@
 	-ms-user-select: none; /* IE10+ */
 }
 
-@mixin underline-focus {
-	content: '';
-	position: absolute;
-	height: 100%;
-	border-bottom: var(--border-weight-hard) solid var(--theme-color-primary-500);
-	border-radius: inherit;
-	bottom: rem(-8);
-}
+@mixin focus-outline {
+	outline: 2px dashed var(--theme-color-primary-600);
+	outline-offset: 2px;
+  }
 
 @mixin underline-bottom {
 	content: '';

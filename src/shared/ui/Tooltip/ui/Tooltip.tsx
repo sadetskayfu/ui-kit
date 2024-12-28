@@ -12,6 +12,7 @@ import { classNames } from "@/shared/lib/classNames/classNames";
 import { Portal } from "@/shared/ui/Portal";
 import { handleChangePosition } from "@/shared/ui/Tooltip/model/handleChangePosition";
 import { throttleHandleChangePositionWithFollowCursor } from "../model/handleChangePositionWithFollowCursor";
+import { Z_INDEX } from "@/shared/constants/zIndex";
 import styles from "./style.module.scss";
 
 type TooltipPositionVariant = "left" | "top" | "bottom" | "right";
@@ -43,7 +44,7 @@ export const Tooltip = (props: TooltipProps) => {
     disabledTouch,
     disabledClick = true,
     followCursor,
-    zIndex = 1500,
+    zIndex = Z_INDEX.TOOLTIP,
     margin = 10,
   } = props;
 

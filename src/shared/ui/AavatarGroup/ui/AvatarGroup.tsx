@@ -54,7 +54,7 @@ export const AvatarGroup = memo((props: AvatarGroupProps) => {
             alt: "Number of hidden avatars",
           })
         ) : (
-          <Avatar border="dark" alt="Number of hidden avatars">{"+" + count}</Avatar>
+          <Avatar defaultBgColor border="dark" alt="Number of hidden avatars">{"+" + count}</Avatar>
         );
       }
       return cloneElement(avatar);

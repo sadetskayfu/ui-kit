@@ -27,8 +27,7 @@ const BackdropWrapper = (args: any) => {
 	return (
 		<>
 			<Button onClick={handleOpen}>Open backdrop</Button>
-			<Backdrop onClose={handleClose} isVisible={isVisible} {...args}>
-			</Backdrop>
+			<Backdrop onClose={handleClose} isVisible={isVisible} {...args}></Backdrop>
 		</>
 	)
 }

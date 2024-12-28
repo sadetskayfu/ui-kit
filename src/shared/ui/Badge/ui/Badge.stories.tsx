@@ -16,6 +16,10 @@ const meta: Meta<typeof Badge> = {
 	},
 }
 
+export default meta
+
+type Story = StoryObj<typeof Badge>
+
 const BadgeWrapper = (args: any) => {
 	const [count, setCount] = useState<number>(2)
 
@@ -39,9 +43,6 @@ const BadgeWrapper = (args: any) => {
 		</div>
 	)
 }
-
-export default meta
-type Story = StoryObj<typeof Badge>
 
 export const Default: Story = {
 	render: (args) => BadgeWrapper(args),

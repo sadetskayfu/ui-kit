@@ -23,18 +23,21 @@ export const Default: Story = {
 
 export const WithTitle: Story = {
   args: {
-    title: 'Title'
+    title: 'Title',
+    children: 'Alert with title'
   }
 };
 
 export const WithAction: Story = {
   args: {
     Action: <IconButton size="small-xx" color="custom-color" variant="clear"><Icon variant="x-mark"/></IconButton>,
+    children: 'Alert with action button'
   }
 };
 
 export const WithIcon: Story = {
   args: {
-    Icon: <Icon size="medium" variant="heart"/>
+    Icon: <Icon size="small" variant="heart"/>,
+    children: 'Alert with icon'
   }
 };

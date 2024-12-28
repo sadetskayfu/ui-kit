@@ -1,7 +1,7 @@
 type Mods = Record<string, boolean | undefined>
 
 export function classNames(
-	mainClass: string,
+	mainClass: string | undefined,
 	additionalClasses: Array<string | undefined> = [],
 	mods: Mods = {}
 ) {

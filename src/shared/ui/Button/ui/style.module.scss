@@ -3,8 +3,9 @@
 .button {
   --height: ;
   --bgColor: transparent;
-  --color: ;
   --bgColorHover: ;
+  --color: ;
+  --borderColor: ;
   height: var(--height);
   position: relative;
   display: flex;
@@ -16,14 +17,8 @@
   color: var(--color);
   background-color: var(--bgColor);
   border-radius: var(--border-radius-m);
-  transition-duration: 0.2s;
+  transition: background-color 0.2s, color 0.2s;
   @include user-select-off;
-	&:before {
-		@include underline-focus;
-	}
-  svg {
-    transition-duration: 0.2s;
-  }
 }
 
 // Colors
@@ -100,11 +95,9 @@
   @include hover {
     background-color: var(--bgColorHover);
   }
-	&:focus-visible {
-		&:before {
-			width: 110%;
-		}
-	}
+  &:focus-visible {
+    @include focus-outline;
+  }
   &.disabled {
     @include disabled;
   }

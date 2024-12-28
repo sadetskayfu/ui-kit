@@ -15,13 +15,14 @@ const meta: Meta<typeof Chip> = {
 }
 
 export default meta
+
 type Story = StoryObj<typeof Chip>
 
 export const Default: Story = {}
 
 export const ButtonChip: Story = {
 	args: {
-		isButton: true,
+		label: 'Button chip'
 	},
 	argTypes: {
 		onClick: { action: 'clicked' },
@@ -30,45 +31,55 @@ export const ButtonChip: Story = {
 
 export const LinkChip: Story = {
 	args: {
-		isLink: true,
 		to: '/example',
+		label: 'Link chip'
 	},
 }
 
 export const ExternalLinkChip: Story = {
 	args: {
-		isExternalLink: true,
-		to: 'https://example.com',
+		href: 'https://example.com',
+		label: 'External link chip'
 	},
 }
 
 export const Disabled: Story = {
 	args: {
 		disabled: true,
+		label: 'Disabled chip'
 	},
 }
 
 export const WithCloseButton: Story = {
 	args: {
-		onClose: () => undefined,
+		label: 'With close button'
+	},
+	argTypes: {
+		onClick: { action: 'clicked' },
+		onClose: { action: 'close clicked' },
 	},
 }
 
 export const WithIcon: Story = {
 	args: {
 		Icon: <Icon variant="heart" />,
+		label: 'With icon'
 	},
 }
 
 export const WithAvatar: Story = {
 	args: {
 		Avatar: <Avatar />,
+		label: 'With avatar'
 	},
 }
 
 export const WithAvatarAndCloseButton: Story = {
 	args: {
 		Avatar: <Avatar />,
-		onClose: () => undefined,
+		label: 'With avatar and close button'
+	},
+	argTypes: {
+		onClose: { action: 'close clicked' },
 	},
 }

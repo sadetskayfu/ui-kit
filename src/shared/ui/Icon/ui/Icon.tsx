@@ -24,12 +24,14 @@ const Plus = lazy(() => import("@/shared/assets/icons/plus.svg"));
 const Minus = lazy(() => import("@/shared/assets/icons/minus.svg"));
 
 export type IconVariant = "arrow" | "check-mark" | "cart" | "envelope" | "eye" | "eye-slash" | "bell" | "book-mark" | "thumbs-up" | "trash" | "user" | "x-mark" | "gear" | "heart" | "house" | "search" | "plus" | "minus";
-export type IconSize = "small-xx" | "small-x" | "small" | "medium" | "large" | "inherit";
+type IconSize = "small-xx" | "small-x" | "small" | "medium" | "large" | "inherit";
+type IconColor = 'inherit' | 'primary'
 
 export interface IconProps {
   className?: string;
   variant: IconVariant;
   size?: IconSize;
+  color?: IconColor
   fontSize?: string;
 }
 
@@ -38,12 +40,14 @@ export const Icon = (props: IconProps) => {
     className,
     variant,
     size = "inherit",
+    color = 'inherit',
     fontSize,
   } = props;
 
   const additionalClasses: Array<string | undefined> = [
     className,
     styles[size],
+    styles[color]
   ];
 
   return (

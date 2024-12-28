@@ -19,42 +19,35 @@ type ButtonVariant = 'filled' | 'outlined' | 'clear'
 type ButtonColor = 'primary' | 'dark' | 'grey'
 type ButtonSize = 'medium' | 'large'
 
-type HTMLLinkProps = Omit<
-	LinkHTMLAttributes<HTMLAnchorElement>,
-	'href' | 'tabIndex' | 'onKeyDown' | 'onMouseDown' | 'onClick' | 'aria-readonly'
->
-type HTMLButtonProps = Omit<
-	ButtonHTMLAttributes<HTMLButtonElement>,
-	| 'disabled'
-	| 'type'
-	| 'tabIndex'
-	| 'onClick'
-	| 'onKeyDown'
-	| 'onMouseDown'
-	| 'aria-readonly'
->
-
-interface ButtonProps {
+interface BaseButtonProps {
 	className?: string
 	id?: string
 	variant?: ButtonVariant
 	color?: ButtonColor
 	size?: ButtonSize
 	disabled?: boolean
-	stopFocus?: boolean
-	isLink?: boolean
-	isExternalLink?: boolean
+	href?: string
 	to?: string
 	children: string
 	type?: 'submit' | 'reset' | 'button'
 	StartIcon?: ReactNode
 	EndIcon?: ReactNode
 	tabIndex?: number
-	onClick?: () => void
-	onMouseDown?: () => void
-	onKeyDown?: () => void
-	linkProps?: HTMLLinkProps
+	onClick?: (event: React.KeyboardEvent | React.MouseEvent) => void
+}
+
+type HTMLLinkProps = Omit<
+	LinkHTMLAttributes<HTMLAnchorElement>,
+	keyof BaseButtonProps
+>
+type HTMLButtonProps = Omit<
+	ButtonHTMLAttributes<HTMLButtonElement>,
+	keyof BaseButtonProps
+>
+
+interface ButtonProps extends BaseButtonProps {
 	buttonProps?: HTMLButtonProps
+	linkProps?: HTMLLinkProps
 }
 
 export const Button = memo(
@@ -68,10 +61,8 @@ export const Button = memo(
 				id,
 				className,
 				disabled,
-				stopFocus,
-				isLink,
-				isExternalLink,
-				to = '',
+				href,
+				to,
 				variant = 'filled',
 				size = 'medium',
 				color = 'primary',
@@ -80,8 +71,6 @@ export const Button = memo(
 				EndIcon,
 				tabIndex,
 				onClick,
-				onMouseDown,
-				onKeyDown,
 				linkProps,
 				buttonProps,
 				...otherProps
@@ -93,33 +82,28 @@ export const Button = memo(
 				? (ref as React.RefObject<HTMLAnchorElement>)
 				: localLinkRef
 
-			const handleKeyDown = (event: React.KeyboardEvent) => {
+			const handleKeyUp = (event: React.KeyboardEvent) => {
 				if (event.key === 'Enter' || event.key === ' ') {
 					event.preventDefault()
-					event.stopPropagation()
 
-					if (isLink || isExternalLink) {
+					if (to || href) {
 						linkRef.current?.click()
 					} else {
-						onClick?.()
+						onClick?.(event)
 					}
 
 					handleRipple(rippleWrapperRef)
 				}
-				onKeyDown?.()
 			}
 
-			const handleMouseDown = (event: React.MouseEvent) => {
-				if (stopFocus) {
+			const handleKeyDown = (event: React.KeyboardEvent) => {
+				if(event.key === 'Enter') {
 					event.preventDefault()
 				}
-
-				onMouseDown?.()
 			}
 
 			const handleClick = (event: React.MouseEvent) => {
-				event.stopPropagation()
-				onClick?.()
+				onClick?.(event)
 				handleRippleMousePosition(rippleWrapperRef, event)
 			}
 
@@ -136,13 +120,13 @@ export const Button = memo(
 
 			const localTabIndex = disabled ? -1 : tabIndex
 
-			if (isLink) {
+			if (to) {
 				return (
 					<Link
 						className={classNames(styles['button'], additionalClasses, mods)}
 						id={id}
+						onKeyUp={handleKeyUp}
 						onKeyDown={handleKeyDown}
-						onMouseDown={handleMouseDown}
 						onClick={handleClick}
 						to={to}
 						tabIndex={localTabIndex}
@@ -150,32 +134,31 @@ export const Button = memo(
 						{...linkProps}
 						{...otherProps}
 					>
-						{StartIcon ? StartIcon : undefined}
+						{StartIcon && StartIcon}
 						{children}
-						{EndIcon ? EndIcon : undefined}
+						{EndIcon && EndIcon}
 						<RippleWrapper ref={rippleWrapperRef} />
 					</Link>
 				)
 			}
 
-			if (isExternalLink) {
+			if (href) {
 				return (
 					<a
 						className={classNames(styles['button'], additionalClasses, mods)}
 						id={id}
+						onKeyUp={handleKeyUp}
 						onKeyDown={handleKeyDown}
-						onMouseDown={handleMouseDown}
 						onClick={handleClick}
-						href={to}
+						href={href}
 						tabIndex={localTabIndex}
 						ref={linkRef}
 						{...linkProps}
 						{...otherProps}
 					>
-						{StartIcon ? StartIcon : undefined}
+						{StartIcon && StartIcon}
 						{children}
-						{EndIcon ? EndIcon : undefined}
-						<RippleWrapper ref={rippleWrapperRef} />
+						{EndIcon && EndIcon}
 					</a>
 				)
 			}
@@ -185,7 +168,7 @@ export const Button = memo(
 					className={classNames(styles['button'], additionalClasses, mods)}
 					id={id}
 					type={type}
-					onMouseDown={handleMouseDown}
+					onKeyUp={handleKeyUp}
 					onKeyDown={handleKeyDown}
 					onClick={handleClick}
 					tabIndex={localTabIndex}
@@ -194,9 +177,9 @@ export const Button = memo(
 					{...buttonProps}
 					{...otherProps}
 				>
-					{StartIcon ? StartIcon : undefined}
+					{StartIcon && StartIcon}
 					{children}
-					{EndIcon ? EndIcon : undefined}
+					{EndIcon && EndIcon}
 					<RippleWrapper ref={rippleWrapperRef} />
 				</button>
 			)

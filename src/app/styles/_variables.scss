@@ -1,17 +1,12 @@
 @use 'helpers' as *;
 
 :root {
-	// Font
-	--font-family-base: 'Inter', 'sans-serif';
-    --font-family-accent: 'Kumbh Sans', 'sans-serif';
-	--font-size-small: #{rem(14)};
-
 	// Colors
 	--color-dark: #141414;
     --color-light: #FFF;
 
     --color-primary-800: #503400;
-    --color-primary-600: #ffa807;
+    --color-primary-600: #ff9c07;
     --color-primary-500: #ffc107;
     --color-primary-50: #ffedb3;
 	--color-primary-opacity: hsl(45, 100%, 51%, 0.1);
@@ -30,6 +25,12 @@
 	--color-red-800: #410000;
 	--color-red-500: #f44336;
 	--color-red-50: #fde1e5;
+
+	// Font
+	--font-family-base: 'Inter', 'sans-serif';
+    --font-family-accent: 'Kumbh Sans', 'sans-serif';
+	--font-size-small: #{fluid-text(14, 12)};
+	--font-color-description: var(--color-grey-500);
 
 	// Border
 	--border-weight-soft: #{rem(1)};
@@ -72,11 +73,10 @@
 	--fz-icon-m: calc(var(--button-height-m) / 2);
 	--fz-icon-l: calc(var(--button-height-l) / 2);
 
-    --padding-small-s: #{rem(7.5)};
-	--padding-small-m: #{rem(10)};
-	--padding-small-l: #{rem(12.5)};
-	--padding-medium: #{rem(17.5)};
-	--padding-large: #{rem(25)};
+	--padding-5: #{rem(5)};
+	--padding-10: #{rem(10)};
+	--padding-15: #{rem(15)};
+	--padding-20: #{rem(20)};
 
 	--container-width: #{rem(1600)};
     --container-padding-x: #{rem(16)};

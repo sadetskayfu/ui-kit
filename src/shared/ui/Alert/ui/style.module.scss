@@ -16,9 +16,6 @@
             margin-right: rem(-7);
         }
     }
-    svg {
-        color: var(--fontColor);
-    }
     @include laptop {
         padding-inline: var(--button-padding-inline-s);
         padding-block: var(--button-padding-block-s);
