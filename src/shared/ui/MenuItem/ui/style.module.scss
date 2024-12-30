@@ -1,14 +1,14 @@
 @use '@/app/styles/helpers' as *;
 
 .menu-item {
-    --color: var(--font-color-soft);
-    --paddingInline: var(--padding-15);
+    --color: var(--font-color-hard);
+    --padding: var(--padding-15);
     --fzStartIcon: var(--fz-icon-xs);
     --fzEndIcon: var(--fz-icon-xxs);
     --paddingLeftDesc: 0px;
     --paddingRightDesc: 0px;
     &.with-start-icon {
-        --paddingLeftDesc: calc(var(--fzStartIcon) + var(--paddingInline));
+        --paddingLeftDesc: calc(var(--fzStartIcon) + var(--padding));
     };
     &.with-end-icon {
         --paddingRightDesc: var(--fzEndIcon);
@@ -21,8 +21,8 @@
     flex-direction: column;
     align-items: start;
     width: 100%;
-    padding: var(--paddingInline);
-    column-gap: var(--paddingInline);
+    padding: var(--padding);
+    column-gap: var(--padding);
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -36,7 +36,7 @@
         background-color: var(--color-grey-opacity);
     }
     p {
-        font-size: var(--font-size-small);
+        font-size: var(--font-size-s);
         color: var(--font-color-description);
         padding-right: var(--paddingRightDesc);
         padding-left: var(--paddingLeftDesc);
@@ -47,7 +47,7 @@
     color: var(--color);
     display: flex;
     align-items: center;
-    column-gap: var(--paddingInline);
+    column-gap: var(--padding);
     width: 100%;
 }
 

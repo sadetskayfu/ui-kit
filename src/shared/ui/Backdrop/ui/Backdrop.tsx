@@ -1,4 +1,4 @@
-import { ReactElement, useRef } from 'react'
+import { ReactElement } from 'react'
 import { classNames } from '@/shared/lib/classNames/classNames'
 import { Portal } from '@/shared/ui/Portal'
 import { Z_INDEX } from '@/shared/constants/zIndex'

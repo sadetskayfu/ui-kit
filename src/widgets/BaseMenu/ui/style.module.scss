@@ -2,7 +2,6 @@
 
 .menu {
 	max-width: rem(400);
-    background-color: var(--theme-color-dark);
 	padding-block: var(--padding-10);
 	display: flex;
 	flex-direction: column;
@@ -14,7 +13,6 @@
 
 .sub-menu {
     height: 100%;
-	background-color: var(--theme-color-grey-900);
 	padding-block: var(--padding-10);
 	li {
 		margin-inline: var(--padding-10);

@@ -1,0 +1,13 @@
+.body {
+    width: 100%;
+    overflow: hidden;
+    height: 0px;
+    visibility: hidden;
+    opacity: 0;
+    transition: height 0.3s, opacity 0.3s, visibility 0s 0.3s;
+    &.open {
+        visibility: visible;
+        transition: height 0.3s, opacity 0.3s;
+        opacity: 1;
+    }
+}

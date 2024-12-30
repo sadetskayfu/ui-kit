@@ -40,7 +40,7 @@
 .button {
 	&.filled {
 		&.primary {
-			--color: var(--color-dark);
+			--color: var(--font-color-onDark);
 			--bgColor: var(--theme-color-primary-500);
 			--bgColorHover: var(--theme-color-primary-600);
 		}

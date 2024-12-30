@@ -1,0 +1,86 @@
+@use '@/app/styles/helpers' as *;
+
+.radio-wrapper {
+  --height: ;
+  --bgColor: ;
+  --emulatorColor: var(--theme-color-primary-500);
+  --borderColor: var(--border-color-grey);
+  --borderColorChecked: var(--emulatorColor);
+}
+
+.radio {
+  position: relative;
+  height: var(--height);
+  width: var(--height);
+  border-radius: 50%;
+  transition-duration: 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  @include hover {
+    box-shadow: 0 0 0 1px var(--borderColor);
+  }
+  &:before {
+    content: '';
+    height: 50%;
+    aspect-ratio: 1;
+    border-radius: inherit;
+    border: var(--border-weight-soft) solid var(--borderColor);
+    background-color: var(--bgColor);
+    transition-duration: inherit;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+}
+
+.emulator {
+  position: absolute;
+  background-color: var(--emulatorColor);
+  height: 0%;
+  aspect-ratio: 1;
+  transition-duration: inherit;
+  border-radius: inherit;
+}
+
+.input {
+  @include visually-hidden;
+  &:focus-visible + .radio:after {
+      box-shadow: 0 0 0 1px var(--borderColor);
+      animation: ripple 1s infinite;
+  }
+}
+
+// Sizes
+.radio-wrapper {
+  &.medium {
+    --height: var(--button-height-s);
+  }
+}
+
+// Variants
+.radio-wrapper {
+  &.filled {
+    --bgColor: var(--theme-color-grey-900);
+  }
+  &.outlined {
+    --bgColor: transparent;
+  }
+}
+
+// Mods
+.radio-wrapper {
+  &.checked {
+    --borderColor: var(--borderColorChecked);
+    .emulator {
+      height: 25%;
+    }
+  }
+  &.disabled {
+    @include disabled;
+  }
+}

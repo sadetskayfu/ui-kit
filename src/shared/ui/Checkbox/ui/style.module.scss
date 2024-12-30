@@ -1,0 +1,123 @@
+@use '@/app/styles/helpers' as *;
+
+.checkbox-wrapper {
+	--height: ;
+	--fz: ;
+	--bgColor: ;
+	--bgColorChecked: ;
+	--borderColor: var(--border-color-grey);
+	--borderColorChecked: var(--bgColorChecked);
+	--shadowColor: var(--border-color-grey);
+	--iconColor: ;
+	--checkedIconColor: ;
+	--color: ;
+}
+
+.checkbox {
+	position: relative;
+	height: var(--height);
+	width: var(--height);
+	border-radius: 50%;
+	transition-duration: 0.2s;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	font-size: var(--fz);
+	color: var(--color);
+	@include hover {
+		box-shadow: 0 0 0 1px var(--shadowColor);
+	}
+	&:before {
+		position: absolute;
+		content: '';
+		height: 50%;
+		width: 50%;
+		border-radius: var(--border-radius-xs);
+		transition-duration: inherit;
+		background-color: var(--bgColor);
+		border: var(--border-weight-soft) solid var(--borderColor);
+	}
+	&:after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+	}
+}
+
+.input {
+	@include visually-hidden;
+	&:focus-visible + .checkbox:after {
+		box-shadow: 0 0 0 1px var(--shadowColor);
+		animation: ripple 1s infinite;
+	}
+}
+
+.icon {
+	position: absolute;
+	transition-duration: inherit;
+	color: var(--iconColor);
+}
+
+.checked-icon {
+	position: absolute;
+	transition-duration: inherit;
+	color: var(--checkedIconColor);
+	opacity: 0;
+}
+
+// Colors
+.checkbox-wrapper {
+	&.primary {
+		--bgColorChecked: var(--theme-color-primary-500);
+		--color: var(--theme-color-primary-500);
+	}
+	&.red {
+		--bgColorChecked: var(--color-red-500);
+		--color: var(--color-red-500);
+	}
+}
+
+// Variants
+.checkbox-wrapper {
+	&.filled {
+		--checkedIconColor: var(--font-color-onDark);
+		--bgColor: var(--theme-color-grey-900)
+	}
+	&.outlined {
+		--bgColor: transparent;
+		--checkedIconColor: var(--font-color-onDark);
+	}
+	&.clear {
+		--iconColor: var(--border-color-grey);
+		--checkedIconColor: var(--color);
+		--bgColor: transparent;
+		--bgColorChecked: transparent;
+		--borderColor: transparent;
+		--borderColorChecked: transparent;
+	}
+}
+
+// Sizes
+.checkbox-wrapper {
+	&.medium {
+		--height: var(--button-height-s);
+		--fz: var(--fz-icon-s);
+	}
+}
+
+// Mods
+.checkbox-wrapper {
+	&.disabled {
+		@include disabled;
+	}
+	&.checked {
+		--bgColor: var(--bgColorChecked);
+		--borderColor: var(--borderColorChecked);
+		--shadowColor: var(--color);
+		.checked-icon {
+			opacity: 1;
+		}
+	}
+}

@@ -9,7 +9,7 @@
 	justify-content: center;
 	align-items: center;
 	overflow: hidden;
-	color: var(--color-light);
+	color: var(--font-color-soft);
 	@include user-select-off;
 	font-size: var(--fontSize);
 	box-sizing: content-box;
@@ -23,8 +23,8 @@
 	&.dark {
 		border: var(--border-weight-hard) solid var(--theme-color-dark);
 	}
-	&.grey {
-		border: var(--border-weight-hard) solid var(--color-grey-500);
+	&.primary {
+		border: var(--border-weight-hard) solid var(--theme-color-primary-500);
 	}
 }
 

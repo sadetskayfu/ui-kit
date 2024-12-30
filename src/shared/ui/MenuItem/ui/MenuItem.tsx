@@ -32,18 +32,18 @@ interface BaseMenuItemProps {
 	role?: AriaRole
 }
 
-type ButtonProps = Omit<
+type HTMLButtonProps = Omit<
 	ButtonHTMLAttributes<HTMLButtonElement>,
 	keyof BaseMenuItemProps
 >
-type LinkProps = Omit<
+type HTMLLinkProps = Omit<
 	LinkHTMLAttributes<HTMLAnchorElement>,
 	keyof BaseMenuItemProps
 >
 
 export interface MenuItemProps extends BaseMenuItemProps {
-	buttonProps?: ButtonProps
-	linkProps?: LinkProps
+	buttonProps?: HTMLButtonProps
+	linkProps?: HTMLLinkProps
 }
 
 export const MenuItem = memo(

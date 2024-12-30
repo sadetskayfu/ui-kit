@@ -1,0 +1,43 @@
+@use '@/app/styles/helpers' as *;
+
+.label-wrapper {
+    --gap: #{rem(3)};
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.label {
+    color: var(--font-color-hard);
+}
+
+// Mods
+.label-wrapper {
+    &.required {
+        .label:after {
+            content: "*";
+            color: var(--color-red-500);
+            position: absolute;
+        }
+    }
+    &.disabled {
+        @include disabled;
+    }
+}
+
+// Position
+.label-wrapper {
+    &.right {
+        column-gap: var(--gap);
+    }
+    &.left {
+        flex-direction: row-reverse;
+        column-gap: var(--gap);
+    }
+    &.top {
+        flex-direction: column-reverse;
+    }
+    &.bottom {
+        flex-direction: column;
+    }
+}

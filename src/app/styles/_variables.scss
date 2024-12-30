@@ -5,42 +5,46 @@
 	--color-dark: #141414;
     --color-light: #FFF;
 
-    --color-primary-800: #503400;
-    --color-primary-600: #ff9c07;
-    --color-primary-500: #ffc107;
-    --color-primary-50: #ffedb3;
-	--color-primary-opacity: hsl(45, 100%, 51%, 0.1);
+    --color-primary-800: #462977;
+	--color-primary-600: #8c59e4;
+    --color-primary-500: #b28bf5;
+	--color-primary-300: #d1c4e9;
+    --color-primary-100: #d1c4e9;
+	--color-primary-opacity: hsl(262, 84%, 75%, 0.2);
 
-    --color-grey-900: #212121;
-    --color-grey-800: #424242;
-	--color-grey-500: #9e9e9e;
-    --color-grey-300: #e0e0e0;
-    --color-grey-50: #fafafa;
-	--color-grey-opacity: hsl(0, 0%, 62%, 0.1);
+    --color-grey-900: #212121; // bg
+    --color-grey-800: #424242; // border
+	--color-grey-500: #9e9e9e; // active
+    --color-grey-300: #e0e0e0; // border
+    --color-grey-100: #ececec; // bg
+	--color-grey-opacity: hsl(0, 0%, 62%, 0.2);
 
-    --color-green-800: #002e02;
-	--color-green-500: #4caf50;
-	--color-green-50: #d3ecd5;
+    --color-green-800: #0c3f0f; // border
+	--color-green-500: #4caf50; // active
+	--color-green-300: #abe7ae; // border
+	--color-green-100: #ade9b2; // bg
 
-	--color-red-800: #410000;
-	--color-red-500: #f44336;
-	--color-red-50: #fde1e5;
+	--color-red-800: #810c0c; // border
+	--color-red-500: #f44336; // active
+	--color-red-300: #f8a7a7; // border
+	--color-red-100: #ffcdd2; // bg
 
 	// Font
 	--font-family-base: 'Inter', 'sans-serif';
     --font-family-accent: 'Kumbh Sans', 'sans-serif';
-	--font-size-small: #{fluid-text(14, 12)};
+	--font-size-s: #{fluid-text(14, 12)};
 	--font-color-description: var(--color-grey-500);
 
 	// Border
 	--border-weight-soft: #{rem(1)};
 	--border-weight-hard: #{rem(2)};
+	--border-radius-xs: #{rem(4)};
 	--border-radius-s: #{rem(6)};
 	--border-radius-m: #{rem(10)};
 	--border-radius-full: 9999px;
 
 	// Opacity
-	--opacity-disabled: 0.2;
+	--opacity-disabled: 0.4;
 
 	// Icon button xxs
 	--button-height-xxs: #{rem(25)};
@@ -65,6 +69,9 @@
 	--button-padding-inline-l: #{rem(24)};
 	--button-padding-block-l: #{rem(18)};
 	--button-gap-l: #{rem(10)};
+	
+	// Form
+	--form-margin-m: #{rem(11.25)};
 
 	// Icon size
 	--fz-icon-xxs: calc(var(--button-height-xxs) / 2);
@@ -77,6 +84,12 @@
 	--padding-10: #{rem(10)};
 	--padding-15: #{rem(15)};
 	--padding-20: #{rem(20)};
+	--padding-24: #{rem(24)};
+	--padding-34: #{rem(34)};
+
+	--gap-30: #{rem(30)};
+	--gap-24: #{rem(24)};
+	--gap-20: #{rem(20)};
 
 	--container-width: #{rem(1600)};
     --container-padding-x: #{rem(16)};

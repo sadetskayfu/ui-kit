@@ -1,5 +1,6 @@
 @use 'sass:math';
 @use 'functions' as *;
+@use 'animations' as *;
 
 @mixin fluid-text($max: 48, $min: 16) {
     $maxViewportWidth: 1920;
@@ -51,13 +52,13 @@
 	outline-offset: 2px;
   }
 
-@mixin underline-bottom {
+@mixin divider-bottom {
 	content: '';
 	position: absolute;
 	bottom: 0;
 	left: 50%;
 	translate: -50%;
-	height: 2px;
+	height: var(--border-weight-soft);
 	background-color: currentColor;
 	width: 0%;
 	transition-duration: inherit;
@@ -66,4 +67,10 @@
 @mixin disabled {
 	opacity: var(--opacity-disabled);
     pointer-events: none;
+}
+
+@mixin error-message {
+	font-size: var(--font-size-s);
+    color: var(--color-red-500);
+    animation: appearance-right 0.5s;
 }

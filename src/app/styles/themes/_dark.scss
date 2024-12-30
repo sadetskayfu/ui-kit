@@ -1,16 +1,16 @@
 .theme-color-dark {
 	--font-color-soft: var(--color-grey-300);
     --font-color-hard: var(--color-light);
-    --font-color-interactive: var(--color-primary-500);
-
+    --font-color-onDark: var(--color-dark);
+    
     --theme-color-dark: var(--color-dark);
     --theme-color-light: var(--color-light);
     --theme-color-grey-900: var(--color-grey-900);
     --theme-color-grey-800: var(--color-grey-800);
-
     --theme-color-primary-500: var(--color-primary-500);
     --theme-color-primary-600: var(--color-primary-600);
-    
+    --theme-color-primary-800: var(--color-primary-800);
+
     --border-color-grey: var(--color-grey-800);
     --border-color-primary: var(--color-primary-800);
     --border-color-red: var(--color-red-800);

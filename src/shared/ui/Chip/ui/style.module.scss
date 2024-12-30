@@ -76,8 +76,12 @@
 
 // Colors
 .chip {
+	&.primary {
+		--borderColor: var(--border-color-primary);
+	}
 	&.secondary {
 		--fontColor: var(--font-color-soft);
+		--borderColor: var(--border-color-grey);
 	}
 }
 
@@ -86,15 +90,16 @@
 	&.filled {
 		--paddingBlock: #{rem(3)};
 		--buttonFontColor: var(--bgColor);
-		--avatarBgColor: var(--color-grey-500);
 		&.primary {
-			--fontColor: var(--color-dark);
+			--fontColor: var(--font-color-onDark);
 			--bgColor: var(--theme-color-primary-500);
 			--bgColorHover: var(--theme-color-primary-600);
+			--avatarBgColor: var(--borderColor);
 		}
 		&.secondary {
 			--bgColor: var(--theme-color-grey-800);
 			--bgColorHover: var(--theme-color-grey-900);
+			--avatarBgColor: var(--color-grey-500);
 		}
 	}
 	&.outlined {
@@ -105,12 +110,10 @@
 		border: var(--border-weight-soft) solid var(--borderColor);
 		&.primary {
 			--bgColorHover: var(--color-primary-opacity);
-			--borderColor: var(--border-color-primary);
 			--fontColor: var(--theme-color-primary-500);
 		}
 		&.secondary {
 			--bgColorHover: var(--color-grey-opacity);
-			--borderColor: var(--border-color-grey);
 		}
 	}
 }

@@ -4,7 +4,7 @@ import styles from './style.module.scss'
 
 type AvatarVariant = 'circular' | 'rounded' | 'square'
 type AvatarSize = 'small' | 'medium' | 'large'
-type AvatarBorderColor = 'dark' | 'grey' | "none"
+type AvatarBorderColor = 'dark' | 'primary' | "none"
 
 type HTMLImgProps = Omit<ImgHTMLAttributes<HTMLImageElement>, 'alt' | 'src'>
 

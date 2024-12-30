@@ -1,19 +1,20 @@
 .theme-color-light {
 	--font-color-soft: var(--color-grey-800);
     --font-color-hard: var(--color-dark);
-    --font-color-interactive: var(--color-primary-600);
+    --font-color-onDark: var(--color-light);
 
     --theme-color-dark: var(--color-light);
     --theme-color-light: var(--color-dark);
-    --theme-color-grey-900: var(--color-grey-50);
+    --theme-color-grey-900: var(--color-grey-100);
     --theme-color-grey-800: var(--color-grey-300);
-
     --theme-color-primary-500: var(--color-primary-600);
     --theme-color-primary-600: var(--color-primary-500);
+    --theme-color-primary-800: var(--color-primary-300);
+
     
     --border-color-grey: var(--color-grey-300);
-    --border-color-primary: var(--color-primary-50);
-    --border-color-red: var(--color-red-50);
-    --border-color-green: var(--color-green-50);
+    --border-color-primary: var(--color-primary-300);
+    --border-color-red: var(--color-red-300);
+    --border-color-green: var(--color-green-300);
 }
  

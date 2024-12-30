@@ -1,0 +1,104 @@
+@use '@/app/styles/helpers' as *;
+
+.accordion {
+  --paddingInline: var(--padding-34);
+  --paddingBlock: var(--padding-24);
+  --bgColor: var(--theme-color-grey-900);
+  --titleColor: var(--font-color-hard);
+  --dividerColor: var(--border-color-grey);
+  width: 100%;
+  border-radius: var(--border-radius-m);
+  border: var(--border-weight-soft) solid var(--border-color-grey);
+  background-color: var(--bgColor);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: var(--paddingInline);
+  padding-block: var(--paddingBlock);
+  padding-inline: var(--paddingInline);
+  cursor: pointer;
+  transition-duration: 0.2s;
+  position: relative;
+  font-size: fluid-text(20, 16);
+  &:after {
+    @include divider-bottom;
+    background-color: var(--dividerColor);
+  }
+  @include hover {
+    --titleColor: var(--theme-color-primary-500);
+  }
+  &:focus-visible {
+    --titleColor: var(--theme-color-primary-500);
+    --dividerColor: var(--theme-color-primary-500);
+  }
+}
+
+.header-icon {
+    position: relative;
+    display: flex;
+}
+
+.open-icon {
+  color: var(--theme-color-primary-500);
+  opacity: 1;
+  transition-duration: 1s;
+}
+.close-icon {
+  position: absolute;
+  opacity: 0;
+  color: var(--font-color-soft);
+}
+
+.body {
+  padding-block: var(--paddingBlock);
+  padding-inline: var(--paddingInline);
+  color: var(--font-color-description);
+}
+
+.title {
+  color: var(--titleColor);
+  font-weight: 500;
+  font-size: inherit;
+  transition-duration: 0.2s;
+}
+
+// Variants
+.accordion {
+  &.filled {
+    --bgColor: var(--theme-color-grey-900);
+  }
+  &.outlined {
+    --bgColor: transparent;
+  }
+}
+
+// Mods
+.accordion {
+  &.open {
+    .header:after {
+      width: calc(100% - var(--paddingInline) * 2);
+    }
+    .open-icon {
+      opacity: 0;
+      transition-duration: 0s;
+    }
+    .close-icon {
+      opacity: 1;
+      transition-duration: 1s;
+    }
+  }
+  &.disabled {
+    @include disabled;
+  }
+}
+
+// Media
+.accordion {
+  @include laptop {
+    --paddingInline: var(--padding-24);
+    --paddingBlock: var(--padding-20);
+  }
+}

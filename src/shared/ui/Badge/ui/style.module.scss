@@ -41,7 +41,7 @@
     bottom: var(--bottom);
     right: var(--right);
     border: var(--border);
-    font-weight: bold;
+    font-weight: 500;
 }
 
 // Border
@@ -55,7 +55,7 @@
 .container {
     &.primary {
         --bgColor: var(--theme-color-primary-500);
-        --color: var(--color-dark);
+        --color: var(--font-color-onDark);
     }
     &.green {
         --bgColor: var(--color-green-500);

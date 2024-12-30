@@ -47,22 +47,20 @@ interface BaseIconButtonProps {
 	type?: 'submit' | 'reset' | 'button' | undefined
 	tabIndex?: number
 	onClick?: (event: React.MouseEvent | React.KeyboardEvent) => void
-	linkProps?: LinkProps
-	buttonProps?: ButtonProps
 }
 
-type LinkProps = Omit<
+type HTMLLinkProps = Omit<
 	LinkHTMLAttributes<HTMLAnchorElement>,
 	keyof BaseIconButtonProps
 >
-type ButtonProps = Omit<
+type HTMLButtonProps = Omit<
 	ButtonHTMLAttributes<HTMLButtonElement>,
 	keyof BaseIconButtonProps
 >
 
 interface IconButtonProps extends BaseIconButtonProps {
-	buttonProps?: ButtonProps
-	linkProps?: LinkProps
+	buttonProps?: HTMLButtonProps
+	linkProps?: HTMLLinkProps
 }
 
 export const IconButton = forwardRef(
