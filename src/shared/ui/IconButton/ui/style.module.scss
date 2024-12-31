@@ -2,7 +2,7 @@
 
 .button {
 	--bgColor: transparent;
-	--color: inherit;
+	--color: ;
 	--bgColorHover: ;
 	--borderColor: ;
 	--height: ;
@@ -77,7 +77,7 @@
 		}
 		@include hover {
 			&:after {
-				opacity: 0.2;
+				opacity: 0.1;
 			}
 		}
 	}

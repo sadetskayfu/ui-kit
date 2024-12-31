@@ -18,7 +18,7 @@ export default meta
 type Story = StoryObj<typeof Radio>
 
 const RadioGroupWrapper = (args: any) => {
-	const [selectedValue, setSelectedValue] = useState('1')
+	const [selectedValue, setSelectedValue] = useState<string>('1')
 
 	const handleChange = (value: string) => {
 		setSelectedValue(value)

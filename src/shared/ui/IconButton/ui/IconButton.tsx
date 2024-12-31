@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom'
 import styles from './style.module.scss'
 
 type IconButtonVariant = 'filled' | 'outlined' | 'clear'
-type IconButtonColor = 'primary' | 'dark' | 'grey' | 'custom-color'
+export type IconButtonColor = 'primary' | 'dark' | 'grey' | 'custom-color'
 type IconButtonSize =
 	| 'small-xx'
 	| 'small-x'
@@ -24,7 +24,7 @@ type IconButtonSize =
 	| 'large'
 	| 'custom-size'
 
-type IconButtonBorderRadius =
+export type IconButtonBorderRadius =
 	| 'rounded-left'
 	| 'rounded-right'
 	| 'rounded'

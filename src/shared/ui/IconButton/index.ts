@@ -1,2 +1,2 @@
-export { IconButton } from "./ui/IconButton";
+export { IconButton, type IconButtonBorderRadius, type IconButtonColor } from "./ui/IconButton";
 

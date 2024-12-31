@@ -26,7 +26,7 @@
 	font-size: var(--fz);
 	color: var(--color);
 	@include hover {
-		box-shadow: 0 0 0 1px var(--shadowColor);
+		box-shadow: 0 0 0 var(--border-weight-soft) var(--shadowColor);
 	}
 	&:before {
 		position: absolute;
@@ -49,7 +49,7 @@
 .input {
 	@include visually-hidden;
 	&:focus-visible + .checkbox:after {
-		box-shadow: 0 0 0 1px var(--shadowColor);
+		box-shadow: 0 0 0 var(--border-weight-soft) var(--shadowColor);
 		animation: ripple 1s infinite;
 	}
 }
@@ -103,7 +103,11 @@
 .checkbox-wrapper {
 	&.medium {
 		--height: var(--button-height-s);
-		--fz: var(--fz-icon-s);
+		--fz: var(--fz-icon-xs);
+		&.clear {
+			--fz: var(--fz-icon-s);
+		}
+		
 	}
 }
 

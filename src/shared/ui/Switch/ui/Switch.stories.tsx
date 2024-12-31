@@ -9,7 +9,6 @@ const meta: Meta<typeof Switch> = {
 		size: 'medium',
 		disabled: false,
 		required: false,
-		name: 'switch'
 	},
 }
 
@@ -26,7 +25,7 @@ const SwitchWrapper = (args: any) => {
 
 	return (
 		<>
-			<Switch checked={isChecked} onChange={handleChange}{...args} />
+			<Switch checked={isChecked} onChange={handleChange} inputProps={{'aria-label': 'Default switch'}} {...args} />
 		</>
 	)
 }

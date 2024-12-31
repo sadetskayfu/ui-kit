@@ -11,6 +11,7 @@ const meta: Meta<typeof Chip> = {
 		color: 'primary',
 		size: 'medium',
 		label: 'I am Chip',
+		disabled: false,
 	},
 }
 
@@ -40,13 +41,6 @@ export const ExternalLinkChip: Story = {
 	args: {
 		href: 'https://example.com',
 		label: 'External link chip'
-	},
-}
-
-export const Disabled: Story = {
-	args: {
-		disabled: true,
-		label: 'Disabled chip'
 	},
 }
 

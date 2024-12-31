@@ -1,0 +1,39 @@
+.pagination {
+    --itemWidth: ;
+    --arrowIconSize: var(--fz-icon-xxs);
+    &.small {
+        --itemWidth: var(--button-height-s);
+    }
+    &.medium {
+        --itemWidth: var(--button-height-m);
+    }
+}
+
+.list {
+    display: flex;
+    align-items: center;
+    column-gap: var(--padding-5);
+}
+
+.list-item {
+    width: var(--itemWidth);
+    height: var(--itemWidth);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button {
+    height: 100%;
+    width: 100%;
+}
+
+.arrow-icon {
+    font-size: var(--arrowIconSize);
+}
+
+.button-next-page {
+    svg {
+        transform: scale(-1);
+    }
+}

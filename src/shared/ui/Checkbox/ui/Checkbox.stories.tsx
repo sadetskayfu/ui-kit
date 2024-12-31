@@ -12,7 +12,6 @@ const meta: Meta<typeof Checkbox> = {
         variant: 'filled',
 		disabled: false,
 		required: false,
-		name: 'checkbox'
 	},
 }
 
@@ -29,7 +28,7 @@ const CheckboxWrapper = (args: any) => {
 
 	return (
 		<>
-			<Checkbox checked={isChecked} onChange={handleChange} {...args} />
+			<Checkbox checked={isChecked} onChange={handleChange} inputProps={{'aria-label': 'Default checkbox'}} {...args} />
 		</>
 	)
 }
@@ -45,6 +44,8 @@ export const FavoriteCheckbox: Story = {
         Icon: <Icon variant='heart'/>,
         variant: 'clear',
         color: 'red',
-		name: 'Favorite'
+		inputProps: {
+			'aria-label': 'Favorite'
+		}
     }
 }

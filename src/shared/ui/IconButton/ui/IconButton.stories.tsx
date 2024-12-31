@@ -11,6 +11,7 @@ const meta: Meta<typeof IconButton> = {
     color: "primary",
     size: "medium",
     borderRadius: 'circular',
+    disabled: false,
   },
   argTypes: {
     onClick: { action: "clicked" },
@@ -23,12 +24,6 @@ type Story = StoryObj<typeof IconButton>
 
 export const Default: Story = {
 
-};
-
-export const Disabled: Story = {
-  args: {
-    disabled: true,
-  }
 };
 
 export const LinkButton: Story = {

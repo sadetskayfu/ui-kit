@@ -12,7 +12,7 @@ const meta: Meta<typeof FormGroup> = {
         required: false,
         label: 'Checkbox group',
         hiddenLegend: false,
-        size: 'medium'
+        size: 'medium',
     },
 }
 

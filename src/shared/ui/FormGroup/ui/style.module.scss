@@ -3,7 +3,7 @@
 .form-group {
     --marginLeft: ;
     --gap: var(--marginLeft);
-    --legendColor: var(--secondary-600);
+    --legendColor: var(--font-color-soft);
     margin: 0px;
     &:focus-within {
         --legendColor: var(--theme-color-primary-500);
