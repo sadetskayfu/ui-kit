@@ -1,0 +1,104 @@
+@use '@/app/styles/helpers' as *;
+
+.progress {
+	--height: ;
+	--halfHeight: calc(var(--height) / 2);
+	--color: ;
+	--strokeWidth: ;
+	--radius: calc((var(--height) - var(--strokeWidth)) / 2);
+	--circumferenceLength: calc(2 * 3.14 * var(--radius));
+	--strokeLength: ;
+	--dashOffsetSmall: ;
+	--dashOffsetLarge: ;
+	width: var(--height);
+	height: var(--height);
+	@include user-select-off;
+    svg {
+        width: inherit;
+        height: inherit;
+    }
+	circle {
+		stroke: var(--color);
+		stroke-width: var(--strokeWidth);
+		fill: transparent;
+		cx: var(--halfHeight);
+		cy: var(--halfHeight);
+		r: var(--radius);
+	}
+}
+
+.label {
+	@include abs-center;
+	text-wrap: nowrap;
+	font-size: calc(var(--height) / 3.5);
+	rotate: 90deg;
+}
+
+.progress {
+	&.abs-center {
+		@include abs-center;
+	}
+	&.controlled {
+		rotate: -90deg;
+		circle {
+			transition: stroke-dashoffset 0.4s;
+			stroke-dasharray: var(--circumferenceLength);
+			stroke-dashoffset: var(--circumferenceLength);
+		}
+	}
+	&:not(.controlled) {
+		--strokeLength: calc(80 * (1 / 100) * var(--circumferenceLength));
+		--dashOffsetSmall: calc((15 * (1 / 100) * var(--circumferenceLength)) * -1);
+		--dashOffsetLarge: calc(var(--circumferenceLength) * -1);
+		animation: rotate 1.4s linear infinite;
+		circle {
+			animation: loading 1.4s ease-in-out infinite;
+		}
+	}
+}
+
+// Colors
+.progress {
+	&.primary {
+		--color: var(--theme-color-primary-500);
+	}
+	&.grey {
+		--color: var(--color-grey-500);
+	}
+}
+
+// Sizes
+.progress {
+	&.medium {
+		--height: #{rem(24)};
+		--strokeWidth: #{rem(2)};
+	}
+	&.large {
+		--height: #{rem(40)};
+		--strokeWidth: #{rem(4)};
+	}
+}
+
+@keyframes rotate {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes loading {
+	0% {
+		stroke-dasharray: rem(1), var(--circumferenceLength);
+		stroke-dashoffset: 0;
+	}
+	50% {
+		stroke-dasharray: var(--strokeLength), var(--circumferenceLength);
+		stroke-dashoffset: var(--dashOffsetSmall);
+	}
+	100% {
+		stroke-dasharray: var(--strokeLength), var(--circumferenceLength);
+		stroke-dashoffset: var(--dashOffsetLarge);
+	}
+}

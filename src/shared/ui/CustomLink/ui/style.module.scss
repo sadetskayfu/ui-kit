@@ -1,0 +1,44 @@
+@use '@/app/styles/helpers' as *;
+
+.link {
+    color: var(--theme-color-primary-500);
+    &:focus-visible {
+        @include focus-outline;
+    }
+}
+
+// Underline variant
+.link {
+    &.none {
+        @include hover {
+            color: var(--theme-color-primary-600);
+        }
+    }
+    &.hover,
+    &.always {
+        position: relative;
+        &:before {
+            content: '';
+            position: absolute;
+            bottom: rem(3);
+            width: 100%;
+            height: rem(1);
+            background-color: currentColor;
+        }
+        @include hover {
+            &:before {
+                opacity: 1;
+            }
+        }
+    }
+    &.hover {
+        &:before {
+            opacity: 0;
+        }
+    }
+    &.always {
+        &:before {
+            opacity: 0.5;
+        }
+    }
+}
