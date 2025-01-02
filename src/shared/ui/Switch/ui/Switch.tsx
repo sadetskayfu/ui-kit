@@ -15,7 +15,6 @@ interface BaseSwitchProps {
 	disabled?: boolean
 	checked: boolean
 	onChange: (checked: boolean, name:string) => void
-	tabIndex?: number
 }
 
 type HTMLInputProps = Omit<
@@ -37,8 +36,8 @@ export const Switch = memo((props: SwitchProps) => {
 		required,
 		checked,
 		onChange,
-		tabIndex = 0,
 		inputProps,
+		...otherProps
 	} = props
 
 	const rippleWrapperRef = useRef<HTMLSpanElement | null>(null)
@@ -56,7 +55,7 @@ export const Switch = memo((props: SwitchProps) => {
 		[styles['disabled']]: disabled,
 	}
 
-	const localTabIndex = disabled ? -1 : tabIndex
+	const tabIndex = disabled ? -1 : 0
 
 	return (
 		<label className={classNames(styles['switch'], additionalClasses, mods)}>
@@ -66,12 +65,13 @@ export const Switch = memo((props: SwitchProps) => {
 				value={name}
 				name={name}
 				onChange={handleChange}
-				tabIndex={localTabIndex}
+				tabIndex={tabIndex}
 				disabled={disabled}
 				required={required}
 				checked={checked}
 				aria-labelledby={labelId ? labelId : undefined}
 				{...inputProps}
+				{...otherProps}
 			/>
 			<div className={styles['track']}>
 				<div className={styles['thumb']}>

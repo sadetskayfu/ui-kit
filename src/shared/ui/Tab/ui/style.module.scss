@@ -1,0 +1,87 @@
+@use '@/app/styles/helpers' as *;
+
+.tab {
+    --paddingBlock: ;
+    --paddingInline: ;
+    --color: var(--font-color-soft);
+    --colorActive: var(--theme-color-primary-500);
+    --bgColor: ;
+    --bgColorHover: var(--theme-color-grey-900);
+    --bgColorActive: ;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-block: var(--paddingBlock);
+    padding-inline: var(--paddingInline);
+    column-gap: var(--padding-8);
+    row-gap: var(--padding-6);
+    background-color: var(--bgColor);
+    color: var(--color);
+    transition: background-color 0.2s, color 0.2s;
+    white-space: nowrap;
+}
+
+.icon {
+    font-size: var(--fz-icon-s);
+}
+
+// Variants
+.tab {
+    &.filled {
+        --bgColor: var(--theme-color-dark);
+        --bgColorActive: var(--theme-color-grey-900);
+        border: var(--border-weight-soft) solid var(--border-color-grey);
+        border-radius: var(--border-radius-m);
+    }
+    &.clear {
+        --bgColor: transparent;
+        --bgColorActive: transparent;
+        border: none;
+    }
+}
+
+// Sizes
+.tab {
+    &.medium {
+        --paddingBlock: var(--button-padding-block-m);
+        --paddingInline: var(--button-padding-inline-m);
+    }
+    &.large {
+        --paddingBlock: var(--button-padding-block-l);
+        --paddingInline: var(--button-padding-inline-l);
+    }
+}
+
+// Icon positions
+.tab {
+    &.right {
+        flex-direction: row-reverse;
+    }
+    &.top {
+        flex-direction: column;
+    }
+    &.bottom {
+        flex-direction: column-reverse;
+    }
+}
+
+// Mods
+.tab {
+    &.full-width {
+        width: 100%;
+    }
+    &:focus-visible {
+        @include focus-outline;
+    }
+    &.disabled {
+        @include disabled;
+    }
+    &.selected {
+        --bgColor: var(--bgColorActive);
+        --color: var(--colorActive);
+    }
+    @include hover {
+        --bgColor: var(--bgColorHover);
+    }
+}

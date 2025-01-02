@@ -160,7 +160,7 @@ export const Menu = (props: MenuProps) => {
 			if (isOpenSubMenu) return
 
 			let newIndex = activeIndex
-			const currentFocusableElements = focusableElementsRef.current
+			const focusableElements = focusableElementsRef.current
 
 			switch (event.key) {
 				case 'ArrowDown':
@@ -172,10 +172,10 @@ export const Menu = (props: MenuProps) => {
 						event.key === 'ArrowUp' || event.key === 'ArrowLeft' ? -1 : 1
 					newIndex =
 						newIndex === -1 && direction === -1
-							? currentFocusableElements.length - 1
-							: (activeIndex + direction + currentFocusableElements.length) %
-								currentFocusableElements.length
-					currentFocusableElements[newIndex].focus()
+							? focusableElements.length - 1
+							: (activeIndex + direction + focusableElements.length) %
+								focusableElements.length
+					focusableElements[newIndex].focus()
 					break
 				case 'Escape':
 				case 'Tab':

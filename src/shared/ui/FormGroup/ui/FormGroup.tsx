@@ -10,7 +10,6 @@ interface FormGroupProps {
   children: ReactElement[];
   label: string;
   errorMessage?: string;
-  tabIndex?: number;
   size?: FormGroupSize;
   orientation?: FormGroupOrientation;
   required?: boolean;
@@ -23,7 +22,6 @@ export const FormGroup = (props: FormGroupProps) => {
     children,
     label,
     errorMessage,
-    tabIndex,
     size = "medium",
     orientation = "horizontal",
     required,
@@ -34,7 +32,7 @@ export const FormGroup = (props: FormGroupProps) => {
 
   const renderChildren = () => {
     return Children.map(children, (child: ReactElement) => {
-      return cloneElement(child, { tabIndex, size });
+      return cloneElement(child, { size, onMouseDown: (event: React.MouseEvent) => event.preventDefault() });
     });
   };
 

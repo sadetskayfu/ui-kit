@@ -26,7 +26,6 @@ interface BaseCheckboxProps {
   disabled?: boolean;
   checked: boolean;
   onChange: (checked: boolean, name: string) => void;
-  tabIndex?: number;
   Icon?: ReactElement<IconProps>;
   CheckedIcon?: ReactElement<IconProps>;
 }
@@ -52,10 +51,10 @@ export const Checkbox = memo((props: CheckboxProps) => {
     required,
     checked,
     onChange,
-    tabIndex = 0,
     Icon,
     CheckedIcon,
     inputProps,
+    ...otherProps
   } = props;
 
   const rippleWrapperRef = useRef<HTMLSpanElement | null>(null);
@@ -78,7 +77,7 @@ export const Checkbox = memo((props: CheckboxProps) => {
     [styles["disabled"]]: disabled,
   };
 
-  const localTabIndex = disabled ? -1 : tabIndex;
+  const tabIndex = disabled ? -1 : 0;
 
   return (
     <label
@@ -94,12 +93,13 @@ export const Checkbox = memo((props: CheckboxProps) => {
         value={name}
         name={name}
         onChange={handleChange}
-        tabIndex={localTabIndex}
+        tabIndex={tabIndex}
         disabled={disabled}
         required={required}
         checked={checked}
         aria-labelledby={labelId ? labelId : undefined}
         {...inputProps}
+        {...otherProps}
       />
       <div className={styles["checkbox"]}>
         {Icon && cloneElement(Icon, { className: styles["icon"] })}

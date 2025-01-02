@@ -13,7 +13,7 @@ interface FormLabelProps {
 }
 
 export const FormLabel = (props: FormLabelProps) => {
-  const { Component, label, required, disabled, labelPosition = 'right'} = props;
+  const { Component, label, required, disabled, labelPosition = 'right', ...otherProps} = props;
 
   const labelId = useId();
 
@@ -27,7 +27,7 @@ export const FormLabel = (props: FormLabelProps) => {
   }
 
   return (
-    <label className={classNames(styles['label-wrapper'], additionalClasses, mods)} onMouseDown={(event) => event.preventDefault()}>
+    <label className={classNames(styles['label-wrapper'], additionalClasses, mods)} {...otherProps}>
       {cloneElement(Component, { labelId, required, disabled })}
       <span id={labelId} className={styles["label"]}>
         {label}

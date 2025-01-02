@@ -17,7 +17,6 @@ interface BaseRadioProps {
   onChange: (value: string) => void;
   value: string;
   selectedValue: string;
-  tabIndex?: number;
 }
 
 type HTMLInputProps = Omit<
@@ -40,8 +39,8 @@ export const Radio = memo((props: RadioProps) => {
     labelId,
     disabled,
     onChange,
-    tabIndex = 0,
     inputProps,
+    ...otherProps
   } = props;
 
   const rippleWrapperRef = useRef<HTMLSpanElement | null>(null)
@@ -64,7 +63,7 @@ export const Radio = memo((props: RadioProps) => {
     [styles['checked']]: isChecked
   }
 
-  const localTabIndex = disabled ? -1 : tabIndex
+  const tabIndex = disabled ? -1 : 0
 
   return (
     <label
@@ -78,10 +77,11 @@ export const Radio = memo((props: RadioProps) => {
         value={value}
         onChange={handleChange}
         checked={isChecked}
-        tabIndex={localTabIndex}
+        tabIndex={tabIndex}
         disabled={disabled}
         aria-labelledby={labelId ? labelId : undefined}
         {...inputProps}
+        {...otherProps}
       />
       <div className={styles["radio"]}>
           <span className={styles['emulator']}></span>

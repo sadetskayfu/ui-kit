@@ -1,0 +1,30 @@
+.tabs {
+    display: flex;
+    position: relative;
+    width: 100%;
+}
+
+.indicator {
+    position: absolute;
+    background-color: var(--theme-color-primary-500);
+    transition-duration: 0.2s;
+}
+
+// Orientation
+.tabs {
+    &.horizontal {
+        column-gap: var(--padding-8);
+        .indicator {
+            height: var(--border-weight-hard);
+            bottom: 0;
+        }
+    }
+    &.vertical {
+        flex-direction: column;
+        row-gap: var(--padding-8);
+        .indicator {
+            width: var(--border-weight-hard);
+            right: 0;
+        }
+    }
+}
