@@ -135,16 +135,12 @@ export const IconButton = forwardRef(
 			className,
 		]
 
-		const mods: Record<string, boolean | undefined> = {
-			[styles['disabled']]: disabled,
-		}
-
 		const localTabIndex = disabled ? -1 : tabIndex
 
 		if (to) {
 			return (
 				<Link
-					className={classNames(styles['button'], additionalClasses, mods)}
+					className={classNames(styles['button'], additionalClasses)}
 					id={id}
 					to={to}
 					tabIndex={localTabIndex}
@@ -165,7 +161,7 @@ export const IconButton = forwardRef(
 		if (href) {
 			return (
 				<a
-					className={classNames(styles['button'], additionalClasses, mods)}
+					className={classNames(styles['button'], additionalClasses)}
 					id={id}
 					href={href}
 					tabIndex={localTabIndex}
@@ -184,7 +180,7 @@ export const IconButton = forwardRef(
 
 		return (
 			<button
-				className={classNames(styles['button'], additionalClasses, mods)}
+				className={classNames(styles['button'], additionalClasses)}
 				id={id}
 				type={type}
 				onMouseDown={handleMouseDown}

@@ -30,7 +30,7 @@
 .label {
 	@include abs-center;
 	text-wrap: nowrap;
-	font-size: calc(var(--height) / 3.5);
+	font-size: calc(var(--height) / 3);
 	rotate: 90deg;
 }
 

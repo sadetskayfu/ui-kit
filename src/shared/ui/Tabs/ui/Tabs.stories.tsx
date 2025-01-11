@@ -10,6 +10,7 @@ const meta: Meta<typeof Tabs> = {
 	args: {
 		orientation: 'horizontal',
 		indicator: false,
+		indicatorPosition: 'bottom'
 	},
 }
 
@@ -36,8 +37,6 @@ const TabsWrapper = (args: any, tabVariant: TabVariant = 'filled') => {
 			style={{
 				display: 'flex',
 				flexDirection: args.orientation === 'horizontal' ? 'column' : 'row',
-				border: `1px solid grey`,
-				padding: '10px',
 				width: '600px',
 			}}
 		>

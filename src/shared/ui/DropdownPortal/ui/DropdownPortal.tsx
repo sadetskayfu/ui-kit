@@ -64,9 +64,9 @@ export const DropdownPortal = forwardRef((props: DropdownPortalProps, ref: React
     const dropdown = dropdownRef.current
     const parent = parentRef.current
 
-    if(!dropdown || !parent) return
-
-    setPositionPortalElement(dropdown, parent, position)
+    if(dropdown && parent) {
+      setPositionPortalElement(dropdown, parent, position)
+    }
   }, [position, parentRef])
 
 
@@ -79,11 +79,11 @@ useEffect(() => {
 
   if(width === '100%') {
     const parentRect = parent.getBoundingClientRect()
-    dropdown.style.width = `${parentRect.width}px`
+    dropdown.style.width = `${parentRect.width / 16}rem`
   }
   if(height === '100%') {
     const parentRect = parent.getBoundingClientRect()
-    dropdown.style.height = `${parentRect.height}px`
+    dropdown.style.height = `${parentRect.height / 16}rem`
   }
 
 }, [isOpen, width, height, parentRef])
@@ -134,8 +134,8 @@ useEffect(() => {
         ref={dropdownRef}
         onMouseDown={handleMouseDown}
         style={{
-          width: width === "100%" ? undefined : width,
-          height: height === '100%' ? undefined : height,
+          width: width === "100%" ? '': width,
+          height: height === '100%' ? '' : height,
           zIndex: isOpen ? zIndex : -1000,
         }}
         role="presentation"

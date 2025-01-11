@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { DropdownPortal } from './DropdownPortal'
 import { Button } from '@/shared/ui/Button'
 import { useCallback, useRef, useState } from 'react'
+import { useDragging } from '@/shared/hooks'
 
 const meta: Meta<typeof DropdownPortal> = {
 	title: 'shared/DropdownPortal',
@@ -27,9 +28,11 @@ const DropdownPortalWrapper = (args: any) => {
 		setIsOpen((prev) => !prev)
 	}, [])
 
+	const {handleMouseDown} = useDragging(buttonRef)
+
 	return (
 		<>
-			<Button onClick={handleToggle} ref={buttonRef} color="grey">
+			<Button buttonProps={{onMouseDown: handleMouseDown, style: {position: 'absolute'}}} onClick={handleToggle} ref={buttonRef} color="grey">
 				Open dropdown
 			</Button>
 			<DropdownPortal

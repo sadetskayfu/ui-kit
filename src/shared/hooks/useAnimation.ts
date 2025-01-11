@@ -13,6 +13,7 @@ export const useAnimation = (duration: number = 500) => {
 
 		timeoutIdRef.current = setTimeout(() => {
 			setIsAnimating(true)
+			
 			timeoutIdRef.current = setTimeout(() => {
 				setIsAnimating(false)
 			}, duration)

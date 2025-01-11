@@ -3,8 +3,8 @@ import { Snackbar } from './Snackbar'
 import { useEffect, useState } from 'react'
 import { Button } from '@/shared/ui/Button'
 import { Alert } from '@/shared/ui/Alert'
-import { Icon } from '@/shared/ui/Icon'
-import { IconButton } from '../../IconButton'
+import { IconButton } from '@/shared/ui/IconButton'
+import { CheckMark, XMark } from '@/shared/assets/icons'
 
 const meta: Meta<typeof Snackbar> = {
 	title: 'shared/Snackbar',
@@ -63,10 +63,10 @@ export const CustomContentWithAlert: Story = {
 			<Alert
 				variant="filled"
 				severity="success"
-				Icon={<Icon variant="check-mark" size="small"/>}
+				Icon={<CheckMark size="small" />}
 				Action={
 					<IconButton variant="clear" color="custom-color" size="small-xx">
-						<Icon variant="x-mark" />
+						<XMark />
 					</IconButton>
 				}
 			>

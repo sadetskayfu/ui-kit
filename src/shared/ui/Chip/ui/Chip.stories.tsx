@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { Chip } from './Chip'
-import { Icon } from '@/shared/ui/Icon'
 import { Avatar } from '@/shared/ui/Avatar'
+import { Heart } from '@/shared/assets/icons'
 
 const meta: Meta<typeof Chip> = {
 	title: 'shared/Chip',
@@ -56,7 +56,7 @@ export const WithCloseButton: Story = {
 
 export const WithIcon: Story = {
 	args: {
-		Icon: <Icon variant="heart" />,
+		Icon: <Heart />,
 		label: 'With icon'
 	},
 }

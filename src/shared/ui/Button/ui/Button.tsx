@@ -11,9 +11,9 @@ import {
 	handleRipple,
 	handleRippleMousePosition,
 } from '@/shared/lib/handleRipple/handleRipple'
-import styles from './style.module.scss'
 import { RippleWrapper } from '@/shared/ui/RippleWrapper'
 import { Link } from 'react-router-dom'
+import styles from './style.module.scss'
 
 type ButtonVariant = 'filled' | 'outlined' | 'clear'
 type ButtonColor = 'primary' | 'dark' | 'grey'
@@ -28,10 +28,8 @@ interface BaseButtonProps {
 	disabled?: boolean
 	href?: string
 	to?: string
-	children: string
+	children: ReactNode
 	type?: 'submit' | 'reset' | 'button'
-	StartIcon?: ReactNode
-	EndIcon?: ReactNode
 	tabIndex?: number
 	onClick?: (event: React.KeyboardEvent | React.MouseEvent) => void
 }
@@ -67,8 +65,6 @@ export const Button = memo(
 				size = 'medium',
 				color = 'primary',
 				type = 'button',
-				StartIcon,
-				EndIcon,
 				tabIndex,
 				onClick,
 				linkProps,
@@ -114,16 +110,12 @@ export const Button = memo(
 				styles[size],
 			]
 
-			const mods: Record<string, boolean | undefined> = {
-				[styles['disabled']]: disabled,
-			}
-
 			const localTabIndex = disabled ? -1 : tabIndex
 
 			if (to) {
 				return (
 					<Link
-						className={classNames(styles['button'], additionalClasses, mods)}
+						className={classNames(styles['button'], additionalClasses)}
 						id={id}
 						onKeyUp={handleKeyUp}
 						onKeyDown={handleKeyDown}
@@ -134,9 +126,7 @@ export const Button = memo(
 						{...linkProps}
 						{...otherProps}
 					>
-						{StartIcon && StartIcon}
 						{children}
-						{EndIcon && EndIcon}
 						<RippleWrapper ref={rippleWrapperRef} />
 					</Link>
 				)
@@ -145,7 +135,7 @@ export const Button = memo(
 			if (href) {
 				return (
 					<a
-						className={classNames(styles['button'], additionalClasses, mods)}
+						className={classNames(styles['button'], additionalClasses)}
 						id={id}
 						onKeyUp={handleKeyUp}
 						onKeyDown={handleKeyDown}
@@ -156,16 +146,14 @@ export const Button = memo(
 						{...linkProps}
 						{...otherProps}
 					>
-						{StartIcon && StartIcon}
 						{children}
-						{EndIcon && EndIcon}
 					</a>
 				)
 			}
 
 			return (
 				<button
-					className={classNames(styles['button'], additionalClasses, mods)}
+					className={classNames(styles['button'], additionalClasses)}
 					id={id}
 					type={type}
 					onKeyUp={handleKeyUp}
@@ -177,9 +165,7 @@ export const Button = memo(
 					{...buttonProps}
 					{...otherProps}
 				>
-					{StartIcon && StartIcon}
 					{children}
-					{EndIcon && EndIcon}
 					<RippleWrapper ref={rippleWrapperRef} />
 				</button>
 			)

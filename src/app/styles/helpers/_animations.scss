@@ -1,47 +1,64 @@
 @keyframes snaking {
-    0% {
-        transform: translateX(0%);
-      }
-      15% {
-        transform: translateX(-3%);
-      }
-      30% {
-        transform: translateX(3%);
-      }
-      45% {
-        transform: translateX(-2%);
-      }
-      60% {
-        transform: translateX(2%);
-      }
-      80% {
-        transform: translateX(-1%);
-      }
-      100% {
-        transform: translateX(0%);
-      } 
+	0% {
+		transform: translateX(0%);
+	}
+	15% {
+		transform: translateX(-3%);
+	}
+	30% {
+		transform: translateX(3%);
+	}
+	45% {
+		transform: translateX(-2%);
+	}
+	60% {
+		transform: translateX(2%);
+	}
+	80% {
+		transform: translateX(-1%);
+	}
+	100% {
+		transform: translateX(0%);
+	}
 }
 
 @keyframes appearance-right {
-    0%{
-        transform: translateX(10%);
-        opacity: 0;
-    }
-    100% {
-        transform: translateX(0%);
-        opacity: 1;
-    }
+	0% {
+		transform: translateX(10%);
+		opacity: 0;
+	}
+	100% {
+		transform: translateX(0%);
+		opacity: 1;
+	}
+}
+
+@keyframes fade-mounting {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fade-unmounting {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }
 
 @keyframes ripple {
-  0% {
-    transform: scale(0.9);
-  }
-  50% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(0.9);
-  }
+	0% {
+		transform: scale(0.9);
+	}
+	50% {
+		transform: scale(1);
+	}
+	100% {
+		transform: scale(0.9);
+	}
 }
-

@@ -1,12 +1,12 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { IconButton } from "./IconButton";
-import { Icon } from "@/shared/ui/Icon";
+import { Bell } from "@/shared/assets/icons";
 
 const meta: Meta<typeof IconButton> = {
   title: "shared/IconButton",
   component: IconButton,
   args: {
-    children: <Icon variant="bell" />,
+    children: <Bell />,
     variant: "filled",
     color: "primary",
     size: "medium",

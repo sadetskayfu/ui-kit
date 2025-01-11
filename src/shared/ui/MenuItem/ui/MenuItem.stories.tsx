@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { MenuItem } from "./MenuItem";
-import { Icon } from "@/shared/ui/Icon";
+import { Arrow, Envelope, Gear } from "@/shared/assets/icons";
 
 const meta: Meta<typeof MenuItem> = {
   title: "shared/MenuItem",
@@ -25,14 +25,14 @@ export const Default: Story = {
 
 export const WithStartIcon: Story = {
     args: {
-        StartIcon: <Icon variant="gear"/>,
+        StartIcon: <Gear />,
         label: 'With start icon'
     }
 }
 
 export const WithEndIcon: Story = {
     args: {
-        EndIcon: <Icon variant="arrow"/>,
+        EndIcon: <Arrow />,
         label: 'With end icon'
     }
 }
@@ -41,8 +41,8 @@ export const WithStartAndEndIcon: Story = {
     args: {
         label: 'With description',
         description: 'Text text text text1 text 32 text 44 text pppppp dddd text 45',
-        StartIcon: <Icon variant="envelope"/>,
-        EndIcon: <Icon variant="arrow"/>
+        StartIcon: <Envelope />,
+        EndIcon: <Arrow />
      }
 }
 

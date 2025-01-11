@@ -1,6 +1,9 @@
 @use '@/app/styles/helpers' as *;
 
 .link {
+    display: flex;
+    column-gap: var(--padding-6);
+    align-items: center;
     color: var(--theme-color-primary-500);
     &:focus-visible {
         @include focus-outline;
@@ -20,7 +23,7 @@
         &:before {
             content: '';
             position: absolute;
-            bottom: rem(3);
+            bottom: rem(1);
             width: 100%;
             height: rem(1);
             background-color: currentColor;

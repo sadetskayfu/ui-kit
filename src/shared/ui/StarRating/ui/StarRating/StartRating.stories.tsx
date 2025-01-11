@@ -11,7 +11,7 @@ const meta: Meta<typeof StarRating> = {
         readonly: false,
         required: false,
         maxStars: 5,
-        hiddenLabel: false,
+        hiddenLegend: true,
         name: 'star-rating',
         precise: false,
         size: 'medium',

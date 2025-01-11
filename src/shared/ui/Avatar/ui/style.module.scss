@@ -10,9 +10,9 @@
 	align-items: center;
 	overflow: hidden;
 	color: var(--font-color-soft);
-	@include user-select-off;
 	font-size: var(--fontSize);
 	box-sizing: content-box;
+	@include user-select-off;
 	&.default-bg-color {
 		background-color: var(--theme-color-grey-800);
 	}

@@ -1,14 +1,13 @@
 import { ImgHTMLAttributes, memo, ReactElement, useState } from 'react'
 import { classNames } from '@/shared/lib/classNames/classNames'
+import { getFirstLetter } from '@/shared/lib/formattingString'
 import styles from './style.module.scss'
 
 type AvatarVariant = 'circular' | 'rounded' | 'square'
 type AvatarSize = 'small' | 'medium' | 'large'
 type AvatarBorderColor = 'dark' | 'primary' | "none"
 
-type HTMLImgProps = Omit<ImgHTMLAttributes<HTMLImageElement>, 'alt' | 'src'>
-
-export interface AvatarProps {
+interface BaseAvatarProps {
 	className?: string
 	size?: AvatarSize
 	children?: ReactElement | string
@@ -16,16 +15,16 @@ export interface AvatarProps {
 	alt?: string
 	variant?: AvatarVariant
 	border?: AvatarBorderColor
-	imgProps?: HTMLImgProps
 	bgColor?: string
 	height?: string
 	width?: string
 	defaultBgColor?: boolean
 }
 
-const getFirstLetter = (str: string | undefined) => {
-	if (!str) return 'U'
-	return str.charAt(0)
+type HTMLImgProps = Omit<ImgHTMLAttributes<HTMLImageElement>, keyof BaseAvatarProps>
+
+export interface AvatarProps extends BaseAvatarProps {
+	imgProps?: HTMLImgProps
 }
 
 export const Avatar = memo((props: AvatarProps) => {
@@ -59,7 +58,7 @@ export const Avatar = memo((props: AvatarProps) => {
 		[styles['default-bg-color']]: defaultBgColor,
 	}
 
-	const content = children ? children : getFirstLetter(alt)
+	const reserveContent = children ? children : getFirstLetter(alt)
 
 	return (
 		<div
@@ -67,7 +66,7 @@ export const Avatar = memo((props: AvatarProps) => {
 			className={classNames(styles['avatar'], additionalClasses, mods)}
 		>
 			{imageError || isEmptySrc ? (
-				content
+				reserveContent
 			) : (
 				<img
 					src={src}

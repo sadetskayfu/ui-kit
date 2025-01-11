@@ -1,56 +1,52 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { Button } from "./Button";
-import { Icon } from "@/shared/ui/Icon";
+import { Meta, StoryObj } from '@storybook/react'
+import { Button } from './Button'
+import { Gear } from '@/shared/assets/icons'
 
 const meta: Meta<typeof Button> = {
-  title: "shared/Button",
-  component: Button,
-  args: {
-    variant: "filled",
-    color: "primary",
-    size: "medium",
-    disabled: false,
-  },
-  argTypes: {
-    onClick: { action: "clicked" },
-  }
+	title: 'shared/Button',
+	component: Button,
+	args: {
+		variant: 'filled',
+		color: 'primary',
+		size: 'medium',
+		disabled: false,
+	},
+	argTypes: {
+		onClick: { action: 'clicked' },
+	},
 }
 
-export default meta;
+export default meta
 
 type Story = StoryObj<typeof Button>
 
-export const Default: Story = {
-  args: {
-    children: 'Default button'
-  }
+export const DefaultButton: Story = {
+	args: {
+		children: 'Default button',
+	},
+}
 
-};
-
-export const WithStartIcon: Story = {
-    args: {
-        StartIcon: <Icon variant="gear"/>,
-        children: 'With start icon'
-    }
-};
-
-export const WithEndIcon: Story = {
-    args: {
-        EndIcon: <Icon variant="gear"/>,
-        children: 'With end icon'
-    }
-};
+export const ButtonWithIcon: Story = {
+	args: {
+		children: (
+			<>
+				Button with icon
+				<Gear />
+			</>
+		),
+	},
+}
 
 export const LinkButton: Story = {
-  args: {
-    to: '/example',
-    children: 'Link button'
-  }
-};
+	args: {
+		to: '/example',
+		children: 'Link button',
+	},
+}
 
 export const ExternalLinkButton: Story = {
-  args: {
-    href: "https://example.com",
-    children: 'External link button'
-  }
-};
+	args: {
+		href: 'https://example.com',
+		children: 'External link button',
+	},
+}

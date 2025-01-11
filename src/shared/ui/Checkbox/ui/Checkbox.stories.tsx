@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { Checkbox } from './Checkbox'
 import { useState } from 'react'
-import { Icon } from '../../Icon'
+import { Heart } from '@/shared/assets/icons'
 
 const meta: Meta<typeof Checkbox> = {
 	title: 'shared/Checkbox',
@@ -40,8 +40,8 @@ export const Default: Story = {
 export const FavoriteCheckbox: Story = {
 	render: (args) => CheckboxWrapper(args),
     args: {
-        CheckedIcon: <Icon variant='heart'/>,
-        Icon: <Icon variant='heart'/>,
+        CheckedIcon: <Heart />,
+        Icon: <Heart />,
         variant: 'clear',
         color: 'red',
 		inputProps: {

@@ -1,12 +1,12 @@
 import { memo } from "react";
 import { classNames } from "@/shared/lib/classNames/classNames";
 import { IconButton, IconButtonBorderRadius } from "@/shared/ui/IconButton";
-import { Icon } from "@/shared/ui/Icon";
+import { Arrow } from "@/shared/assets/icons";
 import styles from "./style.module.scss";
 
-export type PaginationSize = "small" | "medium";
-export type PaginationColor = 'primary' | 'dark' | 'grey'
-export type PaginationBorderRadius = IconButtonBorderRadius;
+type PaginationSize = "small" | "medium";
+type PaginationColor = 'primary' | 'dark' | 'grey'
+type PaginationBorderRadius = IconButtonBorderRadius;
 
 interface PaginationProps {
   className?: string;
@@ -143,7 +143,7 @@ export const Pagination = memo(
                 "aria-label": "Preview page",
               }}
             >
-              <Icon className={styles["arrow-icon"]} variant="arrow" />
+              <Arrow className={styles["arrow-icon"]} />
             </IconButton>
           </li>
           {renderButtons()}
@@ -162,7 +162,7 @@ export const Pagination = memo(
                 "aria-label": "Next page",
               }}
             >
-              <Icon className={styles["arrow-icon"]} variant="arrow" />
+              <Arrow className={styles["arrow-icon"]} />
             </IconButton>
           </li>
         </ul>

@@ -9,7 +9,6 @@ const meta: Meta<typeof CircularProgress> = {
 	args: {
 		size: 'large',
 		color: 'primary',
-		visibleLabel: false,
 		absCenter: false,
 	},
 }
@@ -21,12 +20,14 @@ type Story = StoryObj<typeof CircularProgress>
 const ControlledProgressWrapper = (args: any) => {
 	const [value, setValue] = useState<number>(0)
 
+	const maxValue = 5
+
 	const intervalIdRef = useRef<NodeJS.Timeout | null>(null)
 
 	useEffect(() => {
 		intervalIdRef.current = setInterval(() => {
-			if (value < 100) {
-				setValue((prev) => prev + 10)
+			if (value < maxValue) {
+				setValue((prev) => prev + 1)
 			} else {
 				setValue(0)
 			}
@@ -40,7 +41,7 @@ const ControlledProgressWrapper = (args: any) => {
 
 	return (
 		<>
-			<CircularProgress value={value} {...args} />
+			<CircularProgress value={value} maxValue={maxValue} label={`${maxValue - value}s`} {...args} />
 		</>
 	)
 }

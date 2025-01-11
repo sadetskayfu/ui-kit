@@ -1,3 +1,5 @@
+@use '@/app/styles/helpers' as *;
+
 .backdrop {
 	position: fixed;
 	inset: 0;
@@ -18,7 +20,7 @@
         transition: opacity 0.2s;
     }
     &.mounting-animation {
-        animation: mounting 0.2s;
+        animation: fade-mounting 0.2s;
     }
 }
 
@@ -30,13 +32,4 @@
 	&.clear {
 		background-color: transparent;
 	}
-}
-
-@keyframes mounting {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
 }

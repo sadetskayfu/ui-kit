@@ -32,6 +32,6 @@ const FormLabelWrapper = (args: any) => {
 	)
 }
 
-export const Default: Story = {
+export const DefaultLabel: Story = {
 	render: (args) => FormLabelWrapper(args),
 }

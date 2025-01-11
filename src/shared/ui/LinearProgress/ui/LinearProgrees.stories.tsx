@@ -7,7 +7,6 @@ const meta: Meta<typeof LinearProgress> = {
 	component: LinearProgress,
 	args: {
 		color: 'primary',
-		visibleLabel: false,
 	},
 }
 
@@ -37,7 +36,7 @@ const ControlledProgressWrapper = (args: any) => {
 
 	return (
 		<>
-			<LinearProgress value={value} {...args} />
+			<LinearProgress value={value} label={`${value}%`} {...args} />
 		</>
 	)
 }
@@ -47,3 +46,4 @@ export const Default: Story = {}
 export const ControlledProgress: Story = {
 	render: (args) => ControlledProgressWrapper(args),
 }
+

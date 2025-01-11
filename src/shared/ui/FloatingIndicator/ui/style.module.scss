@@ -1,0 +1,25 @@
+.indicator {
+	position: absolute;
+	background-color: var(--theme-color-primary-500);
+	transition-duration: 0.2s;
+}
+
+// Orientation
+.indicator {
+    &.top {
+		height: var(--border-weight-hard);
+		top: 0;
+	}
+    &.bottom {
+		height: var(--border-weight-hard);
+		bottom: 0;
+	}
+	&.right {
+		width: var(--border-weight-hard);
+		right: 0;
+	}
+	&.left {
+		width: var(--border-weight-hard);
+		left: 0;
+	}
+}

@@ -3,17 +3,10 @@ import {
 	DropdownPortal,
 	DropdownPortalPosition,
 } from '@/shared/ui/DropdownPortal'
-import {
-	cloneElement,
-	ReactElement,
-	useCallback,
-	useEffect,
-	useId,
-	useRef,
-	useState,
-} from 'react'
-import { ID } from '@/shared/constants/id'
+import { cloneElement, ReactElement, useEffect, useId, useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
+import { useKeyboardNavigation, getFocusableElements } from '@/shared/lib/KeyboardNavigation'
+import { useTouchDevice } from '@/shared/hooks'
 import styles from './style.module.scss'
 
 export type MenuOpenVariant = 'mouse-click' | 'mouse-move'
@@ -30,12 +23,13 @@ interface MenuProps {
 	isOpenSubMenu?: boolean
 	onOpen: () => void
 	onClose: () => void
-	onToggle: () => void
 	delay?: number
 	width?: string
 	height?: string
 	lazy?: boolean
+	unmount?: boolean
 	dropdownRef?: React.RefObject<HTMLDivElement>
+	openingElementRef: React.RefObject<HTMLElement>
 }
 
 export const Menu = (props: MenuProps) => {
@@ -50,26 +44,34 @@ export const Menu = (props: MenuProps) => {
 		isOpenSubMenu,
 		onOpen,
 		onClose,
-		onToggle,
 		delay = 500,
 		width,
 		height,
+		unmount,
 		lazy,
-		dropdownRef
+		dropdownRef,
+		openingElementRef,
 	} = props
 
-	const [activeIndex, setActiveIndex] = useState<number>(-1)
-
 	const menuRef = useRef<HTMLUListElement | null>(null)
-	const parentRef = useRef<HTMLElement | null>(null)
-	const focusableElementsRef = useRef<HTMLElement[]>([])
-	const isTouchDeviceRef = useRef<boolean>(false)
+
+	const isTouchDeviceRef = useTouchDevice()
+	const focusableElementsRef = getFocusableElements(menuRef, isOpen)
+
+	const mountingDelayTimeoutIdRef = useRef<NodeJS.Timeout | null>(null)
+	const unmountingDelayTimeoutIdRef = useRef<NodeJS.Timeout | null>(null)
 
 	const labelId = useId()
 	const menuId = useId()
 
-	const mountingDelayTimeoutIdRef = useRef<NodeJS.Timeout | null>(null)
-	const unmountingDelayTimeoutIdRef = useRef<NodeJS.Timeout | null>(null)
+	useKeyboardNavigation({
+		elementRef: menuRef,
+		focusableElementsRef,
+		isOpen,
+		isOpenSubMenu,
+		isDropdownMenu: true,
+		onClose,
+	})
 
 	const handleMouseLeave = () => {
 		if (isTouchDeviceRef.current || openVariant === 'mouse-click') return
@@ -86,7 +88,7 @@ export const Menu = (props: MenuProps) => {
 		}
 	}
 
-	const handleMouseEnter = useCallback(() => {
+	const handleMouseEnter = () => {
 		if (isTouchDeviceRef.current || openVariant === 'mouse-click') return
 
 		if (unmountingDelayTimeoutIdRef.current && delay !== 0) {
@@ -99,124 +101,7 @@ export const Menu = (props: MenuProps) => {
 		} else {
 			onOpen()
 		}
-	}, [openVariant, isOpen, onOpen, delay])
-
-	// Get items
-	useEffect(() => {
-		const menu = menuRef.current
-
-		if (!menu || !isOpen) return
-
-		const updateFocusableElements = () => {
-			const focusableElements = Array.from(
-				menu.querySelectorAll<HTMLElement>(
-					'a, button, input, textarea, select, [tabindex]'
-				)
-			).filter((el) => el.tabIndex !== -1)
-
-			focusableElementsRef.current = focusableElements
-		}
-
-		const observer = new MutationObserver((mutations) => {
-			mutations.forEach((mutation) => {
-				if (mutation.type === 'childList') {
-					// Ignoring non HTML elements and add ripple <span>
-					mutation.addedNodes.forEach((node) => {
-						if (node instanceof HTMLElement && node.id !== ID.RIPPLE) {
-							updateFocusableElements()
-						}
-					})
-					// Ignoring non HTML elements and remove ripple <span>
-					mutation.removedNodes.forEach((node) => {
-						if (node instanceof HTMLElement && node.id !== ID.RIPPLE) {
-							updateFocusableElements()
-						}
-					})
-				}
-				if (
-					mutation.type === 'attributes' &&
-					mutation.attributeName === 'tabindex'
-				) {
-					updateFocusableElements()
-				}
-			})
-		})
-
-		observer.observe(menu, {
-			childList: true,
-			subtree: true,
-			attributes: true,
-		})
-
-		updateFocusableElements()
-
-		return () => {
-			observer.disconnect()
-		}
-	}, [isOpen])
-
-	const handleKeyDown = useCallback(
-		(event: KeyboardEvent) => {
-			if (isOpenSubMenu) return
-
-			let newIndex = activeIndex
-			const focusableElements = focusableElementsRef.current
-
-			switch (event.key) {
-				case 'ArrowDown':
-				case 'ArrowUp':
-				case 'ArrowLeft':
-				case 'ArrowRight':
-					event.preventDefault()
-					const direction =
-						event.key === 'ArrowUp' || event.key === 'ArrowLeft' ? -1 : 1
-					newIndex =
-						newIndex === -1 && direction === -1
-							? focusableElements.length - 1
-							: (activeIndex + direction + focusableElements.length) %
-								focusableElements.length
-					focusableElements[newIndex].focus()
-					break
-				case 'Escape':
-				case 'Tab':
-					event.preventDefault()
-					onClose()
-					parentRef.current?.focus()
-					break
-				default:
-					break
-			}
-
-			if (newIndex !== activeIndex) {
-				setActiveIndex(newIndex)
-			}
-		},
-		[activeIndex, onClose, isOpenSubMenu]
-	)
-
-	useEffect(() => {
-		if (isOpen) {
-			window.addEventListener('keydown', handleKeyDown)
-		}
-		return () => {
-			window.removeEventListener('keydown', handleKeyDown)
-		}
-	}, [handleKeyDown, isOpen])
-
-	// Reset active index
-	useEffect(() => {
-		if (!isOpen && activeIndex !== -1) {
-			setActiveIndex(-1)
-		}
-	}, [activeIndex, isOpen])
-
-	useEffect(() => {
-		if ('ontouchstart' in window) {
-			isTouchDeviceRef.current = true
-		} else {
-			isTouchDeviceRef.current = false
-		}
-	}, [])
+	}
 
 	// Clear timeouts
 	useEffect(() => {
@@ -231,12 +116,10 @@ export const Menu = (props: MenuProps) => {
 	}, [])
 
 	const parentProps = {
-		onClick: onToggle,
-		ref: parentRef,
 		id: labelId,
 		'aria-controls': isOpen ? menuId : undefined,
 		'aria-haspopup': 'menu',
-		'aria-expanded': isOpen ? 'true' : undefined,
+		'aria-expanded': isOpen ? 'true' : 'false',
 	}
 
 	return (
@@ -245,7 +128,7 @@ export const Menu = (props: MenuProps) => {
 			<CSSTransition
 				nodeRef={menuRef}
 				in={isOpen}
-				unmountOnExit={lazy}
+				unmountOnExit={unmount}
 				mountOnEnter={lazy}
 				timeout={200}
 				classNames={{
@@ -257,7 +140,7 @@ export const Menu = (props: MenuProps) => {
 				<DropdownPortal
 					isOpen={isOpen}
 					onClose={onClose}
-					parentRef={parentRef}
+					parentRef={openingElementRef}
 					position={position}
 					zIndex={zIndex}
 					height={height}

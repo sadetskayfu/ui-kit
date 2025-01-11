@@ -10,7 +10,9 @@ interface CircularProgressProps {
 	size?: CircularProgressSize
 	color?: CircularProgressColor
 	value?: number
-    visibleLabel?: boolean
+	maxValue?: number
+	minValue?: number
+    label?: string
     zIndex?: number
     absCenter?: boolean
 }
@@ -28,7 +30,7 @@ const getCircumferenceLength = (element: HTMLSpanElement) => {
 }
 
 export const CircularProgress = (props: CircularProgressProps) => {
-	const { className, size = 'large', color = 'primary', value, visibleLabel, absCenter, zIndex = 1 } = props
+	const { className, size = 'large', color = 'primary', value, maxValue = 100, minValue = 0, label, absCenter, zIndex = 1 } = props
 
 	const progressRef = useRef<HTMLSpanElement | null>(null)
 	const circleRef = useRef<SVGCircleElement | null>(null)
@@ -39,12 +41,12 @@ export const CircularProgress = (props: CircularProgressProps) => {
 		const circle = circleRef.current
 		const progress = progressRef.current
 
-		if (circle && progress && isControlled) {
+		if (isControlled && circle && progress) {
             const circumferenceLength = getCircumferenceLength(progress)
-            const offset = circumferenceLength - (value / 100) * circumferenceLength
+            const offset = circumferenceLength - ((value - minValue) / (maxValue - minValue)) * circumferenceLength
             circle.style.strokeDashoffset = `${offset}rem`
         }
-	}, [value, isControlled, size])
+	}, [value, size])
 
 	const additionalClasses: Array<string | undefined> = [
 		className,
@@ -65,14 +67,14 @@ export const CircularProgress = (props: CircularProgressProps) => {
                 zIndex
             }}
 			role="progressbar"
-			aria-valuemax={isControlled ? 100 : undefined}
-			aria-valuemin={isControlled ? 0 : undefined}
+			aria-valuemax={isControlled ? maxValue : undefined}
+			aria-valuemin={isControlled ? minValue : undefined}
 			aria-valuenow={isControlled ? value : undefined}
 		>
 			<svg>
 				<circle ref={circleRef} />
 			</svg>
-            {visibleLabel && <p className={styles['label']}>{value}%</p>}
+            {label && <p className={styles['label']}>{label}</p>}
 		</span>
 	)
 }

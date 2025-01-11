@@ -50,7 +50,12 @@
 @mixin focus-outline {
 	outline: 2px dashed var(--theme-color-primary-600);
 	outline-offset: 2px;
-  }
+}
+
+@mixin focus-outline-inset {
+	outline: 2px dashed var(--theme-color-primary-600);
+	outline-offset: -10px;
+}
 
 @mixin divider-bottom {
 	content: '';

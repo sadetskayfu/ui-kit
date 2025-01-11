@@ -1,9 +1,10 @@
 @use '@/app/styles/helpers' as *;
 
 .star {
-  --width: ;
+  --height: ;
+  --width: calc(var(--height) / 1.75);
+  height: var(--height);
   width: var(--width);
-  height: var(--width);
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -27,7 +28,7 @@
 .focus-border {
   position: absolute;
   width: 130%;
-  height: 130%;
+  height: 80%;
   left: 50%;
   top: 50%;
   translate: -50% -50%;
@@ -42,12 +43,12 @@
   position: absolute;
   pointer-events: none;
   left: 50%;
-  translate: -50%;
-  top: 5%;
-  width: 100%;
-  height: 100%;
+  top: 50%;
+  translate: -50% -50%;
+  height: var(--width);
+  width: var(--width);
   background-color: var(--theme-color-grey-800);
-  transition: transform 0.1s;
+  transition-duration: 0.1s;
   clip-path: polygon(
     50% 0%,
     61% 35%,
@@ -76,10 +77,10 @@
 // Sizes
 .star {
   &.small {
-    --width: var(--button-height-xxs);
+    --height: var(--button-height-xs);
   }
   &.medium {
-    --width: var(--button-height-xs);
+    --height: var(--button-height-s);
   }
 }
 

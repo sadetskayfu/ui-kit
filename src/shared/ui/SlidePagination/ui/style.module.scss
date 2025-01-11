@@ -1,0 +1,50 @@
+@use '@/app/styles/helpers' as *;
+
+.button {
+    --width: ;
+    --height: ;
+    width: var(--width);
+    height: var(--height);
+    flex-shrink: 0;
+    padding: 0;
+    border: none;
+    color: green;
+    &:focus-visible {
+        @include focus-outline;
+    }
+}
+
+// Variants
+.button {
+    &.dot {
+        --width: var(--button-height-xxs);
+        --height: var(--button-height-xxs);
+        --borderColor: var(--border-color-grey);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: transparent;
+        transition: box-shadow 0.2s;
+        &:after {
+            content: '';
+            height: 35%;
+            width: 35%;
+            border-radius: inherit;
+            background-color: var(--theme-color-grey-900);
+            border: var(--border-weight-soft) solid var(--borderColor);
+            transition: 0.2s;
+        }
+        &.active {
+            --borderColor: var(--theme-color-primary-500);
+            &:after {
+                transform: scale(1.5);
+                background-color: var(--theme-color-primary-500);
+            }
+        }
+        @include hover {
+            box-shadow: 0 0 0 var(--border-weight-soft) var(--borderColor);
+        }
+    }
+}
+

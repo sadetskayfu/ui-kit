@@ -8,7 +8,7 @@ const meta: Meta<typeof Dropdown> = {
 	component: Dropdown,
 	args: {
 		position: 'bottom',
-        transition: false,
+		transition: false,
 	},
 }
 
@@ -28,7 +28,7 @@ const DropdownWrapper = (args: any) => {
 	}
 
 	return (
-		<div style={{position: 'relative'}}>
+		<div style={{ position: 'relative' }}>
 			<Button onClick={handleToggle} ref={buttonRef} color="grey">
 				Open dropdown
 			</Button>
@@ -38,11 +38,13 @@ const DropdownWrapper = (args: any) => {
 				isOpen={isOpen}
 				onClose={handleClose}
 			>
-				<div style={{ backgroundColor: 'brown', height: '100%', overflowY: 'auto' }}>
-						<p>Text text text text text text text text text text text text text</p>
-						<p>Text text text text text text text text </p>
-						<p>Text text text text text text text text text</p>
-                        <Button>Test</Button>
+				<div
+					style={{ backgroundColor: 'brown', height: '100%', overflowY: 'auto' }}
+				>
+					<p>Text text text text text text text text text text text text text</p>
+					<p>Text text text text text text text text </p>
+					<p>Text text text text text text text text text</p>
+					<Button>Test</Button>
 				</div>
 			</Dropdown>
 		</div>
@@ -51,9 +53,9 @@ const DropdownWrapper = (args: any) => {
 
 export const Default: Story = {
 	render: (args) => DropdownWrapper(args),
-    args: {
-        width: '300px',
-    }
+	args: {
+		width: '300px',
+	},
 }
 
 export const ParentWidth: Story = {
@@ -69,4 +71,3 @@ export const ParentHeight: Story = {
 		height: '100%',
 	},
 }
-

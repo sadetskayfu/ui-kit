@@ -5,7 +5,7 @@ import {
 	handleRippleMousePosition,
 } from '@/shared/lib/handleRipple/handleRipple'
 import { classNames } from '@/shared/lib/classNames/classNames'
-import { IconProps } from '@/shared/ui/Icon'
+import { IconProps } from '@/shared/assets/icons'
 import styles from './style.module.scss'
 
 interface AriaAttributes {

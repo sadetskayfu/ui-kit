@@ -1,61 +1,78 @@
 @use '@/app/styles/helpers' as *;
 
 .star-rating {
-  margin: 0px;
-  display: flex;
+  --legendColor: var(--font-color-soft);
+	margin: 0px;
+	display: flex;
+	flex-direction: column;
+	&:focus-within {
+		--legendColor: var(--color-yellow);
+	}
+	&.errored {
+		--legendColor: var(--color-red-500);
+	}
+	&.required {
+		.legend:after {
+			content: '*';
+			color: var(--color-red-500);
+			position: absolute;
+		}
+	}
+  &.success {
+		pointer-events: none;
+	}
+	&.hidden-legend {
+		.legend {
+			@include visually-hidden;
+		}
+	}
 }
 
 .stars-group {
-  display: inline-flex;
+	display: inline-flex;
 }
 
 .legend {
-  padding: 0px;
+	padding: 0px;
+  color: var(--legendColor);
+}
+
+.error-message {
+	@include error-message;
 }
 
 .star {
-  &.success {
-    animation: success 1s;
-  }
-}
-
-.star-rating {
-  &.hidden-label {
-    .legend {
-      @include visually-hidden;
-    }
-  }
-  &.success {
-    pointer-events: none;
-  }
+	&.success {
+		animation: success 1s;
+	}
 }
 
 @keyframes success {
-  0% {
-    transform: translateY(0%);
-  }
-  40% {
-    transform: translateY(-40%);
-  }
-  60% {
-    transform: translateX(0%);
-  }
-  65% {
-    transform: translateX(10%);
-  }
-  70% {
-    transform: translateX(-9%);
-  }
-  75% {
-    transform: translateX(7%);
-  }
-  80% {
-      transform: translateX(-5%);
-    }
-  90% {
-    transform: translateX(3%);
-  }
-  100% {
-    transform: translateX(0%);
-  }
+	0% {
+		transform: translateY(0%);
+	}
+	40% {
+		transform: translateY(-40%);
+	}
+	60% {
+		transform: translateX(0%);
+	}
+	65% {
+		transform: translateX(10%);
+	}
+	70% {
+		transform: translateX(-9%);
+	}
+	75% {
+		transform: translateX(7%);
+	}
+	80% {
+		transform: translateX(-5%);
+	}
+	90% {
+		transform: translateX(3%);
+	}
+	100% {
+		transform: translateX(0%);
+	}
 }

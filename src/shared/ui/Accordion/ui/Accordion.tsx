@@ -1,7 +1,7 @@
 import { classNames } from '@/shared/lib/classNames/classNames'
 import { ReactNode, useId, useState } from 'react'
 import { Collapse } from '@/shared/ui/Collapse'
-import { Icon } from '@/shared/ui/Icon'
+import { Minus, Plus } from '@/shared/assets/icons'
 import styles from './style.module.scss'
 
 type AccordionVariant = 'filled' | 'outlined'
@@ -28,11 +28,13 @@ export const Accordion = (props: AccordionProps) => {
 		variant = 'filled',
 		disabled,
 		tabIndex = 0,
-		isOpen: isOpenInGroup,
+		isOpen: externalIsOpen,
 		onChange
 	} = props
 
 	const [isOpen, setIsOpen] = useState<boolean>(false)
+
+	const localIsOpen = typeof externalIsOpen === 'boolean' ? externalIsOpen : isOpen
 
 	const bodyId = useId()
 	const headerId = useId()
@@ -55,7 +57,7 @@ export const Accordion = (props: AccordionProps) => {
 	}
 
 	const mods: Record<string, boolean | undefined> = {
-		[styles['open']]: isOpen || isOpenInGroup,
+		[styles['open']]: localIsOpen,
 		[styles['disabled']]: disabled,
 	}
 
@@ -72,7 +74,7 @@ export const Accordion = (props: AccordionProps) => {
 				onClick={handleToggle}
 				onKeyUp={handleKeyUp}
 				role="button"
-				aria-expanded={isOpen || isOpenInGroup ? 'true' : 'false'}
+				aria-expanded={localIsOpen ? 'true' : 'false'}
 				aria-controls={bodyId}
 				aria-disabled={disabled ? 'true' : undefined}
 				id={headerId}
@@ -80,11 +82,11 @@ export const Accordion = (props: AccordionProps) => {
 				{titleVariant === 'h3' && <h3 className={styles['title']}>{title}</h3>}
 				{titleVariant === 'h4' && <h4 className={styles['title']}>{title}</h4>}
 				<div className={styles['header-icon']}>
-					<Icon className={styles['open-icon']} variant="plus" />
-					<Icon className={styles['close-icon']} variant="minus" />
+					<Plus className={styles['open-icon']}/>
+					<Minus className={styles['close-icon']}/>
 				</div>
 			</div>
-			<Collapse isOpen={isOpenInGroup || isOpen} headerId={headerId} bodyId={bodyId}>
+			<Collapse isOpen={localIsOpen} headerId={headerId} bodyId={bodyId}>
 				<div className={styles['body']}>{children}
 				</div>
 			</Collapse>

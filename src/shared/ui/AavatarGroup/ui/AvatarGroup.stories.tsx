@@ -21,17 +21,18 @@ const meta: Meta<typeof AvatarGroup> = {
 }
 
 export default meta
+
 type Story = StoryObj<typeof AvatarGroup>
 
-export const Default: Story = {}
+export const DefaultGroup: Story = {}
 
-export const withMaxAvatars: Story = {
+export const GroupWithMaxAvatars: Story = {
 	args: {
 		maxAvatars: 4,
 	},
 }
 
-export const withBadge: Story = {
+export const AvatarWithBadge: Story = {
 	args: {
 		maxAvatars: 4,
 		children: [

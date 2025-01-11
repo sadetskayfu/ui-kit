@@ -61,10 +61,9 @@ export const Dropdown = (props: DropdownProps) => {
     const parent = parentRef.current;
     const dropdown = dropdownRef.current
 
-    if(!parent || !dropdown) return
-
-    setPosition(dropdown, parent, position)
-
+    if(parent && dropdown) {
+      setPosition(dropdown, parent, position)
+    }
   }, [parentRef, position])
 
   useEffect(() => {

@@ -10,6 +10,7 @@ const meta: Meta<typeof AsideMenu> = {
         position: 'left',
         backdrop: 'dark',
         lazy: false,
+		unmount: false
     },
 }
 
@@ -35,6 +36,7 @@ const AsideMenuWrapper = (args: any) => {
 
 	const handleClose = useCallback(() => {
 		setIsOpen(false)
+		buttonRef.current?.focus()
 	}, [])
 	const handleToggle = useCallback(() => {
 		setIsOpen((prev) => !prev)
@@ -47,7 +49,6 @@ const AsideMenuWrapper = (args: any) => {
 				labelId={labelId}
 				isOpen={isOpen}
 				onClose={handleClose}
-				triggerButtonRef={buttonRef}
                 {...args}
 			>
 				<div style={{display: 'flex', flexDirection: 'column', gap: '10px', padding: '10px'}}>

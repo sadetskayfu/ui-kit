@@ -1,10 +1,11 @@
+@use '@/app/styles/helpers' as *;
+
 .menu {
-	height: 100%;
-	width: 100%;
     overflow: hidden;
     box-shadow: 0 0 0 var(--border-weight-soft) var(--border-color-grey);
 	border-radius: var(--border-radius-m);
 	background-color: var(--theme-color-grey-900);
+	animation: fade-mounting 0.2s;
 }
 
 .active {

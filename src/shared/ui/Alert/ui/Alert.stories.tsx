@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { IconButton } from "@/shared/ui/IconButton";
 import { Alert } from "./Alert";
-import { Icon } from "@/shared/ui/Icon";
+import { Heart, XMark } from "@/shared/assets/icons";
 
 const meta: Meta<typeof Alert> = {
   title: "shared/Alert",
@@ -18,27 +18,27 @@ export default meta;
 
 type Story = StoryObj<typeof Alert>
 
-export const Default: Story = {
+export const DefaultAlert: Story = {
 
 };
 
-export const WithTitle: Story = {
+export const AlertWithTitle: Story = {
   args: {
     title: 'Title',
     children: 'Alert with title'
   }
 };
 
-export const WithAction: Story = {
+export const AlertWithAction: Story = {
   args: {
-    Action: <IconButton size="small-xx" color="custom-color" variant="clear"><Icon variant="x-mark"/></IconButton>,
+    Action: <IconButton size="small-xx" color="custom-color" variant="clear"><XMark /></IconButton>,
     children: 'Alert with action button'
   }
 };
 
-export const WithIcon: Story = {
+export const AlertWithIcon: Story = {
   args: {
-    Icon: <Icon size="small" variant="heart"/>,
+    Icon: <Heart size="small"/>,
     children: 'Alert with icon'
   }
 };

@@ -1,6 +1,6 @@
 import { classNames } from "@/shared/lib/classNames/classNames";
 import { Star, StarSize } from "../Star/Star";
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useId, useState } from "react";
 import { useAnimation } from "@/shared/hooks/useAnimation";
 import styles from "./style.module.scss";
 
@@ -17,7 +17,8 @@ interface StarRatingProps {
   readonly?: boolean;
   required?: boolean;
   precise?: boolean;
-  hiddenLabel?: boolean;
+  hiddenLegend?: boolean;
+  errorMessage?: string
 }
 
 export const StarRating = memo((props: StarRatingProps) => {
@@ -33,12 +34,15 @@ export const StarRating = memo((props: StarRatingProps) => {
     disabled,
     readonly,
     precise,
-    hiddenLabel,
+    hiddenLegend= true,
     required,
+    errorMessage
   } = props;
 
   const [fillValue, setFillValue] = useState<number>(selectedValue);
   const {isAnimating, startAnimation} = useAnimation(1000)
+
+  const errorMessageId = useId()
 
   const handleChangeValue = (value: number) => {
     onChange(value);
@@ -53,8 +57,10 @@ export const StarRating = memo((props: StarRatingProps) => {
   }, [selectedValue]);
 
   const mods: Record<string, boolean | undefined> = {
-    [styles["hidden-label"]]: hiddenLabel,
-    [styles['success']]: isAnimating
+    [styles["hidden-legend"]]: hiddenLegend,
+    [styles['success']]: isAnimating,
+    [styles["required"]]: required,
+    [styles['errored']]: !!errorMessage
   };
 
   const renderStars = () => {
@@ -78,8 +84,8 @@ export const StarRating = memo((props: StarRatingProps) => {
         isQuarterFilled,
       };
 
-      const starMods: Record<string, boolean> = {
-        [styles['success']]: isAnimating && (isFullFilled || isHalfFilled)
+      const starMods: Record<string, boolean | undefined> = {
+        [styles['success']]: isAnimating && (isFullFilled || isHalfFilled),
       }
 
       return (
@@ -108,6 +114,7 @@ export const StarRating = memo((props: StarRatingProps) => {
       aria-disabled={disabled ? "true" : undefined}
       aria-readonly={readonly ? "true" : undefined}
       aria-required={required ? "true" : undefined}
+      aria-errormessage={errorMessage && errorMessageId}
     >
       <legend className={styles["legend"]}>{label}</legend>
       <div
@@ -118,6 +125,9 @@ export const StarRating = memo((props: StarRatingProps) => {
       >
         {renderStars()}
       </div>
+      {errorMessage && (
+        <p id={errorMessageId} className={styles["error-message"]}>{errorMessage}</p>
+      )}
     </fieldset>
   );
 });

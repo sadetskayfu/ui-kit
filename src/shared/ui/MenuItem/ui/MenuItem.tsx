@@ -16,7 +16,7 @@ import {
 } from '@/shared/lib/handleRipple/handleRipple'
 import { Link } from 'react-router-dom'
 import { RippleWrapper } from '@/shared/ui/RippleWrapper'
-import { IconProps } from '@/shared/ui/Icon'
+import { IconProps } from '@/shared/assets/icons'
 import styles from './style.module.scss'
 
 interface BaseMenuItemProps {

@@ -48,7 +48,7 @@ const FormGroupWrapper = (args: any) => {
 	)
 }
 
-export const Default: Story = {
+export const DefaultGroup: Story = {
 	render: (args) => FormGroupWrapper(args),
 }
 

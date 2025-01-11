@@ -35,19 +35,19 @@ export const Snackbar = (props: SnackbarProps) => {
 	} = props
 
 	const snackbarRef = useRef<HTMLDivElement | null>(null)
-	const autoHideTimeoutId = useRef<NodeJS.Timeout | null>(null)
+	const autoHideTimeoutIdRef = useRef<NodeJS.Timeout | null>(null)
 
 	// Auto hide
 	useEffect(() => {
-		if (isVisible && autoHideDuration) {
-			autoHideTimeoutId.current = setTimeout(() => {
+		if (autoHideDuration && isVisible) {
+			autoHideTimeoutIdRef.current = setTimeout(() => {
 				onClose()
 			}, autoHideDuration)
 		}
 		return () => {
-			if (autoHideTimeoutId.current) clearTimeout(autoHideTimeoutId.current)
+			if (autoHideTimeoutIdRef.current) clearTimeout(autoHideTimeoutIdRef.current)
 		}
-	}, [isVisible, autoHideDuration, onClose])
+	}, [isVisible])
 
 	const additionalClasses: Array<string | undefined> = [
 		className,

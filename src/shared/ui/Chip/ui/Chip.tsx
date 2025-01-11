@@ -13,11 +13,11 @@ import {
 	ReactNode,
 	useRef,
 } from 'react'
-import { IconProps, Icon as XMarkIcon } from '@/shared/ui/Icon'
 import { RippleWrapper } from '@/shared/ui/RippleWrapper'
 import { IconButton } from '@/shared/ui/IconButton'
 import { Link } from 'react-router-dom'
 import { AvatarProps } from '@/shared/ui/Avatar'
+import { IconProps, XMark } from '@/shared/assets/icons'
 import styles from './style.module.scss'
 
 type ChipVariant = 'filled' | 'outlined'
@@ -228,7 +228,7 @@ export const Chip = memo(
 							stopFocus
 							stopPropagation
 						>
-							<XMarkIcon variant="x-mark" />
+							<XMark />
 						</IconButton>
 					)}
 				</Parent>

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { Tab } from "./Tab";
-import { Icon } from "@/shared/ui/Icon";
+import { House } from "@/shared/assets/icons";
 
 const meta: Meta<typeof Tab> = {
   title: "shared/Tab",
@@ -38,14 +38,14 @@ export const ActiveTab: Story = {
 
 export const TabWithIcon: Story = {
     args: {
-        Icon: <Icon variant="house"/>,
+        Icon: <House />,
         label: 'Tab with icon'
     }
 };
 
 export const IconTab: Story = {
     args: {
-        Icon: <Icon variant="house"/>,
+        Icon: <House />,
         "aria-label": 'Icon tab'
     }
 }

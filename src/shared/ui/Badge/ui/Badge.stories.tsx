@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { Badge } from './Badge'
-import { Icon } from '@/shared/ui/Icon'
 import { useState } from 'react'
 import { IconButton } from '@/shared/ui/IconButton'
+import { BookMark, Minus, Plus } from '@/shared/assets/icons'
 
 const meta: Meta<typeof Badge> = {
 	title: 'shared/Badge',
@@ -12,7 +12,7 @@ const meta: Meta<typeof Badge> = {
 		overlap: 'circular',
 		position: 'top-right',
 		size: 'medium',
-		children: <Icon size='large' variant="book-mark" />,
+		children: <BookMark size='large'/>,
 	},
 }
 
@@ -34,18 +34,25 @@ const BadgeWrapper = (args: any) => {
 	return (
 		<div style={{ display: 'flex', gap: '10px' }}>
 			<IconButton size="small-x" variant="clear" onClick={handleDecrement}>
-				<Icon variant="minus" />
+				<Minus />
 			</IconButton>
 			<Badge badgeContent={count} {...args} />
 			<IconButton size="small-x" variant="clear" onClick={handleIncrement}>
-				<Icon variant="plus" />
+				<Plus />
 			</IconButton>
 		</div>
 	)
 }
 
-export const Default: Story = {
+export const DefaultBadge: Story = {
 	render: (args) => BadgeWrapper(args),
+}
+
+export const BadgeWithMaxCount: Story = {
+	args: {
+		badgeContent: 999,
+		max: 99,
+	}
 }
 
 export const ClearContent: Story = {
