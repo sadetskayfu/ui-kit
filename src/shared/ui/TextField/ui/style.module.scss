@@ -1,0 +1,40 @@
+@use '@/app/styles/helpers' as *;
+
+.field {
+    --clearButtonOpacity: 0;
+    --clearButtonPointerEvents: none;
+    cursor: text;
+    &.dirty {
+        @include hover {
+            --clearButtonOpacity: 1;
+            --clearButtonPointerEvents: all;
+        }
+        &.focused {
+            --clearButtonOpacity: 1;
+            --clearButtonPointerEvents: all;
+        }
+    }
+}
+
+.input,
+.text-area {
+    color: var(--font-color-hard);
+    background-color: transparent;
+    border: none;
+    padding: 0px;
+    width: 100%;
+    text-overflow: ellipsis;
+    &::placeholder {
+        color: var(--font-color-soft);
+    }
+}
+
+.text-area {
+    resize: none;
+    overflow-y: hidden;
+}
+
+.clear-button {
+    opacity: var(--clearButtonOpacity);
+    pointer-events: var(--clearButtonPointerEvents);
+}

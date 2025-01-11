@@ -15,9 +15,7 @@
 .label-wrapper {
     &.required {
         .label:after {
-            content: "*";
-            color: var(--color-red-500);
-            position: absolute;
+            @include required-label;
         }
     }
     &.disabled {

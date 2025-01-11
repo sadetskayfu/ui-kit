@@ -1,0 +1,105 @@
+@use '@/app/styles/helpers' as *;
+
+.field-wrapper {
+	--height: ;
+	--bgColor: ;
+	--borderColor: var(--border-color-grey);
+	--borderColorHover: var(--color-grey-500);
+	--borderColorFocus: var(--theme-color-primary-500);
+	--padding: ;
+	--labelColor: var(--font-color-hard);
+	display: flex;
+	flex-direction: column;
+	row-gap: var(--padding-6);
+	width: 100%;
+}
+
+.field {
+	min-height: var(--height);
+	width: 100%;
+	padding: var(--padding);
+	border: var(--border-weight-soft) solid var(--borderColor);
+	border-radius: var(--border-radius-s);
+	background-color: var(--bgColor);
+	transition-duration: 0.2s;
+	display: flex;
+	align-items: center;
+}
+
+.label {
+	color: var(--labelColor);
+	transition-duration: 0.2s;
+}
+
+.start-adornment {
+	margin-right: var(--padding);
+}
+
+.actions {
+	display: flex;
+	margin-left: calc(var(--padding) - var(--field-actions-margin));
+	margin-right: calc(var(--field-actions-margin) * -1);
+}
+
+// Variants
+.field-wrapper {
+	&.filled {
+		--bgColor: var(--theme-color-grey-900);
+	}
+	&.outlined {
+		--bgColor: transparent;
+	}
+}
+
+// Sizes
+.field-wrapper {
+	&.medium {
+		--height: var(--button-height-m);
+		--padding: var(--padding-15);
+	}
+	&.large {
+		--height: var(--button-height-l);
+		--padding: var(--padding-20);
+	}
+}
+
+.field-wrapper {
+	&.errored {
+		--borderColor: var(--border-color-red);
+		--borderColorHover: var(--color-red-500);
+		--labelColor: var(--color-red-500);
+        .field {
+            animation: snaking 0.5s;
+        }
+	}
+    &:not(.errored) {
+        &.focused {
+            --labelColor: var(--theme-color-primary-500);
+        }
+    }
+    &.focused {
+        --borderColor: var(--theme-color-primary-500);
+    }
+	&:not(.focused) {
+		.field {
+			@include hover {
+				border-color: var(--borderColorHover);
+			}
+		}
+	}
+    &.disabled {
+        .field {
+            @include disabled;
+        }
+    }
+    &.required {
+        .label::after {
+            @include required-label
+        }
+    }
+    &.hidden-label {
+        .label {
+            @include visually-hidden;
+        }
+    }
+}

@@ -1,62 +1,62 @@
 @use '@/app/styles/helpers' as *;
 
 .form-group {
-    --marginLeft: ;
-    --gap: var(--marginLeft);
-    --legendColor: var(--font-color-soft);
-    margin: 0px;
-    &:focus-within {
-        --legendColor: var(--theme-color-primary-500);
-    }
-    &.errored {
-        --legendColor: var(--color-red-500);
-    }
-    &.required {
-        .legend:after {
-            content: '*';
-            color: var(--color-red-500);
-            position: absolute;
-        }
-    }
-    &.hidden-legend {
-        .legend {
-            @include visually-hidden;
-        }
-    }
+	--marginLeft: ;
+	--gap: var(--marginLeft);
+	--legendColor: var(--font-color-hard);
+	margin: 0px;
+	&:focus-within {
+		--legendColor: var(--theme-color-primary-500);
+	}
+	&.errored {
+		--legendColor: var(--color-red-500);
+		.items {
+			animation: snaking 0.5s;
+		}
+	}
+	&.required {
+		.legend:after {
+			@include required-label;
+		}
+	}
+	&.hidden-legend {
+		.legend {
+			@include visually-hidden;
+		}
+	}
 }
 
 .legend {
-    padding: 0px;
-    margin-left: var(--marginLeft);
-    color: var(--legendColor);
+	padding: 0px;
+	margin-left: var(--marginLeft);
+	color: var(--legendColor);
 }
 
-.error-message {
-    @include error-message;
-    margin-left: var(--marginLeft);
+.helper-text {
+	margin-left: var(--marginLeft);
 }
 
 .items {
-    display: flex;
+	display: flex;
 }
 
 // Sizes
 .form-group {
-    &.medium {
-        --marginLeft: var(--form-margin-m); 
-    }
+	&.medium {
+		--marginLeft: var(--form-margin-m);
+	}
 }
 
 // Directions
 .form-group {
-    &.horizontal {
-        .items {
-            column-gap: var(--gap);
-        } 
-    }
-    &.vertical {
-        .items {
-            flex-direction: column;
-        }
-    }
+	&.horizontal {
+		.items {
+			column-gap: var(--gap);
+		}
+	}
+	&.vertical {
+		.items {
+			flex-direction: column;
+		}
+	}
 }

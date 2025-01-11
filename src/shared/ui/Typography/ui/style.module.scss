@@ -1,0 +1,53 @@
+@use '@/app/styles/helpers' as *;
+
+.typography {
+    --color: ;
+    --fontSize: ;
+    color: var(--color);
+    font-size: var(--fontSize);
+}
+
+// Variants
+.typography {
+    &.h1 {
+        --fontSize: #{fluid-text(70, 30)};
+    }
+    &.h2 {
+        --fontSize: #{fluid-text(50, 28)};
+    }
+    &.h3 {
+        --fontSize: #{fluid-text(40, 24)};
+    }
+    &.h4 {
+        --fontSize: #{fluid-text(26, 18)};
+    }
+    &.h5 {
+        --fontSize: #{fluid-text(24, 18)};
+    }
+    &.h6 {
+        --fontSize: #{fluid-text(22, 16)};
+    }
+    &.helper-text {
+        --fontSize: var(--font-size-s);
+    }
+    &.text {
+        --fontSize: var(--font-size-default);
+    }
+}
+
+// Colors
+.typography {
+    &.hard {
+        --color: var(--font-color-hard);
+    }
+    &.soft {
+        --color: var(--font-color-soft);
+    }
+    &.onDark {
+        --color: var(--font-color-onDark);
+    }
+    &.error {
+        --color: var(--color-red-500);
+        animation: appearance-right 0.5s;
+    }
+}

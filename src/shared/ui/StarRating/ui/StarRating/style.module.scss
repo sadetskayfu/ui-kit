@@ -1,7 +1,7 @@
 @use '@/app/styles/helpers' as *;
 
 .star-rating {
-  --legendColor: var(--font-color-soft);
+	--legendColor: var(--font-color-hard);
 	margin: 0px;
 	display: flex;
 	flex-direction: column;
@@ -10,15 +10,16 @@
 	}
 	&.errored {
 		--legendColor: var(--color-red-500);
+		.stars-group {
+			animation: snaking 0.5s;
+		}
 	}
 	&.required {
 		.legend:after {
-			content: '*';
-			color: var(--color-red-500);
-			position: absolute;
+			@include required-label;
 		}
 	}
-  &.success {
+	&.success {
 		pointer-events: none;
 	}
 	&.hidden-legend {
@@ -34,11 +35,7 @@
 
 .legend {
 	padding: 0px;
-  color: var(--legendColor);
-}
-
-.error-message {
-	@include error-message;
+	color: var(--legendColor);
 }
 
 .star {

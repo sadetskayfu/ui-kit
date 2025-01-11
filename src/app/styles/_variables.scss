@@ -34,8 +34,9 @@
 	// Font
 	--font-family-base: 'Inter', 'sans-serif';
     --font-family-accent: 'Kumbh Sans', 'sans-serif';
+	--font-size-default: #{fluid-text(18, 14)};
 	--font-size-s: #{fluid-text(14, 12)};
-	--font-color-description: var(--color-grey-500);
+	--font-color-soft: var(--color-grey-500);
 
 	// Border
 	--border-weight-soft: #{rem(1)};
@@ -74,6 +75,7 @@
 	
 	// Form
 	--form-margin-m: #{rem(11.25)};
+	--field-actions-margin: #{rem(6.25)};
 
 	// Icon size
 	--fz-icon-xxs: calc(var(--button-height-xxs) / 2);

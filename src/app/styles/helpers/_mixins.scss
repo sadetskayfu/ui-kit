@@ -74,8 +74,9 @@
     pointer-events: none;
 }
 
-@mixin error-message {
-	font-size: var(--font-size-s);
-    color: var(--color-red-500);
-    animation: appearance-right 0.5s;
+@mixin required-label {
+	content: "*";
+	color: var(--color-red-500);
+	position: absolute;
+	padding-left: rem(2);
 }
