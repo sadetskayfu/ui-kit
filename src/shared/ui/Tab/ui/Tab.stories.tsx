@@ -32,7 +32,7 @@ export const DefaultTab: Story = {
 export const ActiveTab: Story = {
     args: {
         label: 'Active tab',
-        selectedValue: 'tab'
+        selected: true
     }
 }
 

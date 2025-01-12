@@ -6,18 +6,20 @@
 	--borderColor: var(--border-color-grey);
 	--borderColorHover: var(--color-grey-500);
 	--borderColorFocus: var(--theme-color-primary-500);
-	--padding: ;
+	--paddingBlock: ;
+	--paddingInline: ;
 	--labelColor: var(--font-color-hard);
 	display: flex;
 	flex-direction: column;
-	row-gap: var(--padding-6);
+	row-gap: var(--form-margin-m);
 	width: 100%;
 }
 
 .field {
 	min-height: var(--height);
 	width: 100%;
-	padding: var(--padding);
+	padding-inline: var(--paddingInline);
+	padding-block: var(--paddingBlock);
 	border: var(--border-weight-soft) solid var(--borderColor);
 	border-radius: var(--border-radius-s);
 	background-color: var(--bgColor);
@@ -32,12 +34,12 @@
 }
 
 .start-adornment {
-	margin-right: var(--padding);
+	margin-right: var(--paddingInline);
 }
 
 .actions {
 	display: flex;
-	margin-left: calc(var(--padding) - var(--field-actions-margin));
+	margin-left: calc(var(--paddingInline) - var(--field-actions-margin));
 	margin-right: calc(var(--field-actions-margin) * -1);
 }
 
@@ -55,11 +57,13 @@
 .field-wrapper {
 	&.medium {
 		--height: var(--button-height-m);
-		--padding: var(--padding-15);
+		--paddingInline: var(--padding-20);
+		--paddingBlock: #{rem(8)};
 	}
 	&.large {
 		--height: var(--button-height-l);
-		--padding: var(--padding-20);
+		--paddingInline: var(--padding-20);
+		--paddingBlock: #{rem(13)};
 	}
 }
 

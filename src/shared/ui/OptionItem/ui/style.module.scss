@@ -1,0 +1,39 @@
+@use '@/app/styles/helpers' as *;
+
+.menu-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    column-gap: var(--padding-medium);
+    width: 100%;
+    padding-inline: var(--padding-20);
+    padding-block: var(--padding-10);
+    cursor: pointer;
+    text-align: start;
+    &.selected {
+        .bg {
+            background-color: var(--color-primary-opacity);
+            position: absolute;
+            inset: 0;
+        }
+        .check-mark {
+            opacity: 1;
+        }
+    }
+    &.disabled {
+        @include disabled;
+    }
+    &.readonly {
+        pointer-events: none;
+    }
+}
+
+.check-mark {
+    opacity: 0;
+    margin-left: auto;
+    transition-duration: 0.2s;
+}
+
+.end-icon {
+    margin-left: auto;
+}

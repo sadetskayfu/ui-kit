@@ -88,8 +88,11 @@ export const Tabs = (props: TabsProps) => {
 
 	const renderTabs = useMemo(() => {
 		return Children.map(children, (tab, index) => {
+			const tabValue = tab.props.value
+			const isSelected = tabValue === selectedValue
+
 			return cloneElement(tab, {
-				selectedValue,
+				selected: isSelected,
 				onClick: onChange,
 				onKeyDown: handleKeyDown,
 				onFocus: () => handleFocus(index),

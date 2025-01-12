@@ -1,5 +1,5 @@
 import { classNames } from '@/shared/lib/classNames/classNames'
-import { ReactElement, ReactNode } from 'react'
+import { ForwardedRef, forwardRef, ReactElement, ReactNode } from 'react'
 import { Typography } from '@/shared/ui/Typography'
 import styles from './style.module.scss'
 
@@ -26,7 +26,7 @@ interface FieldProps {
     hiddenLabel?: boolean
 }
 
-export const Field = (props: FieldProps) => {
+export const Field = forwardRef((props: FieldProps, ref: ForwardedRef<HTMLDivElement>) => {
 	const {
 		children,
 		label,
@@ -77,6 +77,7 @@ export const Field = (props: FieldProps) => {
 				className={classNames(styles['field'], [className])}
 				onClick={handleClick}
 				onMouseDown={(event) => event.preventDefault()}
+				ref={ref}
 			>
 				{StartAdornment && (
 					<div className={styles['start-adornment']}>{StartAdornment}</div>
@@ -94,4 +95,4 @@ export const Field = (props: FieldProps) => {
 			)}
 		</div>
 	)
-}
+})

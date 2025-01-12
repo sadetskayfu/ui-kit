@@ -21,7 +21,7 @@ export interface TabProps extends AriaAttributes {
     id: string
     panelId: string
 	value: string
-	selectedValue?: string
+	selected?: boolean
 	onClick?: (value: string) => void
 	onKeyDown?: (event: React.KeyboardEvent) => void
 	onFocus?: () => void
@@ -41,7 +41,7 @@ export const Tab = memo((props: TabProps) => {
         id,
         panelId,
 		value,
-		selectedValue,
+		selected,
 		label,
 		onClick,
 		onKeyDown,
@@ -58,17 +58,15 @@ export const Tab = memo((props: TabProps) => {
 
 	const rippleWrapperRef = useRef<HTMLSpanElement | null>(null)
 
-	const isSelected = selectedValue === value
-
 	const handleClick = (event: React.MouseEvent) => {
-		if (isSelected) return
+		if (selected) return
 
 		handleRippleMousePosition(rippleWrapperRef, event)
 		onClick!(value)
 	}
 
 	const handleKeyUp = (event: React.KeyboardEvent) => {
-		if ((event.key === 'Enter' || event.key === ' ') && !isSelected) {
+		if ((event.key === 'Enter' || event.key === ' ') && !selected) {
 			event.preventDefault()
 			handleRipple(rippleWrapperRef)
 			onClick!(value)
@@ -90,12 +88,12 @@ export const Tab = memo((props: TabProps) => {
 	]
 
 	const mods: Record<string, boolean | undefined> = {
-		[styles['selected']]: isSelected,
+		[styles['selected']]: selected,
 		[styles['disabled']]: disabled,
         [styles['full-width']]: fullWidth
 	}
 
-	const localTabIndex = isSelected && !disabled ? 0 : disabled ? -1 : tabIndex
+	const localTabIndex = selected && !disabled ? 0 : disabled ? -1 : tabIndex
 
 	return (
 		<button
@@ -111,7 +109,7 @@ export const Tab = memo((props: TabProps) => {
             data-value={value}
             type='button'
             role='tab'
-            aria-selected={isSelected ? 'true' : 'false'}
+            aria-selected={selected ? 'true' : 'false'}
             aria-controls={panelId}
             {...otherProps}
 		>

@@ -36,6 +36,7 @@ interface BaseTextFieldProps {
 	required?: boolean
     hiddenLabel?: boolean
 	multiline?: boolean
+	tabIndex?: number
 }
 
 type HTMLInputProps = Omit<
@@ -74,6 +75,7 @@ export const TextField = memo((props: TextFieldProps) => {
 		required,
 		multiline,
         hiddenLabel,
+		tabIndex = 0,
 		inputProps,
 		textAreaProps,
 	} = props
@@ -145,6 +147,7 @@ export const TextField = memo((props: TextFieldProps) => {
 		disabled,
 		readOnly: readOnly,
 		required,
+		tabIndex: disabled ? -1 : tabIndex
 	}
 
 	return (

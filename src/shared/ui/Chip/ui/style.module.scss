@@ -14,7 +14,6 @@
 	--paddingBlock: ;
 	--buttonHeight: calc(var(--height) - var(--paddingInline));
 	--buttonMargin: calc((var(--height) - var(--paddingInline)) / 2);
-	font-size: calc(var(--height) / 2);
 	height: var(--height);
 	padding-block: var(--paddingBlock);
 	border-radius: var(--border-radius-full);
