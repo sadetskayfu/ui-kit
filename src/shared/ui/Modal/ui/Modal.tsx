@@ -19,8 +19,8 @@ interface ModalProps {
 	onClose: () => void
 	backdrop?: ModalBackdrop
 	zIndex?: number
-	lazy?: boolean
-	unmount?: boolean
+	isLazy?: boolean
+	isUnmount?: boolean
 }
 
 export const Modal = (props: ModalProps) => {
@@ -32,8 +32,8 @@ export const Modal = (props: ModalProps) => {
 		onClose,
 		backdrop = 'dark',
 		zIndex = Z_INDEX.MODAL,
-		lazy,
-		unmount,
+		isLazy,
+		isUnmount,
 	} = props
 
 	const modalRef = useRef<HTMLDivElement | null>(null)
@@ -54,8 +54,8 @@ export const Modal = (props: ModalProps) => {
 			nodeRef={modalRef}
 			in={isOpen}
 			timeout={200}
-			unmountOnExit={unmount}
-			mountOnEnter={lazy}
+			unmountOnExit={isUnmount}
+			mountOnEnter={isLazy}
 			classNames={{
 				enter: styles['enter'],
 				enterDone: styles['enter-done'],
@@ -67,7 +67,7 @@ export const Modal = (props: ModalProps) => {
 				onClose={onClose}
 				variant={backdrop}
 				zIndex={zIndex}
-				mountingAnimation={lazy}
+				mountingAnimation={isLazy}
 			>
 				<div
 					className={classNames(styles['modal'], additionalClasses)}

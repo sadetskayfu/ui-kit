@@ -68,6 +68,6 @@ const RadioGroupWrapper = (args: any) => {
 	)
 }
 
-export const Default: Story = {
+export const DefaultRadioGroup: Story = {
 	render: (args) => RadioGroupWrapper(args),
 }

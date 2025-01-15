@@ -49,7 +49,7 @@ export const Accordion = (props: AccordionProps) => {
 		}
 	}
 
-	const handleKeyUp = (event: React.KeyboardEvent<HTMLDivElement>) => {
+	const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
 		if (event.key === 'Enter' || event.key === ' ') {
 			event.preventDefault()
 			handleToggle()
@@ -65,6 +65,8 @@ export const Accordion = (props: AccordionProps) => {
 		className,
 		styles[variant],
 	]
+
+	const TitleTag = titleVariant
 	
 	return (
 		<div className={classNames(styles['accordion'], additionalClasses, mods)}>
@@ -72,15 +74,14 @@ export const Accordion = (props: AccordionProps) => {
 				className={styles['header']}
 				tabIndex={disabled ? -1 : tabIndex}
 				onClick={handleToggle}
-				onKeyUp={handleKeyUp}
+				onKeyDown={handleKeyDown}
 				role="button"
 				aria-expanded={localIsOpen ? 'true' : 'false'}
 				aria-controls={bodyId}
 				aria-disabled={disabled ? 'true' : undefined}
 				id={headerId}
 			>
-				{titleVariant === 'h3' && <h3 className={styles['title']}>{title}</h3>}
-				{titleVariant === 'h4' && <h4 className={styles['title']}>{title}</h4>}
+				<TitleTag className={styles['title']}>{title}</TitleTag>
 				<div className={styles['header-icon']}>
 					<Plus className={styles['open-icon']}/>
 					<Minus className={styles['close-icon']}/>

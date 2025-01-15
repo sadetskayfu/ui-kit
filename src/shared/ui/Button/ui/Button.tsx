@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom'
 import styles from './style.module.scss'
 
 type ButtonVariant = 'filled' | 'outlined' | 'clear'
-type ButtonColor = 'primary' | 'dark' | 'grey'
+type ButtonColor = 'primary' | 'secondary'
 type ButtonSize = 'medium' | 'large'
 
 interface BaseButtonProps {
@@ -52,7 +52,7 @@ export const Button = memo(
 	forwardRef(
 		(
 			props: ButtonProps,
-			ref: React.ForwardedRef<HTMLButtonElement | HTMLAnchorElement | null>
+			ref: React.ForwardedRef<HTMLButtonElement | HTMLAnchorElement>
 		) => {
 			const {
 				children,

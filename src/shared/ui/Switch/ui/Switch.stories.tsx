@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { Switch } from './Switch'
 import { useState } from 'react'
+import { FormLabel } from '@/shared/ui/FormLabel'
 
 const meta: Meta<typeof Switch> = {
 	title: 'shared/Switch',
@@ -25,11 +26,39 @@ const SwitchWrapper = (args: any) => {
 
 	return (
 		<>
-			<Switch checked={isChecked} onChange={handleChange} inputProps={{'aria-label': 'Default switch'}} {...args} />
+			<Switch
+				checked={isChecked}
+				onChange={handleChange}
+				inputProps={{ 'aria-label': 'Default switch' }}
+				{...args}
+			/>
 		</>
 	)
 }
 
-export const Default: Story = {
+const SwitchWithLabelWrapper = (args: any) => {
+	const [isChecked, setIsChecked] = useState<boolean>(false)
+
+	const handleChange = (value: boolean) => {
+		setIsChecked(value)
+	}
+
+	return (
+		<>
+			<FormLabel
+				label="Label"
+				disabled={args.disabled}
+				required={args.required}
+				Component={<Switch checked={isChecked} onChange={handleChange} {...args} />}
+			/>
+		</>
+	)
+}
+
+export const DefaultSwitch: Story = {
 	render: (args) => SwitchWrapper(args),
+}
+
+export const SwitchWithLabel: Story = {
+	render: (args) => SwitchWithLabelWrapper(args),
 }

@@ -32,7 +32,7 @@
         --bgColor: var(--theme-color-dark);
         --bgColorActive: var(--theme-color-grey-900);
         border: var(--border-weight-soft) solid var(--border-color-grey);
-        border-radius: var(--border-radius-m);
+        border-radius: var(--border-radius-s);
     }
     &.clear {
         --bgColor: transparent;

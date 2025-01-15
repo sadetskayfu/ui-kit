@@ -10,9 +10,9 @@ const meta: Meta<typeof Menu> = {
 	args: {
 		position: 'bottom',
 		openVariant: 'mouse-move',
-		delay: 500,
-		lazy: false,
-		unmount: false,
+		delay: 200,
+		isLazy: false,
+		isUnmount: false,
 	},
 }
 

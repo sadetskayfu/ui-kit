@@ -55,7 +55,7 @@ export const BadgeWithMaxCount: Story = {
 	}
 }
 
-export const ClearContent: Story = {
+export const AlwaysVisibleBadge: Story = {
     args: {
         badgeContent: '',
         size: 'small',

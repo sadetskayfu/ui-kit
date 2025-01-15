@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom'
 import styles from './style.module.scss'
 
 type IconButtonVariant = 'filled' | 'outlined' | 'clear'
-export type IconButtonColor = 'primary' | 'dark' | 'grey' | 'custom-color'
+export type IconButtonColor = 'primary' | 'secondary' | 'custom-color'
 type IconButtonSize =
 	| 'small-xx'
 	| 'small-x'
@@ -44,7 +44,7 @@ interface BaseIconButtonProps {
 	to?: string
 	href?: string
 	children: ReactNode
-	type?: 'submit' | 'reset' | 'button' | undefined
+	type?: 'submit' | 'reset' | 'button'
 	tabIndex?: number
 	onClick?: (event: React.MouseEvent | React.KeyboardEvent) => void
 }
@@ -66,7 +66,7 @@ interface IconButtonProps extends BaseIconButtonProps {
 export const IconButton = forwardRef(
 	(
 		props: IconButtonProps,
-		ref: React.ForwardedRef<HTMLButtonElement | HTMLAnchorElement | null>
+		ref: React.ForwardedRef<HTMLButtonElement | HTMLAnchorElement>
 	) => {
 		const {
 			children,

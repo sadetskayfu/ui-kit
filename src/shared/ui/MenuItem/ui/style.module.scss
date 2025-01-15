@@ -31,13 +31,13 @@
     color: var(--color);
     &:focus-visible {
         background-color: var(--color-grey-opacity);
+        --color: var(--theme-color-primary-500);
     }
     @include hover {
         background-color: var(--color-grey-opacity);
+        --color: var(--theme-color-primary-500);
     }
     p {
-        font-size: var(--font-size-s);
-        color: var(--font-color-description);
         padding-right: var(--paddingRightDesc);
         padding-left: var(--paddingLeftDesc);
     }

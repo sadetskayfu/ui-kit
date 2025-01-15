@@ -5,7 +5,7 @@ import { Arrow } from '@/shared/assets/icons'
 import styles from './style.module.scss'
 
 type PaginationSize = 'small' | 'medium'
-type PaginationColor = 'primary' | 'dark' | 'grey'
+type PaginationColor = 'primary' | 'secondary'
 type PaginationBorderRadius = IconButtonBorderRadius
 
 interface PaginationProps {
@@ -25,7 +25,7 @@ export const Pagination = memo(
 	({
 		className,
 		size = 'medium',
-		color = 'grey',
+		color = 'secondary',
 		borderRadius = 'circular',
 		infinity,
 		totalItems,
@@ -102,7 +102,7 @@ export const Pagination = memo(
 							className={styles['button']}
 							variant={isCurrentPage ? 'filled' : 'clear'}
 							borderRadius={borderRadius}
-							color={isCurrentPage ? color : 'grey'}
+							color={isCurrentPage ? color : 'secondary'}
 							size="custom-size"
 							onClick={() => (!isCurrentPage ? handleChangePage(page) : undefined)}
 							buttonProps={{
@@ -130,7 +130,7 @@ export const Pagination = memo(
 							className={styles['button']}
 							size="custom-size"
 							variant="clear"
-							color="grey"
+							color="secondary"
 							borderRadius={borderRadius}
 							onClick={() => handleChangePage(currentPage - 1)}
 							disabled={currentPage === 1 && !infinity}
@@ -147,7 +147,7 @@ export const Pagination = memo(
 							className={classNames(styles['button'], [styles['button-next-page']])}
 							size="custom-size"
 							variant="clear"
-							color="grey"
+							color="secondary"
 							borderRadius={borderRadius}
 							onClick={() => handleChangePage(currentPage + 1)}
 							disabled={currentPage === totalPages && !infinity}

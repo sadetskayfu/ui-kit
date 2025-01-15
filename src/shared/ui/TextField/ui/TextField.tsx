@@ -146,7 +146,7 @@ export const TextField = memo((props: TextFieldProps) => {
 					onClick={!readonly ? onClear : undefined}
 					size="small-xx"
 					variant="clear"
-					color="grey"
+					color="secondary"
 					tabIndex={-1}
 				>
 					<XMark />

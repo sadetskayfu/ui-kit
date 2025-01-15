@@ -16,11 +16,6 @@
             margin-right: rem(-7);
         }
     }
-    @include laptop {
-        padding-inline: var(--button-padding-inline-s);
-        padding-block: var(--button-padding-block-s);
-        gap: var(--button-padding-inline-s);
-    }
 }
 
 .content {

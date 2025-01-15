@@ -6,7 +6,7 @@
 	--bgColorHover: ;
 	--borderColor: ;
 	--height: ;
-	--borderRadius: var(--border-radius-m);
+	--borderRadius: var(--border-radius-s);
 	height: var(--height);
 	width: var(--height);
 	border: none;
@@ -29,8 +29,7 @@
 		--color: var(--theme-color-primary-500);
 		--borderColor: var(--border-color-primary);
 	}
-	&.dark,
-	&.grey {
+	&.secondary {
 		--color: var(--font-color-soft);
 		--borderColor: var(--border-color-grey);
 	}
@@ -49,18 +48,11 @@
 			--bgColor: var(--theme-color-primary-500);
 			--bgColorHover: var(--theme-color-primary-600);
 		}
-		&.dark {
-			--bgColor: var(--theme-color-dark);
-			--bgColorHover: var(--theme-color-grey-900);
-		}
-		&.grey {
+		&.secondary {
 			--bgColor: var(--theme-color-grey-900);
 			--bgColorHover: var(--theme-color-dark);
+			border: var(--border-weight-soft) solid var(--borderColor);
 		}
-    &.dark,
-    &.grey {
-      border: var(--border-weight-soft) solid var(--borderColor);
-    }
 	}
   &.outlined {
     border: var(--border-weight-soft) solid var(--borderColor);
@@ -88,38 +80,23 @@
 .button {
 	&.small-xx {
 		--height: var(--button-height-xxs);
-		--borderRadius: var(--border-radius-s);
 		font-size: var(--fz-icon-xxs);
 	}
 	&.small-x {
 		--height: var(--button-height-xs);
-		--borderRadius: var(--border-radius-s);
 		font-size: var(--fz-icon-xs);
 	}
 	&.small {
 		--height: var(--button-height-s);
-		--borderRadius: var(--border-radius-s);
 		font-size: var(--fz-icon-s);
-		@include laptop {
-			--height: var(--button-height-xs);
-			font-size: var(--fz-icon-xs);
-		}
 	}
 	&.medium {
 		--height: var(--button-height-m);
 		font-size: var(--fz-icon-m);
-		@include laptop {
-			--height: var(--button-height-s);
-			font-size: var(--fz-icon-s);
-		}
 	}
 	&.large {
 		--height: var(--button-height-l);
 		font-size: var(--fz-icon-l);
-		@include laptop {
-			--height: var(--button-height-m);
-			font-size: var(--fz-icon-m);
-		}
 	}
 }
 

@@ -18,6 +18,7 @@ import { Link } from 'react-router-dom'
 import { RippleWrapper } from '@/shared/ui/RippleWrapper'
 import { IconProps } from '@/shared/assets/icons'
 import styles from './style.module.scss'
+import { Typography } from '../../Typography'
 
 interface BaseMenuItemProps {
 	className?: string
@@ -50,7 +51,7 @@ export const MenuItem = memo(
 	forwardRef(
 		(
 			props: MenuItemProps,
-			ref: React.ForwardedRef<HTMLButtonElement | HTMLAnchorElement | null>
+			ref: React.ForwardedRef<HTMLButtonElement | HTMLAnchorElement>
 		) => {
 			const {
 				className,
@@ -169,7 +170,7 @@ export const MenuItem = memo(
 							{label}
 							{EndIcon && cloneElement(EndIcon, {className: styles['end-icon']})}
 						</div>
-						{description && <p>{description}</p>}
+						{description && <Typography color='soft' component='p' variant='helper-text'>{description}</Typography>}
 					</Component>
 				</li>
 			)

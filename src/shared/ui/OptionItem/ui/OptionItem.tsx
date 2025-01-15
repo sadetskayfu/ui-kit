@@ -1,4 +1,4 @@
-import { memo, ReactNode, useRef } from 'react'
+import { AriaRole, memo, ReactNode, useRef } from 'react'
 import { classNames } from '@/shared/lib/classNames/classNames'
 import { handleRippleMousePosition } from '@/shared/lib/handleRipple/handleRipple'
 import { RippleWrapper } from '@/shared/ui/RippleWrapper'
@@ -14,7 +14,7 @@ export interface OptionItemProps {
 	value?: string
 	label?: string
 	id?: string
-	role?: string
+	role?: AriaRole
 }
 
 export const OptionItem = memo((props: OptionItemProps) => {

@@ -9,8 +9,8 @@ const meta: Meta<typeof AsideMenu> = {
 	args: {
         position: 'left',
         backdrop: 'dark',
-        lazy: false,
-		unmount: false
+        isLazy: false,
+		isUnmount: false
     },
 }
 
@@ -55,16 +55,16 @@ const AsideMenuWrapper = (args: any) => {
 					<h3 id={labelId} className="visually-hidden">
 						Aside menu
 					</h3>
-					<Button color="grey" onClick={handleVisibleNewButton}>
+					<Button color="secondary" onClick={handleVisibleNewButton}>
 						Add new button
 					</Button>
-					<Button color="grey" onClick={handleToggleDisabledButton}>
+					<Button color="secondary" onClick={handleToggleDisabledButton}>
 						Toggle disabled button 3
 					</Button>
-					<Button color="grey" disabled={disabledButton}>
+					<Button color="secondary" disabled={disabledButton}>
 						Button 3
 					</Button>
-					<Button color="grey" onClick={handleClose}>
+					<Button color="secondary" onClick={handleClose}>
 						Close modal
 					</Button>
 					{visibleNewButton && <Button>New button</Button>}
@@ -74,7 +74,7 @@ const AsideMenuWrapper = (args: any) => {
 	)
 }
 
-export const Default: Story = {
+export const DefaultAsideMenu: Story = {
 	render: (args) => AsideMenuWrapper(args),
 }
 

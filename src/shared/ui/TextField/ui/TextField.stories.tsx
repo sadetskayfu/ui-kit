@@ -70,10 +70,10 @@ export const FieldWithAdornment: Story = {
 export const FieldWithActions: Story = {
 	args: {
 		Actions: [
-			<IconButton size="small-xx" variant="clear" color="grey">
+			<IconButton size="small-xx" variant="clear" color="secondary">
 				<User />
 			</IconButton>,
-			<IconButton size="small-xx" variant="clear" color="grey">
+			<IconButton size="small-xx" variant="clear" color="secondary">
 				<Arrow />
 			</IconButton>,
 		],

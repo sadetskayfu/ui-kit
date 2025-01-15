@@ -2,6 +2,7 @@ import {
 	Children,
 	cloneElement,
 	ReactElement,
+	useCallback,
 	useEffect,
 	useMemo,
 	useRef,
@@ -91,11 +92,15 @@ export const Tabs = (props: TabsProps) => {
 			const tabValue = tab.props.value
 			const isSelected = tabValue === selectedValue
 
+			const localHandleFocus = useCallback(() => {
+				handleFocus(index)
+			}, [handleFocus])
+
 			return cloneElement(tab, {
 				selected: isSelected,
 				onClick: onChange,
 				onKeyDown: handleKeyDown,
-				onFocus: () => handleFocus(index),
+				onFocus: localHandleFocus,
 			})
 		})
 	}, [handleKeyDown, handleFocus, selectedValue, onChange, children])

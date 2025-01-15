@@ -1,41 +1,41 @@
 @use '@/app/styles/helpers' as *;
 
 .button {
-  --height: ;
-  --bgColor: transparent;
-  --bgColorHover: ;
-  --color: ;
-  --borderColor: ;
-  height: var(--height);
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border: none;
-  white-space: nowrap;
-  color: var(--color);
-  background-color: var(--bgColor);
-  border-radius: var(--border-radius-m);
-  transition: background-color 0.2s, color 0.2s;
-  @include user-select-off;
+	--height: ;
+	--bgColor: transparent;
+	--bgColorHover: ;
+	--color: ;
+	--borderColor: ;
+	height: var(--height);
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	border: none;
+	white-space: nowrap;
+	color: var(--color);
+	background-color: var(--bgColor);
+	border-radius: var(--border-radius-s);
+	transition:
+		background-color 0.2s,
+		color 0.2s;
+	@include user-select-off;
 }
 
 // Colors
 .button {
 	&.primary {
 		--color: var(--theme-color-primary-500);
-    --bgColorHover: var(--color-primary-opacity);
-    --borderColor: var(--border-color-primary);
-	};
-	&.dark,
-	&.grey {
+		--bgColorHover: var(--color-primary-opacity);
+		--borderColor: var(--border-color-primary);
+	}
+	&.secondary {
 		--color: var(--font-color-soft);
 		--borderColor: var(--border-color-grey);
-    --bgColorHover: var(--color-grey-opacity);
+		--bgColorHover: var(--color-grey-opacity);
 	}
 }
-
 // Variants
 .button {
 	&.filled {
@@ -44,61 +44,42 @@
 			--bgColor: var(--theme-color-primary-500);
 			--bgColorHover: var(--theme-color-primary-600);
 		}
-		&.dark {
-			--bgColor: var(--theme-color-dark);
-			--bgColorHover: var(--theme-color-grey-900);
-		}
-		&.grey {
+		&.secondary {
 			--bgColor: var(--theme-color-grey-900);
 			--bgColorHover: var(--theme-color-dark);
-		}
-    &.dark,
-    &.grey {
       border: var(--border-weight-soft) solid var(--borderColor);
-    }
+		}
 	}
-  &.outlined {
-    border: var(--border-weight-soft) solid var(--borderColor);
-  }
+	&.outlined {
+		border: var(--border-weight-soft) solid var(--borderColor);
+	}
 }
 
 // Sizes
 .button {
-  &.medium {
-    --height: var(--button-height-m);
-    padding-inline: var(--button-padding-inline-m);
-    padding-block: var(--button-padding-block-m);
-    gap: var(--button-gap-m);
-    @include laptop {
-      --height: var(--button-height-s);
-      padding-inline: var(--button-padding-inline-s);
-      padding-block: var(--button-padding-block-s);
-      gap: var(--button-gap-s);
-    }
-  }
-  &.large {
-    --height: var(--button-height-l);
-    padding-inline: var(--button-padding-inline-l);
-    padding-block: var(--button-padding-block-l);
-    gap: var(--button-gap-l);
-    @include laptop {
-      --height: var(--button-height-m);
-      padding-inline: var(--button-padding-inline-m);
-      padding-block: var(--button-padding-block-m);
-      gap: var(--button-gap-m);
-    }
-  }
+	&.medium {
+		--height: var(--button-height-m);
+		padding-inline: var(--button-padding-inline-m);
+		padding-block: var(--button-padding-block-m);
+		gap: var(--button-gap-m);
+	}
+	&.large {
+		--height: var(--button-height-l);
+		padding-inline: var(--button-padding-inline-l);
+		padding-block: var(--button-padding-block-l);
+		gap: var(--button-gap-l);
+	}
 }
 
 // Mods
 .button {
-  @include hover {
-    background-color: var(--bgColorHover);
-  }
-  &:focus-visible {
-    @include focus-outline;
-  }
-  &:disabled {
-    @include disabled;
-  }
+	@include hover {
+		background-color: var(--bgColorHover);
+	}
+	&:focus-visible {
+		@include focus-outline;
+	}
+	&:disabled {
+		@include disabled;
+	}
 }

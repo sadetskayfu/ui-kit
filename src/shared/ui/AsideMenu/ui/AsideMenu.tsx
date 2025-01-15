@@ -21,8 +21,8 @@ interface AsideMenuProps {
 	position?: AsideMenuPosition
 	backdrop?: AsideMenuBackdrop
 	zIndex?: number
-	lazy?: boolean
-	unmount?: boolean
+	isLazy?: boolean
+	isUnmount?: boolean
 }
 
 export const AsideMenu = (props: AsideMenuProps) => {
@@ -35,8 +35,8 @@ export const AsideMenu = (props: AsideMenuProps) => {
 		position = 'left',
 		backdrop = 'dark',
 		zIndex = Z_INDEX.ASIDE_MENU,
-		lazy,
-		unmount
+		isLazy,
+		isUnmount
 	} = props
 
 	const menuRef = useRef<HTMLDivElement | null>(null)
@@ -60,8 +60,8 @@ export const AsideMenu = (props: AsideMenuProps) => {
 			nodeRef={menuRef}
 			in={isOpen}
 			timeout={200}
-			unmountOnExit={unmount}
-			mountOnEnter={lazy}
+			unmountOnExit={isUnmount}
+			mountOnEnter={isLazy}
 			classNames={{
 				enter: styles['enter'],
 				enterDone: styles['enter-done'],
@@ -73,7 +73,7 @@ export const AsideMenu = (props: AsideMenuProps) => {
 				onClose={onClose}
 				variant={backdrop}
 				zIndex={zIndex}
-				mountingAnimation={lazy}
+				mountingAnimation={isLazy}
 			>
 				<div
 					ref={menuRef}

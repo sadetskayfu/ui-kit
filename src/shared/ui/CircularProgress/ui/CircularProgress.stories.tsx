@@ -73,7 +73,7 @@ const ProgressOnButtonWrapper = (args: any) => {
 
 	return (
 		<div style={{ position: 'relative' }}>
-			<Button color="grey" disabled={isLoading} onClick={handleStartLoading}>
+			<Button color="secondary" disabled={isLoading} onClick={handleStartLoading}>
 				Start loading
 			</Button>
 			{isLoading && <CircularProgress {...args} />}

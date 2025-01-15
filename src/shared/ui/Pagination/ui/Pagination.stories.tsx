@@ -8,7 +8,7 @@ const meta: Meta<typeof Pagination> = {
 	args: {
         borderRadius: 'circular',
         size: 'medium',
-        color: 'grey',
+        color: 'secondary',
         infinity: false,
         maxDisplayedPages: 5,
         totalItems: 100,
@@ -35,6 +35,6 @@ const PaginationWrapper = (args: any) => {
     )
 }
 
-export const Default: Story = {
+export const DefaultPagination: Story = {
 	render: (args) => PaginationWrapper(args)
 }

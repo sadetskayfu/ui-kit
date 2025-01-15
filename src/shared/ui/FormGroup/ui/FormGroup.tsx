@@ -1,4 +1,4 @@
-import { Children, cloneElement, ReactElement, useId } from 'react'
+import { Children, cloneElement, HTMLAttributes, ReactElement, useId } from 'react'
 import { classNames } from '@/shared/lib/classNames/classNames'
 import { Typography } from '@/shared/ui/Typography'
 import styles from './style.module.scss'
@@ -6,7 +6,7 @@ import styles from './style.module.scss'
 type FormGroupSize = 'medium'
 type FormGroupOrientation = 'horizontal' | 'vertical'
 
-interface FormGroupProps {
+interface BaseFormGroupProps {
 	className?: string
 	children: ReactElement[]
 	label: string
@@ -16,6 +16,12 @@ interface FormGroupProps {
 	orientation?: FormGroupOrientation
 	required?: boolean
 	hiddenLegend?: boolean
+}
+
+type HTMLFieldsetProps = Omit<HTMLAttributes<HTMLFieldSetElement>, keyof BaseFormGroupProps>
+
+interface FormGroupProps extends BaseFormGroupProps {
+	fieldsetProps?: HTMLFieldsetProps
 }
 
 export const FormGroup = (props: FormGroupProps) => {
@@ -29,6 +35,7 @@ export const FormGroup = (props: FormGroupProps) => {
 		orientation = 'horizontal',
 		required,
 		hiddenLegend,
+		fieldsetProps,
 	} = props
 
 	const errorMessageId = useId()
@@ -57,8 +64,9 @@ export const FormGroup = (props: FormGroupProps) => {
 	return (
 		<fieldset
 			className={classNames(styles['form-group'], additionalClasses, mods)}
-			aria-required={required ? 'true' : undefined}
+			aria-required={required ? 'true' : 'false'}
 			aria-errormessage={errorMessage ? errorMessageId : undefined}
+			{...fieldsetProps}
 		>
 			<legend className={styles['legend']}>{label}</legend>
 			<div className={styles['items']}>{renderChildren()}</div>

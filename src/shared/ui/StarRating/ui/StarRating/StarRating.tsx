@@ -1,11 +1,11 @@
 import { classNames } from '@/shared/lib/classNames/classNames'
 import { Star, StarSize } from '../Star/Star'
-import { memo, useEffect, useId, useState } from 'react'
+import { HTMLAttributes, memo, useCallback, useEffect, useId, useState } from 'react'
 import { useAnimation } from '@/shared/hooks/useAnimation'
 import { Typography } from '@/shared/ui/Typography'
 import styles from './style.module.scss'
 
-interface StarRatingProps {
+interface BaseStarRatingProps {
 	className?: string
 	size?: StarSize
 	selectedValue: number
@@ -21,6 +21,12 @@ interface StarRatingProps {
 	hiddenLegend?: boolean
 	errorMessage?: string
 	helperText?: string
+}
+
+type HTMLFieldsetProps = Omit<HTMLAttributes<HTMLFieldSetElement>, keyof BaseStarRatingProps>
+
+interface StarRatingProps extends BaseStarRatingProps {
+	fieldsetProps?: HTMLFieldsetProps
 }
 
 export const StarRating = memo((props: StarRatingProps) => {
@@ -40,6 +46,7 @@ export const StarRating = memo((props: StarRatingProps) => {
 		required,
 		errorMessage,
 		helperText,
+		fieldsetProps,
 	} = props
 
 	const [fillValue, setFillValue] = useState<number>(selectedValue)
@@ -47,13 +54,13 @@ export const StarRating = memo((props: StarRatingProps) => {
 
 	const errorMessageId = useId()
 
-	const handleChangeValue = (value: number) => {
+	const handleChangeValue = useCallback((value: number) => {
 		onChange(value)
-	}
+	}, [onChange])
 
-	const handleChangeFillValue = (value: number) => {
+	const handleChangeFillValue = useCallback((value: number) => {
 		setFillValue(value)
-	}
+	}, [])
 
 	useEffect(() => {
 		setFillValue(selectedValue)
@@ -117,6 +124,7 @@ export const StarRating = memo((props: StarRatingProps) => {
 			aria-readonly={readonly && 'true'}
 			aria-required={required ? 'true' : 'false'}
 			aria-errormessage={errorMessage && errorMessageId}
+			{...fieldsetProps}
 		>
 			<legend className={styles['legend']}>{label}</legend>
 			<div

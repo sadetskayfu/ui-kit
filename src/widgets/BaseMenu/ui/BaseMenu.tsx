@@ -36,9 +36,11 @@ export const BaseMenu = memo(() => {
 			onClose={handleClose}
 			dropdownRef={mainMenuRef}
 			openingElementRef={buttonRef}
-			lazy
+			position='right-start'
+			isLazy
+			isUnmount
 			Component={
-				<Button onClick={handleToggle} ref={buttonRef} color="grey">
+				<Button onClick={handleToggle} ref={buttonRef} color="secondary">
 					Open menu
 				</Button>
 			}

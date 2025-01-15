@@ -29,7 +29,7 @@ const DropdownWrapper = (args: any) => {
 
 	return (
 		<div style={{ position: 'relative' }}>
-			<Button onClick={handleToggle} ref={buttonRef} color="grey">
+			<Button onClick={handleToggle} ref={buttonRef} color="secondary">
 				Open dropdown
 			</Button>
 			<Dropdown

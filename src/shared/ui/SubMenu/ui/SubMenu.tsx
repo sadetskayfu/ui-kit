@@ -54,13 +54,16 @@ export const SubMenu = (props: SubMenuProps) => {
 	const focusableElementsRef = getFocusableElements(menuRef, isOpen)
 
 	const isTouchDeviceRef = useTouchDevice()
+	const isMountingRef = useRef<boolean>(isMounting)
 
 	const labelId = useId()
 	const menuId = useId()
 
 	const handleOpenMenu = useCallback(() => {
+		if(!isMountingRef.current) {
+			setIsMounting(true)
+		}
 		setIsOpen(true)
-		setIsMounting(true)
 	}, [])
 
 	const handleCloseMenu = useCallback(() => {
@@ -86,6 +89,10 @@ export const SubMenu = (props: SubMenuProps) => {
 		isOpenSubMenu: false,
 		onClose: handleCloseMenu,
 	})
+
+	useEffect(() => {
+		isMountingRef.current = isMounting
+	}, [isMounting])
 
 	// Close submenu if parent menu closed
 	useEffect(() => {

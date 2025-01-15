@@ -36,6 +36,6 @@ const StarRatingWrapper = (args: any) => {
 	)
 }
 
-export const Default: Story = {
+export const DefaultStarRating: Story = {
 	render: (args) => StarRatingWrapper(args),
 }

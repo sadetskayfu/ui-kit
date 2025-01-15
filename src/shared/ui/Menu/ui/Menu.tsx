@@ -26,8 +26,8 @@ interface MenuProps {
 	delay?: number
 	width?: string
 	height?: string
-	lazy?: boolean
-	unmount?: boolean
+	isLazy?: boolean
+	isUnmount?: boolean
 	dropdownRef?: React.RefObject<HTMLDivElement>
 	openingElementRef: React.RefObject<HTMLElement>
 }
@@ -44,11 +44,11 @@ export const Menu = (props: MenuProps) => {
 		isOpenSubMenu,
 		onOpen,
 		onClose,
-		delay = 500,
+		delay = 200,
 		width,
 		height,
-		unmount,
-		lazy,
+		isUnmount,
+		isLazy,
 		dropdownRef,
 		openingElementRef,
 	} = props
@@ -128,8 +128,8 @@ export const Menu = (props: MenuProps) => {
 			<CSSTransition
 				nodeRef={menuRef}
 				in={isOpen}
-				unmountOnExit={unmount}
-				mountOnEnter={lazy}
+				unmountOnExit={isUnmount}
+				mountOnEnter={isLazy}
 				timeout={200}
 				classNames={{
 					enter: styles['enter'],
