@@ -1,9 +1,18 @@
-import { Field, FieldSize, FieldVariant } from '@/shared/ui/Field'
 import {
+	Field,
+	FieldLabelVariant,
+	FieldSize,
+	FieldVariant,
+	HTMLFieldProps,
+} from '@/shared/ui/Field'
+import {
+	ChangeEvent,
 	InputHTMLAttributes,
 	memo,
 	ReactElement,
+	ReactNode,
 	TextareaHTMLAttributes,
+	useCallback,
 	useEffect,
 	useId,
 	useRef,
@@ -17,26 +26,29 @@ import styles from './style.module.scss'
 interface BaseTextFieldProps {
 	className?: string
 	value?: string
-	onChange?: (
-		event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-	) => void
+	onChange?: (value: string, name: string) => void
 	onClear?: () => void
 	onBlur?: () => void
 	onFocus?: () => void
 	label: string
 	labelId?: string
+	placeholder?: string
 	variant?: FieldVariant
+	labelVariant?: FieldLabelVariant
 	size?: FieldSize
 	errorMessage?: string
 	helperText?: string
-	Actions?: ReactElement[]
+	Actions?: (ReactElement | undefined)[]
 	StartAdornment?: ReactElement | string | number
 	disabled?: boolean
 	readOnly?: boolean
 	required?: boolean
-    hiddenLabel?: boolean
+	defaultWidth?: boolean
 	multiline?: boolean
 	tabIndex?: number
+	children?: ReactNode
+	fieldRef?: React.Ref<HTMLDivElement>
+	fieldProps?: HTMLFieldProps
 }
 
 type HTMLInputProps = Omit<
@@ -49,7 +61,7 @@ type HTMLTextAreaProps = Omit<
 	keyof BaseTextFieldProps
 >
 
-interface TextFieldProps extends BaseTextFieldProps {
+export interface TextFieldProps extends BaseTextFieldProps {
 	inputProps?: HTMLInputProps
 	textAreaProps?: HTMLTextAreaProps
 }
@@ -64,8 +76,10 @@ export const TextField = memo((props: TextFieldProps) => {
 		onFocus,
 		label,
 		labelId: externalLabelId,
-		variant = 'filled',
-		size = 'large',
+		placeholder,
+		variant = 'outlined',
+		labelVariant = 'on-border',
+		size = 'medium',
 		errorMessage,
 		helperText,
 		Actions: ExternalActions = [],
@@ -73,9 +87,12 @@ export const TextField = memo((props: TextFieldProps) => {
 		disabled,
 		readOnly,
 		required,
+		defaultWidth,
 		multiline,
-        hiddenLabel,
 		tabIndex = 0,
+		children,
+		fieldRef,
+		fieldProps,
 		inputProps,
 		textAreaProps,
 	} = props
@@ -90,15 +107,22 @@ export const TextField = memo((props: TextFieldProps) => {
 	const errorMessageId = useId()
 	const labelId = externalLabelId ? externalLabelId : localLabelId
 
-	const handleFocus = () => {
+	const handleChange = useCallback(
+		(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+			onChange?.(event.target.value, event.target.name)
+		},
+		[onChange]
+	)
+
+	const handleFocus = useCallback(() => {
 		setIsFocused(true)
 		onFocus?.()
-	}
+	}, [onFocus])
 
-	const handleBlur = () => {
+	const handleBlur = useCallback(() => {
 		setIsFocused(false)
 		onBlur?.()
-	}
+	}, [onBlur])
 
 	// Update height textarea
 	useEffect(() => {
@@ -111,14 +135,9 @@ export const TextField = memo((props: TextFieldProps) => {
 
 			const newHeight = textarea.scrollHeight
 
-			textarea.style.height = `${newHeight}px`
+			textarea.style.height = `${newHeight / 16}rem`
 		}
 	}, [value, multiline])
-
-	const mods: Record<string, boolean | undefined> = {
-		[styles['dirty']]: isDirty,
-		[styles['focused']]: isFocused,
-	}
 
 	const Actions = onClear
 		? [
@@ -138,25 +157,32 @@ export const TextField = memo((props: TextFieldProps) => {
 
 	const sharedProps = {
 		value,
-		onChange,
+		placeholder,
+		onChange: handleChange,
 		onFocus: handleFocus,
 		onBlur: handleBlur,
 		onMouseDown: (event: React.MouseEvent) => event.stopPropagation(),
 		'aria-labelledby': labelId,
 		'aria-errormessage': errorMessage ? errorMessageId : undefined,
 		disabled,
-		readOnly: readOnly,
+		readOnly,
 		required,
-		tabIndex: disabled ? -1 : tabIndex
+		tabIndex: disabled ? -1 : tabIndex,
+	}
+
+	const mods: Record<string, boolean | undefined> = {
+		[styles['dirty']]: isDirty,
+		[styles['focused']]: isFocused,
 	}
 
 	return (
-		<div className={className}>
+		<div className={classNames(styles['text-field'], [className], {[styles['default-width']]: defaultWidth})}>
 			<Field
 				className={classNames(styles['field'], [], mods)}
 				label={label}
 				labelId={labelId}
 				variant={variant}
+				labelVariant={labelVariant}
 				size={size}
 				errored={!!errorMessage}
 				focused={isFocused}
@@ -168,24 +194,31 @@ export const TextField = memo((props: TextFieldProps) => {
 				focusElementRef={inputRef}
 				disabled={disabled}
 				required={required}
-                hiddenLabel={hiddenLabel}
+				ref={fieldRef}
+				htmlProps={{
+					onMouseDown: (event) => event.preventDefault(),
+					...fieldProps
+				}}
 			>
-				{multiline ? (
-					<textarea
-						className={styles['text-area']}
-                        rows={1}
-						ref={inputRef as React.MutableRefObject<HTMLTextAreaElement>}
-						{...textAreaProps}
-						{...sharedProps}
-					/>
-				) : (
-					<input
-						className={styles['input']}
-						ref={inputRef as React.MutableRefObject<HTMLInputElement>}
-						{...inputProps}
-						{...sharedProps}
-					/>
-				)}
+				<div className={styles['content']}>
+					{children && children}
+					{multiline ? (
+						<textarea
+							className={styles['text-area']}
+							rows={1}
+							ref={inputRef as React.MutableRefObject<HTMLTextAreaElement>}
+							{...textAreaProps}
+							{...sharedProps}
+						/>
+					) : (
+						<input
+							className={styles['input']}
+							ref={inputRef as React.MutableRefObject<HTMLInputElement>}
+							{...inputProps}
+							{...sharedProps}
+						/>
+					)}
+				</div>
 			</Field>
 		</div>
 	)

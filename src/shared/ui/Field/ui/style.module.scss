@@ -3,21 +3,21 @@
 .field-wrapper {
 	--height: ;
 	--bgColor: ;
-	--borderColor: var(--border-color-grey);
-	--borderColorHover: var(--color-grey-500);
-	--borderColorFocus: var(--theme-color-primary-500);
 	--paddingBlock: ;
 	--paddingInline: ;
 	--labelColor: var(--font-color-hard);
+	--borderColor: var(--border-color-grey);
+	--borderColorHover: var(--color-grey-500);
+	--borderColorFocus: var(--theme-color-primary-500);
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	row-gap: var(--form-margin-m);
-	width: 100%;
 }
 
 .field {
+	position: relative;
 	min-height: var(--height);
-	width: 100%;
 	padding-inline: var(--paddingInline);
 	padding-block: var(--paddingBlock);
 	border: var(--border-weight-soft) solid var(--borderColor);
@@ -53,16 +53,57 @@
 	}
 }
 
+// Label variants
+.field-wrapper {
+	&.on-border {
+		--labelTranslateTop: #{rem(-9)};
+		.label {
+			position: absolute;
+			z-index: 1;
+			font-size: var(--font-size-s);
+			left: 0px;
+			top: 0px;
+			translate: var(--paddingInline) var(--labelTranslateTop);
+		}
+		.fieldset {
+			position: absolute;
+			inset: var(--labelTranslateTop) 0 0;
+			border: var(--border-weight-soft) solid var(--borderColor);
+			border-radius: inherit;
+			margin: 0px;
+			pointer-events: none;
+			transition: border-color 0.2s;
+		}
+		.legend {
+			padding-inline: rem(5);
+			margin-left: calc(var(--paddingInline) - rem(6));
+			font-size: var(--font-size-s);
+			opacity: 0;
+		}
+		.field {
+			border: none;
+		}
+		.helper-text {
+			margin-left: var(--paddingInline);
+		}
+	}
+	&.hidden {
+        .label {
+            @include visually-hidden;
+        }
+	}
+}
+
 // Sizes
 .field-wrapper {
 	&.medium {
 		--height: var(--button-height-m);
-		--paddingInline: var(--padding-20);
+		--paddingInline: var(--padding-15);
 		--paddingBlock: #{rem(8)};
 	}
 	&.large {
 		--height: var(--button-height-l);
-		--paddingInline: var(--padding-20);
+		--paddingInline: var(--padding-15);
 		--paddingBlock: #{rem(13)};
 	}
 }
@@ -87,7 +128,7 @@
 	&:not(.focused) {
 		.field {
 			@include hover {
-				border-color: var(--borderColorHover);
+				--borderColor: var(--borderColorHover);
 			}
 		}
 	}
@@ -99,11 +140,6 @@
     &.required {
         .label::after {
             @include required-label
-        }
-    }
-    &.hidden-label {
-        .label {
-            @include visually-hidden;
         }
     }
 }

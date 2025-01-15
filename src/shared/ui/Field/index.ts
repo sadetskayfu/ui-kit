@@ -1,1 +1,1 @@
-export { Field, type FieldSize, type FieldVariant } from './ui/Field'
+export { Field, type FieldSize, type FieldVariant, type FieldLabelVariant, type HTMLFieldProps } from './ui/Field'

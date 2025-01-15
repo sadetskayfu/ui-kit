@@ -66,6 +66,7 @@ export const DropdownPortal = forwardRef((props: DropdownPortalProps, ref: React
 
     if(dropdown && parent) {
       setPositionPortalElement(dropdown, parent, position)
+      console.log('change position')
     }
   }, [position, parentRef])
 
@@ -95,7 +96,7 @@ useEffect(() => {
 
     if(!parent || !dropdown || !isOpen) return
     
-    const throttledHandleChanges = throttle(handleChangePosition, 100);
+    const throttledHandleChanges = throttle(handleChangePosition, 20);
 
     const resizeObserver = new ResizeObserver(throttledHandleChanges);
 

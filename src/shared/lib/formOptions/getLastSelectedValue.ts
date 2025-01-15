@@ -9,3 +9,4 @@ export const getLastSelectedValue = (selectedValue: string | string[]): string =
 
     return lastSelectedValue
 }
+

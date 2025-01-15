@@ -1,1 +1,1 @@
-export { TextField } from './ui/TextField'
+export { TextField, type TextFieldProps } from './ui/TextField'

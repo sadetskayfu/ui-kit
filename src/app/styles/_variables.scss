@@ -75,6 +75,7 @@
 	// Form
 	--form-margin-m: #{rem(11.25)};
 	--field-actions-margin: #{rem(6.25)};
+	--field-default-width: #{rem(300)};
 
 	// Icon size
 	--fz-icon-xxs: calc(var(--button-height-xxs) / 2);

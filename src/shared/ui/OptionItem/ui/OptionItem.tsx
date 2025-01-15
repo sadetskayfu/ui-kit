@@ -11,7 +11,7 @@ export interface OptionItemProps {
 	disabled?: boolean
 	selected?: boolean
 	readonly?: boolean
-	value: string
+	value?: string
 	label?: string
 	id?: string
 	role?: string
@@ -62,6 +62,8 @@ export const OptionItem = memo((props: OptionItemProps) => {
 			data-index={typeof index === 'number' ? index : undefined}
 			data-value={value}
 			aria-selected={selected ? 'true' : 'false'}
+			aria-disabled={disabled ? 'true' : undefined}
+			aria-readonly={readonly ? 'true' : undefined}
 			onClick={handleClick}
 			onMouseMove={handleMouseMove}
 		>

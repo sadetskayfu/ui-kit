@@ -1,13 +1,17 @@
+import { checkValue } from '@/shared/lib/formOptions'
 import { useCallback } from 'react'
-import { checkValue } from './checkValue'
 
 type UseChangeValueInputValues = {
 	selectedValueRef: React.MutableRefObject<string | string[]>
+	activeIndexRef: React.MutableRefObject<number>
+	optionsRef: React.MutableRefObject<HTMLLIElement[]>
+	focusedClassName: string
 	onChange: (value: string | string[]) => void
+	onClose: () => void
 }
 
 export const useChangeValue = (inputValues: UseChangeValueInputValues) => {
-	const { selectedValueRef, onChange } = inputValues
+	const { selectedValueRef, activeIndexRef, optionsRef, focusedClassName, onChange, onClose } = inputValues
 
 	const handleDeleteValue = useCallback((value: string) => {
 		const selectedValue = selectedValueRef.current
@@ -32,20 +36,30 @@ export const useChangeValue = (inputValues: UseChangeValueInputValues) => {
 			const isSelected = checkValue(value, selectedValue)
 
 			if (isSelected) {
+				setTimeout(() => {
+					optionsRef.current[activeIndexRef.current].classList.add(focusedClassName)
+				}, 0)
 				handleDeleteValue(value)
 			} else {
 				let newSelectedValues: string | string[]
 
 				if (Array.isArray(selectedValue)) {
-					newSelectedValues = [...(selectedValue as string[]), value]
+					newSelectedValues = [...selectedValue, value]
+
+					setTimeout(() => {
+						optionsRef.current[activeIndexRef.current].classList.add(
+							focusedClassName
+						)
+					}, 0)
 				} else {
 					newSelectedValues = value
+					onClose()
 				}
 
 				onChange(newSelectedValues)
 			}
 		},
-		[handleDeleteValue, onChange]
+		[handleDeleteValue, onChange, onClose, focusedClassName]
 	)
 
     const handleClick = useCallback((event: React.MouseEvent) => {

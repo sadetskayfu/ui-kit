@@ -1,5 +1,11 @@
 @use '@/app/styles/helpers' as *;
 
+.text-field {
+    &.default-width {
+        width: var(--field-default-width);
+    }
+}
+
 .field {
     --clearButtonOpacity: 0;
     --clearButtonPointerEvents: none;
@@ -22,8 +28,8 @@
     background-color: transparent;
     border: none;
     padding: 0px;
-    width: 100%;
     text-overflow: ellipsis;
+    width: 100%;
     &::placeholder {
         color: var(--font-color-soft);
     }
@@ -32,6 +38,13 @@
 .text-area {
     resize: none;
     overflow-y: hidden;
+}
+
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--padding-6);
+    width: 100%;
 }
 
 .clear-button {

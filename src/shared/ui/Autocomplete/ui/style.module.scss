@@ -1,6 +1,6 @@
 @use '@/app/styles/helpers' as *;
 
-.select {
+.autocomplete {
     &.default-width {
         width: var(--field-default-width);
     }
@@ -9,26 +9,20 @@
             rotate: 180deg;
         }
     }
-
-}
-
-.field {
-    cursor: pointer;
-}
-
-.content {
-    width: 100%;
-}
-
-.selected-values {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--padding-6);
-    color: var(--font-color-hard);
-}
-
-.placeholder {
-    color: var(--font-color-soft);
+    &.multi {
+        .field {
+            input {
+                width: 0;
+                min-width: 30px;
+                flex-grow: 1;
+                height: auto;
+            }
+        }
+        .selected-values {
+            display: contents;
+            color: var(--font-color-hard);
+        }
+    }
 }
 
 .arrow-icon {

@@ -120,8 +120,8 @@
 
 .chip {
 	&.small {
-		--height: var(--button-height-xxs);
-		--paddingInline: #{rem(12)};
+		--height: #{rem(30)};
+		--paddingInline: #{rem(14)};
 	}
 	&.medium {
 		--height: var(--button-height-xs);

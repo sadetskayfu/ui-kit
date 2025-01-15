@@ -1,7 +1,13 @@
-import { Field, FieldSize, FieldVariant } from '@/shared/ui/Field'
+import {
+	Field,
+	FieldLabelVariant,
+	FieldSize,
+	FieldVariant,
+} from '@/shared/ui/Field'
 import {
 	Children,
 	cloneElement,
+	HTMLAttributes,
 	ReactElement,
 	useCallback,
 	useEffect,
@@ -15,13 +21,15 @@ import {
 	DropdownPortal,
 	DropdownPortalPosition,
 } from '@/shared/ui/DropdownPortal'
-import { useKeyboardNavigation } from '../model/useKeyboardNavigation'
-import { useOptions } from '../model/useOptions'
 import { OptionItemProps } from '@/shared/ui/OptionItem'
-import { checkValue } from '../model/checkValue'
 import { useChangeValue } from '../model/useChangeValue'
-import { Chip } from '@/shared/ui/Chip'
 import { classNames } from '@/shared/lib/classNames/classNames'
+import {
+	useFocusOption,
+	useNavigation,
+	useOptions,
+} from '@/shared/hooks/formOptions'
+import { checkValue } from '@/shared/lib/formOptions'
 import styles from './style.module.scss'
 
 export type Option = {
@@ -29,31 +37,42 @@ export type Option = {
 	label: string
 }
 
-interface SelectProps {
+interface BaseSelectProps {
 	className?: string
-	children: ReactElement<OptionItemProps>[]
+	children: ReactElement[]
 	options: Option[]
 	selectedValue: string | string[]
 	onChange: (value: string | string[]) => void
 	label: string
 	placeholder?: string
 	variant?: FieldVariant
+	labelVariant?: FieldLabelVariant
 	size?: FieldSize
 	StartAdornment?: ReactElement | string | number
-	chips?: boolean
 	errorMessage?: string
 	helperText?: string
-	hiddenLabel?: boolean
 	disabled?: boolean
 	readOnly?: boolean
 	required?: boolean
+	defaultWidth?: boolean
 	tabIndex?: number
 	menuHeight?: string
 	menuWidth?: string
 	menuPosition?: DropdownPortalPosition
+	renderTags?: (
+		value: string,
+		label: string,
+		params: { onClose: () => void }
+	) => ReactElement
 	getDisabledOptions?: (value: string) => boolean
 	onBlur?: () => void
 	onFocus?: () => void
+}
+
+type HTMLProps = Omit<HTMLAttributes<HTMLDivElement>, keyof BaseSelectProps>
+
+interface SelectProps extends BaseSelectProps {
+	htmlProps?: HTMLProps
 }
 
 export const Select = (props: SelectProps) => {
@@ -65,42 +84,59 @@ export const Select = (props: SelectProps) => {
 		onChange,
 		label,
 		placeholder,
-		variant,
-		size,
+		variant = 'outlined',
+		labelVariant = 'on-border',
+		size = 'large',
 		StartAdornment,
-		chips,
 		errorMessage,
 		helperText,
-		hiddenLabel,
 		disabled,
 		readOnly,
 		required,
+		defaultWidth,
 		tabIndex = 0,
 		menuHeight = '300px',
 		menuWidth = '100%',
 		menuPosition = 'bottom',
+		renderTags,
 		getDisabledOptions,
 		onBlur,
 		onFocus,
-		...otherProps
+		htmlProps,
 	} = props
 
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const [isMountedMenu, setIsMountedMenu] = useState<boolean>(false)
 	const [isFocused, setIsFocused] = useState<boolean>(false)
 
-	const selectRef = useRef<HTMLDivElement | null>(null)
 	const fieldRef = useRef<HTMLDivElement | null>(null)
 	const optionsListRef = useRef<HTMLUListElement | null>(null)
-	const optionsRef = useOptions(optionsListRef, isMountedMenu)
 	const selectedValueRef = useRef<string | string[]>(selectedValue)
 	const isOpenRef = useRef<boolean>(false)
 	const isMountedMenuRef = useRef<boolean>(false)
+	const isMulti = Array.isArray(selectedValue)
+	const focusedClassName = styles['focused']
 
 	const labelId = useId()
 	const errorMessageId = useId()
 	const optionsListId = useId()
 	const optionId = useId()
+
+	const localOptions = useMemo(() => {
+		return options.reduce(
+			(keys, option) => {
+				keys[option.value] = option
+				return keys
+			},
+			{} as Record<string, Option>
+		)
+	}, [options])
+
+	const optionsRef = useOptions(optionsListRef, isMountedMenu, false)
+	const { activeIndexRef, focusedOptionId, setFocusedOption } = useFocusOption(
+		optionsRef,
+		focusedClassName
+	)
 
 	// Update ref selected value
 	useEffect(() => {
@@ -116,11 +152,6 @@ export const Select = (props: SelectProps) => {
 	useEffect(() => {
 		isMountedMenuRef.current = isMountedMenu
 	}, [isMountedMenu])
-
-	const { handleClick, handleDeleteValue, handleSelectValue } = useChangeValue({
-		onChange,
-		selectedValueRef,
-	})
 
 	const handleClose = useCallback(() => {
 		setIsOpen(false)
@@ -150,36 +181,35 @@ export const Select = (props: SelectProps) => {
 		onBlur?.()
 	}, [onBlur])
 
-	const { handleKeyDown, throttleHandleChangeIndex, focusedOptionId } =
-		useKeyboardNavigation({
-			focusedClassName: styles['focused'],
-			optionsRef,
-			optionsListRef,
-			isOpen,
-			isOpenRef,
-			onClose: handleClose,
-			onOpen: handleOpen,
-			onToggle: handleToggle,
-			onSelect: handleSelectValue,
-			onDelete: handleDeleteValue,
-			selectedValueRef,
-		})
+	const { handleClick, handleDeleteValue, handleSelectValue } = useChangeValue({
+		selectedValueRef,
+		activeIndexRef,
+		focusedClassName,
+		optionsRef,
+		onClose: handleClose,
+		onChange,
+	})
 
-	const localOptions = useMemo(() => {
-		return options.reduce(
-			(keys, option) => {
-				keys[option.value] = option
-				return keys
-			},
-			{} as Record<string, Option>
-		)
-	}, [options])
+	const { handleKeyDown, handleMouseMove } = useNavigation({
+		optionsRef,
+		optionsListRef,
+		isOpen,
+		isOpenRef,
+		activeIndexRef,
+		setFocusedOption,
+		onClose: handleClose,
+		onOpen: handleOpen,
+		onToggle: handleToggle,
+		onSelect: handleSelectValue,
+		onDelete: handleDeleteValue,
+		selectedValueRef,
+	})
 
 	const renderOptions = useMemo(() => {
 		let index = 0
 
 		return Children.map(children, (child) => {
-			const optionValue = child.props.value
+			const optionValue: string | undefined = child.props.value
 
 			if (!optionValue) {
 				return cloneElement(child)
@@ -193,32 +223,23 @@ export const Select = (props: SelectProps) => {
 
 			index++
 
-			return cloneElement(child, {
-				id: optionId + optionValue,
+			return cloneElement(child as ReactElement<OptionItemProps>, {
+				id: optionId + optionIndex,
 				index: optionIndex,
-				setIndex: throttleHandleChangeIndex,
 				selected: isSelected,
 				disabled: isDisabled,
 			})
 		})
-	}, [throttleHandleChangeIndex, selectedValue, getDisabledOptions, children])
+	}, [selectedValue, getDisabledOptions, children])
 
 	const renderSelectedValue = useMemo(() => {
 		if (selectedValue.length > 0) {
-			if (Array.isArray(selectedValue)) {
-				if (chips) {
+			if (isMulti) {
+				if (renderTags) {
 					return selectedValue.map((optionValue) => {
-						return (
-							<Chip
-								key={optionValue}
-								onClose={() => (readOnly ? undefined : handleDeleteValue(optionValue))}
-								color="secondary"
-								variant="filled"
-								size="medium"
-								label={localOptions[optionValue].label}
-								tabIndex={-1}
-							/>
-						)
+						return renderTags(optionValue, localOptions[optionValue].label, {
+							onClose: () => (readOnly ? undefined : handleDeleteValue(optionValue)),
+						})
 					})
 				} else {
 					const optionsLabel = selectedValue.map(
@@ -230,35 +251,16 @@ export const Select = (props: SelectProps) => {
 				return <p>{localOptions[selectedValue].label}</p>
 			}
 		}
-	}, [selectedValue, readOnly])
+	}, [selectedValue, readOnly, localOptions, isMulti, handleDeleteValue])
 
 	const mods: Record<string, boolean | undefined> = {
 		[styles['opened']]: isOpen,
-		[styles['disabled']]: disabled,
+		[styles['default-width']]: defaultWidth
 	}
 
 	return (
 		<>
-			<div
-				className={classNames(styles['select'], [className], mods)}
-				tabIndex={disabled ? -1 : tabIndex}
-				ref={selectRef}
-				onFocus={handleFocus}
-				onBlur={handleBlur}
-				onClick={readOnly ? undefined : handleToggle}
-				onKeyDown={readOnly ? undefined : handleKeyDown}
-				role="combobox"
-				aria-haspopup="listbox"
-				aria-expanded={isOpen}
-				aria-errormessage={errorMessage ? errorMessageId : undefined}
-				aria-labelledby={labelId}
-				aria-controls={isMountedMenu ? optionsListId : undefined}
-				aria-activedescendant={isOpen ? focusedOptionId : undefined}
-				aria-readonly={readOnly ? 'true' : undefined}
-				aria-required={required ? 'true' : 'false'}
-				aria-disabled={disabled ? 'true' : undefined}
-				{...otherProps}
-			>
+			<div className={classNames(styles['select'], [className], mods)}>
 				<Field
 					className={styles['field']}
 					label={label}
@@ -270,17 +272,34 @@ export const Select = (props: SelectProps) => {
 						</span>,
 					]}
 					variant={variant}
+					labelVariant={labelVariant}
 					size={size}
 					errored={!!errorMessage}
 					focused={isFocused}
 					helperText={helperText}
 					errorMessage={errorMessage}
 					errorMessageId={errorMessageId}
-					focusElementRef={selectRef}
 					disabled={disabled}
 					required={required}
-					hiddenLabel={hiddenLabel}
 					ref={fieldRef}
+					htmlProps={{
+						tabIndex: disabled ? -1 : tabIndex,
+						onFocus: handleFocus,
+						onBlur: handleBlur,
+						onClick: readOnly ? undefined : handleToggle,
+						onKeyDown: readOnly ? undefined : handleKeyDown,
+						role: 'combobox',
+						'aria-haspopup': 'listbox',
+						'aria-expanded': isOpen,
+						'aria-errormessage': errorMessage ? errorMessageId : undefined,
+						'aria-labelledby': labelId,
+						'aria-controls': isMountedMenu ? optionsListId : undefined,
+						'aria-activedescendant': isOpen ? focusedOptionId : undefined,
+						'aria-readonly': readOnly ? 'true' : undefined,
+						'aria-required': required ? 'true' : 'false',
+						'aria-disabled': disabled ? 'true' : undefined,
+						...htmlProps,
+					}}
 				>
 					<div className={styles['content']}>
 						<div aria-hidden="true" className={styles['selected-values']}>
@@ -302,13 +321,14 @@ export const Select = (props: SelectProps) => {
 				>
 					<ul
 						className={styles['menu']}
+						style={{ maxHeight: menuHeight }}
 						id={optionsListId}
 						onClick={handleClick}
+						onMouseMove={handleMouseMove}
 						ref={optionsListRef}
 						aria-labelledby={labelId}
 						role="listbox"
 						aria-multiselectable={Array.isArray(selectedValue) ? 'true' : 'false'}
-						style={{ maxHeight: menuHeight }}
 					>
 						{renderOptions}
 					</ul>
