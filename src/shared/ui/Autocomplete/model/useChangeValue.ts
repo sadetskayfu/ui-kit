@@ -35,7 +35,7 @@ export const useChangeValue = (inputValues: UseChangeValueInputValues) => {
 		setFocusedOption,
 	} = inputValues
 
-	const selectedOptionLabelRef = useRef<string>('')
+	const selectedOptionsRef = useRef<Record<string, string>>({})
 
 	const handleDeleteValue = useCallback(
 		(value: string) => {
@@ -47,10 +47,12 @@ export const useChangeValue = (inputValues: UseChangeValueInputValues) => {
 				newSelectedValues = selectedValue.filter(
 					(selectedValue) => selectedValue !== value
 				)
+				
 			} else {
 				newSelectedValues = ''
-				selectedOptionLabelRef.current = ''
 			}
+
+			delete selectedOptionsRef.current[value]
 			
 			onSelect(newSelectedValues)
 			onChange('')
@@ -76,6 +78,9 @@ export const useChangeValue = (inputValues: UseChangeValueInputValues) => {
 				}
 				handleDeleteValue(optionValue)
 			} else {
+				const optionLabel = options[optionValue].label
+				selectedOptionsRef.current[optionValue] = optionLabel
+
 				let newSelectedValues: string | string[]
 
 				if (Array.isArray(selectedValue)) {
@@ -94,10 +99,6 @@ export const useChangeValue = (inputValues: UseChangeValueInputValues) => {
 					onChange('')
 				} else {
 					newSelectedValues = optionValue
-
-					const optionLabel = options[newSelectedValues].label
-					selectedOptionLabelRef.current = optionLabel
-
 					onClose()
 					onChange(optionLabel)
 				}
@@ -143,9 +144,10 @@ export const useChangeValue = (inputValues: UseChangeValueInputValues) => {
 			selectedValue.length > 0 &&
 			value === ''
 		) {
+			delete selectedOptionsRef.current[selectedValue]
 			onSelect('')
 		}
 	}, [value])
 
-	return { handleSelectValue, handleDeleteValue, handleClick, selectedOptionLabelRef }
+	return { handleSelectValue, handleDeleteValue, handleClick, selectedOptionsRef }
 }

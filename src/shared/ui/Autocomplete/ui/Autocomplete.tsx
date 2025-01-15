@@ -48,7 +48,7 @@ interface SelectProps {
 	onClose?: () => void
 	isLoading?: boolean
 	disabled?: boolean
-	readOnly?: boolean
+	readonly?: boolean
 	required?: boolean
 	defaultWidth?: boolean
 	noFilter?: boolean
@@ -79,12 +79,12 @@ export const Autocomplete = (props: SelectProps) => {
 		selectedValue,
 		onChange,
 		onSelect,
-		isOpen: externalOpen,
+		isOpen: externalIsOpen,
 		onOpen,
 		onClose,
 		isLoading,
 		disabled,
-		readOnly,
+		readonly,
 		required,
 		defaultWidth,
 		noFilter,
@@ -101,7 +101,7 @@ export const Autocomplete = (props: SelectProps) => {
 	} = props
 
 	const [isOpen, setIsOpen] = useState<boolean>(
-		typeof externalOpen === 'boolean' ? externalOpen : false
+		typeof externalIsOpen === 'boolean' ? externalIsOpen : false
 	)
 	const [isMountedMenu, setIsMountedMenu] = useState<boolean>(false)
 	const [isFilterOptions, setIsFilterOptions] = useState<boolean>(false)
@@ -190,7 +190,7 @@ export const Autocomplete = (props: SelectProps) => {
 		handleClick,
 		handleDeleteValue,
 		handleSelectValue,
-		selectedOptionLabelRef,
+		selectedOptionsRef,
 	} = useChangeValue({
 		onSelect,
 		onClose: handleClose,
@@ -233,7 +233,7 @@ export const Autocomplete = (props: SelectProps) => {
 		} else {
 			const selectedValue = selectedValueRef.current as string
 
-			onChange(selectedValue.length > 0 ? selectedOptionLabelRef.current : '')
+			onChange(selectedValue.length > 0 ? selectedOptionsRef.current[selectedValue] : '')
 		}
 		handleStopFiler()
 
@@ -270,15 +270,15 @@ export const Autocomplete = (props: SelectProps) => {
 	}, [isOpen])
 
 	useEffect(() => {
-		if (typeof externalOpen === 'boolean' && externalOpen !== isOpen) {
-			setIsOpen(externalOpen)
+		if (typeof externalIsOpen === 'boolean' && externalIsOpen !== isOpen) {
+			setIsOpen(externalIsOpen)
 		}
-	}, [externalOpen])
+	}, [externalIsOpen])
 
 	const renderOptions = useMemo(() => {
 		if (options.length === 0) {
 			return isLoading ? (
-				<OptionItem readonly label="Loading..." />
+				<OptionItem role='progressbar' readonly label="Loading..." />
 			) : (
 				<OptionItem readonly label="No options" />
 			)
@@ -337,21 +337,23 @@ export const Autocomplete = (props: SelectProps) => {
 	const renderSelectedValues = useMemo(() => {
 		if (isMulti) {
 			if (selectedValue.length > 0) {
+				const selectedOptions = selectedOptionsRef.current
+
 				if (renderTags) {
 					return selectedValue.map((optionValue) => {
-						return renderTags(optionValue, localOptions[optionValue].label, {
-							onClose: () => (readOnly ? undefined : handleDeleteValue(optionValue)),
+						return renderTags(optionValue, selectedOptions[optionValue], {
+							onClose: () => (readonly ? undefined : handleDeleteValue(optionValue)),
 						})
 					})
 				} else {
 					const optionsLabel = selectedValue.map(
-						(optionValue) => localOptions[optionValue].label
+						(optionValue) => selectedOptions[optionValue]
 					)
 					return <p>{optionsLabel.join(', ')}</p>
 				}
 			}
 		}
-	}, [selectedValue, isMulti, localOptions, handleDeleteValue, readOnly])
+	}, [selectedValue, isMulti, handleDeleteValue, readonly])
 
 	const mods: Record<string, boolean | undefined> = {
 		[styles['opened']]: isOpen,
@@ -370,15 +372,15 @@ export const Autocomplete = (props: SelectProps) => {
 						onBlur: handleBlur,
 						onFocus: handleFocus,
 						labelId,
-						readOnly,
+						readonly,
 						disabled,
 						required,
 						fieldRef,
 						fieldProps: {
-							onClick: readOnly ? undefined : handleToggle,
+							onClick: readonly ? undefined : handleToggle,
 						},
 						inputProps: {
-							onKeyDown: readOnly ? undefined : handleKeyDown,
+							onKeyDown: readonly ? undefined : handleKeyDown,
 							role: 'combobox',
 							'aria-haspopup': 'listbox',
 							'aria-expanded': isOpen,

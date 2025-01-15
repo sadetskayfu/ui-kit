@@ -14,7 +14,7 @@ const meta: Meta<typeof TextField> = {
 		size: 'medium',
 		label: 'Label',
 		disabled: false,
-		readOnly: false,
+		readonly: false,
 		required: false,
         multiline: false,
 		defaultWidth: true,
@@ -59,7 +59,6 @@ const FieldWrapper = (args: any) => {
 }
 
 export const DefaultField: Story = {
-
 }
 
 export const FieldWithAdornment: Story = {

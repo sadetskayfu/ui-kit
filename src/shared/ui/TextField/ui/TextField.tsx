@@ -41,7 +41,7 @@ interface BaseTextFieldProps {
 	Actions?: (ReactElement | undefined)[]
 	StartAdornment?: ReactElement | string | number
 	disabled?: boolean
-	readOnly?: boolean
+	readonly?: boolean
 	required?: boolean
 	defaultWidth?: boolean
 	multiline?: boolean
@@ -85,7 +85,7 @@ export const TextField = memo((props: TextFieldProps) => {
 		Actions: ExternalActions = [],
 		StartAdornment,
 		disabled,
-		readOnly,
+		readonly,
 		required,
 		defaultWidth,
 		multiline,
@@ -143,7 +143,7 @@ export const TextField = memo((props: TextFieldProps) => {
 		? [
 				<IconButton
 					className={styles['clear-button']}
-					onClick={!readOnly ? onClear : undefined}
+					onClick={!readonly ? onClear : undefined}
 					size="small-xx"
 					variant="clear"
 					color="grey"
@@ -165,7 +165,7 @@ export const TextField = memo((props: TextFieldProps) => {
 		'aria-labelledby': labelId,
 		'aria-errormessage': errorMessage ? errorMessageId : undefined,
 		disabled,
-		readOnly,
+		readOnly: readonly,
 		required,
 		tabIndex: disabled ? -1 : tabIndex,
 	}

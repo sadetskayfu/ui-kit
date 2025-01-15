@@ -14,9 +14,6 @@
         .bg {
             background-color: var(--color-primary-opacity);
         }
-        .check-mark {
-            opacity: 1;
-        }
     }
     &.disabled {
         @include disabled;
@@ -32,8 +29,6 @@
 }
 
 .check-mark {
-    opacity: 0;
     margin-left: auto;
-    transition-duration: 0.2s;
 }
 

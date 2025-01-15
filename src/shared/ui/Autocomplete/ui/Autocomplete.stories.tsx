@@ -130,7 +130,7 @@ const meta: Meta<typeof Autocomplete> = {
 	component: Autocomplete,
 	args: {
 		disabled: false,
-		readOnly: false,
+		readonly: false,
 		required: false,
 		noFilter: false,
 		menuHeight: '300px',
@@ -337,30 +337,33 @@ const ControlledAutocompleteWrapper = (args: any) => {
 	}, [])
 
 	return (
-		<Autocomplete
-			isOpen={isOpen}
-			onOpen={handleOpen}
-			onClose={handleClose}
-			value={value}
-			selectedValue={selectedValue}
-			onChange={handleChange}
-			onSelect={handleSelect}
-			options={options}
-			isLoading={isLoading}
-			renderInput={(params, actions) => (
-				<TextField
-					size="large"
-					label="Label"
-					placeholder="Placeholder..."
-					Actions={[
-						isLoading ? <CircularProgress size="medium" /> : undefined,
-						...actions,
-					]}
-					{...params}
-				/>
-			)}
-			{...args}
-		/>
+		<div style={{ display: 'flex', flexDirection: 'column', rowGap: '15px' }}>
+			<span>Is open: {isOpen ? 'true' : 'false'}</span>
+			<Autocomplete
+				isOpen={isOpen}
+				onOpen={handleOpen}
+				onClose={handleClose}
+				value={value}
+				selectedValue={selectedValue}
+				onChange={handleChange}
+				onSelect={handleSelect}
+				options={options}
+				isLoading={isLoading}
+				renderInput={(params, actions) => (
+					<TextField
+						size="large"
+						label="Label"
+						placeholder="Placeholder..."
+						Actions={[
+							isLoading ? <CircularProgress size="medium" /> : undefined,
+							...actions,
+						]}
+						{...params}
+					/>
+				)}
+				{...args}
+			/>
+		</div>
 	)
 }
 
@@ -398,4 +401,3 @@ export const LocationAutocomplete: Story = {
 export const ControlledAutocomplete: Story = {
 	render: (args) => ControlledAutocompleteWrapper(args),
 }
-

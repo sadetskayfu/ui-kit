@@ -76,6 +76,8 @@ export const useNavigation = (inputValues: UseNavigationInputValues) => {
 					if (valueRef && valueRef.current !== '') break
 
 					if (Array.isArray(selectedValue) && selectedValue.length > 0) {
+						event.preventDefault()
+						
 						const lastSelectedValue = getLastSelectedValue(selectedValue)
 						onDelete(lastSelectedValue)
 					}

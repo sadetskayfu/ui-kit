@@ -3,11 +3,11 @@ import {
 	FieldLabelVariant,
 	FieldSize,
 	FieldVariant,
+	HTMLFieldProps,
 } from '@/shared/ui/Field'
 import {
 	Children,
 	cloneElement,
-	HTMLAttributes,
 	ReactElement,
 	useCallback,
 	useEffect,
@@ -37,7 +37,7 @@ export type Option = {
 	label: string
 }
 
-interface BaseSelectProps {
+interface SelectProps {
 	className?: string
 	children: ReactElement[]
 	options: Option[]
@@ -52,13 +52,16 @@ interface BaseSelectProps {
 	errorMessage?: string
 	helperText?: string
 	disabled?: boolean
-	readOnly?: boolean
+	readonly?: boolean
 	required?: boolean
 	defaultWidth?: boolean
 	tabIndex?: number
 	menuHeight?: string
 	menuWidth?: string
 	menuPosition?: DropdownPortalPosition
+	isOpen?: boolean
+	onOpen?: () => void
+	onClose?: () => void
 	renderTags?: (
 		value: string,
 		label: string,
@@ -67,13 +70,10 @@ interface BaseSelectProps {
 	getDisabledOptions?: (value: string) => boolean
 	onBlur?: () => void
 	onFocus?: () => void
+	fieldProps?: HTMLFieldProps
 }
 
-type HTMLProps = Omit<HTMLAttributes<HTMLDivElement>, keyof BaseSelectProps>
 
-interface SelectProps extends BaseSelectProps {
-	htmlProps?: HTMLProps
-}
 
 export const Select = (props: SelectProps) => {
 	const {
@@ -91,21 +91,24 @@ export const Select = (props: SelectProps) => {
 		errorMessage,
 		helperText,
 		disabled,
-		readOnly,
+		readonly,
 		required,
 		defaultWidth,
 		tabIndex = 0,
 		menuHeight = '300px',
 		menuWidth = '100%',
 		menuPosition = 'bottom',
+		isOpen: externalIsOpen,
+		onClose,
+		onOpen,
 		renderTags,
 		getDisabledOptions,
 		onBlur,
 		onFocus,
-		htmlProps,
+		fieldProps
 	} = props
 
-	const [isOpen, setIsOpen] = useState<boolean>(false)
+	const [isOpen, setIsOpen] = useState<boolean>(typeof externalIsOpen === 'boolean' ? externalIsOpen : false)
 	const [isMountedMenu, setIsMountedMenu] = useState<boolean>(false)
 	const [isFocused, setIsFocused] = useState<boolean>(false)
 
@@ -132,7 +135,7 @@ export const Select = (props: SelectProps) => {
 		)
 	}, [options])
 
-	const optionsRef = useOptions(optionsListRef, isMountedMenu, false)
+	const optionsRef = useOptions(optionsListRef, isMountedMenu)
 	const { activeIndexRef, focusedOptionId, setFocusedOption } = useFocusOption(
 		optionsRef,
 		focusedClassName
@@ -155,21 +158,24 @@ export const Select = (props: SelectProps) => {
 
 	const handleClose = useCallback(() => {
 		setIsOpen(false)
-	}, [])
+		onClose?.()
+	}, [onClose])
 
 	const handleOpen = useCallback(() => {
 		if (!isMountedMenuRef.current) {
 			setIsMountedMenu(true)
 		}
 		setIsOpen(true)
-	}, [])
+		onOpen?.()
+	}, [onOpen])
 
 	const handleToggle = useCallback(() => {
-		if (!isMountedMenuRef.current) {
-			setIsMountedMenu(true)
+		if(isOpenRef.current) {
+			handleClose()
+		} else {
+			handleOpen()
 		}
-		setIsOpen((prev) => !prev)
-	}, [])
+	}, [handleClose, handleOpen])
 
 	const handleFocus = useCallback(() => {
 		setIsFocused(true)
@@ -178,8 +184,9 @@ export const Select = (props: SelectProps) => {
 
 	const handleBlur = useCallback(() => {
 		setIsFocused(false)
+		handleClose()
 		onBlur?.()
-	}, [onBlur])
+	}, [onBlur, handleClose])
 
 	const { handleClick, handleDeleteValue, handleSelectValue } = useChangeValue({
 		selectedValueRef,
@@ -196,36 +203,36 @@ export const Select = (props: SelectProps) => {
 		isOpen,
 		isOpenRef,
 		activeIndexRef,
+		selectedValueRef,
 		setFocusedOption,
 		onClose: handleClose,
 		onOpen: handleOpen,
 		onToggle: handleToggle,
 		onSelect: handleSelectValue,
 		onDelete: handleDeleteValue,
-		selectedValueRef,
 	})
 
-	const renderOptions = useMemo(() => {
-		let index = 0
+	useEffect(() => {
+		if (typeof externalIsOpen === 'boolean' && externalIsOpen !== isOpen) {
+			setIsOpen(externalIsOpen)
+		}
+	}, [externalIsOpen])
 
-		return Children.map(children, (child) => {
+	const renderOptions = useMemo(() => {
+		return Children.map(children, (child, index) => {
 			const optionValue: string | undefined = child.props.value
 
 			if (!optionValue) {
 				return cloneElement(child)
 			}
 
-			const optionIndex = index
 			const isDisabled = getDisabledOptions
 				? getDisabledOptions(optionValue)
 				: false
 			const isSelected = checkValue(optionValue, selectedValue)
 
-			index++
-
 			return cloneElement(child as ReactElement<OptionItemProps>, {
-				id: optionId + optionIndex,
-				index: optionIndex,
+				id: optionId + (index + 1),
 				selected: isSelected,
 				disabled: isDisabled,
 			})
@@ -238,7 +245,7 @@ export const Select = (props: SelectProps) => {
 				if (renderTags) {
 					return selectedValue.map((optionValue) => {
 						return renderTags(optionValue, localOptions[optionValue].label, {
-							onClose: () => (readOnly ? undefined : handleDeleteValue(optionValue)),
+							onClose: () => (readonly ? undefined : handleDeleteValue(optionValue)),
 						})
 					})
 				} else {
@@ -251,7 +258,7 @@ export const Select = (props: SelectProps) => {
 				return <p>{localOptions[selectedValue].label}</p>
 			}
 		}
-	}, [selectedValue, readOnly, localOptions, isMulti, handleDeleteValue])
+	}, [selectedValue, readonly, localOptions, isMulti, handleDeleteValue])
 
 	const mods: Record<string, boolean | undefined> = {
 		[styles['opened']]: isOpen,
@@ -286,8 +293,8 @@ export const Select = (props: SelectProps) => {
 						tabIndex: disabled ? -1 : tabIndex,
 						onFocus: handleFocus,
 						onBlur: handleBlur,
-						onClick: readOnly ? undefined : handleToggle,
-						onKeyDown: readOnly ? undefined : handleKeyDown,
+						onClick: readonly ? undefined : handleToggle,
+						onKeyDown: readonly ? undefined : handleKeyDown,
 						role: 'combobox',
 						'aria-haspopup': 'listbox',
 						'aria-expanded': isOpen,
@@ -295,10 +302,10 @@ export const Select = (props: SelectProps) => {
 						'aria-labelledby': labelId,
 						'aria-controls': isMountedMenu ? optionsListId : undefined,
 						'aria-activedescendant': isOpen ? focusedOptionId : undefined,
-						'aria-readonly': readOnly ? 'true' : undefined,
+						'aria-readonly': readonly ? 'true' : undefined,
 						'aria-required': required ? 'true' : 'false',
 						'aria-disabled': disabled ? 'true' : undefined,
-						...htmlProps,
+						...fieldProps
 					}}
 				>
 					<div className={styles['content']}>

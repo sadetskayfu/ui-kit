@@ -15,8 +15,6 @@ export interface OptionItemProps {
 	label?: string
 	id?: string
 	role?: string
-	index?: number
-	setIndex?: (index: number) => void
 }
 
 export const OptionItem = memo((props: OptionItemProps) => {
@@ -26,8 +24,6 @@ export const OptionItem = memo((props: OptionItemProps) => {
 		disabled,
 		selected,
 		readonly,
-		index,
-		setIndex,
 		value,
 		label,
 		id,
@@ -46,12 +42,6 @@ export const OptionItem = memo((props: OptionItemProps) => {
 		handleRippleMousePosition(rippleWrapperRef, event)
 	}
 
-	const handleMouseMove = () => {
-		if(typeof index === 'number' && setIndex) {
-			setIndex(index)
-		}
-	}
-
 	return (
 		<li
 			className={classNames(styles['menu-item'], [className], mods)}
@@ -59,21 +49,21 @@ export const OptionItem = memo((props: OptionItemProps) => {
 			role={role}
 			tabIndex={-1}
 			data-disabled={disabled || readonly ? true : undefined}
-			data-index={typeof index === 'number' ? index : undefined}
 			data-value={value}
 			aria-selected={selected ? 'true' : 'false'}
 			aria-disabled={disabled ? 'true' : undefined}
 			aria-readonly={readonly ? 'true' : undefined}
 			onClick={handleClick}
-			onMouseMove={handleMouseMove}
 		>
 			<span className={styles['bg']}></span>
 			{children ? children : label}
-			<CheckMark
-				className={styles['check-mark']}
-				color="primary"
-				size="small-xx"
-			/>
+			{selected && (
+				<CheckMark
+					className={styles['check-mark']}
+					color="primary"
+					size="small-xx"
+				/>
+			)}
 			<RippleWrapper ref={rippleWrapperRef} />
 		</li>
 	)

@@ -1,44 +1,41 @@
 import { useEffect, useRef } from 'react'
 
 export const useOptions = (
-    optionsListRef: React.MutableRefObject<HTMLUListElement | null>,
-    isMounted: boolean,
-    setIndex: boolean = true
+	optionsListRef: React.MutableRefObject<HTMLUListElement | null>,
+	isMounted: boolean
 ) => {
-    const optionsRef = useRef<HTMLLIElement[]>([])
+	const optionsRef = useRef<HTMLLIElement[]>([])
 
-    useEffect(() => {
-        const optionsList = optionsListRef.current
+	useEffect(() => {
+		const optionsList = optionsListRef.current
 
-        if (!optionsList || !isMounted) return
+		if (!optionsList || !isMounted) return
 
-        const updateOptions = () => {
-            console.log('take options')
-            
-            const options =
-                optionsList.querySelectorAll<HTMLLIElement>("[role='option']")
+		const updateOptions = () => {
+			console.log('take options')
 
-            if(setIndex) {
-                options.forEach((option, index) => {
-                    option.setAttribute('data-index', index + '')
-                })
-            }
-            
-            optionsRef.current = Array.from(options)
-        }
+			const options =
+				optionsList.querySelectorAll<HTMLLIElement>("[role='option']")
 
-        const observer = new MutationObserver(updateOptions)
+			options.forEach((option, index) => {
+				option.setAttribute('data-index', index + '')
+			})
 
-        observer.observe(optionsList, {
-            childList: true,
-        })
+			optionsRef.current = Array.from(options)
+		}
 
-        updateOptions()
+		const observer = new MutationObserver(updateOptions)
 
-        return () => {
-            observer.disconnect()
-        }
-    }, [isMounted])
+		observer.observe(optionsList, {
+			childList: true,
+		})
 
-    return optionsRef
+		updateOptions()
+
+		return () => {
+			observer.disconnect()
+		}
+	}, [isMounted])
+
+	return optionsRef
 }
