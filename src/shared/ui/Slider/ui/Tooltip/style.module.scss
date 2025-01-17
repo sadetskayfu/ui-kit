@@ -1,0 +1,72 @@
+@use '@/app/styles/helpers' as *;
+
+.tooltip {
+    --padding: #{rem(8)};
+    --bgColor: var(--theme-color-grey-800);
+    position: absolute;
+    min-width: rem(40);
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.5);
+    transition-duration: 0.2s;
+    &:before {
+        --height: #{rem(8)};
+        content: '';
+        position: absolute;
+        width: var(--height);
+        height: var(--height);
+        rotate: 45deg;
+        background-color: var(--bgColor);
+    }
+}
+
+.content {
+    background-color: var(--bgColor);
+    width: 100%;
+    padding: rem(5);
+    border-radius: rem(2);
+    display: flex;
+    justify-content: center;
+}
+
+// Position
+.tooltip {
+    &.top {
+        padding-bottom: var(--padding);
+        bottom: 100%;
+        &:before {
+            bottom: 0;
+            left: 50%;
+            translate: -50% -50%;
+        }
+    }
+    &.bottom {
+        padding-top: var(--padding);
+        top: 100%;
+        &:before {
+            top: 0;
+            left: 50%;
+            translate: -50% 50%;
+        }
+    }
+    &.left {
+        padding-right: var(--padding);
+        right: 100%;
+        &:before {
+            right: 0;
+            top: 50%;
+            translate: -50% -50%;
+        }
+    }
+    &.right {
+        padding-left: var(--padding);
+        left: 100%;
+        &:before {
+            left: 0;
+            top: 50%;
+            translate: 50% -50%;
+        }
+    }
+}

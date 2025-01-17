@@ -1,0 +1,76 @@
+@use '@/app/styles/helpers' as *;
+
+.slider {
+	--height: ;
+	--trackHeight: ;
+	--markerHeight: ;
+	--boxShadow: 0 0 0 var(--border-weight-soft) var(--theme-color-primary-500);
+	--trackColor: var(--theme-color-grey-900);
+	--labelPaddingTop: ;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	//background-color: red;
+	&.disabled {
+		@include disabled;
+	}
+}
+
+.track {
+	position: relative;
+	background-color: var(--trackColor);
+	border: var(--border-weight-soft) solid var(--border-color-grey);
+	border-radius: var(--border-radius-full);
+}
+
+.fill {
+	position: absolute;
+	background-color: var(--theme-color-primary-500);
+	box-shadow: var(--boxShadow);
+	border-radius: inherit;
+}
+
+// Sizes
+.slider {
+	&.small {
+		--height: var(--button-height-xs);
+		--trackHeight: #{rem(3)};
+		--labelPaddingTop: #{rem(12)};
+		--markerHeight: #{rem(8)};
+	}
+
+	&.medium {
+		--height: var(--button-height-s);
+		--trackHeight: #{rem(6)};
+		--labelPaddingTop: #{rem(18)};
+		--markerHeight: #{rem(12)};
+	}
+}
+
+// Orientation
+.slider {
+	&.horizontal {
+		height: var(--height);
+		width: 300px; //
+		.track {
+			width: 100%;
+			height: var(--trackHeight);
+		}
+		.fill {
+			height: 100%;
+		}
+	}
+	&.vertical {
+		width: var(--height);
+		height: 300px; //
+		.track {
+			height: 100%;
+			width: var(--trackHeight);
+		}
+		.fill {
+			width: 100%;
+      bottom: 0;
+		}
+	}
+}

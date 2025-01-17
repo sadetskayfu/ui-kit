@@ -1,0 +1,71 @@
+@use '@/app/styles/helpers' as *;
+
+.thumb {
+	--thumbHeight: ;
+	--boxShadow: 0 0 0 0.5px var(--theme-color-primary-500);
+	@include user-select-off;
+	position: absolute;
+	height: var(--thumbHeight);
+	width: var(--thumbHeight);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--theme-color-primary-500);
+	box-shadow: 0 0 0.5px var(--border-color-grey);
+	border-radius: 50%;
+	&:before {
+		content: '';
+		position: absolute;
+		border-radius: inherit;
+		height: 200%;
+		width: 200%;
+		transition-duration: 0.2s;
+	}
+	@include hover {
+		&:before {
+			box-shadow: var(--boxShadow);
+		}
+		.tooltip {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+	&:focus {
+		z-index: 1;
+		&:before {
+			box-shadow: var(--boxShadow);
+		}
+		.tooltip {
+			opacity: 1;
+			transform: scale(1);
+		}
+		&.dragging {
+			&:before {
+				width: 230%;
+				height: 230%;
+			}
+		}
+	}
+}
+
+// Orientation
+.thumb {
+	&.horizontal {
+		top: 50%;
+		translate: -50% -50%;
+	}
+	&.vertical {
+		left: 50%;
+		translate: -50% 50%;
+	}
+}
+
+// Sizes
+.thumb {
+	&.small {
+		--thumbHeight: calc(var(--button-height-xs) / 2);
+	}
+	&.medium {
+		--thumbHeight: calc(var(--button-height-s) / 2);
+	}
+}

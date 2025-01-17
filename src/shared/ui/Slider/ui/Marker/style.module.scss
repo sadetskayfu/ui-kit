@@ -1,0 +1,88 @@
+@use '@/app/styles/helpers' as *;
+
+.marker {
+    --height: ;
+    --color: var(--font-color-soft);
+    --emulatorScale: 0;
+    --labelPaddingBlock: #{rem(5)};
+    --labelPaddingInline: #{rem(8)};
+	position: absolute;
+	height: var(--height);
+	width: var(--height);
+	background-color: var(--trackColor);
+	border-radius: 50%;
+	font-size: var(--font-size-s);
+	color: var(--color);
+	transition-duration: 0.2s;
+	border: var(--border-weight-soft) solid var(--border-color-grey);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	&:before {
+		content: '';
+		width: 40%;
+		height: 40%;
+		background-color: var(--theme-color-primary-500);
+		border-radius: inherit;
+		transform: scale(var(--emulatorScale));
+		transition-duration: inherit;
+	}
+	&.active {
+        --emulatorScale: 1;
+		--color: var(--theme-color-primary-500);
+		border-color: var(--theme-color-primary-500);
+	}
+}
+
+.label {
+    position: absolute;
+    pointer-events: none;
+}
+
+// Position
+.marker {
+    &.top,
+    &.bottom {
+        top: 50%;
+        translate: -50% -50%;
+    }
+    &.left,
+    &.right {
+        left: 50%;
+        translate: -50% 50%;
+    }
+    &.bottom {
+        .label {
+            top: 100%;
+            padding-top: var(--labelPaddingBlock);
+        }  
+    }
+    &.top {
+        .label {
+            bottom: 100%;
+            padding-bottom: var(--labelPaddingBlock);
+        }  
+    }
+    &.left {
+        .label {
+            right: 100%;
+            padding-right: var(--labelPaddingInline);
+        }
+    }
+    &.right {
+        .label {
+            left: 100%;
+            padding-left: var(--labelPaddingInline);
+        } 
+    }
+}
+
+// Sizes
+.marker {
+    &.small {
+        --height: #{rem(10)};
+    }
+    &.medium {
+        --height: #{rem(15)};
+    }
+}

@@ -1,0 +1,78 @@
+import { forwardRef, memo } from 'react'
+import { AriaAttributes, SliderOrientation, SliderSize } from '../Slider/Slider'
+import { classNames } from '@/shared/lib/classNames/classNames'
+import { Tooltip, TooltipPosition } from '../Tooltip/Tooltip'
+import { calculateTranslateThumb } from '../../model/lib'
+import styles from './style.module.scss'
+
+interface ThumbProps extends AriaAttributes {
+    index: 0 | 1
+	value: number
+	min: number
+	max: number
+	orientation: SliderOrientation
+	disabled?: boolean
+	isDragging: boolean
+	tabIndex?: number
+    size: SliderSize
+    tooltipPosition: TooltipPosition
+    onKeyDown: (event: React.KeyboardEvent) => void
+    onFocus: (index: 0 | 1) => void
+    getTooltipLabel?: (value: number) => string | number
+}
+
+export const Thumb = memo(forwardRef(
+	(props: ThumbProps, ref: React.ForwardedRef<HTMLDivElement>) => {
+		const {
+            index,
+			value,
+			min,
+			max,
+			orientation,
+			disabled,
+			isDragging,
+			tabIndex = 0,
+            size,
+            tooltipPosition,
+            onKeyDown,
+            onFocus,
+            getTooltipLabel,
+            ...otherProps
+		} = props
+
+        const additionalClasses: Array<string | undefined> = [
+            styles[size],
+            styles[orientation]
+        ]
+
+        const mods: Record<string, boolean | undefined> = {
+            [styles['dragging']]: isDragging
+        }
+
+        const isHorizontal = orientation === 'horizontal'
+
+        const tooltipLabel = getTooltipLabel ? getTooltipLabel(value) : value
+
+        const translate = `${calculateTranslateThumb(value, min, max)}%`
+
+		return (
+			<div
+				className={classNames(styles['thumb'], additionalClasses, mods)}
+				ref={ref}
+				style={{ left: isHorizontal ? translate : '', bottom: !isHorizontal ? translate : ''}}
+                tabIndex={disabled ? -1 : tabIndex}
+                role='slider'
+                aria-disabled={disabled ? 'true' : undefined}
+				aria-valuenow={value}
+				aria-valuemax={max}
+				aria-valuemin={min}
+                aria-orientation={orientation}
+                onKeyDown={onKeyDown}
+                onFocus={() => onFocus(index)}
+                {...otherProps}
+			>
+                <Tooltip className={styles['tooltip']} label={tooltipLabel} position={tooltipPosition}/>
+            </div>
+		)
+	}
+))
