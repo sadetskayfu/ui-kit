@@ -4,11 +4,12 @@ type UseDraggingInputValues = {
 	minThumbRef: React.RefObject<HTMLDivElement | null>
 	maxThumbRef: React.RefObject<HTMLDivElement | null>
 	fillRef: React.RefObject<HTMLDivElement | null>
-	handleChange: (event: React.MouseEvent | MouseEvent) => void
+	isTouchDevice: boolean
+	handleChange: (event: React.MouseEvent | MouseEvent | React.TouchEvent | TouchEvent) => void
 }
 
 export const useDragging = (inputValues: UseDraggingInputValues) => {
-	const { minThumbRef, maxThumbRef, fillRef, handleChange } = inputValues
+	const { minThumbRef, maxThumbRef, fillRef, isTouchDevice, handleChange } = inputValues
 
 	const [isDragging, setIsDragging] = useState<boolean>(false)
 
@@ -16,7 +17,7 @@ export const useDragging = (inputValues: UseDraggingInputValues) => {
 	const isTransitionClearedRef = useRef<boolean>(false)
 
 	const handleMouseDown = useCallback(
-		(event: React.MouseEvent) => {
+		(event: React.MouseEvent | React.TouchEvent) => {
 			event.preventDefault()
 
 			if (timeoutIdRef.current) {
@@ -53,7 +54,9 @@ export const useDragging = (inputValues: UseDraggingInputValues) => {
 	)
 
 	const handleMouseMove = useCallback(
-		(event: MouseEvent) => {
+		(event: MouseEvent | TouchEvent) => {
+			event.preventDefault()
+
 			const minThumb = minThumbRef.current
 			const maxThumb = maxThumbRef.current
 			const fill = fillRef.current
@@ -74,21 +77,30 @@ export const useDragging = (inputValues: UseDraggingInputValues) => {
 		[handleChange]
 	)
 
-	const handleMouseUp = useCallback(() => {
+	const handleMouseUp = useCallback((event: MouseEvent | TouchEvent) => {
+		event.preventDefault()
+
 		setIsDragging(false)
 	}, [])
 
 	useEffect(() => {
 		if (isDragging) {
-			document.addEventListener('mousemove', handleMouseMove)
-			document.addEventListener('mouseup', handleMouseUp)
+			if(isTouchDevice) {
+				document.addEventListener('touchmove', handleMouseMove)
+				document.addEventListener('touchend', handleMouseUp)
+			} else {
+				document.addEventListener('mousemove', handleMouseMove)
+				document.addEventListener('mouseup', handleMouseUp)
+			}
 		}
 
 		return () => {
-			document.removeEventListener('mousemove', handleMouseMove)
-			document.removeEventListener('mouseup', handleMouseUp)
+				document.removeEventListener('touchmove', handleMouseMove)
+				document.removeEventListener('touchend', handleMouseUp)
+				document.removeEventListener('mousemove', handleMouseMove)
+				document.removeEventListener('mouseup', handleMouseUp)
 		}
-	}, [isDragging])
+	}, [isDragging, isTouchDevice])
 
 	useEffect(() => {
 		return () => {

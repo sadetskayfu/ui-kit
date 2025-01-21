@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
-import { ValueType } from '../../ui/Slider/Slider'
-import { getRangeValues } from '../lib'
+import { ValueType } from '../ui/Slider/Slider'
+import { getRangeValues } from '../helpers'
 
 type UseKeyboardNavigationInputValues = {
 	valueRef: React.MutableRefObject<ValueType>
@@ -27,6 +27,8 @@ export const useKeyboardNavigation = (
 				case 'ArrowUp':
 				case 'ArrowLeft':
 				case 'ArrowDown':
+					event.preventDefault()
+					
 					const direction =
 						event.key === 'ArrowRight' || event.key === 'ArrowUp' ? 1 : -1
 					const localStep = direction * step
@@ -44,7 +46,8 @@ export const useKeyboardNavigation = (
 							value,
 							newValue,
 							activeThumbIndex,
-							minRange
+							minRange,
+							step
 						)
 
 						if (correctedValue !== thumbValue) {
@@ -63,6 +66,8 @@ export const useKeyboardNavigation = (
 					break
 				case 'Home':
 				case 'End':
+					event.preventDefault()
+
 					const newValue = event.key === 'Home' ? min : max
 
 					if (Array.isArray(value)) {
@@ -72,7 +77,8 @@ export const useKeyboardNavigation = (
 							value,
 							newValue,
 							activeThumbIndex,
-							minRange
+							minRange,
+							step
 						)
 
 						if(value[activeThumbIndex] !== correctedValue) {

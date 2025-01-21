@@ -2,7 +2,7 @@ import { forwardRef, memo } from 'react'
 import { AriaAttributes, SliderOrientation, SliderSize } from '../Slider/Slider'
 import { classNames } from '@/shared/lib/classNames/classNames'
 import { Tooltip, TooltipPosition } from '../Tooltip/Tooltip'
-import { calculateTranslateThumb } from '../../model/lib'
+import { calculateTranslateThumb } from '../../helpers'
 import styles from './style.module.scss'
 
 interface ThumbProps extends AriaAttributes {
@@ -10,15 +10,17 @@ interface ThumbProps extends AriaAttributes {
 	value: number
 	min: number
 	max: number
+    name?: string
 	orientation: SliderOrientation
 	disabled?: boolean
 	isDragging: boolean
-	tabIndex?: number
+	tabIndex: number
     size: SliderSize
     tooltipPosition: TooltipPosition
     onKeyDown: (event: React.KeyboardEvent) => void
     onFocus: (index: 0 | 1) => void
     getTooltipLabel?: (value: number) => string | number
+    getAriaValueText?: (value: number) => string
 }
 
 export const Thumb = memo(forwardRef(
@@ -28,6 +30,7 @@ export const Thumb = memo(forwardRef(
 			value,
 			min,
 			max,
+            name,
 			orientation,
 			disabled,
 			isDragging,
@@ -37,6 +40,7 @@ export const Thumb = memo(forwardRef(
             onKeyDown,
             onFocus,
             getTooltipLabel,
+            getAriaValueText,
             ...otherProps
 		} = props
 
@@ -52,6 +56,7 @@ export const Thumb = memo(forwardRef(
         const isHorizontal = orientation === 'horizontal'
 
         const tooltipLabel = getTooltipLabel ? getTooltipLabel(value) : value
+        const ariaValueText = getAriaValueText ? getAriaValueText(value) : value + ''
 
         const translate = `${calculateTranslateThumb(value, min, max)}%`
 
@@ -63,6 +68,7 @@ export const Thumb = memo(forwardRef(
                 tabIndex={disabled ? -1 : tabIndex}
                 role='slider'
                 aria-disabled={disabled ? 'true' : undefined}
+                aria-valuetext={ariaValueText}
 				aria-valuenow={value}
 				aria-valuemax={max}
 				aria-valuemin={min}
@@ -71,6 +77,7 @@ export const Thumb = memo(forwardRef(
                 onFocus={() => onFocus(index)}
                 {...otherProps}
 			>
+                <input name={name} value={value} type='range'></input>
                 <Tooltip className={styles['tooltip']} label={tooltipLabel} position={tooltipPosition}/>
             </div>
 		)

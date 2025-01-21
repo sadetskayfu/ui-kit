@@ -1,4 +1,4 @@
-import { SliderOrientation } from '../../ui/Slider/Slider'
+import { SliderOrientation } from '../ui/Slider/Slider'
 
 export const getPercentage = (
 	clickPosition: number,

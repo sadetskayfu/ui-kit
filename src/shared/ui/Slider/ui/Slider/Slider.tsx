@@ -1,22 +1,17 @@
-import { useState, useRef, useCallback, memo, useEffect } from 'react'
+import { useState, useRef, useCallback, memo, useEffect, Suspense } from 'react'
 import { classNames } from '@/shared/lib/classNames/classNames'
-import {
-	CustomMarker,
-	useChangeValue,
-	useDragging,
-	useKeyboardNavigation,
-	useMarkers,
-} from '../../model/hooks'
+import { useChangeValue, useDragging, useKeyboardNavigation } from '../../hooks'
 import { Thumb } from '../Thumb/Thumb'
-import { calculateTranslateThumb } from '../../model/lib'
+import { calculateTranslateThumb } from '../../helpers'
 import { TooltipPosition } from '../Tooltip/Tooltip'
-import { MarkerPosition } from '../Marker/Marker'
+import { MarkerLabelPosition } from '../Markers/ui/Marker/Marker'
+import { CustomMarker } from '../Markers'
+import { Markers } from '../Markers'
+import { useTouchDevice } from '@/shared/hooks'
 import styles from './style.module.scss'
 
 export type SliderSize = 'small' | 'medium'
-
 export type SliderOrientation = 'horizontal' | 'vertical'
-
 export type ValueType = number | [number, number]
 
 export interface AriaAttributes {
@@ -29,20 +24,24 @@ interface SliderProps extends AriaAttributes {
 	size?: SliderSize
 	orientation?: SliderOrientation
 	tooltipPosition?: TooltipPosition
-	markersPosition?: MarkerPosition
+	markerLabelPosition?: MarkerLabelPosition
 	value: ValueType
 	min: number
 	max: number
 	step?: number
 	minRange?: number
+	name?: string
+	minInputName?: string
+	maxInputName?: string
 	disabled?: boolean
 	tabIndex?: number
 	customMarkers?: CustomMarker[]
 	isMarkers?: boolean
 	isVisibleMarkersLabel?: boolean
-	onChange?: (value: ValueType) => void
+	onChange?: (value: ValueType, name: string) => void
 	getMarkerLabel?: (value: number) => string | number
 	getTooltipLabel?: (value: number) => string | number
+	getAriaValueText?: (value: number) => string
 }
 
 export const Slider = memo((props: SliderProps) => {
@@ -51,12 +50,15 @@ export const Slider = memo((props: SliderProps) => {
 		size = 'medium',
 		orientation = 'horizontal',
 		tooltipPosition = 'top',
-		markersPosition = 'bottom',
+		markerLabelPosition = 'bottom',
 		value: externalValue,
 		min = 1,
 		max = 100,
 		step = 1,
 		minRange = 1,
+		name = '',
+		minInputName,
+		maxInputName,
 		disabled,
 		tabIndex = 0,
 		isMarkers,
@@ -65,11 +67,13 @@ export const Slider = memo((props: SliderProps) => {
 		onChange: externalOnChange,
 		getMarkerLabel,
 		getTooltipLabel,
+		getAriaValueText,
 		...otherProps
 	} = props
 
 	const [value, setValue] = useState<ValueType>(externalValue)
 	const valueRef = useRef<ValueType>(value)
+	const { isTouchDevice } = useTouchDevice()
 
 	const sliderRef = useRef<HTMLDivElement | null>(null)
 	const minThumbRef = useRef<HTMLDivElement | null>(null)
@@ -81,7 +85,7 @@ export const Slider = memo((props: SliderProps) => {
 	const onChange = useCallback(
 		(value: ValueType) => {
 			setValue(value)
-			externalOnChange?.(value)
+			externalOnChange?.(value, name)
 		},
 		[externalOnChange]
 	)
@@ -104,6 +108,7 @@ export const Slider = memo((props: SliderProps) => {
 		minThumbRef,
 		maxThumbRef,
 		fillRef,
+		isTouchDevice,
 		handleChange,
 	})
 
@@ -115,19 +120,6 @@ export const Slider = memo((props: SliderProps) => {
 		min,
 		minRange,
 		onChange,
-	})
-
-	const { renderMarkers } = useMarkers({
-		value,
-		step,
-		min,
-		max,
-		customMarkers,
-		isVisibleMarkersLabel,
-		size,
-		position: markersPosition,
-		orientation,
-		getMarkerLabel,
 	})
 
 	const handleFocus = useCallback((thumbIndex: 0 | 1) => {
@@ -144,6 +136,23 @@ export const Slider = memo((props: SliderProps) => {
 	useEffect(() => {
 		valueRef.current = value
 	}, [value])
+
+	useEffect(() => {
+		if (Array.isArray(externalValue)) {
+			const arrayValue = value as [number, number]
+
+			if (
+				externalValue[0] !== arrayValue[0] ||
+				externalValue[1] !== arrayValue[1]
+			) {
+				onChange(externalValue)
+			}
+		} else {
+			if (externalValue !== value) {
+				onChange(externalValue)
+			}
+		}
+	}, [externalValue])
 
 	const renderThumb = (
 		value: number,
@@ -163,9 +172,11 @@ export const Slider = memo((props: SliderProps) => {
 				value={value}
 				max={max}
 				min={min}
+				name={index === 0 ? minInputName : maxInputName}
 				onKeyDown={handleKeyDown}
 				onFocus={handleFocus}
 				getTooltipLabel={getTooltipLabel}
+				getAriaValueText={getAriaValueText}
 				{...otherProps}
 			></Thumb>
 		)
@@ -186,7 +197,8 @@ export const Slider = memo((props: SliderProps) => {
 			<div
 				className={classNames(styles['slider'], additionalClasses, mods)}
 				ref={sliderRef}
-				onMouseDown={handleMouseDown}
+				onMouseDown={isTouchDevice ? undefined : handleMouseDown}
+				onTouchStart={isTouchDevice ? handleMouseDown : undefined}
 			>
 				<div className={styles['track']}>
 					{typeof value === 'number' ? (
@@ -199,7 +211,22 @@ export const Slider = memo((props: SliderProps) => {
 								}}
 								ref={fillRef}
 							></div>
-							{isMarkers && renderMarkers()}
+							{isMarkers && (
+								<Suspense>
+									<Markers
+										value={value}
+										min={min}
+										max={max}
+										step={step}
+										size={size}
+										labelPosition={markerLabelPosition}
+										orientation={orientation}
+										isVisibleMarkersLabel={isVisibleMarkersLabel}
+										customMarkers={customMarkers}
+										getMarkerLabel={getMarkerLabel}
+									/>
+								</Suspense>
+							)}
 							{renderThumb(value, 0, minThumbRef)}
 						</>
 					) : (
@@ -208,19 +235,40 @@ export const Slider = memo((props: SliderProps) => {
 								className={styles['fill']}
 								style={{
 									left: isHorizontal ? `${localCalculateTranslateThumb(value[0])}%` : '',
-									bottom: !isHorizontal ? `${localCalculateTranslateThumb(value[0])}%` : '',
-									width: isHorizontal ?  `${
-										localCalculateTranslateThumb(value[1]) -
-										localCalculateTranslateThumb(value[0])
-									}%` : '',
-									height: !isHorizontal ?  `${
-										localCalculateTranslateThumb(value[1]) -
-										localCalculateTranslateThumb(value[0])
-									}%` : '',
+									bottom: !isHorizontal
+										? `${localCalculateTranslateThumb(value[0])}%`
+										: '',
+									width: isHorizontal
+										? `${
+												localCalculateTranslateThumb(value[1]) -
+												localCalculateTranslateThumb(value[0])
+											}%`
+										: '',
+									height: !isHorizontal
+										? `${
+												localCalculateTranslateThumb(value[1]) -
+												localCalculateTranslateThumb(value[0])
+											}%`
+										: '',
 								}}
 								ref={fillRef}
 							></div>
-							{isMarkers && renderMarkers()}
+							{isMarkers && (
+								<Suspense>
+									<Markers
+										value={value}
+										min={min}
+										max={max}
+										step={step}
+										size={size}
+										labelPosition={markerLabelPosition}
+										orientation={orientation}
+										isVisibleMarkersLabel={isVisibleMarkersLabel}
+										customMarkers={customMarkers}
+										getMarkerLabel={getMarkerLabel}
+									/>
+								</Suspense>
+							)}
 							{renderThumb(value[0], 0, minThumbRef)}
 							{renderThumb(value[1], 1, maxThumbRef)}
 						</>

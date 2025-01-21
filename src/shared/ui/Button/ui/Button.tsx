@@ -79,22 +79,8 @@ export const Button = memo(
 				: localLinkRef
 
 			const handleKeyUp = (event: React.KeyboardEvent) => {
-				if (event.key === 'Enter' || event.key === ' ') {
-					event.preventDefault()
-
-					if (to || href) {
-						linkRef.current?.click()
-					} else {
-						onClick?.(event)
-					}
-
+				if (event.key === ' ' || event.key === 'Enter') {
 					handleRipple(rippleWrapperRef)
-				}
-			}
-
-			const handleKeyDown = (event: React.KeyboardEvent) => {
-				if(event.key === 'Enter') {
-					event.preventDefault()
 				}
 			}
 
@@ -118,7 +104,6 @@ export const Button = memo(
 						className={classNames(styles['button'], additionalClasses)}
 						id={id}
 						onKeyUp={handleKeyUp}
-						onKeyDown={handleKeyDown}
 						onClick={handleClick}
 						to={to}
 						tabIndex={localTabIndex}
@@ -138,7 +123,6 @@ export const Button = memo(
 						className={classNames(styles['button'], additionalClasses)}
 						id={id}
 						onKeyUp={handleKeyUp}
-						onKeyDown={handleKeyDown}
 						onClick={handleClick}
 						href={href}
 						tabIndex={localTabIndex}
@@ -157,7 +141,6 @@ export const Button = memo(
 					id={id}
 					type={type}
 					onKeyUp={handleKeyUp}
-					onKeyDown={handleKeyDown}
 					onClick={handleClick}
 					tabIndex={localTabIndex}
 					disabled={disabled}

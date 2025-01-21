@@ -3,15 +3,12 @@
 .slider {
 	--height: ;
 	--trackHeight: ;
-	--markerHeight: ;
 	--boxShadow: 0 0 0 var(--border-weight-soft) var(--theme-color-primary-500);
 	--trackColor: var(--theme-color-grey-900);
-	--labelPaddingTop: ;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
-	//background-color: red;
 	&.disabled {
 		@include disabled;
 	}
@@ -36,15 +33,11 @@
 	&.small {
 		--height: var(--button-height-xs);
 		--trackHeight: #{rem(3)};
-		--labelPaddingTop: #{rem(12)};
-		--markerHeight: #{rem(8)};
 	}
 
 	&.medium {
 		--height: var(--button-height-s);
 		--trackHeight: #{rem(6)};
-		--labelPaddingTop: #{rem(18)};
-		--markerHeight: #{rem(12)};
 	}
 }
 
@@ -70,7 +63,7 @@
 		}
 		.fill {
 			width: 100%;
-      bottom: 0;
+			bottom: 0;
 		}
 	}
 }
