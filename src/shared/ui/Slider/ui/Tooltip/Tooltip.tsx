@@ -1,6 +1,6 @@
 import { classNames } from '@/shared/lib/classNames/classNames'
-import styles from './style.module.scss'
 import { memo } from 'react'
+import styles from './style.module.scss'
 
 export type TooltipPosition = 'bottom' | 'top' | 'left' | 'right'
 
@@ -10,7 +10,7 @@ interface TooltipProps {
     position: TooltipPosition
 }
 
-export const Tooltip = memo((props: TooltipProps) => {
+const Tooltip = memo((props: TooltipProps) => {
 
     const {className, label, position = 'top'} = props
 
@@ -27,3 +27,5 @@ export const Tooltip = memo((props: TooltipProps) => {
         </div>
     )
 })
+
+export default Tooltip

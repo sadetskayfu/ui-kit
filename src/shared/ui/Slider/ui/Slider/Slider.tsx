@@ -36,6 +36,7 @@ interface SliderProps extends AriaAttributes {
 	disabled?: boolean
 	tabIndex?: number
 	customMarkers?: CustomMarker[]
+	isTooltip?: boolean
 	isMarkers?: boolean
 	isVisibleMarkersLabel?: boolean
 	onChange?: (value: ValueType, name: string) => void
@@ -61,6 +62,7 @@ export const Slider = memo((props: SliderProps) => {
 		maxInputName,
 		disabled,
 		tabIndex = 0,
+		isTooltip = true,
 		isMarkers,
 		isVisibleMarkersLabel,
 		customMarkers = [],
@@ -168,6 +170,7 @@ export const Slider = memo((props: SliderProps) => {
 				tabIndex={tabIndex}
 				disabled={disabled}
 				isDragging={isDragging && activeThumbIndexRef.current === index}
+				isTooltip={isTooltip}
 				index={index}
 				value={value}
 				max={max}

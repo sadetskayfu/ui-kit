@@ -12,6 +12,7 @@ const meta: Meta<typeof Slider> = {
 		markerLabelPosition: 'bottom',
 		orientation: 'horizontal',
 		disabled: false,
+		isTooltip: true
 	},
 }
 
