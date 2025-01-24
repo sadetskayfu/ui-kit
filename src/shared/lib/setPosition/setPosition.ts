@@ -141,9 +141,11 @@ export const setPosition = (
 			break
 	}
 
-	element.style.top = styles.top
-	element.style.bottom = styles.bottom
-	element.style.left = styles.left
-	element.style.right = styles.right
-    element.style.translate = styles.translate
+	Object.assign(element.style, {
+		top: styles.top,
+		bottom: styles.bottom,
+		left: styles.left,
+		right: styles.right,
+		translate: styles.translate
+	})
 }

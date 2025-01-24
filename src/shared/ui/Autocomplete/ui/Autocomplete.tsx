@@ -12,17 +12,17 @@ import {
 	DropdownPortal,
 	DropdownPortalPosition,
 } from '@/shared/ui/DropdownPortal'
-import { useChangeValue } from '../model/useChangeValue'
+import { useChangeValue } from '../hooks/useChangeValue'
 import { OptionItem } from '@/shared/ui/OptionItem'
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { classNames } from '@/shared/helpers/classNames'
 import { TextFieldProps } from '@/shared/ui/TextField'
-import { filterByIncludes } from '@/shared/lib/filters'
+import { filterByIncludes } from '@/shared/helpers/filters'
 import {
 	useFocusOption,
 	useNavigation,
 	useOptions,
 } from '@/shared/hooks/formOptions'
-import { checkValue } from '@/shared/lib/formOptions'
+import { checkValue } from '@/shared/helpers/formOptions'
 import styles from './style.module.scss'
 
 export type Option = {
@@ -32,7 +32,7 @@ export type Option = {
 
 type OptionProps = {
 	id: string
-	selected: boolean
+	isSelected: boolean
 	disabled: boolean
 }
 
@@ -41,11 +41,7 @@ interface SelectProps {
 	options: Option[]
 	value: string
 	selectedValue: string | string[]
-	onChange: (value: string) => void
-	onSelect: (value: string | string[]) => void
 	isOpen?: boolean
-	onOpen?: () => void
-	onClose?: () => void
 	isLoading?: boolean
 	disabled?: boolean
 	readonly?: boolean
@@ -55,6 +51,10 @@ interface SelectProps {
 	menuHeight?: string
 	menuWidth?: string
 	menuPosition?: DropdownPortalPosition
+	onChange: (value: string) => void
+	onSelect: (value: string | string[]) => void
+	onOpen?: () => void
+	onClose?: () => void
 	renderOption?: (option: Option, props: OptionProps) => ReactElement
 	renderInput: (
 		params: Partial<TextFieldProps>,
@@ -77,11 +77,7 @@ export const Autocomplete = (props: SelectProps) => {
 		options,
 		value,
 		selectedValue,
-		onChange,
-		onSelect,
 		isOpen: externalIsOpen,
-		onOpen,
-		onClose,
 		isLoading,
 		disabled,
 		readonly,
@@ -91,6 +87,10 @@ export const Autocomplete = (props: SelectProps) => {
 		menuHeight = '300px',
 		menuWidth = '100%',
 		menuPosition = 'bottom',
+		onChange,
+		onSelect,
+		onOpen,
+		onClose,
 		renderOption,
 		renderInput,
 		renderTags,
@@ -278,21 +278,19 @@ export const Autocomplete = (props: SelectProps) => {
 	const renderOptions = useMemo(() => {
 		if (options.length === 0) {
 			return isLoading ? (
-				<OptionItem role='progressbar' readonly label="Loading..." />
+				<OptionItem role='progressbar' readOnly label="Loading..." />
 			) : (
-				<OptionItem readonly label="No options" />
+				<OptionItem readOnly label="No options" />
 			)
 		}
 
 		return options.map((option, index) => {
-			console.log('map options')
-
 			const optionValue = option.value
 
 			const optionProps: OptionProps = {
 				id: optionId + (index + 1),
 				disabled: getDisabledOptions ? getDisabledOptions(optionValue) : false,
-				selected: checkValue(optionValue, selectedValue),
+				isSelected: checkValue(optionValue, selectedValue),
 			}
 
 			return renderOption ? (
@@ -316,7 +314,6 @@ export const Autocomplete = (props: SelectProps) => {
 			Array.isArray(renderOptions)
 		) {
 			const filteredOptions = renderOptions.filter((option) => {
-				console.log('Filter options')
 
 				const optionLabel = localOptions[option.props.value].label
 
@@ -326,7 +323,7 @@ export const Autocomplete = (props: SelectProps) => {
 			})
 
 			if (filteredOptions.length === 0) {
-				return <OptionItem readonly label="No options" />
+				return <OptionItem readOnly label="No options" />
 			}
 
 			return filteredOptions

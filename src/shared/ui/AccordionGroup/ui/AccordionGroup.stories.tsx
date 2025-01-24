@@ -63,6 +63,6 @@ const AccordionGroupWrapper = (args: any) => {
 	)
 }
 
-export const DefaultAccordionGroup: Story = {
+export const Default: Story = {
 	render: (args) => AccordionGroupWrapper(args),
 }

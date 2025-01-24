@@ -82,6 +82,6 @@ const ModalWrapper = (args: any) => {
 	)
 }
 
-export const DefaultModal: Story = {
+export const Default: Story = {
 	render: (args) => ModalWrapper(args),
 }

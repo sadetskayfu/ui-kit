@@ -16,17 +16,17 @@ export default meta
 
 type Story = StoryObj<typeof Avatar>
 
-export const DefaultAvatar: Story = {
+export const Default: Story = {
 }
 
-export const AvatarWithErroredUrl: Story = {
+export const WithErroredUrl: Story = {
 	args: {
 		src: 'errored-url',
 		alt: 'Cats',
 	},
 }
 
-export const AvatarWitchImg: Story = {
+export const WitchImg: Story = {
 	args: {
 		src: 'https://stihi.ru/pics/2014/04/21/1633.jpg',
 		alt: 'Cats',

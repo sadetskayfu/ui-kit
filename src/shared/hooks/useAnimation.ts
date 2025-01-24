@@ -8,8 +8,9 @@ export const useAnimation = (duration: number = 500) => {
 		if (timeoutIdRef.current) {
 			clearTimeout(timeoutIdRef.current)
 		}
-
-		setIsAnimating(false)
+		if(isAnimating) {
+			setIsAnimating(false)
+		}
 
 		timeoutIdRef.current = setTimeout(() => {
 			setIsAnimating(true)

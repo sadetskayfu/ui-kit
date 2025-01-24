@@ -12,8 +12,6 @@ export const useOptions = (
 		if (!optionsList || !isMounted) return
 
 		const updateOptions = () => {
-			console.log('take options')
-
 			const options =
 				optionsList.querySelectorAll<HTMLLIElement>("[role='option']")
 

@@ -1,7 +1,7 @@
-import { classNames } from '@/shared/lib/classNames/classNames'
-import { handleRipple } from '@/shared/lib/handleRipple/handleRipple'
+import { classNames } from '@/shared/helpers/classNames'
 import { InputHTMLAttributes, memo, useRef } from 'react'
-import { RippleWrapper } from '../../RippleWrapper'
+import { RippleWrapper } from '@/shared/ui/RippleWrapper'
+import { handleRipple } from '@/shared/lib/ripple'
 import styles from './style.module.scss'
 
 export type SwitchSize = 'medium'
@@ -13,8 +13,8 @@ interface BaseSwitchProps {
 	labelId?: string
 	required?: boolean
 	disabled?: boolean
-	checked: boolean
-	onChange: (checked: boolean, name:string) => void
+	checked?: boolean
+	onChange?: (checked: boolean, name: string) => void
 }
 
 type HTMLInputProps = Omit<
@@ -43,14 +43,14 @@ export const Switch = memo((props: SwitchProps) => {
 	const rippleWrapperRef = useRef<HTMLSpanElement | null>(null)
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		onChange(event.target.checked, event.target.name)
+		onChange?.(event.target.checked, event.target.name)
+
 		handleRipple(rippleWrapperRef, true)
 	}
 
 	const additionalClasses: Array<string | undefined> = [className, styles[size]]
 
 	const mods: Record<string, boolean | undefined> = {
-		[styles['checked']]: checked,
 		[styles['required']]: required,
 		[styles['disabled']]: disabled,
 	}

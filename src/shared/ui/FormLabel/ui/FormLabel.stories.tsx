@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { FormLabel } from './FormLabel'
 import { useState } from 'react'
-import { Switch } from '../../Switch'
+import { Switch } from '@/shared/ui/Switch'
 
 const meta: Meta<typeof FormLabel> = {
 	title: 'shared/FormLabel',
@@ -27,7 +27,7 @@ const FormLabelWrapper = (args: any) => {
 
 	return (
 		<>
-			<FormLabel {...args} Component={<Switch checked={isChecked} onChange={handleChange} name='Checkbox with label'/>}/>
+			<FormLabel {...args} Component={<Switch checked={isChecked} onChange={handleChange} name='checkbox-with-label'/>}/>
 		</>
 	)
 }

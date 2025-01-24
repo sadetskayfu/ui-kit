@@ -1,5 +1,5 @@
 import { memo, ReactNode } from "react"
-import { classNames } from "@/shared/lib/classNames/classNames"
+import { classNames } from "@/shared/helpers/classNames"
 import styles from './style.module.scss'
 
 type PaginationButtonVariant = 'dot'
@@ -8,8 +8,8 @@ interface PaginationButtonProps {
     children?: ReactNode
     isActive: boolean
     variant?: PaginationButtonVariant
-    onClick: (index: number) => void
     index: number
+    onClick: (index: number) => void
 }
 
 export const PaginationButton = memo((props: PaginationButtonProps) => {

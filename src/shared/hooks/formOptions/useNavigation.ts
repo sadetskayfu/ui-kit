@@ -3,10 +3,10 @@ import { useCallback, useEffect } from 'react'
 import {
 	getLastSelectedOption,
 	getLastSelectedValue,
-} from '@/shared/lib/formOptions'
+} from '@/shared/helpers/formOptions'
 import throttle from 'lodash/throttle'
 
-type UseNavigationInputValues = {
+type UseNavigationArgs = {
 	optionsRef: React.MutableRefObject<HTMLLIElement[]>
 	optionsListRef: React.MutableRefObject<HTMLUListElement | null>
 	valueRef?: React.MutableRefObject<string>
@@ -22,7 +22,7 @@ type UseNavigationInputValues = {
 	onDelete: (value: string) => void
 }
 
-export const useNavigation = (inputValues: UseNavigationInputValues) => {
+export const useNavigation = (args: UseNavigationArgs) => {
 	const {
 		optionsRef,
 		optionsListRef,
@@ -37,7 +37,7 @@ export const useNavigation = (inputValues: UseNavigationInputValues) => {
 		onToggle,
 		onSelect,
 		onDelete,
-	} = inputValues
+	} = args
 
 	const handleKeyDown = useCallback(
 		(event: React.KeyboardEvent) => {

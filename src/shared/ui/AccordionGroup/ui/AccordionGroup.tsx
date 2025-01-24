@@ -23,7 +23,7 @@ export const AccordionGroup = (props: AccordionGroupProps) => {
 
 				return cloneElement(accordion, {
 					isOpen: value === activeValue,
-					onChange: () => handleChange(value),
+					onToggle: () => handleChange(value),
 				})
 			})}
 		</>

@@ -1,13 +1,20 @@
-@use '@/app/styles/helpers' as *;
-
 .menu {
     overflow: hidden;
     box-shadow: 0 0 0 var(--border-weight-soft) var(--border-color-grey);
-	border-radius: var(--border-radius-s);
-	background-color: var(--theme-color-grey-900);
+	border-radius: var(--border-radius-m);
+	background-color: var(--theme-color-grey-dark);
 	animation: fade-mounting 0.2s;
 }
 
 .active {
 	background-color: var(--color-grey-opacity);
+}
+
+@keyframes fade-mounting {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }

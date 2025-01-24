@@ -1,6 +1,6 @@
 import { ReactElement, useEffect, useRef } from 'react'
 import { Portal } from '@/shared/ui/Portal'
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { classNames } from '@/shared/helpers/classNames'
 import { CSSTransition } from 'react-transition-group'
 import styles from './style.module.scss'
 
@@ -14,24 +14,24 @@ type SnackbarPosition =
 interface SnackbarProps {
 	className?: string
 	isVisible: boolean
-	onClose: () => void
 	autoHideDuration?: number
 	children: ReactElement | string
 	variant?: SnackbarVariant
 	position?: SnackbarPosition
 	zIndex?: number
+	onClose: () => void
 }
 
 export const Snackbar = (props: SnackbarProps) => {
 	const {
 		isVisible,
-		onClose,
 		autoHideDuration,
 		children,
 		variant = 'filled',
 		position = 'top-right',
 		className,
 		zIndex = 1400,
+		onClose,
 	} = props
 
 	const snackbarRef = useRef<HTMLDivElement | null>(null)

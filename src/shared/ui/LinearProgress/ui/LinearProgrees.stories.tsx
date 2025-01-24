@@ -43,7 +43,7 @@ const ControlledProgressWrapper = (args: any) => {
 
 export const Default: Story = {}
 
-export const ControlledProgress: Story = {
+export const Controlled: Story = {
 	render: (args) => ControlledProgressWrapper(args),
 }
 

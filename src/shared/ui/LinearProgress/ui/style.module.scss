@@ -46,10 +46,10 @@
 .progress {
     &.primary {
         --trackColor: var(--theme-color-primary-800);
-        --fillColor: var(--theme-color-primary-500);
+        --fillColor: var(--theme-color-primary-main);
     }
-    &.grey {
-        --trackColor: var(--theme-color-grey-800);
+    &.secondary {
+        --trackColor: var(--theme-color-grey-light);
         --fillColor: var(--color-grey-500);
     }
 }

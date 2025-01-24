@@ -32,7 +32,7 @@
   left: 50%;
   top: 50%;
   translate: -50% -50%;
-  border-radius: var(--border-radius-xs);
+  border-radius: var(--border-radius-s);
   box-shadow: 0 0 0 var(--border-weight-soft) var(--color-yellow);
   opacity: 0;
   pointer-events: none;
@@ -47,7 +47,7 @@
   translate: -50% -50%;
   height: var(--width);
   width: var(--width);
-  background-color: var(--theme-color-grey-800);
+  background-color: var(--theme-color-grey-light);
   transition-duration: 0.1s;
   clip-path: polygon(
     50% 0%,

@@ -1,10 +1,10 @@
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { classNames } from '@/shared/helpers/classNames'
 import { ForwardedRef, forwardRef, HTMLAttributes, ReactElement, ReactNode } from 'react'
 import { Typography } from '@/shared/ui/Typography'
 import styles from './style.module.scss'
 
-export type FieldVariant = 'filled' | 'outlined'
-export type FieldSize = 'medium' | 'large'
+export type FieldVariant = 'filled' | 'outlined' | "clear"
+export type FieldSize = 'small' | 'medium' | 'large'
 export type FieldLabelVariant = 'default' | 'on-border' | 'hidden'
 
 interface BaseFieldProps {

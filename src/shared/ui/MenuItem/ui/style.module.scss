@@ -31,11 +31,9 @@
     color: var(--color);
     &:focus-visible {
         background-color: var(--color-grey-opacity);
-        --color: var(--theme-color-primary-500);
     }
     @include hover {
         background-color: var(--color-grey-opacity);
-        --color: var(--theme-color-primary-500);
     }
     p {
         padding-right: var(--paddingRightDesc);
@@ -52,10 +50,12 @@
 }
 
 .start-icon {
+    display: inline-flex;
     font-size: var(--fzStartIcon);
 }
 
 .end-icon {
+    display: inline-flex;
     margin-left: auto;
     font-size: var(--fzEndIcon);
 }

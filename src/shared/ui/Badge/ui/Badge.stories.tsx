@@ -12,6 +12,7 @@ const meta: Meta<typeof Badge> = {
 		overlap: 'circular',
 		position: 'top-right',
 		size: 'medium',
+		isBorder: false,
 		children: <BookMark size='large'/>,
 	},
 }
@@ -44,11 +45,11 @@ const BadgeWrapper = (args: any) => {
 	)
 }
 
-export const DefaultBadge: Story = {
+export const Default: Story = {
 	render: (args) => BadgeWrapper(args),
 }
 
-export const BadgeWithMaxCount: Story = {
+export const WithMaxCount: Story = {
 	args: {
 		badgeContent: 999,
 		max: 99,

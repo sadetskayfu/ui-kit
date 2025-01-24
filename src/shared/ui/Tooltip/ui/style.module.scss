@@ -1,49 +1,61 @@
 @use '@/app/styles/helpers' as *;
 
-.tooltip-wrapper {
+.tooltip {
+    --transformHidden: translateZ(0px) scale(0.5);
+    --transformVisible: translateZ(0px) scale(1);
     position: absolute;
     left: 0;
     top: 0;
-    animation: mounting 0.2s;
+    opacity: 0;
     translate: -100% -100%;
-    transform: translateZ(0px);
-    &.unmounting {
+    transform: var(--transformHidden);
+    padding-inline: rem(7);
+    &.vertical {
+        padding-block: rem(7);
+        padding-inline: 0px;
+    }
+    &.enter {
+        animation: mounting 0.2s forwards;
+    }
+    &.enter-done {
+        opacity: 1;
+        transform: var(--transformVisible);
+    }
+    &.exit {
         animation: unmounting 0.2s forwards;
         pointer-events: none;
     }
 }
 
-.tooltip {
+.content {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-width: rem(30);
-    padding-inline: rem(15);
-    padding-block: rem(10);
-    border-radius: var(--border-radius-s);
-    background-color: var(--theme-color-light);
-    color: var(--theme-color-dark);
-    text-wrap: nowrap;
+    min-width: rem(40);
+    padding-inline: rem(10);
+    padding-block: rem(5);
+    border-radius: var(--border-radius-m);
+    background-color: var(--theme-color-grey-light);
 }
 
 @keyframes mounting {
     0% {
         opacity: 0;
-        transform: scale(0.6);
+        transform: var(--transformHidden);
     }
     100% {
         opacity: 1;
-        transform: scale(1);
+        transform: var(--transformVisible);
     }
 }
 
 @keyframes unmounting {
     0% {
         opacity: 1;
-        transform: scale(1);
+        transform: var(--transformVisible);
     }
     100% {
         opacity: 0;
-        transform: scale(0.6);
+        transform: var(--transformHidden);
     }
 }

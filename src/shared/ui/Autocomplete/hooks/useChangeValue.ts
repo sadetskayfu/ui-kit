@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef } from 'react'
 import { Option } from '../ui/Autocomplete'
-import { checkValue } from '@/shared/lib/formOptions'
+import { checkValue } from '@/shared/helpers/formOptions'
 
-type UseChangeValueInputValues = {
+type UseChangeValueArgs = {
 	value: string
 	valueRef: React.MutableRefObject<string>
 	selectedValueRef: React.MutableRefObject<string | string[]>
@@ -18,7 +18,7 @@ type UseChangeValueInputValues = {
 	setFocusedOption: (index: number) => void
 }
 
-export const useChangeValue = (inputValues: UseChangeValueInputValues) => {
+export const useChangeValue = (args: UseChangeValueArgs) => {
 	const {
 		value,
 		valueRef,
@@ -33,7 +33,7 @@ export const useChangeValue = (inputValues: UseChangeValueInputValues) => {
 		onClose,
 		onStopFilter,
 		setFocusedOption,
-	} = inputValues
+	} = args
 
 	const selectedOptionsRef = useRef<Record<string, string>>({})
 

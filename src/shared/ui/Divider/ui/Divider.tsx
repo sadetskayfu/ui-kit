@@ -1,48 +1,31 @@
-import { classNames } from "@/shared/lib/classNames/classNames";
-import { memo } from "react";
-import styles from "./style.module.scss";
+import { classNames } from '@/shared/helpers/classNames'
+import { memo } from 'react'
+import styles from './style.module.scss'
 
-type DividerOrientation = "horizontal" | "vertical";
-type DividerComponent = "li" | "hr";
+type DividerOrientation = 'horizontal' | 'vertical'
+type DividerComponent = 'div' | 'li' | 'hr'
 
 interface DividerProps {
-  className?: string;
-  orientation?: DividerOrientation;
-  component?: DividerComponent;
+	className?: string
+	orientation?: DividerOrientation
+	component?: DividerComponent
 }
 
 export const Divider = memo((props: DividerProps) => {
-  const { orientation = "vertical", component, className } = props;
+	const { orientation = 'vertical', component = 'div', className } = props
 
-  const additionalClasses: Array<string | undefined> = [
-    styles[orientation],
-    className,
-  ];
+	const additionalClasses: Array<string | undefined> = [
+		styles[orientation],
+		className,
+	]
 
-  switch (component) {
-    case "hr":
-      return (
-        <hr
-          className={classNames(styles["divider"], additionalClasses)}
-          role="separator"
-          aria-orientation={orientation}
-        ></hr>
-      );
-    case "li":
-      return (
-        <li
-          className={classNames(styles["divider"], additionalClasses)}
-          role="separator"
-          aria-orientation={orientation}
-        ></li>
-      );
-    default:
-      return (
-        <div
-          className={classNames(styles["divider"], additionalClasses)}
-          role="separator"
-          aria-orientation={orientation}
-        ></div>
-      );
-  }
-});
+	const Tag = component
+
+	return (
+		<Tag
+			className={classNames(styles['divider'], additionalClasses)}
+			role="separator"
+			aria-orientation={orientation}
+		/>
+	)
+})

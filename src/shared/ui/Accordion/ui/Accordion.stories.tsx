@@ -41,13 +41,13 @@ const ControlledAccordionWrapper = (args: any) => {
 	return (
 		<div style={{display: 'flex', flexDirection: 'column', rowGap: '15px'}}>
 			<span>Is open: {isOpen ? 'true' : 'false'}</span>
-			<Accordion isOpen={isOpen} onChange={handleToggle} {...args}></Accordion>
+			<Accordion isOpen={isOpen} onToggle={handleToggle} {...args}></Accordion>
 		</div>
 	)
 }
 
-export const DefaultAccordion: Story = {}
+export const Default: Story = {}
 
-export const ControlledAccordion: Story = {
+export const Controlled: Story = {
 	render: (args) => ControlledAccordionWrapper(args),
 }

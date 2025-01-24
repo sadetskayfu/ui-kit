@@ -22,35 +22,6 @@
 	}
 }
 
-@keyframes appearance-right {
-	0% {
-		transform: translateX(10%);
-		opacity: 0;
-	}
-	100% {
-		transform: translateX(0%);
-		opacity: 1;
-	}
-}
-
-@keyframes fade-mounting {
-	from {
-		opacity: 0;
-	}
-	to {
-		opacity: 1;
-	}
-}
-
-@keyframes fade-unmounting {
-	from {
-		opacity: 0;
-	}
-	to {
-		opacity: 1;
-	}
-}
-
 @keyframes ripple {
 	0% {
 		transform: scale(0.9);

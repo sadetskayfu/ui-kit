@@ -1,21 +1,23 @@
 import {
 	ButtonHTMLAttributes,
 	forwardRef,
+	lazy,
 	LinkHTMLAttributes,
+	memo,
 	ReactNode,
+	Suspense,
 	useRef,
 } from 'react'
-import { classNames } from '@/shared/lib/classNames/classNames'
-import {
-	handleRipple,
-	handleRippleMousePosition,
-} from '@/shared/lib/handleRipple/handleRipple'
+import { classNames } from '@/shared/helpers/classNames'
 import { RippleWrapper } from '@/shared/ui/RippleWrapper'
-import { Link } from 'react-router-dom'
+import { handleRipple, handleRippleCursorPosition } from '@/shared/lib/ripple'
 import styles from './style.module.scss'
 
+const LazyLink = lazy(() =>
+	import('react-router-dom').then((module) => ({ default: module.Link }))
+)
+
 type IconButtonVariant = 'filled' | 'outlined' | 'clear'
-export type IconButtonColor = 'primary' | 'secondary' | 'custom-color'
 type IconButtonSize =
 	| 'small-xx'
 	| 'small-x'
@@ -23,7 +25,7 @@ type IconButtonSize =
 	| 'medium'
 	| 'large'
 	| 'custom-size'
-
+export type IconButtonColor = 'primary' | 'secondary' | 'custom-color'
 export type IconButtonBorderRadius =
 	| 'rounded-left'
 	| 'rounded-right'
@@ -38,15 +40,15 @@ interface BaseIconButtonProps {
 	color?: IconButtonColor
 	size?: IconButtonSize
 	borderRadius?: IconButtonBorderRadius
-	disabled?: boolean
+	stopPropagation?: boolean
 	stopFocus?: boolean
-	stopPropagation?: boolean;
+	disabled?: boolean
 	to?: string
 	href?: string
 	children: ReactNode
 	type?: 'submit' | 'reset' | 'button'
 	tabIndex?: number
-	onClick?: (event: React.MouseEvent | React.KeyboardEvent) => void
+	onClick?: (event: any) => void
 }
 
 type HTMLLinkProps = Omit<
@@ -63,139 +65,125 @@ interface IconButtonProps extends BaseIconButtonProps {
 	linkProps?: HTMLLinkProps
 }
 
-export const IconButton = forwardRef(
-	(
-		props: IconButtonProps,
-		ref: React.ForwardedRef<HTMLButtonElement | HTMLAnchorElement>
-	) => {
-		const {
-			children,
-			id,
-			className,
-			disabled,
-			stopFocus,
-			stopPropagation,
-			to,
-			href,
-			variant = 'filled',
-			size = 'medium',
-			color = 'primary',
-			borderRadius = 'circular',
-			type = 'button',
-			tabIndex,
-			onClick,
-			linkProps,
-			buttonProps,
-			...otherProps
-		} = props
+const IconButton = memo(
+	forwardRef(
+		(
+			props: IconButtonProps,
+			ref: React.ForwardedRef<HTMLButtonElement | HTMLAnchorElement>
+		) => {
+			const {
+				children,
+				id,
+				className,
+				disabled,
+				stopPropagation,
+				stopFocus,
+				to,
+				href,
+				variant = 'filled',
+				size = 'medium',
+				color = 'primary',
+				borderRadius = 'circular',
+				type = 'button',
+				tabIndex,
+				onClick,
+				linkProps,
+				buttonProps,
+				...otherProps
+			} = props
 
-		const rippleWrapperRef = useRef<HTMLSpanElement | null>(null)
-		const localLinkRef = useRef<HTMLAnchorElement | null>(null)
-		const linkRef = ref
-			? (ref as React.RefObject<HTMLAnchorElement>)
-			: localLinkRef
+			const rippleWrapperRef = useRef<HTMLSpanElement | null>(null)
 
-		const handleKeyUp = (event: React.KeyboardEvent) => {
-			if (event.key === 'Enter' || event.key === ' ') {
-				event.preventDefault()
+			const handleKeyUp = (event: React.KeyboardEvent) => {
+				if (event.key === ' ' || event.key === 'Enter') {
+					stopPropagation && event.stopPropagation()
 
-				if (to || href) {
-					linkRef.current?.click()
-				} else {
-					onClick?.(event)
+					handleRipple(rippleWrapperRef)
 				}
-
-				handleRipple(rippleWrapperRef)
 			}
-		}
 
-		const handleKeyDown = (event: React.KeyboardEvent) => {
-			if(event.key === 'Enter') {
+			const handleClick = (event: React.MouseEvent) => {
+				stopPropagation && event.stopPropagation()
+
+				onClick?.(event)
+				handleRippleCursorPosition(rippleWrapperRef, event)
+			}
+
+			const handleMouseDown = (event: React.MouseEvent) => {
 				event.preventDefault()
 			}
-		}
 
-		const handleMouseDown = (event: React.MouseEvent) => {
-			if (stopFocus) {
-				event.preventDefault()
+			const additionalClasses: Array<string | undefined> = [
+				className,
+				styles[variant],
+				styles[color],
+				styles[size],
+				styles[borderRadius],
+			]
+
+			const localTabIndex = disabled ? -1 : tabIndex
+
+			if (to) {
+				return (
+					<Suspense>
+						<LazyLink
+							className={classNames(styles['button'], additionalClasses)}
+							id={id}
+							to={to}
+							tabIndex={localTabIndex}
+							onClick={handleClick}
+							onKeyUp={handleKeyUp}
+							onMouseDown={stopFocus ? handleMouseDown : undefined}
+							ref={ref as React.ForwardedRef<HTMLAnchorElement>}
+							{...linkProps}
+							{...otherProps}
+						>
+							{children}
+							<RippleWrapper ref={rippleWrapperRef}/>
+						</LazyLink>
+					</Suspense>
+				)
 			}
-		}
 
-		const handleClick = (event: React.MouseEvent) => {
-			stopPropagation && event.stopPropagation()
-			onClick?.(event)
-			handleRippleMousePosition(rippleWrapperRef, event)
-		}
+			if (href) {
+				return (
+					<a
+						className={classNames(styles['button'], additionalClasses)}
+						id={id}
+						href={href}
+						tabIndex={localTabIndex}
+						onClick={handleClick}
+						onKeyUp={handleKeyUp}
+						onMouseDown={stopFocus ? handleMouseDown : undefined}
+						ref={ref as React.ForwardedRef<HTMLAnchorElement>}
+						{...linkProps}
+						{...otherProps}
+					>
+						{children}
+					</a>
+				)
+			}
 
-		const additionalClasses: Array<string | undefined> = [
-			styles[variant],
-			styles[color],
-			styles[size],
-			styles[borderRadius],
-			className,
-		]
-
-		const localTabIndex = disabled ? -1 : tabIndex
-
-		if (to) {
 			return (
-				<Link
+				<button
 					className={classNames(styles['button'], additionalClasses)}
 					id={id}
-					to={to}
-					tabIndex={localTabIndex}
-					onClick={handleClick}
+					type={type}
 					onKeyUp={handleKeyUp}
-					onKeyDown={handleKeyDown}
-					onMouseDown={handleMouseDown}
-					ref={linkRef}
-					{...linkProps}
+					onClick={handleClick}
+					onMouseDown={stopFocus ? handleMouseDown : undefined}
+					tabIndex={localTabIndex}
+					disabled={disabled}
+					ref={ref as React.ForwardedRef<HTMLButtonElement>}
+					{...buttonProps}
 					{...otherProps}
 				>
 					{children}
-					<RippleWrapper ref={rippleWrapperRef} />
-				</Link>
+					<RippleWrapper ref={rippleWrapperRef}/>
+				</button>
 			)
 		}
-
-		if (href) {
-			return (
-				<a
-					className={classNames(styles['button'], additionalClasses)}
-					id={id}
-					href={href}
-					tabIndex={localTabIndex}
-					onClick={handleClick}
-					onKeyUp={handleKeyUp}
-					onKeyDown={handleKeyDown}
-					onMouseDown={handleMouseDown}
-					ref={linkRef}
-					{...linkProps}
-					{...otherProps}
-				>
-					{children}
-				</a>
-			)
-		}
-
-		return (
-			<button
-				className={classNames(styles['button'], additionalClasses)}
-				id={id}
-				type={type}
-				onMouseDown={handleMouseDown}
-				onKeyUp={handleKeyUp}
-				onKeyDown={handleKeyDown}
-				onClick={handleClick}
-				tabIndex={localTabIndex}
-				disabled={disabled}
-				ref={ref && (ref as React.ForwardedRef<HTMLButtonElement>)}
-				{...buttonProps}
-				{...otherProps}
-			>
-				{children}
-				<RippleWrapper ref={rippleWrapperRef} />
-			</button>
-		)
-	}
+	)
 )
+
+export default IconButton

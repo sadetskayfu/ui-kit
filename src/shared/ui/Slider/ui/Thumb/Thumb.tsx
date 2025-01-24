@@ -1,6 +1,6 @@
 import { forwardRef, lazy, memo, Suspense } from 'react'
 import { AriaAttributes, SliderOrientation, SliderSize } from '../Slider/Slider'
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { classNames } from '@/shared/helpers/classNames'
 import { TooltipPosition } from '../Tooltip/Tooltip'
 import { calculateTranslateThumb } from '../../helpers'
 import styles from './style.module.scss'
@@ -84,7 +84,7 @@ export const Thumb = memo(
 				onFocus={() => onFocus(index)}
 				{...otherProps}
 			>
-				<input name={name} value={value} type="range"></input>
+				<input name={name} value={value} tabIndex={-1} readOnly type="range"></input>
 				{isTooltip && (
 					<Suspense>
 						<Tooltip

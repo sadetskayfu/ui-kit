@@ -64,11 +64,14 @@
 	background-color: var(--avatarBgColor);
 	margin-left: var(--paddingBlock);
 	margin-right: calc(var(--buttonMargin) * -1);
+	height: 100%;
 	aspect-ratio: 1;
-	font-size: 1.2em;
+	font-size: calc(var(--height) / 1.5);
+	color: var(--buttonFontColor);
 }
 
 .icon {
+	display: inline-flex;
 	padding-left: var(--paddingInline);
 	margin-right: calc(var(--buttonMargin) * -1);
 	font-size: 1em;
@@ -80,7 +83,7 @@
 		--borderColor: var(--border-color-primary);
 	}
 	&.secondary {
-		--fontColor: var(--font-color-soft);
+		--fontColor: var(--font-color-hard);
 		--borderColor: var(--border-color-grey);
 	}
 }
@@ -92,13 +95,13 @@
 		--buttonFontColor: var(--bgColor);
 		&.primary {
 			--fontColor: var(--font-color-onDark);
-			--bgColor: var(--theme-color-primary-500);
-			--bgColorHover: var(--theme-color-primary-600);
+			--bgColor: var(--theme-color-primary-main);
+			--bgColorHover: var(--theme-color-primary-secondary);
 			--avatarBgColor: var(--borderColor);
 		}
 		&.secondary {
-			--bgColor: var(--theme-color-grey-800);
-			--bgColorHover: var(--theme-color-grey-900);
+			--bgColor: var(--theme-color-grey-light);
+			--bgColorHover: var(--theme-color-grey-dark);
 			--avatarBgColor: var(--color-grey-500);
 		}
 	}
@@ -110,7 +113,7 @@
 		border: var(--border-weight-soft) solid var(--borderColor);
 		&.primary {
 			--bgColorHover: var(--color-primary-opacity);
-			--fontColor: var(--theme-color-primary-500);
+			--fontColor: var(--theme-color-primary-main);
 		}
 		&.secondary {
 			--bgColorHover: var(--color-grey-opacity);
@@ -122,9 +125,16 @@
 	&.small {
 		--height: #{rem(30)};
 		--paddingInline: #{rem(14)};
+		@include laptop {
+			--height: #{rem(27)};
+			--paddingInline: #{rem(13)};
+		}
 	}
 	&.medium {
 		--height: var(--button-height-xs);
 		--paddingInline: #{rem(16)};
+		@include laptop {
+			--paddingInline: #{rem(14)};
+		}
 	}
 }

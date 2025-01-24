@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-export const getElements = (
+export const useElements = (
 	elementRef: React.RefObject<HTMLElement | null>,
     isVisible: boolean = true
 ) => {

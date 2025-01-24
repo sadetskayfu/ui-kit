@@ -1,0 +1,36 @@
+@use '@/app/styles/helpers' as *;
+
+.link {
+    --color: var(--font-color-hard);
+    position: relative;
+    padding-inline: var(--padding-15);
+    padding-block: var(--padding-10);
+    gap: rem(8);
+    display: flex;
+    align-items: center;
+    color: var(--color);
+    transition: background-color 0.2s;
+    &:before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        translate: -50%;
+        bottom: 0;
+        height: var(--border-weight-soft);
+        width: 0%;
+        background-color: var(--theme-color-primary-main);
+        transition-duration: 0.2s;
+    }
+    &:focus-visible {
+        @include focus-outline;
+    }
+    @include hover {
+        background-color: var(--color-grey-opacity);
+    }
+    &.active {
+        color: var(--theme-color-primary-main);
+        &:before {
+            width: 100%;
+        }
+    }
+}

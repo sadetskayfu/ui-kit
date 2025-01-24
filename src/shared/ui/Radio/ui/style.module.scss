@@ -3,15 +3,17 @@
 .radio-wrapper {
   --height: ;
   --bgColor: ;
-  --emulatorColor: var(--theme-color-primary-500);
+  --emulatorColor: var(--theme-color-primary-main);
   --borderColor: var(--border-color-grey);
   --borderColorChecked: var(--emulatorColor);
+  --boxShadow: 0 0 0 var(--border-weight-soft) var(--border-color-grey);
 }
 
 .radio {
   position: relative;
   height: var(--height);
   width: var(--height);
+  color: var(--theme-color-primary-main);
   border-radius: 50%;
   transition-duration: 0.2s;
   display: flex;
@@ -19,7 +21,7 @@
   align-items: center;
   cursor: pointer;
   @include hover {
-    box-shadow: 0 0 0 var(--border-weight-soft) var(--borderColor);
+    box-shadow: var(--boxShadow);
   }
   &:before {
     content: '';
@@ -50,7 +52,7 @@
 .input {
   @include visually-hidden;
   &:focus-visible + .radio:after {
-      box-shadow: 0 0 0 var(--border-weight-soft) var(--borderColor);
+      box-shadow: var(--boxShadow);
       animation: ripple 1s infinite;
   }
 }
@@ -65,7 +67,7 @@
 // Variants
 .radio-wrapper {
   &.filled {
-    --bgColor: var(--theme-color-grey-900);
+    --bgColor: var(--theme-color-grey-dark);
   }
   &.outlined {
     --bgColor: transparent;

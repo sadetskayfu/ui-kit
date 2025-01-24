@@ -22,14 +22,14 @@ import {
 	DropdownPortalPosition,
 } from '@/shared/ui/DropdownPortal'
 import { OptionItemProps } from '@/shared/ui/OptionItem'
-import { useChangeValue } from '../model/useChangeValue'
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { useChangeValue } from '../hooks/useChangeValue'
+import { classNames } from '@/shared/helpers/classNames'
 import {
 	useFocusOption,
 	useNavigation,
 	useOptions,
 } from '@/shared/hooks/formOptions'
-import { checkValue } from '@/shared/lib/formOptions'
+import { checkValue } from '@/shared/helpers/formOptions'
 import styles from './style.module.scss'
 
 export type Option = {
@@ -42,7 +42,6 @@ interface SelectProps {
 	children: ReactElement[]
 	options: Option[]
 	selectedValue: string | string[]
-	onChange: (value: string | string[]) => void
 	label: string
 	placeholder?: string
 	variant?: FieldVariant
@@ -60,6 +59,7 @@ interface SelectProps {
 	menuWidth?: string
 	menuPosition?: DropdownPortalPosition
 	isOpen?: boolean
+	onChange: (value: string | string[]) => void
 	onOpen?: () => void
 	onClose?: () => void
 	renderTags?: (
@@ -233,7 +233,7 @@ export const Select = (props: SelectProps) => {
 
 			return cloneElement(child as ReactElement<OptionItemProps>, {
 				id: optionId + (index + 1),
-				selected: isSelected,
+				isSelected,
 				disabled: isDisabled,
 			})
 		})

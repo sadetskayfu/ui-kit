@@ -1,18 +1,18 @@
 export const setScroll = (
 	focusedElement: HTMLElement,
-	list: HTMLElement
+	elementList: HTMLElement
 ) => {
-	const listRect = list.getBoundingClientRect()
+	const elementListRect = elementList.getBoundingClientRect()
 	const focusedElementRect = focusedElement.getBoundingClientRect()
 
 	const focusedElementBottom = focusedElementRect.bottom
 	const focusedElementTop = focusedElementRect.top
-	const listBottom = listRect.bottom
-	const listTop = listRect.top
+	const listBottom = elementListRect.bottom
+	const listTop = elementListRect.top
 
 	if (focusedElementBottom > listBottom) {
-		list.scrollTop += focusedElementBottom - listBottom
+		elementList.scrollTop += focusedElementBottom - listBottom
 	} else if (focusedElementTop < listTop) {
-		list.scrollTop -= listTop - focusedElementTop
+		elementList.scrollTop -= listTop - focusedElementTop
 	}
 }

@@ -1,46 +1,77 @@
-import { Meta, StoryObj } from "@storybook/react";
-import { Tooltip } from "./Tooltip";
-import { Button } from "@/shared/ui/Button";
+import { Meta, StoryObj } from '@storybook/react'
+import { Tooltip } from './Tooltip'
+import { Button } from '@/shared/ui/Button'
+import { useRef } from 'react'
+import { useDragging } from '@/shared/hooks'
 
 const meta: Meta<typeof Tooltip> = {
-  title: "shared/Tooltip",
-  component: Tooltip,
-  args: {
-    children: <Button>Hover me</Button>,
-    Content: <p>Tooltip text tooltip text tooltip text</p>,
-    position: 'top',
-    disabledClick: true,
-  },
+	title: 'shared/Tooltip',
+	component: Tooltip,
+	args: {
+		Content: <p>Tooltip text text text</p>,
+		position: 'top',
+		delay: 0,
+		isLazy: false,
+		isUnmount: false,
+		isClickableTooltip: false,
+		isFollowCursor: false,
+		disabledClick: true,
+		disabledFocus: false,
+		disabledHover: false,
+		disabledTouch: false,
+	},
 }
 
-export default meta;
+export default meta
 
 type Story = StoryObj<typeof Tooltip>
 
+const TooltipWrapper = (args: any) => {
+	const buttonRef = useRef<HTMLButtonElement | null>(null)
+
+	const { handleMouseDown } = useDragging(buttonRef)
+
+	return (
+		<Tooltip parentRef={buttonRef} {...args}>
+			<Button
+				ref={buttonRef}
+				color="secondary"
+				buttonProps={{
+					style: { position: 'absolute' },
+					onMouseDown: handleMouseDown,
+				}}
+			>
+				Button
+			</Button>
+		</Tooltip>
+	)
+}
+
 export const Default: Story = {
+	render: (args) => TooltipWrapper(args),
+}
 
-};
-
-export const ClickableTooltip: Story = {
-    args: {
-        clickableTooltip: true,
-    }
-};
+export const Clickable: Story = {
+	render: (args) => TooltipWrapper(args),
+	args: {
+		isClickableTooltip: true,
+	},
+}
 
 export const OpenOnClick: Story = {
-    args: {
-        clickableTooltip: true,
-        disabledHover: true,
-        disabledTouch: true,
-        disabledClick: false,
-    }
-};
+	render: (args) => TooltipWrapper(args),
+	args: {
+		isClickableTooltip: true,
+		disabledHover: true,
+		disabledTouch: true,
+		disabledFocus: true,
+		disabledClick: false,
+	},
+}
 
 export const FollowCursor: Story = {
-    args: {
-        followCursor: true,
-    }
-};
-
-
-
+	render: (args) => TooltipWrapper(args),
+	args: {
+		isFollowCursor: true,
+	},
+}

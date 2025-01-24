@@ -9,7 +9,7 @@ const meta: Meta<typeof DropdownPortal> = {
 	component: DropdownPortal,
 	args: {
 		position: 'bottom',
-        transition: false,
+		transition: false,
 	},
 }
 
@@ -28,11 +28,19 @@ const DropdownPortalWrapper = (args: any) => {
 		setIsOpen((prev) => !prev)
 	}, [])
 
-	const {handleMouseDown} = useDragging(buttonRef)
+	const { handleMouseDown } = useDragging(buttonRef)
 
 	return (
 		<>
-			<Button buttonProps={{onMouseDown: handleMouseDown, style: {position: 'absolute'}}} onClick={handleToggle} ref={buttonRef} color="grey">
+			<Button
+				buttonProps={{
+					onMouseDown: handleMouseDown,
+					style: { position: 'absolute' },
+				}}
+				onClick={handleToggle}
+				ref={buttonRef}
+				color="secondary"
+			>
 				Open dropdown
 			</Button>
 			<DropdownPortal
@@ -41,11 +49,13 @@ const DropdownPortalWrapper = (args: any) => {
 				isOpen={isOpen}
 				onClose={handleClose}
 			>
-				<div style={{ backgroundColor: 'brown', height: '100%', overflowY: 'auto' }}>
-						<p>Text text text text text text text text text text text text text</p>
-						<p>Text text text text text text text text </p>
-						<p>Text text text text text text text text text</p>
-                        <Button color='dark'>Button</Button>
+				<div
+					style={{ backgroundColor: 'brown', height: '100%', overflowY: 'auto' }}
+				>
+					<p>Text text text text text text text text text text text text text</p>
+					<p>Text text text text text text text text </p>
+					<p>Text text text text text text text text text</p>
+					<Button color="secondary">Button</Button>
 				</div>
 			</DropdownPortal>
 		</>
@@ -87,4 +97,3 @@ export const FullScreenHeight: Story = {
 		position: 'right',
 	},
 }
-

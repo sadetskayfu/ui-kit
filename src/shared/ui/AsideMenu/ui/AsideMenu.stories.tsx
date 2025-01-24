@@ -38,6 +38,7 @@ const AsideMenuWrapper = (args: any) => {
 		setIsOpen(false)
 		buttonRef.current?.focus()
 	}, [])
+	
 	const handleToggle = useCallback(() => {
 		setIsOpen((prev) => !prev)
 	}, [])
@@ -74,7 +75,7 @@ const AsideMenuWrapper = (args: any) => {
 	)
 }
 
-export const DefaultAsideMenu: Story = {
+export const Default: Story = {
 	render: (args) => AsideMenuWrapper(args),
 }
 

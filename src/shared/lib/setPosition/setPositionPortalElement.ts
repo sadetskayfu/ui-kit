@@ -1,23 +1,29 @@
-import { Position } from "./Position"
+import { Position } from './Position'
 
-interface Spaces {
+export type SetPositionPortalElementArgs = {
+	element: HTMLElement,
+	parent: HTMLElement,
+	position: Position,
+	reserveSpace?: number
+}
+
+type Spaces = {
 	bottom: number
 	top: number
 	right: number
 	left: number
 }
 
-interface Coordinates {
+type Translates = {
 	x: number
 	y: number
 }
 
 export const setPositionPortalElement = (
-	element: HTMLElement,
-	parent: HTMLElement,
-	position: Position,
-    reserveSpace: number = 10
+	args: SetPositionPortalElementArgs
 ) => {
+	const {element, parent, position, reserveSpace = 10} = args
+	
 	const elementHeight = element.offsetHeight
 	const elementWidth = element.offsetWidth
 
@@ -28,12 +34,12 @@ export const setPositionPortalElement = (
 	const differenceWidth = Math.abs(parentWidth - elementWidth)
 	const differenceHeight = Math.abs(parentHeight - elementHeight)
 
-    const isFullScreenWidth = element.style.width === '100vw'
-    const isFullScreenHeight = element.style.height === '100vh'
-    const isParentWidth = element.style.width === '100%'
-    const isParentHeight = element.style.height === '100%'
-    
-	let coordinates: Coordinates = {
+	const isFullScreenWidth = element.style.width === '100vw'
+	const isFullScreenHeight = element.style.height === '100vh'
+	const isParentWidth = element.style.width === '100%'
+	const isParentHeight = element.style.height === '100%'
+
+	let translates: Translates = {
 		x: 0,
 		y: 0,
 	}
@@ -93,47 +99,47 @@ export const setPositionPortalElement = (
 	switch (position) {
 		case 'top':
 		case 'bottom':
-            if (isFullScreenWidth) {
-                coordinates.x = 0
-                break
-            }
+			if (isFullScreenWidth) {
+				translates.x = 0
+				break
+			}
 			if (isParentWidth) {
-				coordinates.x = getPositionX('center')
+				translates.x = getPositionX('center')
 				break
 			}
 			if (checks.isLeft(differenceWidth / 2)) {
-				coordinates.x = getPositionX('end')
+				translates.x = getPositionX('end')
 				break
 			}
 			if (checks.isRight(differenceWidth / 2)) {
-				coordinates.x = getPositionX('start')
+				translates.x = getPositionX('start')
 				break
 			}
-			coordinates.x = getPositionX('center')
+			translates.x = getPositionX('center')
 			break
 		case 'top-start':
 		case 'bottom-start':
-			coordinates.x = checks.isLeft(differenceWidth)
+			translates.x = checks.isLeft(differenceWidth)
 				? getPositionX('end')
 				: getPositionX('start')
 			break
 		case 'top-end':
 		case 'bottom-end':
-			coordinates.x = checks.isRight(differenceWidth)
+			translates.x = checks.isRight(differenceWidth)
 				? getPositionX('start')
 				: getPositionX('end')
 			break
 		case 'left':
 		case 'left-start':
 		case 'left-end':
-			coordinates.x = checks.isRight(elementWidth)
+			translates.x = checks.isRight(elementWidth)
 				? getPositionX('right')
 				: getPositionX('left')
 			break
 		case 'right':
 		case 'right-start':
 		case 'right-end':
-			coordinates.x = checks.isLeft(elementWidth)
+			translates.x = checks.isLeft(elementWidth)
 				? getPositionX('left')
 				: getPositionX('right')
 			break
@@ -143,51 +149,51 @@ export const setPositionPortalElement = (
 	switch (position) {
 		case 'left':
 		case 'right':
-            if (isFullScreenHeight) {
-                coordinates.y = 0
-                break
-            }
+			if (isFullScreenHeight) {
+				translates.y = 0
+				break
+			}
 			if (isParentHeight) {
-				coordinates.y = getPositionY('center')
+				translates.y = getPositionY('center')
 				break
 			}
 			if (checks.isTop(differenceHeight / 2)) {
-				coordinates.y = getPositionY('end')
+				translates.y = getPositionY('end')
 				break
 			}
 			if (checks.isBottom(differenceHeight / 2)) {
-				coordinates.y = getPositionY('start')
+				translates.y = getPositionY('start')
 				break
 			}
-			coordinates.y = getPositionY('center')
+			translates.y = getPositionY('center')
 			break
 		case 'left-start':
 		case 'right-start':
-			coordinates.y = checks.isTop(differenceHeight)
+			translates.y = checks.isTop(differenceHeight)
 				? getPositionY('end')
 				: getPositionY('start')
 			break
 		case 'left-end':
 		case 'right-end':
-			coordinates.y = checks.isBottom(differenceHeight)
+			translates.y = checks.isBottom(differenceHeight)
 				? getPositionY('start')
 				: getPositionY('end')
 			break
 		case 'top':
 		case 'top-start':
 		case 'top-end':
-			coordinates.y = checks.isBottom(elementHeight)
+			translates.y = checks.isBottom(elementHeight)
 				? getPositionY('bottom')
 				: getPositionY('top')
 			break
 		case 'bottom':
 		case 'bottom-start':
 		case 'bottom-end':
-			coordinates.y = checks.isTop(elementHeight)
+			translates.y = checks.isTop(elementHeight)
 				? getPositionY('top')
 				: getPositionY('bottom')
 			break
 	}
 
-	element.style.translate = `${coordinates.x}px ${coordinates.y}px`
+	element.style.translate = `${translates.x / 16}rem ${translates.y / 16}rem`
 }

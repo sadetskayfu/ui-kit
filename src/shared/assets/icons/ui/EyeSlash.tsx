@@ -1,4 +1,4 @@
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { classNames } from '@/shared/helpers/classNames/classNames'
 import { IconProps } from '../types/IconProps'
 import { memo } from 'react'
 import styles from '../styles/style.module.scss'

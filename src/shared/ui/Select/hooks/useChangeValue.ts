@@ -1,4 +1,4 @@
-import { checkValue } from '@/shared/lib/formOptions'
+import { checkValue } from '@/shared/helpers/formOptions'
 import { useCallback } from 'react'
 
 type UseChangeValueInputValues = {

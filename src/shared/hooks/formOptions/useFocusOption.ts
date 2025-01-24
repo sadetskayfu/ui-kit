@@ -13,8 +13,6 @@ export const useFocusOption = (optionsRef: React.MutableRefObject<HTMLLIElement[
             const lastFocusedOption = lastFocusedOptionRef.current
             const options = optionsRef.current
     
-            console.log('set focused options')
-    
             if (lastFocusedOption) {
                 lastFocusedOption.classList.remove(focusedClassName)
             }

@@ -6,7 +6,7 @@
 	--bgColorHover: ;
 	--borderColor: ;
 	--height: ;
-	--borderRadius: var(--border-radius-s);
+	--borderRadius: var(--border-radius-m);
 	height: var(--height);
 	width: var(--height);
 	border: none;
@@ -26,11 +26,11 @@
 // Colors
 .button {
 	&.primary {
-		--color: var(--theme-color-primary-500);
+		--color: var(--theme-color-primary-main);
 		--borderColor: var(--border-color-primary);
 	}
 	&.secondary {
-		--color: var(--font-color-soft);
+		--color: var(--font-color-hard);
 		--borderColor: var(--border-color-grey);
 	}
 }
@@ -45,11 +45,11 @@
 		}
 		&.primary {
 			--color: var(--font-color-onDark);
-			--bgColor: var(--theme-color-primary-500);
-			--bgColorHover: var(--theme-color-primary-600);
+			--bgColor: var(--theme-color-primary-main);
+			--bgColorHover: var(--theme-color-primary-secondary);
 		}
 		&.secondary {
-			--bgColor: var(--theme-color-grey-900);
+			--bgColor: var(--theme-color-grey-dark);
 			--bgColorHover: var(--theme-color-dark);
 			border: var(--border-weight-soft) solid var(--borderColor);
 		}

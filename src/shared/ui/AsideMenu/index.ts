@@ -1,1 +1,1 @@
-export { AsideMenu, type AsideMenuPosition, type AsideMenuBackdrop } from "./ui/AsideMenu";
+export { AsideMenu } from "./ui/AsideMenu";

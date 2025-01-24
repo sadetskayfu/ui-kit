@@ -1,24 +1,89 @@
-import { forwardRef } from 'react'
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { useCallback, useEffect, useRef } from 'react'
+import { classNames } from '@/shared/helpers/classNames'
+import throttle from 'lodash/throttle'
 import styles from './style.module.scss'
 
 export type FloatingIndicatorPosition = 'top' | 'right' | 'bottom' | 'left'
+type FloatingIndicatorOrientation = 'horizontal' | 'vertical'
 
 interface FloatingIndicatorProps {
-    position?: FloatingIndicatorPosition
+	position?: FloatingIndicatorPosition
+	orientation: FloatingIndicatorOrientation
+	elementListRef: React.RefObject<HTMLElement>
+	activeElementRef: React.RefObject<HTMLElement>
+	selectedValue: string
 }
 
-export const FloatingIndicator = forwardRef((props: FloatingIndicatorProps, ref: React.ForwardedRef<HTMLSpanElement>) => {
+const FloatingIndicator = (props: FloatingIndicatorProps) => {
+	const {
+		position = 'bottom',
+		orientation,
+		elementListRef,
+		activeElementRef,
+		selectedValue,
+	} = props
 
-    const {position = 'bottom'} = props
+	const indicatorRef = useRef<HTMLSpanElement | null>(null)
 
-    const additionalClasses: Array<string | undefined> = [
-        styles[position]
-    ]
+	const handleChangePosition = useCallback(() => {
+		const indicator = indicatorRef.current
+		const activeElement = activeElementRef.current
+		const elementList = elementListRef.current
 
-    return (
-        <span ref={ref} className={classNames(styles['indicator'], additionalClasses)}>
+		if (!indicator || !activeElement || !elementList) return
 
-        </span>
-    )
-})
+		const activeElementRect = activeElement.getBoundingClientRect()
+		const elementListRect = elementList.getBoundingClientRect()
+
+		if (orientation === 'horizontal') {
+			const left = activeElementRect.left - elementListRect.left
+
+			Object.assign(indicator.style, {
+				width: `${activeElementRect.width / 16}rem`,
+				left: `${left / 16}rem`,
+				height: '1px',
+				top: '',
+			})
+		} else {
+			const top = activeElementRect.top - elementListRect.top
+
+			Object.assign(indicator.style, {
+				height: `${activeElementRect.height / 16}rem`,
+				top: `${top / 16}rem`,
+				width: '',
+				left: '',
+			})
+		}
+	}, [orientation])
+
+	useEffect(() => {
+		const throttledHandleChangePosition = throttle(
+			handleChangePosition,
+			100
+		)
+
+		window.addEventListener('resize', throttledHandleChangePosition)
+
+		return () => {
+			window.removeEventListener('resize', throttledHandleChangePosition)
+			throttledHandleChangePosition.cancel()
+		}
+	}, [handleChangePosition])
+
+	useEffect(() => {
+		setTimeout(() => {
+			handleChangePosition()
+		}, 0)
+	}, [selectedValue, orientation])
+
+	const additionalClasses: Array<string | undefined> = [styles[position]]
+
+	return (
+		<span
+			ref={indicatorRef}
+			className={classNames(styles['indicator'], additionalClasses)}
+		></span>
+	)
+}
+
+export default FloatingIndicator

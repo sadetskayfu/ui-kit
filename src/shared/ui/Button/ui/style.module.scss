@@ -16,7 +16,7 @@
 	white-space: nowrap;
 	color: var(--color);
 	background-color: var(--bgColor);
-	border-radius: var(--border-radius-s);
+	border-radius: var(--border-radius-m);
 	transition:
 		background-color 0.2s,
 		color 0.2s;
@@ -26,12 +26,12 @@
 // Colors
 .button {
 	&.primary {
-		--color: var(--theme-color-primary-500);
+		--color: var(--theme-color-primary-main);
 		--bgColorHover: var(--color-primary-opacity);
 		--borderColor: var(--border-color-primary);
 	}
 	&.secondary {
-		--color: var(--font-color-soft);
+		--color: var(--font-color-hard);
 		--borderColor: var(--border-color-grey);
 		--bgColorHover: var(--color-grey-opacity);
 	}
@@ -41,13 +41,13 @@
 	&.filled {
 		&.primary {
 			--color: var(--font-color-onDark);
-			--bgColor: var(--theme-color-primary-500);
-			--bgColorHover: var(--theme-color-primary-600);
+			--bgColor: var(--theme-color-primary-main);
+			--bgColorHover: var(--theme-color-primary-secondary);
 		}
 		&.secondary {
-			--bgColor: var(--theme-color-grey-900);
+			--bgColor: var(--theme-color-grey-dark);
 			--bgColorHover: var(--theme-color-dark);
-      border: var(--border-weight-soft) solid var(--borderColor);
+			border: var(--border-weight-soft) solid var(--borderColor);
 		}
 	}
 	&.outlined {
@@ -61,13 +61,13 @@
 		--height: var(--button-height-m);
 		padding-inline: var(--button-padding-inline-m);
 		padding-block: var(--button-padding-block-m);
-		gap: var(--button-gap-m);
+		gap: rem(8);
 	}
 	&.large {
 		--height: var(--button-height-l);
 		padding-inline: var(--button-padding-inline-l);
 		padding-block: var(--button-padding-block-l);
-		gap: var(--button-gap-l);
+		gap: rem(10);
 	}
 }
 
@@ -77,7 +77,7 @@
 		background-color: var(--bgColorHover);
 	}
 	&:focus-visible {
-		@include focus-outline;
+		@include focus-outline-inset;
 	}
 	&:disabled {
 		@include disabled;

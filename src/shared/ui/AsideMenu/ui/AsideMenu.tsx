@@ -1,5 +1,5 @@
 import { ReactNode, useRef } from 'react'
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { classNames } from '@/shared/helpers/classNames'
 import { Backdrop, BackdropVariant } from '@/shared/ui/Backdrop'
 import { Z_INDEX } from '@/shared/constants/zIndex'
 import { CSSTransition } from 'react-transition-group'
@@ -9,20 +9,20 @@ import {
 } from '@/shared/lib/KeyboardNavigation'
 import styles from './style.module.scss'
 
-export type AsideMenuPosition = 'left' | 'right' | 'top' | 'bottom'
-export type AsideMenuBackdrop = BackdropVariant
+type AsideMenuPosition = 'left' | 'right' | 'top' | 'bottom'
+type AsideMenuBackdrop = BackdropVariant
 
 interface AsideMenuProps {
 	className?: string
 	labelId: string
 	children: ReactNode
 	isOpen: boolean
-	onClose: () => void
 	position?: AsideMenuPosition
 	backdrop?: AsideMenuBackdrop
 	zIndex?: number
 	isLazy?: boolean
 	isUnmount?: boolean
+	onClose: () => void
 }
 
 export const AsideMenu = (props: AsideMenuProps) => {
@@ -31,12 +31,12 @@ export const AsideMenu = (props: AsideMenuProps) => {
 		labelId,
 		children,
 		isOpen,
-		onClose,
 		position = 'left',
 		backdrop = 'dark',
 		zIndex = Z_INDEX.ASIDE_MENU,
 		isLazy,
-		isUnmount
+		isUnmount,
+		onClose,
 	} = props
 
 	const menuRef = useRef<HTMLDivElement | null>(null)
@@ -82,7 +82,6 @@ export const AsideMenu = (props: AsideMenuProps) => {
 					aria-modal="true"
 					aria-labelledby={labelId}
 					tabIndex={-1}
-					style={{ zIndex }}
 					onClick={(event: React.MouseEvent) => event.stopPropagation()}
 				>
 					{children}

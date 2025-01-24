@@ -1,2 +1,1 @@
-export { RippleWrapper } from "./ui/RippleWrapper";
-
+export { RippleWrapper } from './ui/RippleWrapper'

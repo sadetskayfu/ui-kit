@@ -1,3 +1,5 @@
+@use '@/app/styles/helpers' as *;
+
 .pagination {
     --itemWidth: ;
     --arrowIconSize: var(--fz-icon-xxs);
@@ -12,7 +14,7 @@
 .list {
     display: flex;
     align-items: center;
-    column-gap: var(--padding-6);
+    column-gap: rem(5);
 }
 
 .list-item {

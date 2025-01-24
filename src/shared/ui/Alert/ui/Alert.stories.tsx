@@ -7,10 +7,9 @@ const meta: Meta<typeof Alert> = {
   title: "shared/Alert",
   component: Alert,
   args: {
-    children: 'Hello world, i am alert',
     variant: "filled",
     severity: 'info',
-    borderRadius: 'small',
+    borderRadius: 'medium',
   },
 }
 
@@ -18,27 +17,29 @@ export default meta;
 
 type Story = StoryObj<typeof Alert>
 
-export const DefaultAlert: Story = {
-
+export const Default: Story = {
+  args: {
+    children: <p>Default alert</p>
+  }
 };
 
-export const AlertWithTitle: Story = {
+export const WithTitle: Story = {
   args: {
     title: 'Title',
-    children: 'Alert with title'
+    children: <p>Alert with title</p>
   }
 };
 
-export const AlertWithAction: Story = {
+export const WithAction: Story = {
   args: {
     Action: <IconButton size="small-xx" color="custom-color" variant="clear"><XMark /></IconButton>,
-    children: 'Alert with action button'
+    children: <p>Alert with action button</p>
   }
 };
 
-export const AlertWithIcon: Story = {
+export const WithIcon: Story = {
   args: {
     Icon: <Heart size="small"/>,
-    children: 'Alert with icon'
+    children: <p>Alert with icon</p>
   }
 };

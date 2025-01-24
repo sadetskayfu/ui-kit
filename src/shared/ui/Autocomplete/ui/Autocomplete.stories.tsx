@@ -367,15 +367,15 @@ const ControlledAutocompleteWrapper = (args: any) => {
 	)
 }
 
-export const SingleAutocomplete: Story = {
+export const Single: Story = {
 	render: (args) => SingleAutocompleteWrapper(args),
 }
 
-export const MultiAutocomplete: Story = {
+export const Multi: Story = {
 	render: (args) => MultiAutocompleteWrapper(args),
 }
 
-export const MultiAutocompleteWithChips: Story = {
+export const MultiWithChips: Story = {
 	render: (args) => MultiAutocompleteWrapper(args),
 	args: {
 		renderTags: (value, label, params) => (
@@ -391,13 +391,13 @@ export const MultiAutocompleteWithChips: Story = {
 	},
 }
 
-export const LocationAutocomplete: Story = {
+export const Locations: Story = {
 	render: (args) => LocationAutocompleteWrapper(args),
 	args: {
 		noFilter: true,
 	},
 }
 
-export const ControlledAutocomplete: Story = {
+export const ControlledOpening: Story = {
 	render: (args) => ControlledAutocompleteWrapper(args),
 }

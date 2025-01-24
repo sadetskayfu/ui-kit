@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react'
 
 export const getFocusableElements = (
 	elementRef: React.RefObject<HTMLElement | null>,
-	isOpen: boolean
+	isMounting: boolean
 ) => {
 	const focusableElementsRef = useRef<HTMLElement[]>([])
 
@@ -11,7 +11,7 @@ export const getFocusableElements = (
 	useEffect(() => {
 		const element = elementRef.current
 
-		if (!element || !isOpen) return
+		if (!element || !isMounting) return
         
 		const updateFocusableElements = () => {
 			const focusableElements = Array.from(
@@ -59,7 +59,7 @@ export const getFocusableElements = (
 		return () => {
 			observer.disconnect()
 		}
-	}, [isOpen])
+	}, [isMounting])
 
     return focusableElementsRef
 }

@@ -20,13 +20,13 @@ export default meta
 
 type Story = StoryObj<typeof Button>
 
-export const DefaultButton: Story = {
+export const Default: Story = {
 	args: {
 		children: 'Default button',
 	},
 }
 
-export const ButtonWithIcon: Story = {
+export const WithIcon: Story = {
 	args: {
 		children: (
 			<>
@@ -37,14 +37,14 @@ export const ButtonWithIcon: Story = {
 	},
 }
 
-export const LinkButton: Story = {
+export const Link: Story = {
 	args: {
 		to: '/example',
 		children: 'Link button',
 	},
 }
 
-export const ExternalLinkButton: Story = {
+export const ExternalLink: Story = {
 	args: {
 		href: 'https://example.com',
 		children: 'External link button',

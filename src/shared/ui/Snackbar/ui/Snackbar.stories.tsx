@@ -23,7 +23,6 @@ const SnackbarWrapper = (args: any) => {
 	const [isVisible, setIsVisible] = useState<boolean>(true)
 
 	useEffect(() => {
-		// Reset visibility when args change
 		setIsVisible(true)
 	}, [args.message, args.position, args.variant])
 

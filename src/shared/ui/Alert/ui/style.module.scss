@@ -4,16 +4,17 @@
     --bgColor: ;
     --fontColor: ;
     --borderColor: ;
+    --actionsMargin: calc(var(--actions-margin) * -1);
     background-color: var(--bgColor);
     color: var(--fontColor);
     display: flex;
     align-items: center;
-    padding-inline: var(--button-padding-inline-m);
-    padding-block: var(--button-padding-block-m);
-    gap: var(--button-padding-inline-m);
+    padding-inline: var(--padding-20);
+    padding-block: var(--padding-15);
+    gap: var(--padding-20);
     &.have-action {
         .content {
-            margin-right: rem(-7);
+            margin-right: var(--actionsMargin);
         }
     }
 }
@@ -24,20 +25,23 @@
 }
 
 .title {
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .actions {
      display: flex;
      align-items: center;
      margin-left: auto;
-     margin-right: rem(-7);
+     margin-right: var(--actionsMargin);
 }
 
 // Border radius
 .alert {
-    &.small {
+    &.medium {
         border-radius: var(--border-radius-m);
+    }
+    &.large {
+        border-radius: var(--border-radius-l);
     }
 }
 
@@ -49,14 +53,14 @@
         --borderColor: var(--border-color-green);
     }
     &.info {
-        --bgColor: var(--theme-color-grey-800);
-        --fontColor: var(--font-color-soft);
+        --bgColor: var(--theme-color-grey-light);
+        --fontColor: var(--font-color-hard);
         --borderColor: var(--border-color-grey);
     }
     &.warning {
-        --bgColor: var(--color-primary-100);
-        --fontColor: var(--color-primary-800);
-        --borderColor: var(--border-color-primary);
+        --bgColor: var(--color-orange-100);
+        --fontColor: var(--color-orange-800);
+        --borderColor: var(--border-color-orange);
     }
     &.error {
         --bgColor: var(--color-red-100);
@@ -80,10 +84,10 @@
             --fontColor: var(--color-green-500);
         }
         &.info {
-            --fontColor: var(--font-color-soft);
+            --fontColor: var(--font-color-hard);
         }
         &.warning {
-            --fontColor: var(--color-primary-500);
+            --fontColor: var(--color-orange-500);
         }
         &.error {
             --fontColor: var(--color-red-500);

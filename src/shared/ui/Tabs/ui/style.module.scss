@@ -1,16 +1,11 @@
 .tabs {
     display: flex;
     position: relative;
-    width: 100%;
 }
 
 // Orientation
 .tabs {
-    &.horizontal {
-        column-gap: var(--padding-8);
-    }
     &.vertical {
         flex-direction: column;
-        row-gap: var(--padding-8);
     }
 }

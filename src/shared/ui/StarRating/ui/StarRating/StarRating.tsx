@@ -1,6 +1,13 @@
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { classNames } from '@/shared/helpers/classNames'
 import { Star, StarSize } from '../Star/Star'
-import { HTMLAttributes, memo, useCallback, useEffect, useId, useState } from 'react'
+import {
+	HTMLAttributes,
+	memo,
+	useCallback,
+	useEffect,
+	useId,
+	useState,
+} from 'react'
 import { useAnimation } from '@/shared/hooks/useAnimation'
 import { Typography } from '@/shared/ui/Typography'
 import styles from './style.module.scss'
@@ -9,21 +16,26 @@ interface BaseStarRatingProps {
 	className?: string
 	size?: StarSize
 	selectedValue: number
-	onChange: (value: number) => void
+	fillValue?: number
 	name: string
 	label: string
 	maxStars?: number
 	tabIndex?: number
 	disabled?: boolean
-	readonly?: boolean
+	readOnly?: boolean
 	required?: boolean
-	precise?: boolean
-	hiddenLegend?: boolean
+	isPrecise?: boolean
+	isHiddenLegend?: boolean
 	errorMessage?: string
 	helperText?: string
+	onChange: (value: number) => void
+	onChangeFillValue?: (value: number) => void
 }
 
-type HTMLFieldsetProps = Omit<HTMLAttributes<HTMLFieldSetElement>, keyof BaseStarRatingProps>
+type HTMLFieldsetProps = Omit<
+	HTMLAttributes<HTMLFieldSetElement>,
+	keyof BaseStarRatingProps
+>
 
 interface StarRatingProps extends BaseStarRatingProps {
 	fieldsetProps?: HTMLFieldsetProps
@@ -34,40 +46,57 @@ export const StarRating = memo((props: StarRatingProps) => {
 		className,
 		size = 'medium',
 		selectedValue,
-		onChange,
+		fillValue: externalFillValue,
 		name,
 		label,
 		maxStars = 5,
 		tabIndex = 0,
 		disabled,
-		readonly,
-		precise,
-		hiddenLegend = true,
+		readOnly,
+		isPrecise,
+		isHiddenLegend = true,
 		required,
 		errorMessage,
 		helperText,
+		onChange,
+		onChangeFillValue,
 		fieldsetProps,
 	} = props
 
 	const [fillValue, setFillValue] = useState<number>(selectedValue)
 	const { isAnimating, startAnimation } = useAnimation(1000)
 
+	const localFillValue =
+		typeof externalFillValue === 'number' ? externalFillValue : fillValue
+
 	const errorMessageId = useId()
 
-	const handleChangeValue = useCallback((value: number) => {
-		onChange(value)
-	}, [onChange])
+	const handleChangeValue = useCallback(
+		(value: number) => {
+			onChange(value)
+		},
+		[onChange]
+	)
 
-	const handleChangeFillValue = useCallback((value: number) => {
-		setFillValue(value)
-	}, [])
+	const handleChangeFillValue = useCallback(
+		(value: number) => {
+			if (onChangeFillValue) {
+				onChangeFillValue(value)
+			} else {
+				setFillValue(value)
+			}
+		},
+		[onChangeFillValue]
+	)
 
 	useEffect(() => {
-		setFillValue(selectedValue)
+		if (localFillValue !== selectedValue) {
+			handleChangeFillValue(selectedValue)
+		}
 	}, [selectedValue])
 
 	const mods: Record<string, boolean | undefined> = {
-		[styles['hidden-legend']]: hiddenLegend,
+		[styles['hidden-legend']]: isHiddenLegend,
 		[styles['success']]: isAnimating,
 		[styles['required']]: required,
 		[styles['errored']]: !!errorMessage,
@@ -76,15 +105,16 @@ export const StarRating = memo((props: StarRatingProps) => {
 	const renderStars = () => {
 		return [...Array(maxStars)].map((_, index) => {
 			const starValue = index + 1
-			const isFullFilled = starValue <= fillValue
-			const isThreeQuartersFilled = !isFullFilled && starValue - 0.25 <= fillValue
+			const isFullFilled = starValue <= localFillValue
+			const isThreeQuartersFilled =
+				!isFullFilled && starValue - 0.25 <= localFillValue
 			const isHalfFilled =
-				!isFullFilled && !isThreeQuartersFilled && starValue - 0.5 <= fillValue
+				!isFullFilled && !isThreeQuartersFilled && starValue - 0.5 <= localFillValue
 			const isQuarterFilled =
 				!isFullFilled &&
 				!isThreeQuartersFilled &&
 				!isHalfFilled &&
-				starValue - 0.75 <= fillValue
+				starValue - 0.75 <= localFillValue
 
 			const fillProps = {
 				isFullFilled,
@@ -106,9 +136,9 @@ export const StarRating = memo((props: StarRatingProps) => {
 					selectedValue={selectedValue}
 					onChange={handleChangeValue}
 					onChangeFillValue={handleChangeFillValue}
-					precise={precise}
+					isPrecise={isPrecise}
 					disabled={disabled}
-					readonly={readonly}
+					readOnly={readOnly}
 					tabIndex={tabIndex}
 					size={size}
 					{...fillProps}
@@ -121,7 +151,7 @@ export const StarRating = memo((props: StarRatingProps) => {
 		<fieldset
 			className={classNames(styles['star-rating'], [className], mods)}
 			aria-disabled={disabled && 'true'}
-			aria-readonly={readonly && 'true'}
+			aria-readonly={readOnly && 'true'}
 			aria-required={required ? 'true' : 'false'}
 			aria-errormessage={errorMessage && errorMessageId}
 			{...fieldsetProps}
@@ -131,7 +161,7 @@ export const StarRating = memo((props: StarRatingProps) => {
 				role="radiogroup"
 				className={styles['stars-group']}
 				onMouseLeave={() => handleChangeFillValue(selectedValue)}
-				onMouseUp={readonly || disabled ? undefined : startAnimation}
+				onMouseUp={readOnly || disabled ? undefined : startAnimation}
 			>
 				{renderStars()}
 			</div>

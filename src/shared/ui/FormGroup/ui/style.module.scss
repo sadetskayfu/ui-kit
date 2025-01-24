@@ -6,7 +6,7 @@
 	--legendColor: var(--font-color-hard);
 	margin: 0px;
 	&:focus-within {
-		--legendColor: var(--theme-color-primary-500);
+		--legendColor: var(--theme-color-primary-main);
 	}
 	&.errored {
 		--legendColor: var(--color-red-500);

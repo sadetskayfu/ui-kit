@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { classNames } from "@/shared/lib/classNames/classNames";
+import { classNames } from "@/shared/helpers/classNames";
 import styles from "./style.module.scss";
 
 type BadgePosition = "top-left" | "top-right" | "bottom-right" | "bottom-left";
@@ -13,10 +13,10 @@ interface BadgeProps {
   position?: BadgePosition;
   color?: BadgeColor;
   size?: BadgeSize;
-  badgeContent?: number | string | ReactElement;
+  badgeContent?: number | string;
   max?: number;
   overlap?: BadgeOverlap;
-  border?: boolean;
+  isBorder?: boolean;
   isVisible?: boolean
 }
 
@@ -41,7 +41,7 @@ export const Badge = (props: BadgeProps) => {
     color = "primary",
     overlap = 'circular',
     size = 'medium',
-    border,
+    isBorder,
     badgeContent,
     max,
     className,
@@ -62,7 +62,7 @@ export const Badge = (props: BadgeProps) => {
 
   const mods: Record<string, boolean | undefined> = {
     [styles["visible"]]: isVisible ? isVisible : (badgeContentIsNumber ? badgeContent > 0 : undefined),
-    [styles['border']]: border,
+    [styles['border']]: isBorder,
   };
 
   return (

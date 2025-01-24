@@ -12,13 +12,13 @@
 }
 
 .ripple {
-  animation: scale 1000ms;
+  animation: ripple-scale 1000ms;
 }
 .ripple-small {
-  animation: scale-small 600ms;
+  animation: ripple-scale-small 600ms;
 }
 
-@keyframes scale {
+@keyframes ripple-scale {
   0% {
     width: 0%;
     opacity: 0.8;
@@ -32,7 +32,7 @@
   }
 }
 
-@keyframes scale-small {
+@keyframes ripple-scale-small {
   0% {
     width: 0%;
     opacity: 0.8;

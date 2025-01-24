@@ -1,5 +1,3 @@
-@use '@/app/styles/helpers' as *;
-
 .backdrop {
 	position: fixed;
 	inset: 0;
@@ -31,5 +29,14 @@
 	}
 	&.clear {
 		background-color: transparent;
+	}
+}
+
+@keyframes fade-mounting {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
 	}
 }

@@ -1,14 +1,12 @@
 @use 'helpers' as *;
 body {
-  font-size: var(--font-size-default);
-  font-family: var(--font-family-base);
-  color: var(--font-color-soft);
-  background-color: var(--theme-color-dark);
+	font-size: var(--font-size-default);
+	font-family: var(--font-family-base);
+	color: var(--font-color-hard);
+	background-color: var(--theme-color-dark);
 }
 
 a {
-  text-decoration: none;
-  color: inherit;
+	text-decoration: none;
+	color: inherit;
 }
-
-

@@ -47,9 +47,9 @@ const MenuWrapper = (args: any) => {
 				openingElementRef={buttonRef}
 				Component={<Button onClick={handleToggle} ref={buttonRef}>Open menu</Button>}
 			>
-				<MenuItem onClick={handleClose} label="Menu item 1" />
-				<MenuItem onClick={handleClose} label="Menu item 2" />
-				<MenuItem onClick={handleClose} label="Menu item 3" />
+				<MenuItem onClick={handleClose} label="Menu item 1 zxc" />
+				<MenuItem onClick={handleClose} label="Menu item 2 zxc" />
+				<MenuItem onClick={handleClose} label="Menu item 3 zxc" />
 			</Menu>
 	)
 }

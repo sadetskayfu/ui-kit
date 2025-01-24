@@ -1,15 +1,11 @@
-import { cloneElement, memo, ReactElement, useRef } from 'react'
+import { memo, ReactElement, useRef } from 'react'
+import { classNames } from '@/shared/helpers/classNames'
 import { RippleWrapper } from '@/shared/ui/RippleWrapper'
-import {
-	handleRipple,
-	handleRippleMousePosition,
-} from '@/shared/lib/handleRipple/handleRipple'
-import { classNames } from '@/shared/lib/classNames/classNames'
-import { IconProps } from '@/shared/assets/icons'
+import { handleRipple, handleRippleCursorPosition } from '@/shared/lib/ripple'
 import styles from './style.module.scss'
 
 interface AriaAttributes {
-    'aria-label'?: string
+	'aria-label'?: string
 }
 
 export type TabSize = 'medium' | 'large'
@@ -17,31 +13,30 @@ export type TabIconPosition = 'left' | 'top' | 'right' | 'bottom'
 export type TabVariant = 'filled' | 'clear'
 
 export interface TabProps extends AriaAttributes {
-    className?: string
-    id: string
-    panelId: string
+	className?: string
+	id: string
+	panelId: string
 	value: string
-	selected?: boolean
+	isSelected?: boolean
+	label?: string
+	disabled?: boolean
+	Icon?: ReactElement
+	size?: TabSize
+	variant?: TabVariant
+	iconPosition?: TabIconPosition
+	tabIndex?: number
 	onClick?: (value: string) => void
 	onKeyDown?: (event: React.KeyboardEvent) => void
 	onFocus?: () => void
-	label?: string
-	disabled?: boolean
-	Icon?: ReactElement<IconProps>
-	size?: TabSize
-    variant?: TabVariant
-	iconPosition?: TabIconPosition
-	tabIndex?: number
-    fullWidth?: boolean
 }
 
 export const Tab = memo((props: TabProps) => {
 	const {
-        className,
-        id,
-        panelId,
+		className,
+		id,
+		panelId,
 		value,
-		selected,
+		isSelected,
 		label,
 		onClick,
 		onKeyDown,
@@ -51,54 +46,58 @@ export const Tab = memo((props: TabProps) => {
 		Icon,
 		size = 'medium',
 		iconPosition = 'left',
-        variant = 'filled',
-        fullWidth,
-        ...otherProps
+		variant = 'filled',
+		...otherProps
 	} = props
 
 	const rippleWrapperRef = useRef<HTMLSpanElement | null>(null)
 
 	const handleClick = (event: React.MouseEvent) => {
-		if (selected) return
-
-		handleRippleMousePosition(rippleWrapperRef, event)
-		onClick!(value)
+		if (!isSelected) {
+			handleRippleCursorPosition(rippleWrapperRef, event)
+			onClick!(value)
+		}
 	}
 
 	const handleKeyUp = (event: React.KeyboardEvent) => {
-		if ((event.key === 'Enter' || event.key === ' ') && !selected) {
-			event.preventDefault()
-			handleRipple(rippleWrapperRef)
-			onClick!(value)
+		if (event.key === ' ') {
+			if (isSelected) {
+				event.preventDefault()
+			} else {
+				handleRipple(rippleWrapperRef)
+			}
 		}
 	}
 
 	const handleKeyDown = (event: React.KeyboardEvent) => {
 		if (event.key === 'Enter') {
-			event.preventDefault()
+			if (isSelected) {
+				event.preventDefault()
+			} else {
+				handleRipple(rippleWrapperRef)
+			}
 		}
 		onKeyDown!(event)
 	}
 
 	const additionalClasses: Array<string | undefined> = [
-        className,
+		className,
 		styles[size],
 		styles[iconPosition],
-        styles[variant]
+		styles[variant],
 	]
 
 	const mods: Record<string, boolean | undefined> = {
-		[styles['selected']]: selected,
+		[styles['selected']]: isSelected,
 		[styles['disabled']]: disabled,
-        [styles['full-width']]: fullWidth
 	}
 
-	const localTabIndex = selected && !disabled ? 0 : disabled ? -1 : tabIndex
+	const localTabIndex = isSelected && !disabled ? 0 : disabled ? -1 : tabIndex
 
 	return (
 		<button
 			className={classNames(styles['tab'], additionalClasses, mods)}
-            id={id}
+			id={id}
 			tabIndex={localTabIndex}
 			disabled={disabled}
 			onClick={handleClick}
@@ -106,14 +105,14 @@ export const Tab = memo((props: TabProps) => {
 			onKeyDown={handleKeyDown}
 			onFocus={onFocus}
 			data-disabled={disabled ? 'true' : undefined}
-            data-value={value}
-            type='button'
-            role='tab'
-            aria-selected={selected ? 'true' : 'false'}
-            aria-controls={panelId}
-            {...otherProps}
+			data-value={value}
+			type="button"
+			role="tab"
+			aria-selected={isSelected ? 'true' : 'false'}
+			aria-controls={panelId}
+			{...otherProps}
 		>
-			{Icon && cloneElement(Icon, { className: styles['icon'] })}
+			{Icon && <span className={styles['icon']}>{Icon}</span>}
 			{label && label}
 			<RippleWrapper ref={rippleWrapperRef} />
 		</button>

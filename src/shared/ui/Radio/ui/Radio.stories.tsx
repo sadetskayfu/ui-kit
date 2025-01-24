@@ -33,7 +33,7 @@ const RadioGroupWrapper = (args: any) => {
 						<Radio
 							name="radio"
 							value="1"
-							selectedValue={selectedValue}
+							checked={selectedValue === '1'}
 							onChange={handleChange}
 							{...args}
 						/>
@@ -45,7 +45,7 @@ const RadioGroupWrapper = (args: any) => {
 						<Radio
 							name="radio"
 							value="2"
-							selectedValue={selectedValue}
+							checked={selectedValue === '2'}
 							onChange={handleChange}
 							{...args}
 						/>
@@ -57,7 +57,7 @@ const RadioGroupWrapper = (args: any) => {
 						<Radio
 							name="radio"
 							value="3"
-							selectedValue={selectedValue}
+							checked={selectedValue === '3'}
 							onChange={handleChange}
 							{...args}
 						/>

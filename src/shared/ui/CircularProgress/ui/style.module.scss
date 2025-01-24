@@ -60,9 +60,9 @@
 // Colors
 .progress {
 	&.primary {
-		--color: var(--theme-color-primary-500);
+		--color: var(--theme-color-primary-main);
 	}
-	&.grey {
+	&.secondary {
 		--color: var(--color-grey-500);
 	}
 }

@@ -8,7 +8,7 @@
 	flex-direction: column;
 	li {
 		margin-inline: var(--padding-10);
-		border-radius: var(--border-radius-s);
+		border-radius: var(--border-radius-m);
 	}
 }
 
@@ -17,6 +17,6 @@
 	padding-block: var(--padding-10);
 	li {
 		margin-inline: var(--padding-10);
-		border-radius: var(--border-radius-s);
+		border-radius: var(--border-radius-m);
 	}
 }

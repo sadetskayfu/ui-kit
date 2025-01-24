@@ -1,4 +1,4 @@
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { classNames } from '@/shared/helpers/classNames'
 import styles from './style.module.scss'
 
 type SkeletonVariant = 'circular' | 'rounded' | 'rectangular'

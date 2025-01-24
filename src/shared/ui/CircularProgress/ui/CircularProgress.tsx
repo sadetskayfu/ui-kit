@@ -1,9 +1,9 @@
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { classNames } from '@/shared/helpers/classNames'
 import { useEffect, useRef} from 'react'
 import styles from './style.module.scss'
 
 type CircularProgressSize = 'medium' | 'large'
-type CircularProgressColor = 'primary' | 'grey'
+type CircularProgressColor = 'primary' | 'secondary'
 
 interface CircularProgressProps {
 	className?: string

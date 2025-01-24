@@ -23,10 +23,10 @@
 }
 .badge {
     position: absolute;
-    border-radius: 999px;
     min-width: var(--badgeWidth);
     height: var(--badgeWidth);
     font-size: var(--fontSize);
+    border-radius: var(--border-radius-full);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,7 +41,6 @@
     bottom: var(--bottom);
     right: var(--right);
     border: var(--border);
-    font-weight: 500;
 }
 
 // Border
@@ -54,8 +53,8 @@
 // Colors
 .container {
     &.primary {
-        --bgColor: var(--theme-color-primary-500);
-        --color: var(--font-color-onDark);
+        --bgColor: var(--theme-color-primary-main);
+        --color: var(--color-light);
     }
     &.green {
         --bgColor: var(--color-green-500);

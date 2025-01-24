@@ -7,6 +7,7 @@ const meta: Meta<typeof CustomLink> = {
 	component: CustomLink,
 	args: {
 		underline: 'hover',
+		color: 'primary'
 	},
 }
 

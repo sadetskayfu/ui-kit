@@ -5,12 +5,7 @@ import {
 	Theme,
 } from '@/app/providers/theme'
 
-interface UseThemeResult {
-	theme: Theme
-	toggleTheme: () => void
-}
-
-export const useTheme = (): UseThemeResult => {
+export const useTheme = () => {
 	const { theme, setTheme } = useContext(ThemeContext)
 
 	const toggleTheme = () => {

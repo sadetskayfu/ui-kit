@@ -9,8 +9,8 @@ const meta: Meta<typeof Tabs> = {
 	component: Tabs,
 	args: {
 		orientation: 'horizontal',
-		indicator: false,
-		indicatorPosition: 'bottom'
+		indicatorPosition: 'bottom',
+		isIndicator: false,
 	},
 }
 
@@ -37,7 +37,6 @@ const TabsWrapper = (args: any, tabVariant: TabVariant = 'filled') => {
 			style={{
 				display: 'flex',
 				flexDirection: args.orientation === 'horizontal' ? 'column' : 'row',
-				width: '600px',
 			}}
 		>
 			<Tabs
@@ -52,7 +51,6 @@ const TabsWrapper = (args: any, tabVariant: TabVariant = 'filled') => {
 					variant={tabVariant}
 					label="First tab"
 					value="1"
-                    fullWidth
 				/>
 				<Tab
 					id={getTabId('2')}
@@ -60,16 +58,14 @@ const TabsWrapper = (args: any, tabVariant: TabVariant = 'filled') => {
 					variant={tabVariant}
 					label="Second tab"
 					value="2"
-                    fullWidth
 				/>
 				<Tab
 					id={getTabId('3')}
 					panelId={getPanelId('1')}
 					variant={tabVariant}
-					disabled
 					label="Third disabled tab"
 					value="3"
-                    fullWidth
+					disabled
 				/>
 				<Tab
 					id={getTabId('4')}
@@ -77,7 +73,6 @@ const TabsWrapper = (args: any, tabVariant: TabVariant = 'filled') => {
 					variant={tabVariant}
 					label="Fourth tab"
 					value="4"
-                    fullWidth
 				/>
 			</Tabs>
 			<TabPanel
@@ -112,6 +107,6 @@ export const FilledTabs: Story = {
 export const ClearTabsWithIndicator: Story = {
 	render: (args) => TabsWrapper(args, 'clear'),
 	args: {
-		indicator: true,
+		isIndicator: true,
 	},
 }

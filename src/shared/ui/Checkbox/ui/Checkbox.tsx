@@ -1,14 +1,8 @@
-import { classNames } from '@/shared/lib/classNames/classNames'
-import { handleRipple } from '@/shared/lib/handleRipple/handleRipple'
-import {
-	cloneElement,
-	InputHTMLAttributes,
-	memo,
-	ReactElement,
-	useRef,
-} from 'react'
+import { classNames } from '@/shared/helpers/classNames'
+import { InputHTMLAttributes, memo, ReactElement, useRef } from 'react'
+import { CheckMark } from '@/shared/assets/icons'
 import { RippleWrapper } from '@/shared/ui/RippleWrapper'
-import { CheckMark, IconProps } from '@/shared/assets/icons'
+import { handleRipple } from '@/shared/lib/ripple'
 import styles from './style.module.scss'
 
 type CheckboxVariant = 'filled' | 'outlined' | 'clear'
@@ -24,10 +18,10 @@ interface BaseCheckboxProps {
 	labelId?: string
 	required?: boolean
 	disabled?: boolean
-	checked: boolean
-	onChange: (checked: boolean, name: string) => void
-	Icon?: ReactElement<IconProps>
-	CheckedIcon?: ReactElement<IconProps>
+	checked?: boolean
+	Icon?: ReactElement
+	CheckedIcon?: ReactElement
+	onChange?: (checked: boolean, name: string) => void
 }
 
 type HTMLInputProps = Omit<
@@ -50,9 +44,9 @@ export const Checkbox = memo((props: CheckboxProps) => {
 		disabled,
 		required,
 		checked,
-		onChange,
 		Icon,
 		CheckedIcon,
+		onChange,
 		inputProps,
 		...otherProps
 	} = props
@@ -60,29 +54,25 @@ export const Checkbox = memo((props: CheckboxProps) => {
 	const rippleWrapperRef = useRef<HTMLSpanElement | null>(null)
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		onChange(event.target.checked, event.target.name)
+		onChange?.(event.target.checked, event.target.name)
+
 		handleRipple(rippleWrapperRef, true)
 	}
 
 	const additionalClasses: Array<string | undefined> = [
-		className,
 		styles[size],
 		styles[variant],
 		styles[color],
 	]
 
 	const mods: Record<string, boolean | undefined> = {
-		[styles['checked']]: checked,
-		[styles['required']]: required,
 		[styles['disabled']]: disabled,
 	}
 
 	const tabIndex = disabled ? -1 : 0
 
 	return (
-		<label
-			className={classNames(styles['checkbox-wrapper'], additionalClasses, mods)}
-		>
+		<label className={classNames(styles['checkbox-wrapper'], [className], mods)}>
 			<input
 				className={styles['input']}
 				type="checkbox"
@@ -97,14 +87,14 @@ export const Checkbox = memo((props: CheckboxProps) => {
 				{...inputProps}
 				{...otherProps}
 			/>
-			<div className={styles['checkbox']}>
-				{Icon && cloneElement(Icon, { className: styles['icon'] })}
+			<div className={classNames(styles['checkbox'], additionalClasses)}>
+				{Icon && <span className={styles['icon']}>{Icon}</span>}
 				{CheckedIcon ? (
-					cloneElement(CheckedIcon, { className: styles['checked-icon'] })
+					<span className={styles['checked-icon']}>{CheckedIcon}</span>
 				) : (
 					<CheckMark className={styles['checked-icon']} />
 				)}
-				<RippleWrapper ref={rippleWrapperRef} />
+				<RippleWrapper ref={rippleWrapperRef}/>
 			</div>
 		</label>
 	)

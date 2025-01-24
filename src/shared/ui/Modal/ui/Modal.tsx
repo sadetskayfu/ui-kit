@@ -1,6 +1,6 @@
 import { ReactElement, useRef } from 'react'
 import { Backdrop, BackdropVariant } from '@/shared/ui/Backdrop'
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { classNames } from '@/shared/helpers/classNames'
 import { Z_INDEX } from '@/shared/constants/zIndex'
 import { CSSTransition } from 'react-transition-group'
 import {
@@ -16,11 +16,11 @@ interface ModalProps {
 	labelId: string
 	children: ReactElement
 	isOpen: boolean
-	onClose: () => void
 	backdrop?: ModalBackdrop
 	zIndex?: number
 	isLazy?: boolean
 	isUnmount?: boolean
+	onClose: () => void
 }
 
 export const Modal = (props: ModalProps) => {
@@ -29,11 +29,11 @@ export const Modal = (props: ModalProps) => {
 		labelId,
 		children,
 		isOpen,
-		onClose,
 		backdrop = 'dark',
 		zIndex = Z_INDEX.MODAL,
 		isLazy,
 		isUnmount,
+		onClose,
 	} = props
 
 	const modalRef = useRef<HTMLDivElement | null>(null)
@@ -78,6 +78,7 @@ export const Modal = (props: ModalProps) => {
 					tabIndex={-1}
 					style={{ zIndex }}
 					onClick={(event: React.MouseEvent) => event.stopPropagation()}
+					onKeyDown={(e) => console.log(e.key)}
 				>
 					{children}
 				</div>

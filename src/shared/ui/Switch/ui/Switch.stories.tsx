@@ -55,10 +55,10 @@ const SwitchWithLabelWrapper = (args: any) => {
 	)
 }
 
-export const DefaultSwitch: Story = {
+export const Default: Story = {
 	render: (args) => SwitchWrapper(args),
 }
 
-export const SwitchWithLabel: Story = {
+export const WithLabel: Story = {
 	render: (args) => SwitchWithLabelWrapper(args),
 }

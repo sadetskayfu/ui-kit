@@ -6,15 +6,15 @@ const meta: Meta<typeof StarRating> = {
 	title: 'shared/StarRating',
 	component: StarRating,
 	args: {
-        label: 'Star rating',
-        disabled: false,
-        readonly: false,
-        required: false,
-        maxStars: 5,
-        hiddenLegend: true,
-        name: 'star-rating',
-        precise: false,
-        size: 'medium',
+		label: 'Star rating',
+		disabled: false,
+		readOnly: false,
+		required: false,
+		maxStars: 5,
+		isHiddenLegend: true,
+		name: 'star-rating',
+		isPrecise: false,
+		size: 'medium',
 	},
 }
 
@@ -31,11 +31,40 @@ const StarRatingWrapper = (args: any) => {
 
 	return (
 		<>
-            <StarRating selectedValue={rating} onChange={handleChange} {...args}/>
+			<StarRating selectedValue={rating} onChange={handleChange} {...args} />
 		</>
 	)
 }
 
-export const DefaultStarRating: Story = {
+const ControlledFillValueWrapper = (args: any) => {
+	const [rating, setRating] = useState<number>(0)
+	const [fillValue, setFillValue] = useState<number>(rating)
+
+	const handleChange = (value: number) => {
+		setRating(value)
+	}
+	const handleChangeFillValue = (value: number) => {
+		setFillValue(value)
+	}
+
+	return (
+		<div style={{ display: 'flex', columnGap: '10px', alignItems: 'center' }}>
+			<StarRating
+				selectedValue={rating}
+				fillValue={fillValue}
+				onChange={handleChange}
+				onChangeFillValue={handleChangeFillValue}
+				{...args}
+			/>
+			<span>Stars: {fillValue}</span>
+		</div>
+	)
+}
+
+export const Default: Story = {
 	render: (args) => StarRatingWrapper(args),
+}
+
+export const ControlledFillValue: Story = {
+	render: (args) => ControlledFillValueWrapper(args),
 }

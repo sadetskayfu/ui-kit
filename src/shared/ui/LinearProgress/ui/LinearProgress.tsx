@@ -1,8 +1,8 @@
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { classNames } from '@/shared/helpers/classNames'
 import { useEffect, useRef } from 'react'
 import styles from './style.module.scss'
 
-type LinearProgressColor = 'primary' | 'grey'
+type LinearProgressColor = 'primary' | 'secondary'
 
 interface LinearProgressProps {
 	className?: string

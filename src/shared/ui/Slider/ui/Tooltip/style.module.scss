@@ -2,7 +2,7 @@
 
 .tooltip {
     --padding: #{rem(8)};
-    --bgColor: var(--theme-color-grey-800);
+    --bgColor: var(--theme-color-grey-light);
     position: absolute;
     min-width: rem(40);
     display: flex;
@@ -24,6 +24,7 @@
 
 .content {
     background-color: var(--bgColor);
+    color: var(--font-color-hard);
     width: 100%;
     padding: rem(5);
     border-radius: rem(2);

@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { Slider } from './Slider'
 import { FormEvent, useCallback, useState } from 'react'
 import { Button } from '@/shared/ui/Button'
+import { TextField } from '@/shared/ui/TextField'
 
 const meta: Meta<typeof Slider> = {
 	title: 'shared/Slider',
@@ -12,7 +13,7 @@ const meta: Meta<typeof Slider> = {
 		markerLabelPosition: 'bottom',
 		orientation: 'horizontal',
 		disabled: false,
-		isTooltip: true
+		isTooltip: true,
 	},
 }
 
@@ -20,11 +21,19 @@ export default meta
 
 type Story = StoryObj<typeof Slider>
 
+const SliderWrapper = (args: any) => {
+	return (
+		<div style={{ width: '350px' }}>
+			<Slider {...args} />
+		</div>
+	)
+}
+
 const UncontrolledSliderWrapper = (args: any) => {
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
+		event.preventDefault()
 
-		const formData = new FormData(event.currentTarget);
+		const formData = new FormData(event.currentTarget)
 
 		const minValue = formData.get('min-value')
 		const maxValue = formData.get('max-value')
@@ -33,9 +42,26 @@ const UncontrolledSliderWrapper = (args: any) => {
 	}
 
 	return (
-		<form onSubmit={handleSubmit} style={{display: 'flex', flexDirection: 'column', rowGap: '10px'}}>
-			<Slider {...args} value={[0, 100]} min={0} max={100} minInputName='min-value' maxInputName='max-value'/>
-			<Button color='secondary' type='submit'>Submit</Button>
+		<form
+			onSubmit={handleSubmit}
+			style={{
+				display: 'flex',
+				flexDirection: 'column',
+				rowGap: '10px',
+				width: '350px',
+			}}
+		>
+			<Slider
+				{...args}
+				value={[0, 100]}
+				min={0}
+				max={100}
+				minInputName="min-value"
+				maxInputName="max-value"
+			/>
+			<Button color="secondary" type="submit">
+				Submit
+			</Button>
 		</form>
 	)
 }
@@ -47,79 +73,129 @@ const ControlledSliderWrapper = (args: any) => {
 		setValue(value as [number, number])
 	}, [])
 
+	const step = 1000
+
+	const handleChangeMinValue = (inputValue: string) => {
+		const numberValue = Number(inputValue)
+
+		if (numberValue + step >= value[1]) return
+
+		setValue([numberValue, value[1]])
+	}
+
+	const handleChangeMaxValue = (inputValue: string) => {
+		const numberValue = Number(inputValue)
+
+		if (numberValue - step <= value[0] || numberValue > 100000) return
+
+		setValue([value[0], numberValue])
+	}
+
 	return (
-		<div style={{display: 'flex', flexDirection: 'column', rowGap: '10px'}}>
-			<span>Min value: {value[0]}</span>
-			<span>Max value: {value[1]}</span>
-			<Slider value={value} onChange={handleChange} min={0} max={100000} {...args}/>
+		<div style={{ display: 'flex', gap: '10px', width: '350px' }}>
+			<TextField
+				value={value[0]}
+				onChange={handleChangeMinValue}
+				variant="clear"
+				size="small"
+				labelVariant="hidden"
+				label="Min slider value"
+				inputProps={{ type: 'number', step, min: 0, max: 100000 }}
+			/>
+			<Slider
+				value={value}
+				onChange={handleChange}
+				min={0}
+				max={100000}
+				step={1000}
+				{...args}
+			/>
+			<TextField
+				value={value[1]}
+				onChange={handleChangeMaxValue}
+				variant="clear"
+				size="small"
+				labelVariant="hidden"
+				label="Min slider value"
+				inputProps={{ type: 'number', step, min: 0, max: 100000 }}
+			/>
 		</div>
 	)
 }
 
-export const DefaultSlider: Story = {
+export const Default: Story = {
+	render: (args) => SliderWrapper(args),
 	args: {
-        value: 0,
+		value: 0,
 		min: 0,
 		max: 100,
 		step: 1,
-		"aria-label": 'Default slider',
-    }
+		'aria-label': 'Default slider',
+	},
 }
 
-export const SliderWithMarkers: Story = {
+export const WithMarkers: Story = {
+	render: (args) => SliderWrapper(args),
 	args: {
-        value: 40,
+		value: 40,
 		min: 40,
 		max: 200,
 		step: 40,
 		isMarkers: true,
 		isVisibleMarkersLabel: true,
-		"aria-label": 'Slider with markers',
-    }
+		'aria-label': 'Slider with markers',
+	},
 }
 
-export const SliderWithCustomMarkers: Story = {
+export const WithCustomMarkers: Story = {
+	render: (args) => SliderWrapper(args),
 	args: {
-        value: 40,
+		value: 40,
 		min: 40,
 		max: 200,
 		step: 1,
 		isMarkers: true,
 		isVisibleMarkersLabel: true,
-		customMarkers: [{value: 40, label: '40'}, {value: 80, label: '80'}, {value: 200, label: '200'}],
-		"aria-label": 'Slider with custom markers',
-    }
+		customMarkers: [
+			{ value: 40, label: '40' },
+			{ value: 80, label: '80' },
+			{ value: 200, label: '200' },
+		],
+		'aria-label': 'Slider with custom markers',
+	},
 }
 
-export const CustomTooltipLabelAndMarkerLabel: Story = {
+export const CustomLabels: Story = {
+	render: (args) => SliderWrapper(args),
 	args: {
-        value: 0,
+		value: 0,
 		min: 0,
 		max: 2000,
 		step: 400,
 		isMarkers: true,
 		isVisibleMarkersLabel: true,
-		getMarkerLabel: (value: number) => (`${value}$`),
-		getTooltipLabel: (value: number) => (`${value}$`),
-		"aria-label": 'Slider with custom labels',
-    }
+		getMarkerLabel: (value: number) => `${value}$`,
+		getTooltipLabel: (value: number) => `${value}$`,
+		'aria-label': 'Slider with custom labels',
+	},
 }
 
-export const RangeSlider: Story = {
+export const Range: Story = {
+	render: (args) => SliderWrapper(args),
 	args: {
-        value: [0, 1000],
+		value: [0, 1000],
 		min: 0,
 		max: 1000,
 		step: 100,
 		minRange: 20,
-		"aria-label": 'Slider with custom markers',
-    }
+		'aria-label': 'Slider with custom markers',
+	},
 }
 
-export const ControlledSlider: Story = {
-	render: (args) => ControlledSliderWrapper(args)
+export const Controlled: Story = {
+	render: (args) => ControlledSliderWrapper(args),
 }
 
-export const UncontrolledSlider: Story = {
-	render: (args) => UncontrolledSliderWrapper(args)
+export const Uncontrolled: Story = {
+	render: (args) => UncontrolledSliderWrapper(args),
 }

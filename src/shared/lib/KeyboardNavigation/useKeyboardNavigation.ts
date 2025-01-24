@@ -1,7 +1,7 @@
 import { getNextIndex } from '@/shared/lib/KeyboardNavigation'
 import { useCallback, useEffect, useRef } from 'react'
 
-type UseKeyboardNavigationInputValues = {
+type UseKeyboardNavigationArgs = {
 	elementRef: React.RefObject<HTMLElement | null>
 	focusableElementsRef: React.MutableRefObject<HTMLElement[]>
 	isOpen: boolean
@@ -11,7 +11,7 @@ type UseKeyboardNavigationInputValues = {
 }
 
 export const useKeyboardNavigation = (
-	inputValues: UseKeyboardNavigationInputValues
+	args: UseKeyboardNavigationArgs
 ) => {
 	const {
 		elementRef,
@@ -20,7 +20,7 @@ export const useKeyboardNavigation = (
 		isOpenSubMenu,
 		isDropdownMenu,
 		onClose,
-	} = inputValues
+	} = args
 
 	const activeIndexRef = useRef<number>(-1)
 

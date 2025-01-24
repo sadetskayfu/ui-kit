@@ -3,8 +3,8 @@
 .slider {
 	--height: ;
 	--trackHeight: ;
-	--boxShadow: 0 0 0 var(--border-weight-soft) var(--theme-color-primary-500);
-	--trackColor: var(--theme-color-grey-900);
+	--boxShadow: 0 0 0 var(--border-weight-soft) var(--theme-color-primary-main);
+	--trackColor: var(--theme-color-grey-dark);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -23,7 +23,7 @@
 
 .fill {
 	position: absolute;
-	background-color: var(--theme-color-primary-500);
+	background-color: var(--theme-color-primary-main);
 	box-shadow: var(--boxShadow);
 	border-radius: inherit;
 }
@@ -45,7 +45,7 @@
 .slider {
 	&.horizontal {
 		height: var(--height);
-		width: 300px; //
+		width: 100%;
 		.track {
 			width: 100%;
 			height: var(--trackHeight);
@@ -56,7 +56,7 @@
 	}
 	&.vertical {
 		width: var(--height);
-		height: 300px; //
+		height: 100%;
 		.track {
 			height: 100%;
 			width: var(--trackHeight);

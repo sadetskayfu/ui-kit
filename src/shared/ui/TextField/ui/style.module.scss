@@ -43,7 +43,7 @@
 .content {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--padding-6);
+    gap: rem(5);
     width: 100%;
     overflow: hidden;
 }

@@ -1,12 +1,23 @@
 @use '@/app/styles/helpers' as *;
 
 .link {
+    --color: ;
+    column-gap: rem(8);
     display: flex;
-    column-gap: var(--padding-6);
     align-items: center;
-    color: var(--theme-color-primary-500);
+    color: var(--color);
     &:focus-visible {
         @include focus-outline;
+    }
+}
+
+// Colors
+.link {
+    &.primary {
+        --color: var(--theme-color-primary-main);
+    }
+    &.inherit {
+        --color: inherit;
     }
 }
 
@@ -14,7 +25,7 @@
 .link {
     &.none {
         @include hover {
-            color: var(--theme-color-primary-600);
+            color: var(--theme-color-primary-secondary);
         }
     }
     &.hover,
@@ -25,7 +36,7 @@
             position: absolute;
             bottom: rem(1);
             width: 100%;
-            height: rem(1);
+            height: var(--border-weight-soft);
             background-color: currentColor;
         }
         @include hover {

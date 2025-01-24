@@ -12,6 +12,7 @@ const meta: Meta<typeof Backdrop> = {
 }
 
 export default meta
+
 type Story = StoryObj<typeof Backdrop>
 
 const BackdropWrapper = (args: any) => {

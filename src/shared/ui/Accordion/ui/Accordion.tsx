@@ -1,4 +1,4 @@
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { classNames } from '@/shared/helpers/classNames'
 import { ReactNode, useId, useState } from 'react'
 import { Collapse } from '@/shared/ui/Collapse'
 import { Minus, Plus } from '@/shared/assets/icons'
@@ -16,7 +16,7 @@ export interface AccordionProps {
 	disabled?: boolean
 	tabIndex?: number
 	isOpen?: boolean
-	onChange?: () => void
+	onToggle?: () => void
 }
 
 export const Accordion = (props: AccordionProps) => {
@@ -29,28 +29,36 @@ export const Accordion = (props: AccordionProps) => {
 		disabled,
 		tabIndex = 0,
 		isOpen: externalIsOpen,
-		onChange
+		onToggle,
 	} = props
 
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 
-	const localIsOpen = typeof externalIsOpen === 'boolean' ? externalIsOpen : isOpen
+	const localIsOpen =
+		typeof externalIsOpen === 'boolean' ? externalIsOpen : isOpen
 
 	const bodyId = useId()
 	const headerId = useId()
 
 	const handleToggle = () => {
-		if(disabled) return
+		if (disabled) return
 
-		if(onChange) {
-			onChange()
+		if (onToggle) {
+			onToggle()
 		} else {
 			setIsOpen((prev) => !prev)
 		}
 	}
 
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-		if (event.key === 'Enter' || event.key === ' ') {
+		if (event.key === 'Enter') {
+			event.preventDefault()
+			handleToggle()
+		}
+	}
+
+	const handleKeyUp = (event: React.KeyboardEvent<HTMLDivElement>) => {
+		if(event.key === ' ') {
 			event.preventDefault()
 			handleToggle()
 		}
@@ -67,29 +75,29 @@ export const Accordion = (props: AccordionProps) => {
 	]
 
 	const TitleTag = titleVariant
-	
+
 	return (
 		<div className={classNames(styles['accordion'], additionalClasses, mods)}>
 			<div
 				className={styles['header']}
+				id={headerId}
 				tabIndex={disabled ? -1 : tabIndex}
 				onClick={handleToggle}
 				onKeyDown={handleKeyDown}
+				onKeyUp={handleKeyUp}
 				role="button"
 				aria-expanded={localIsOpen ? 'true' : 'false'}
 				aria-controls={bodyId}
 				aria-disabled={disabled ? 'true' : undefined}
-				id={headerId}
 			>
 				<TitleTag className={styles['title']}>{title}</TitleTag>
 				<div className={styles['header-icon']}>
-					<Plus className={styles['open-icon']}/>
-					<Minus className={styles['close-icon']}/>
+					<Plus className={styles['open-icon']} />
+					<Minus className={styles['close-icon']} />
 				</div>
 			</div>
 			<Collapse isOpen={localIsOpen} headerId={headerId} bodyId={bodyId}>
-				<div className={styles['body']}>{children}
-				</div>
+				<div className={styles['body']}>{children}</div>
 			</Collapse>
 		</div>
 	)

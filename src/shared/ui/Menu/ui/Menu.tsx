@@ -1,12 +1,15 @@
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { classNames } from '@/shared/helpers/classNames'
 import {
 	DropdownPortal,
 	DropdownPortalPosition,
 } from '@/shared/ui/DropdownPortal'
-import { cloneElement, ReactElement, useEffect, useId, useRef } from 'react'
+import { cloneElement, ReactElement, useId, useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
-import { useKeyboardNavigation, getFocusableElements } from '@/shared/lib/KeyboardNavigation'
-import { useTouchDevice } from '@/shared/hooks'
+import {
+	useKeyboardNavigation,
+	getFocusableElements,
+} from '@/shared/lib/KeyboardNavigation'
+import { useDelayMouseHover, useTouchDevice } from '@/shared/hooks'
 import styles from './style.module.scss'
 
 export type MenuOpenVariant = 'mouse-click' | 'mouse-move'
@@ -21,8 +24,6 @@ interface MenuProps {
 	zIndex?: number
 	isOpen: boolean
 	isOpenSubMenu?: boolean
-	onOpen: () => void
-	onClose: () => void
 	delay?: number
 	width?: string
 	height?: string
@@ -30,6 +31,8 @@ interface MenuProps {
 	isUnmount?: boolean
 	dropdownRef?: React.RefObject<HTMLDivElement>
 	openingElementRef: React.RefObject<HTMLElement>
+	onOpen: () => void
+	onClose: () => void
 }
 
 export const Menu = (props: MenuProps) => {
@@ -42,8 +45,6 @@ export const Menu = (props: MenuProps) => {
 		zIndex,
 		isOpen,
 		isOpenSubMenu,
-		onOpen,
-		onClose,
 		delay = 200,
 		width,
 		height,
@@ -51,15 +52,16 @@ export const Menu = (props: MenuProps) => {
 		isLazy,
 		dropdownRef,
 		openingElementRef,
+		onOpen,
+		onClose,
 	} = props
 
 	const menuRef = useRef<HTMLUListElement | null>(null)
 
-	const isTouchDeviceRef = useTouchDevice()
+	const { isTouchDevice } = useTouchDevice()
 	const focusableElementsRef = getFocusableElements(menuRef, isOpen)
 
-	const mountingDelayTimeoutIdRef = useRef<NodeJS.Timeout | null>(null)
-	const unmountingDelayTimeoutIdRef = useRef<NodeJS.Timeout | null>(null)
+	const isNotMouseHover = isTouchDevice || openVariant === 'mouse-click'
 
 	const labelId = useId()
 	const menuId = useId()
@@ -73,47 +75,11 @@ export const Menu = (props: MenuProps) => {
 		onClose,
 	})
 
-	const handleMouseLeave = () => {
-		if (isTouchDeviceRef.current || openVariant === 'mouse-click') return
-
-		if (mountingDelayTimeoutIdRef.current && delay !== 0) {
-			clearTimeout(mountingDelayTimeoutIdRef.current)
-		}
-		if (isOpen && delay !== 0) {
-			unmountingDelayTimeoutIdRef.current = setTimeout(() => {
-				onClose()
-			}, delay)
-		} else {
-			onClose()
-		}
-	}
-
-	const handleMouseEnter = () => {
-		if (isTouchDeviceRef.current || openVariant === 'mouse-click') return
-
-		if (unmountingDelayTimeoutIdRef.current && delay !== 0) {
-			clearTimeout(unmountingDelayTimeoutIdRef.current)
-		}
-		if (!isOpen && delay !== 0) {
-			mountingDelayTimeoutIdRef.current = setTimeout(() => {
-				onOpen()
-			}, delay)
-		} else {
-			onOpen()
-		}
-	}
-
-	// Clear timeouts
-	useEffect(() => {
-		return () => {
-			if (mountingDelayTimeoutIdRef.current) {
-				clearTimeout(mountingDelayTimeoutIdRef.current)
-			}
-			if (unmountingDelayTimeoutIdRef.current) {
-				clearTimeout(unmountingDelayTimeoutIdRef.current)
-			}
-		}
-	}, [])
+	const { handleMouseEnterDelay, handleMouseLeaveDelay } = useDelayMouseHover({
+		onMouseEnter: onOpen,
+		onMouseLeave: onClose,
+		delay,
+	})
 
 	const parentProps = {
 		id: labelId,
@@ -123,7 +89,10 @@ export const Menu = (props: MenuProps) => {
 	}
 
 	return (
-		<div onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter}>
+		<div
+			onMouseLeave={isNotMouseHover ? undefined : handleMouseLeaveDelay}
+			onMouseEnter={isNotMouseHover ? undefined : handleMouseEnterDelay}
+		>
 			{cloneElement(Component, { ...parentProps })}
 			<CSSTransition
 				nodeRef={menuRef}

@@ -1,261 +1,292 @@
 import {
-  cloneElement,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-} from "react";
-import throttle from "lodash/throttle";
-import { classNames } from "@/shared/lib/classNames/classNames";
-import { Portal } from "@/shared/ui/Portal";
-import { handleChangePosition } from "@/shared/ui/Tooltip/model/handleChangePosition";
-import { throttleHandleChangePositionWithFollowCursor } from "../model/handleChangePositionWithFollowCursor";
-import { Z_INDEX } from "@/shared/constants/zIndex";
-import styles from "./style.module.scss";
+	cloneElement,
+	ReactElement,
+	useCallback,
+	useEffect,
+	useId,
+	useRef,
+	useState,
+} from 'react'
 
-type TooltipPositionVariant = "left" | "top" | "bottom" | "right";
+import { classNames } from '@/shared/helpers/classNames'
+import { Portal } from '@/shared/ui/Portal'
+import { Z_INDEX } from '@/shared/constants/zIndex'
+import { useDelayMouseHover, useLongTouch, useTouchDevice } from '@/shared/hooks'
+import type {
+	SetPositionPortalElementArgs,
+	Position,
+} from '@/shared/lib/setPosition'
+import type { setPositionFollowCursorArgs } from '../lib'
+import { CSSTransition } from 'react-transition-group'
+import throttle from 'lodash/throttle'
+import styles from './style.module.scss'
 
 interface TooltipProps {
-  className?: string;
-  position?: TooltipPositionVariant;
-  children: ReactElement;
-  Content: ReactElement;
-  clickableTooltip?: boolean;
-  disabledFocus?: boolean;
-  disabledHover?: boolean;
-  disabledTouch?: boolean;
-  disabledClick?: boolean;
-  followCursor?: boolean;
-  zIndex?: number;
-  margin?: number;
+	className?: string
+	position?: Position
+	children: ReactElement
+	Content: ReactElement
+	disabledFocus?: boolean
+	disabledHover?: boolean
+	disabledTouch?: boolean
+	disabledClick?: boolean
+	zIndex?: number
+	delay?: number
+	isClickableTooltip?: boolean
+	isFollowCursor?: boolean
+	isLazy?: boolean
+	isUnmount?: boolean
+	parentRef?: React.RefObject<HTMLElement>
 }
 
 export const Tooltip = (props: TooltipProps) => {
-  const {
-    className,
-    position: tooltipPosition = "top",
-    children,
-    Content,
-    clickableTooltip,
-    disabledFocus,
-    disabledHover,
-    disabledTouch,
-    disabledClick = true,
-    followCursor,
-    zIndex = Z_INDEX.TOOLTIP,
-    margin = 10,
-  } = props;
+	const {
+		className,
+		position = 'top',
+		children,
+		Content,
+		disabledFocus,
+		disabledHover,
+		disabledTouch,
+		disabledClick = true,
+		zIndex = Z_INDEX.TOOLTIP,
+		delay = 0,
+		isClickableTooltip,
+		isFollowCursor,
+		isLazy,
+		isUnmount,
+		parentRef: externalParentRef,
+	} = props
 
-  const [isVisible, setIsVisible] = useState<boolean>(
-    false
-  );
-  const [isUnmountingAnimation, setIsUnmountingAnimation] =
-    useState<boolean>(false);
+	const [isVisible, setIsVisible] = useState<boolean>(false)
 
-  const parentRef = useRef<HTMLElement | null>(null);
-  const tooltipRef = useRef<HTMLDivElement | null>(null);
-  const unmountingTimeoutIdRef = useRef<NodeJS.Timeout | null>(null);
-  const touchTimeoutIdRef = useRef<NodeJS.Timeout | null>(null);
-  const autoCloseTimeoutIdRef = useRef<NodeJS.Timeout | null>(null);
-  const isTouchDeviceRef = useRef<boolean>(false)
+	const localParentRef = useRef<HTMLElement | null>(null)
+	const parentRef = externalParentRef ? externalParentRef : localParentRef
+	const tooltipRef = useRef<HTMLDivElement | null>(null)
+	const setPositionRef = useRef<
+		((args: SetPositionPortalElementArgs) => void) | null
+	>(null)
+	const setPositionFollowCursorRef = useRef<
+		((args: setPositionFollowCursorArgs) => void) | null
+	>(null)
 
-  const tooltipId = useId();
+	const { isTouchDevice } = useTouchDevice()
 
-  const handleOpen = () => {
-    if (unmountingTimeoutIdRef.current) {
-      clearTimeout(unmountingTimeoutIdRef.current);
-      setIsUnmountingAnimation(false);
+	const tooltipId = useId()
+
+	const handleMouseMove = useCallback(
+		throttle((event: React.MouseEvent | React.TouchEvent | MouseEvent | TouchEvent) => {
+			const tooltip = tooltipRef.current
+      
+			if (tooltip && setPositionFollowCursorRef.current) {
+				setPositionFollowCursorRef.current({
+					event,
+					tooltip,
+				})
+			}
+		}, 20),
+		[]
+	)
+
+	const handleOpen = (event: React.MouseEvent | React.TouchEvent) => {
+		setIsVisible(true)
+
+    if(isFollowCursor) {
+      handleMouseMove(event)
     }
-    setIsVisible(true);
-  };
+	}
 
-  const handleClose = useCallback(() => {
-    setIsUnmountingAnimation(true);
-    unmountingTimeoutIdRef.current = setTimeout(() => {
-      setIsVisible(false);
-    }, 200);
-  }, []);
+	const handleClose = useCallback(() => {
+		setIsVisible(false)
+	}, [])
 
-  const handleTouchStart = () => {
-    if (disabledTouch) return;
+	const handleToggle = () => {
+		setIsVisible((prev) => !prev)
+	}
 
-    if (autoCloseTimeoutIdRef.current) {
-      clearTimeout(autoCloseTimeoutIdRef.current);
-    }
-    touchTimeoutIdRef.current = setTimeout(() => {
-      handleOpen();
-    }, 500);
-  };
+	const { handleTouchStart, handleTouchEnd } = useLongTouch({
+		onTouchStart: handleOpen,
+		onTouchEnd: handleClose,
+	})
 
-  const handleTouchEnd = () => {
-    if (disabledTouch) return;
+	const handleMouseEnter = (event: React.MouseEvent) => {
+		if (!isTouchDevice && !disabledHover) {
+			handleOpen(event)
 
-    if (touchTimeoutIdRef.current) {
-      clearTimeout(touchTimeoutIdRef.current);
-    }
-    autoCloseTimeoutIdRef.current = setTimeout(() => {
-      handleClose();
-    }, 2000);
-  };
+			if (isFollowCursor) {
+				document.addEventListener('mousemove', handleMouseMove)
+			}
+		}
+	}
 
-  // For following cursor mod
-  const handleMouseMove = useCallback((event: MouseEvent) => {
-    const tooltip = tooltipRef.current;
-    if (!tooltip) return;
-    throttleHandleChangePositionWithFollowCursor(tooltip, event);
-  }, []);
+	const handleMouseLeave = () => {
+		if (!isTouchDevice && !disabledHover) {
+			handleClose()
 
-  const handleMouseEnter = () => {
-    if (isTouchDeviceRef.current || disabledHover) return;
-    if (followCursor) document.addEventListener("mousemove", handleMouseMove);
-    handleOpen();
-  };
+			if (isFollowCursor) {
+				document.removeEventListener('mousemove', handleMouseMove)
+			}
+		}
+	}
 
-  const handleMouseLeave = () => {
-    if (isTouchDeviceRef.current || disabledHover) return;
-    if (followCursor)
-      document.removeEventListener("mousemove", handleMouseMove);
-    handleClose();
-  };
+	const {
+		handleMouseEnterDelay,
+		handleMouseLeaveDelay,
+	} = useDelayMouseHover({
+		onMouseEnter: handleMouseEnter,
+		onMouseLeave: handleMouseLeave,
+		delay,
+	})
 
-  const handleFocus = () => {
-    if (!disabledFocus && !isTouchDeviceRef.current) handleOpen();
-  };
+	const handleClickOutside = useCallback(
+		(event: MouseEvent) => {
+			const tooltip = tooltipRef.current
+			const parent = parentRef.current
 
-  const handleBlur = () => {
-    if (!disabledFocus && !isTouchDeviceRef.current) handleClose();
-  };
+			if (!tooltip || !parent) return
 
-  const handleClickOutside = useCallback(
-    (event: MouseEvent) => {
-      const tooltip = tooltipRef.current;
-      const parent = parentRef.current;
+			if (
+				isClickableTooltip &&
+				!tooltip.contains(event.target as Node) &&
+				!parent.contains(event.target as Node)
+			) {
+				handleClose()
+			} else if (!isClickableTooltip && !parent.contains(event.target as Node)) {
+				handleClose()
+			}
+		},
+		[isClickableTooltip, handleClose]
+	)
 
-      if (!tooltip || !parent) return;
+	// Import change position function
+	useEffect(() => {
+		const loadPositioningFunction = async () => {
+			if (isFollowCursor) {
+				const { setPositionFollowCursor } = await import('../lib')
+				setPositionFollowCursorRef.current = setPositionFollowCursor
+			} else {
+				const { setPositionPortalElement } = await import(
+					'@/shared/lib/setPosition'
+				)
+				setPositionRef.current = setPositionPortalElement
+			}
+		}
+		loadPositioningFunction()
+	}, [isFollowCursor])
 
-      if (
-        !parent.contains(event.target as Node) &&
-        !tooltip.contains(event.target as Node) &&
-        clickableTooltip
-      ) {
-        handleClose();
-      }
-    },
-    [clickableTooltip, handleClose]
-  );
+	useEffect(() => {
+		if (isFollowCursor) return
 
-  useEffect(() => {
-    if (isVisible && !disabledClick) {
-      document.addEventListener("click", handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, [disabledClick, handleClickOutside, isVisible]);
+		const parent = parentRef.current
+		const tooltip = tooltipRef.current
 
-  useEffect(() => {
-    if ("ontouchstart" in window) {
-      isTouchDeviceRef.current = true
-    } else {
-      isTouchDeviceRef.current = false
-    }
-  }, []);
+		if (!isVisible || !parent || !tooltip) return
 
-  // Remove
-  useEffect(() => {
-    return () => {
-      if (unmountingTimeoutIdRef.current)
-        clearTimeout(unmountingTimeoutIdRef.current);
-      if (autoCloseTimeoutIdRef.current) {
-        clearTimeout(autoCloseTimeoutIdRef.current);
-      }
-      if (touchTimeoutIdRef.current) {
-        clearTimeout(touchTimeoutIdRef.current);
-      }
-      document.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, [handleMouseMove, handleClickOutside]);
+		const handleChangePosition = () => {
+			setPositionRef.current!({
+				element: tooltip,
+				parent,
+				position,
+			})
+		}
 
-  const localHandleChangePosition = useCallback(() => {
-    const parent = parentRef.current;
-    const tooltip = tooltipRef.current;
+		const throttledHandleChanges = throttle(handleChangePosition, 20)
 
-    if (!parent || !tooltip) return;
+		const resizeObserver = new ResizeObserver(throttledHandleChanges)
 
-    handleChangePosition(tooltip, parent, tooltipPosition, margin);
-  }, [tooltipPosition, margin]);
+		resizeObserver.observe(tooltip)
+		resizeObserver.observe(parent)
 
-  useEffect(() => {
-    if (!isVisible || (followCursor && !isTouchDeviceRef.current)) return;
+		window.addEventListener('resize', throttledHandleChanges)
 
-    const parent = parentRef.current;
-    const tooltip = tooltipRef.current;
+		return () => {
+			resizeObserver.disconnect()
+			window.removeEventListener('resize', throttledHandleChanges)
+			throttledHandleChanges.cancel()
+		}
+	}, [isVisible, isFollowCursor])
 
-    if (!parent || !tooltip) return;
+	useEffect(() => {
+		if (isVisible && !disabledClick) {
+			document.addEventListener('click', handleClickOutside)
+		}
+		return () => {
+			document.removeEventListener('click', handleClickOutside)
+		}
+	}, [disabledClick, handleClickOutside, isVisible])
 
-    const throttledHandleChanges = throttle(localHandleChangePosition, 1000);
+	useEffect(() => {
+		return () => {
+			handleMouseMove.cancel()
+			document.removeEventListener('mousemove', handleMouseMove)
+		}
+	}, [handleMouseMove])
 
-    const resizeObserver = new ResizeObserver(throttledHandleChanges);
+	const triggerElementProps = {
+		ref: externalParentRef ? undefined : localParentRef,
+		onFocus: isTouchDevice || disabledFocus ? undefined : handleOpen,
+		onBlur: isTouchDevice || disabledFocus ? undefined : handleClose,
+		onMouseEnter: handleMouseEnterDelay,
+		onMouseLeave: isClickableTooltip ? undefined : handleMouseLeaveDelay,
+		onTouchStart:
+			isTouchDevice && !disabledTouch
+				? isFollowCursor
+					? handleOpen
+					: handleTouchStart
+				: undefined,
+		onTouchEnd:
+			isTouchDevice && !disabledTouch
+				? isFollowCursor
+					? handleClose
+					: handleTouchEnd
+				: undefined,
+    onTouchMove: isTouchDevice && isFollowCursor ? handleMouseMove : undefined,
+		onClick: disabledClick ? undefined : handleToggle,
+		'aria-labelledby': isVisible ? tooltipId : undefined,
+	}
 
-    resizeObserver.observe(tooltip);
-    resizeObserver.observe(parent);
+	const isVertical = position.includes('top') || position.includes('bottom')
 
-    window.addEventListener("resize", throttledHandleChanges);
-    window.addEventListener("scroll", throttledHandleChanges);
+	const mods: Record<string, boolean | undefined> = {
+		[styles['vertical']]: isVertical,
+	}
 
-    return () => {
-      resizeObserver.disconnect();
-      window.removeEventListener("resize", throttledHandleChanges);
-      window.removeEventListener("scroll", throttledHandleChanges);
-      throttledHandleChanges.cancel();
-    };
-  }, [isVisible, localHandleChangePosition, followCursor, isTouchDeviceRef]);
-
-  const triggerElementProps = {
-    onFocus: handleFocus,
-    onBlur: handleBlur,
-    onMouseEnter: handleMouseEnter,
-    onTouchStart: handleTouchStart, 
-    onTouchEnd: handleTouchEnd,
-    onClick: !disabledClick ? handleOpen : undefined,
-    onMouseLeave: !clickableTooltip ? handleMouseLeave : undefined,
-    ref: parentRef,
-    "aria-labelledby": isVisible ? tooltipId : undefined,
-  };
-
-  const mods: Record<string, boolean> = {
-    [styles["unmounting"]]: isUnmountingAnimation,
-  };
-
-  return (
-    <div
-      className={classNames(styles["container"], [className])}
-      onMouseLeave={clickableTooltip ? handleMouseLeave : undefined}
-    >
-      {cloneElement(children, { ...triggerElementProps })}
-      {isVisible && (
-        <Portal>
-          <div
-            ref={tooltipRef}
-            className={classNames(
-              styles["tooltip-wrapper"],
-              [styles[tooltipPosition]],
-              mods
-            )}
-            style={{
-              zIndex,
-              padding: margin,
-              pointerEvents: followCursor ? "none" : undefined,
-            }}
-          >
-            <div role="tooltip" id={tooltipId} className={styles["tooltip"]}>
-              {Content}
-            </div>
-          </div>
-        </Portal>
-      )}
-    </div>
-  );
-};
+	return (
+		<div
+			className={classNames(styles['container'], [className])}
+			onMouseLeave={isClickableTooltip ? handleMouseLeaveDelay : undefined}
+		>
+			{cloneElement(children, { ...triggerElementProps })}
+			<CSSTransition
+				nodeRef={tooltipRef}
+				in={isVisible}
+				unmountOnExit={isUnmount}
+				mountOnEnter={isLazy}
+				timeout={200}
+				classNames={{
+					enter: styles['enter'],
+					enterDone: styles['enter-done'],
+					exit: styles['exit'],
+				}}
+			>
+				<Portal>
+					<div
+						ref={tooltipRef}
+						className={classNames(styles['tooltip'], [styles[position]], mods)}
+						onMouseEnter={
+							isClickableTooltip && isVisible ? handleMouseEnterDelay : undefined
+						}
+						style={{
+							zIndex,
+							pointerEvents: isFollowCursor ? 'none' : undefined,
+						}}
+					>
+						<div role="tooltip" id={tooltipId} className={styles['content']}>
+							{Content}
+						</div>
+					</div>
+				</Portal>
+			</CSSTransition>
+		</div>
+	)
+}

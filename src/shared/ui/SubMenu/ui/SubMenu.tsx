@@ -1,4 +1,4 @@
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { classNames } from '@/shared/helpers/classNames'
 import { Dropdown, DropdownPosition } from '@/shared/ui/Dropdown'
 import {
 	cloneElement,
@@ -27,9 +27,9 @@ interface SubMenuProps {
 	position?: DropdownPosition
 	isOpenParentMenu: boolean
 	isOpen: boolean
-	setIsOpen: (value: boolean) => void
 	zIndex?: number
 	portalTarget: HTMLElement | null
+	setIsOpen: (value: boolean) => void
 }
 
 export const SubMenu = (props: SubMenuProps) => {
@@ -42,25 +42,26 @@ export const SubMenu = (props: SubMenuProps) => {
 		height,
 		isOpenParentMenu,
 		isOpen,
-		setIsOpen,
 		zIndex,
 		portalTarget,
+		setIsOpen,
 	} = props
 
 	const [isMounting, setIsMounting] = useState<boolean>(false)
-	const menuRef = useRef<HTMLUListElement | null>(null)
+	const isMountingRef = useRef<boolean>(isMounting)
+
+	const menuRef = useRef<HTMLDivElement | null>(null)
 	const openingElementRef = useRef<HTMLElement | null>(null)
 
-	const focusableElementsRef = getFocusableElements(menuRef, isOpen)
+	const focusableElementsRef = getFocusableElements(menuRef, isMounting)
 
-	const isTouchDeviceRef = useTouchDevice()
-	const isMountingRef = useRef<boolean>(isMounting)
+	const { isTouchDeviceRef } = useTouchDevice()
 
 	const labelId = useId()
 	const menuId = useId()
 
 	const handleOpenMenu = useCallback(() => {
-		if(!isMountingRef.current) {
+		if (!isMountingRef.current) {
 			setIsMounting(true)
 		}
 		setIsOpen(true)
@@ -116,17 +117,17 @@ export const SubMenu = (props: SubMenuProps) => {
 		}
 	}, [isOpen])
 
-	const parentProps = {
-		onMouseEnter: handleMouseEnter,
-		onClick: handleOpenMenu,
+	const openingElementProps = {
 		ref: openingElementRef,
 		id: labelId,
+		onMouseEnter: handleMouseEnter,
+		onClick: handleOpenMenu,
 		'aria-controls': menuId,
 		'aria-haspopup': 'menu',
 	}
 
 	const memoizeOpeningElement = useMemo(
-		() => cloneElement(Component, { ...parentProps }),
+		() => cloneElement(Component, { ...openingElementProps }),
 		[handleOpenMenu, handleMouseEnter]
 	)
 
@@ -145,7 +146,7 @@ export const SubMenu = (props: SubMenuProps) => {
 						zIndex={zIndex}
 						transition
 					>
-						<ul
+						<div
 							className={classNames(styles['menu'], [className])}
 							role="menu"
 							ref={menuRef}
@@ -153,7 +154,7 @@ export const SubMenu = (props: SubMenuProps) => {
 							aria-labelledby={labelId}
 						>
 							{children}
-						</ul>
+						</div>
 					</Dropdown>
 				</Portal>
 			)}

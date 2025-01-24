@@ -2,10 +2,8 @@
 
 .snackbar {
 	--bgColor: ;
-	--color: var(--font-color-soft);
 	position: fixed;
-	color: var(--color);
-	border-radius: var(--border-radius-s);
+	border-radius: var(--border-radius-m);
 	display: flex;
 	align-items: center;
 	overflow: hidden;
@@ -17,14 +15,14 @@
 }
 
 .message {
-	margin-inline: var(--button-padding-inline-m);
-	margin-block: var(--button-padding-block-m);
+	margin-inline: var(--padding-20);
+	margin-block: var(--padding-15);
 }
 
 // Variants
 .snackbar {
 	&.filled {
-		background-color: var(--theme-color-grey-800);
+		background-color: var(--theme-color-grey-light);
 	}
 	&.clear {
 		background-color: transparent;

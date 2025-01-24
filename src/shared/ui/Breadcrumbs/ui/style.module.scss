@@ -1,0 +1,14 @@
+@use '@/app/styles/helpers' as *;
+
+.list {
+    display: flex;
+}
+
+.list-item {
+    background-color: transparent;
+}
+
+.separator {
+    margin-inline: rem(8);
+    @include user-select-off;
+}

@@ -1,20 +1,14 @@
 @use '@/app/styles/helpers' as *;
 
 .avatar {
-	--height: ;
-	--fontSize: 1.3em;
-	height: var(--height);
-	width: var(--height);
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	overflow: hidden;
-	color: var(--font-color-soft);
-	font-size: var(--fontSize);
 	box-sizing: content-box;
 	@include user-select-off;
 	&.default-bg-color {
-		background-color: var(--theme-color-grey-800);
+		background-color: var(--theme-color-grey-light);
 	}
 }
 
@@ -24,31 +18,37 @@
 		border: var(--border-weight-hard) solid var(--theme-color-dark);
 	}
 	&.primary {
-		border: var(--border-weight-hard) solid var(--theme-color-primary-500);
+		border: var(--border-weight-hard) solid var(--theme-color-primary-main);
 	}
 }
 
 // Sizes
 .avatar {
 	&.small {
-		--height: #{rem(40)};
-		--fontSize: calc(var(--height) / 1.75);
+		height: #{rem(40)};
+		width: #{rem(40)};
+		font-size: calc(var(--height) / 1.75);
 		@include laptop {
-			--height: #{rem(35)};
+			height: #{rem(35)};
+			width: #{rem(35)};
 		}
 	}
 	&.medium {
-		--height: #{rem(60)};
-		--fontSize: calc(var(--height) / 1.75);
+		height: #{rem(60)};
+		width: #{rem(60)};
+		font-size: calc(var(--height) / 1.75);
 		@include laptop {
-			--height: #{rem(50)};
+			height: #{rem(45)};
+			width: #{rem(45)};
 		}
 	}
 	&.large {
-		--height: #{rem(80)};
-		--fontSize: calc(var(--height) / 1.75);
+		height: #{rem(80)};
+		width: #{rem(80)};
+		font-size: calc(var(--height) / 1.75);
         @include laptop {
-			--height: #{rem(60)};
+			height: #{rem(80)};
+			width: #{rem(80)};
 		}
 	}
 }

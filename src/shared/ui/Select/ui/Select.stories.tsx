@@ -103,15 +103,15 @@ const ControlledSelectWrapper = (args: any) => {
 	)
 }
 
-export const SingleSelect: Story = {
+export const Single: Story = {
 	render: (args) => SingleSelectWrapper(args),
 }
 
-export const MultiSelect: Story = {
+export const Multi: Story = {
 	render: (args) => MultiSelectWrapper(args),
 }
 
-export const MultiSelectWithChips: Story = {
+export const MultiWithChips: Story = {
 	render: (args) => MultiSelectWrapper(args),
 	args: {
 		renderTags: (value, label, params) => (
@@ -120,13 +120,13 @@ export const MultiSelectWithChips: Story = {
 	},
 }
 
-export const SelectWidthDisabledOptions: Story = {
+export const WidthDisabledOptions: Story = {
 	render: (args) => MultiSelectWrapper(args),
 	args: {
 		getDisabledOptions: (value: string) => value === '2' || value === '5',
 	},
 }
 
-export const ControlledSelect: Story = {
+export const ControlledOpening: Story = {
 	render: (args) => ControlledSelectWrapper(args),
 }

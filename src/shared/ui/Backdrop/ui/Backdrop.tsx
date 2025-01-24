@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { classNames } from '@/shared/helpers/classNames'
 import { Portal } from '@/shared/ui/Portal'
 import { Z_INDEX } from '@/shared/constants/zIndex'
 import styles from './style.module.scss'
@@ -11,9 +11,9 @@ interface BackdropProps {
 	variant?: BackdropVariant
 	children?: ReactElement
 	isVisible: boolean
-	onClose?: () => void
 	zIndex?: number
 	mountingAnimation?: boolean
+	onClose?: () => void
 }
 
 export const Backdrop = (props: BackdropProps) => {
@@ -21,10 +21,10 @@ export const Backdrop = (props: BackdropProps) => {
 		className,
 		children,
 		isVisible,
-		onClose,
 		variant = 'dark',
 		mountingAnimation,
 		zIndex = Z_INDEX.BACKDROP,
+		onClose,
 	} = props
 
 	const additionalClasses: Array<string | undefined> = [

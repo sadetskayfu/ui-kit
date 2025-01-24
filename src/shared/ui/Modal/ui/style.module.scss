@@ -5,7 +5,7 @@
     translate: -50% -50%; 
     border: var(--border-weight-soft) solid var(--border-color-grey);
     background-color: var(--theme-color-dark);
-    border-radius: var(--border-radius-m);
+    border-radius: var(--border-radius-l);
     opacity: 0;
     transform: translateY(50%);
     &.enter {

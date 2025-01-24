@@ -3,10 +3,10 @@
 .tab {
     --paddingBlock: ;
     --paddingInline: ;
-    --color: var(--font-color-soft);
-    --colorActive: var(--theme-color-primary-500);
+    --color: var(--font-color-hard);
+    --colorActive: var(--theme-color-primary-main);
     --bgColor: ;
-    --bgColorHover: var(--theme-color-grey-900);
+    --bgColorHover: var(--theme-color-grey-dark);
     --bgColorActive: ;
     position: relative;
     display: flex;
@@ -14,8 +14,8 @@
     align-items: center;
     padding-block: var(--paddingBlock);
     padding-inline: var(--paddingInline);
-    column-gap: var(--padding-8);
-    row-gap: var(--padding-6);
+    column-gap: rem(8);
+    row-gap: rem(6);
     background-color: var(--bgColor);
     color: var(--color);
     transition: background-color 0.2s, color 0.2s;
@@ -23,6 +23,7 @@
 }
 
 .icon {
+    display: inline-flex;
     font-size: var(--fz-icon-s);
 }
 
@@ -30,9 +31,9 @@
 .tab {
     &.filled {
         --bgColor: var(--theme-color-dark);
-        --bgColorActive: var(--theme-color-grey-900);
+        --bgColorActive: var(--theme-color-grey-dark);
         border: var(--border-weight-soft) solid var(--border-color-grey);
-        border-radius: var(--border-radius-s);
+        border-radius: var(--border-radius-m);
     }
     &.clear {
         --bgColor: transparent;
@@ -68,11 +69,8 @@
 
 // Mods
 .tab {
-    &.full-width {
-        width: 100%;
-    }
     &:focus-visible {
-        @include focus-outline;
+        @include focus-outline-inset;
     }
     &.disabled {
         @include disabled;

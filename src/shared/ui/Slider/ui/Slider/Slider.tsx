@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback, memo, useEffect, Suspense } from 'react'
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { classNames } from '@/shared/helpers/classNames'
 import { useChangeValue, useDragging, useKeyboardNavigation } from '../../hooks'
 import { Thumb } from '../Thumb/Thumb'
 import { calculateTranslateThumb } from '../../helpers'

@@ -1,10 +1,10 @@
 import { ImgHTMLAttributes, memo, ReactElement, useState } from 'react'
-import { classNames } from '@/shared/lib/classNames/classNames'
-import { getFirstLetter } from '@/shared/lib/formattingString'
+import { classNames } from '@/shared/helpers/classNames'
+import { getFirstLetter } from '@/shared/helpers/formattingString'
 import styles from './style.module.scss'
 
 type AvatarVariant = 'circular' | 'rounded' | 'square'
-type AvatarSize = 'small' | 'medium' | 'large'
+type AvatarSize = 'small' | 'medium' | 'large' | 'custom'
 type AvatarBorderColor = 'dark' | 'primary' | "none"
 
 interface BaseAvatarProps {

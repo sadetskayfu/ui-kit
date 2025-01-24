@@ -8,7 +8,7 @@
 	--labelColor: var(--font-color-hard);
 	--borderColor: var(--border-color-grey);
 	--borderColorHover: var(--color-grey-500);
-	--borderColorFocus: var(--theme-color-primary-500);
+	--borderColorFocus: var(--theme-color-primary-main);
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -16,12 +16,13 @@
 }
 
 .field {
+	--border: var(--border-weight-soft) solid var(--borderColor);
 	position: relative;
 	min-height: var(--height);
 	padding-inline: var(--paddingInline);
 	padding-block: var(--paddingBlock);
-	border: var(--border-weight-soft) solid var(--borderColor);
-	border-radius: var(--border-radius-s);
+	border: var(--border);
+	border-radius: var(--border-radius-m);
 	background-color: var(--bgColor);
 	transition-duration: 0.2s;
 	display: flex;
@@ -39,17 +40,24 @@
 
 .actions {
 	display: flex;
-	margin-left: calc(var(--paddingInline) - var(--field-actions-margin));
-	margin-right: calc(var(--field-actions-margin) * -1);
+	margin-left: calc(var(--paddingInline) - var(--actions-margin));
+	margin-right: calc(var(--actions-margin) * -1);
 }
 
 // Variants
 .field-wrapper {
 	&.filled {
-		--bgColor: var(--theme-color-grey-900);
+		--bgColor: var(--theme-color-grey-dark);
 	}
 	&.outlined {
 		--bgColor: transparent;
+	}
+	&.clear {
+		.field {
+			--border: none;
+			border-bottom: var(--border-weight-soft) solid var(--borderColor);
+			border-radius: 0px;
+		}
 	}
 }
 
@@ -68,7 +76,8 @@
 		.fieldset {
 			position: absolute;
 			inset: var(--labelTranslateTop) 0 0;
-			border: var(--border-weight-soft) solid var(--borderColor);
+			border: var(--border);
+			border-bottom: var(--border-weight-soft) solid var(--borderColor);
 			border-radius: inherit;
 			margin: 0px;
 			pointer-events: none;
@@ -96,15 +105,27 @@
 
 // Sizes
 .field-wrapper {
+	&.small {
+		--height: var(--button-height-s);
+		--paddingBlock: #{rem(6)};
+		--paddingInline: var(--padding-15);
+	}
 	&.medium {
 		--height: var(--button-height-m);
-		--paddingInline: var(--padding-15);
 		--paddingBlock: #{rem(8)};
+		--paddingInline: var(--padding-15);
 	}
 	&.large {
 		--height: var(--button-height-l);
-		--paddingInline: var(--padding-15);
 		--paddingBlock: #{rem(13)};
+		--paddingInline: var(--padding-15);
+	}
+	&.small,
+	&.medium,
+	&.large {
+		&.clear {
+			--paddingInline: var(--actions-margin);
+		}
 	}
 }
 
@@ -119,11 +140,11 @@
 	}
     &:not(.errored) {
         &.focused {
-            --labelColor: var(--theme-color-primary-500);
+            --labelColor: var(--theme-color-primary-main);
         }
     }
     &.focused {
-        --borderColor: var(--theme-color-primary-500);
+        --borderColor: var(--theme-color-primary-main);
     }
 	&:not(.focused) {
 		.field {

@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { IconButton } from "./IconButton";
+import IconButton from "./IconButton";
 import { Bell } from "@/shared/assets/icons";
 
 const meta: Meta<typeof IconButton> = {

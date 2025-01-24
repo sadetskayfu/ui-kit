@@ -1,0 +1,54 @@
+@use '@/app/styles/helpers' as *;
+
+.list-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-inline: var(--padding-20);
+    padding-block: var(--padding-15);
+    gap: var(--padding-20);
+    transition: background-color 0.2s;
+    cursor: pointer;
+    @include user-select-off;
+    @include hover {
+        background-color: var(--color-grey-opacity);
+    }
+    &:focus-visible {
+        @include focus-outline-inset;
+    }
+    &:before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        translate: 0% -50%;
+        width: var(--border-weight-soft);
+        height: 0%;
+        background-color: var(--theme-color-primary-main);
+        transition-duration: 0.2s;
+    }
+    &.active {
+        color: var(--theme-color-primary-main);
+        &:before {
+            height: 100%;
+        }
+    }
+}
+
+// Indicator position
+.list-item {
+    &.left {
+        &:before {
+            left: 0;
+        }
+    }
+    &.right {
+        &::before {
+            right: 0;
+        }
+    }
+}
+
+.end-icon {
+    display: inline-flex;
+    margin-left: auto;
+}

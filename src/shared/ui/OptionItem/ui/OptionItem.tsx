@@ -1,16 +1,16 @@
 import { AriaRole, memo, ReactNode, useRef } from 'react'
-import { classNames } from '@/shared/lib/classNames/classNames'
-import { handleRippleMousePosition } from '@/shared/lib/handleRipple/handleRipple'
-import { RippleWrapper } from '@/shared/ui/RippleWrapper'
+import { classNames } from '@/shared/helpers/classNames'
 import { CheckMark } from '@/shared/assets/icons'
+import { RippleWrapper } from '@/shared/ui/RippleWrapper'
+import { handleRippleCursorPosition } from '@/shared/lib/ripple'
 import styles from './style.module.scss'
 
 export interface OptionItemProps {
 	className?: string
 	children?: ReactNode
+	isSelected?: boolean
 	disabled?: boolean
-	selected?: boolean
-	readonly?: boolean
+	readOnly?: boolean
 	value?: string
 	label?: string
 	id?: string
@@ -22,8 +22,8 @@ export const OptionItem = memo((props: OptionItemProps) => {
 		className,
 		children,
 		disabled,
-		selected,
-		readonly,
+		isSelected,
+		readOnly,
 		value,
 		label,
 		id,
@@ -34,12 +34,12 @@ export const OptionItem = memo((props: OptionItemProps) => {
 
 	const mods: Record<string, boolean | undefined> = {
 		[styles['disabled']]: disabled,
-		[styles['readonly']]: readonly,
-		[styles['selected']]: selected,
+		[styles['readonly']]: readOnly,
+		[styles['selected']]: isSelected,
 	}
 
 	const handleClick = (event: React.MouseEvent) => {
-		handleRippleMousePosition(rippleWrapperRef, event)
+		handleRippleCursorPosition(rippleWrapperRef, event)
 	}
 
 	return (
@@ -48,23 +48,23 @@ export const OptionItem = memo((props: OptionItemProps) => {
 			id={id}
 			role={role}
 			tabIndex={-1}
-			data-disabled={disabled || readonly ? true : undefined}
+			data-disabled={disabled || readOnly ? true : undefined}
 			data-value={value}
-			aria-selected={selected ? 'true' : 'false'}
+			aria-selected={isSelected ? 'true' : 'false'}
 			aria-disabled={disabled ? 'true' : undefined}
-			aria-readonly={readonly ? 'true' : undefined}
+			aria-readonly={readOnly ? 'true' : undefined}
 			onClick={handleClick}
 		>
 			<span className={styles['bg']}></span>
 			{children ? children : label}
-			{selected && (
+			{isSelected && (
 				<CheckMark
 					className={styles['check-mark']}
 					color="primary"
 					size="small-xx"
 				/>
 			)}
-			<RippleWrapper ref={rippleWrapperRef} />
+			<RippleWrapper ref={rippleWrapperRef}/>
 		</li>
 	)
 })

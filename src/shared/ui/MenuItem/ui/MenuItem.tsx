@@ -1,36 +1,36 @@
 import {
 	AriaRole,
 	ButtonHTMLAttributes,
-	cloneElement,
 	forwardRef,
+	lazy,
 	LinkHTMLAttributes,
 	memo,
 	ReactElement,
 	ReactNode,
+	Suspense,
 	useRef,
 } from 'react'
-import { classNames } from '@/shared/lib/classNames/classNames'
-import {
-	handleRipple,
-	handleRippleMousePosition,
-} from '@/shared/lib/handleRipple/handleRipple'
-import { Link } from 'react-router-dom'
+import { classNames } from '@/shared/helpers/classNames'
+import { Typography } from '@/shared/ui/Typography'
 import { RippleWrapper } from '@/shared/ui/RippleWrapper'
-import { IconProps } from '@/shared/assets/icons'
+import { handleRipple, handleRippleCursorPosition } from '@/shared/lib/ripple'
 import styles from './style.module.scss'
-import { Typography } from '../../Typography'
+
+const LazyLink = lazy(() =>
+	import('react-router-dom').then((module) => ({ default: module.Link }))
+)
 
 interface BaseMenuItemProps {
 	className?: string
 	label: string
 	description?: string
-	onClick?: (event: React.MouseEvent | React.KeyboardEvent) => void
 	tabIndex?: number
-	StartIcon?: ReactElement<IconProps>
-	EndIcon?: ReactElement<IconProps>
+	StartIcon?: ReactElement
+	EndIcon?: ReactElement
 	to?: string
 	href?: string
 	role?: AriaRole
+	onClick?: (event: any) => void
 }
 
 type HTMLButtonProps = Omit<
@@ -57,67 +57,50 @@ export const MenuItem = memo(
 				className,
 				label,
 				description,
-				onClick,
 				tabIndex = 0,
 				StartIcon,
 				EndIcon,
 				to,
 				href,
 				role = 'menuitem',
+				onClick,
 				buttonProps,
 				linkProps,
 				...otherProps
 			} = props
 
 			const rippleWrapperRef = useRef<HTMLSpanElement | null>(null)
-			const localLinkRef = useRef<HTMLAnchorElement | null>(null)
-			const linkRef = ref
-				? (ref as React.RefObject<HTMLAnchorElement>)
-				: localLinkRef
 
 			const handleClick = (event: React.MouseEvent) => {
 				onClick?.(event)
-				handleRippleMousePosition(rippleWrapperRef, event)
+				handleRippleCursorPosition(rippleWrapperRef, event)
 			}
 
 			const handleKeyUp = (event: React.KeyboardEvent) => {
 				if (event.key === 'Enter' || event.key === ' ') {
-					event.preventDefault()
-
-					if (to || href) {
-						linkRef.current?.click()
-					} else {
-						onClick?.(event)
-					}
-
 					handleRipple(rippleWrapperRef)
-				}
-			}
-
-			const handleKeyDown = (event: React.KeyboardEvent) => {
-				if(event.key === 'Enter' || event.key === ' ') {
-					event.preventDefault()
 				}
 			}
 
 			const Component = ({ children }: { children: ReactNode }) => {
 				if (to)
 					return (
-						<Link
-							className={styles['button']}
-							role={role}
-							tabIndex={tabIndex}
-							to={to}
-							onKeyUp={handleKeyUp}
-							onKeyDown={handleKeyDown}
-							onClick={handleClick}
-							ref={linkRef}
-							{...linkProps}
-							{...otherProps}
-						>
-							{children}
-							<RippleWrapper ref={rippleWrapperRef} />
-						</Link>
+						<Suspense>
+							<LazyLink
+								className={styles['button']}
+								role={role}
+								tabIndex={tabIndex}
+								to={to}
+								onKeyUp={handleKeyUp}
+								onClick={handleClick}
+								ref={ref as React.ForwardedRef<HTMLAnchorElement>}
+								{...linkProps}
+								{...otherProps}
+							>
+								{children}
+								<RippleWrapper ref={rippleWrapperRef}/>
+							</LazyLink>
+						</Suspense>
 					)
 				if (href)
 					return (
@@ -127,9 +110,8 @@ export const MenuItem = memo(
 							tabIndex={tabIndex}
 							href={href}
 							onKeyUp={handleKeyUp}
-							onKeyDown={handleKeyDown}
 							onClick={handleClick}
-							ref={linkRef}
+							ref={ref as React.ForwardedRef<HTMLAnchorElement>}
 							{...linkProps}
 							{...otherProps}
 						>
@@ -142,14 +124,13 @@ export const MenuItem = memo(
 						role={role}
 						onClick={handleClick}
 						onKeyUp={handleKeyUp}
-						onKeyDown={handleKeyDown}
 						tabIndex={tabIndex}
-						ref={ref && (ref as React.ForwardedRef<HTMLButtonElement>)}
+						ref={ref as React.ForwardedRef<HTMLButtonElement>}
 						{...buttonProps}
 						{...otherProps}
 					>
 						{children}
-						<RippleWrapper ref={rippleWrapperRef} />
+						<RippleWrapper ref={rippleWrapperRef}/>
 					</button>
 				)
 			}
@@ -166,11 +147,15 @@ export const MenuItem = memo(
 				>
 					<Component>
 						<div className={styles['title']}>
-							{StartIcon && cloneElement(StartIcon, {className: styles['start-icon']})}
+							{StartIcon && <span className={styles['start-icon']}>{StartIcon}</span>}
 							{label}
-							{EndIcon && cloneElement(EndIcon, {className: styles['end-icon']})}
+							{EndIcon && <span className={styles['end-icon']}>{EndIcon}</span>}
 						</div>
-						{description && <Typography color='soft' component='p' variant='helper-text'>{description}</Typography>}
+						{description && (
+							<Typography color="soft" component="p" variant="helper-text">
+								{description}
+							</Typography>
+						)}
 					</Component>
 				</li>
 			)

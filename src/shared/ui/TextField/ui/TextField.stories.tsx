@@ -58,16 +58,16 @@ const FieldWrapper = (args: any) => {
 	)
 }
 
-export const DefaultField: Story = {
+export const Default: Story = {
 }
 
-export const FieldWithAdornment: Story = {
+export const WithAdornment: Story = {
 	args: {
 		StartAdornment: 'KG',
 	},
 }
 
-export const FieldWithActions: Story = {
+export const WithActions: Story = {
 	args: {
 		Actions: [
 			<IconButton size="small-xx" variant="clear" color="secondary">
@@ -80,12 +80,12 @@ export const FieldWithActions: Story = {
 	},
 }
 
-export const FieldWithClearButton: Story = {
+export const WithClearButton: Story = {
     render: (args) => FieldWrapper(args),
 }
 
 
-export const MultilineField: Story = {
+export const Multiline: Story = {
     render: (args) => FieldWrapper(args),
     args: {
         multiline: true,

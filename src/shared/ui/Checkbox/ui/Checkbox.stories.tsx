@@ -60,15 +60,15 @@ const CheckboxWithLabelWrapper = (args: any) => {
 	)
 }
 
-export const DefaultCheckbox: Story = {
+export const Default: Story = {
 	render: (args) => CheckboxWrapper(args),
 }
 
-export const CheckboxWithLabel: Story = {
+export const WithLabel: Story = {
 	render: (args) => CheckboxWithLabelWrapper(args),
 }
 
-export const CheckboxWithCustomIcon: Story = {
+export const WithCustomIcon: Story = {
 	render: (args) => CheckboxWrapper(args),
 	args: {
 		CheckedIcon: <Heart />,

@@ -20,7 +20,6 @@
         }
         .selected-values {
             display: contents;
-            color: var(--font-color-hard);
         }
     }
 }
@@ -33,13 +32,14 @@
     width: var(--button-height-xxs);
     transform: rotate(-90deg);
     transition-duration: 0.2s;
+    color: var(--font-color-hard);
 }
 
 .menu {
     background-color: var(--theme-color-dark);
     border: var(--border-weight-soft) solid var(--border-color-grey);
-    padding-block: var(--padding-6);
-    border-radius: var(--border-radius-s);
+    padding-block: rem(5);
+    border-radius: var(--border-radius-m);
     width: 100%;
     overflow-y: auto;
 }

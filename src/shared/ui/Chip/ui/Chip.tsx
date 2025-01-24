@@ -1,24 +1,26 @@
-import {
-	handleRipple,
-	handleRippleMousePosition,
-} from '@/shared/lib/handleRipple/handleRipple'
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { classNames } from '@/shared/helpers/classNames'
 import {
 	ButtonHTMLAttributes,
 	cloneElement,
 	forwardRef,
+	lazy,
 	LinkHTMLAttributes,
 	memo,
 	ReactElement,
 	ReactNode,
+	Suspense,
 	useRef,
 } from 'react'
-import { RippleWrapper } from '@/shared/ui/RippleWrapper'
 import { IconButton } from '@/shared/ui/IconButton'
-import { Link } from 'react-router-dom'
 import { AvatarProps } from '@/shared/ui/Avatar'
-import { IconProps, XMark } from '@/shared/assets/icons'
+import { XMark } from '@/shared/assets/icons'
+import { RippleWrapper } from '@/shared/ui/RippleWrapper'
+import { handleRipple, handleRippleCursorPosition } from '@/shared/lib/ripple'
 import styles from './style.module.scss'
+
+const LazyLink = lazy(() =>
+	import('react-router-dom').then((module) => ({ default: module.Link }))
+)
 
 type ChipVariant = 'filled' | 'outlined'
 type ChipColor = 'primary' | 'secondary'
@@ -30,16 +32,14 @@ interface BaseChipProps {
 	color?: ChipColor
 	size?: ChipSize
 	label: string
-	onClose?: (event: React.MouseEvent | React.KeyboardEvent) => void
-	onClick?: (event: React.MouseEvent | React.KeyboardEvent) => void
-	stopFocus?: boolean
-	stopPropagation?: boolean
 	tabIndex?: number
 	disabled?: boolean
 	to?: string
 	href?: string
 	Avatar?: ReactElement<AvatarProps>
-	Icon?: ReactElement<IconProps>
+	Icon?: ReactElement
+	onClose?: (event: any) => void
+	onClick?: (event: any) => void
 }
 
 type HTMLLinkProps = Omit<
@@ -61,7 +61,7 @@ export const Chip = memo(
 		(
 			props: ChipProps,
 			ref: React.ForwardedRef<
-				HTMLButtonElement | HTMLAnchorElement | HTMLDivElement | null
+				HTMLButtonElement | HTMLAnchorElement | HTMLDivElement
 			>
 		) => {
 			const {
@@ -70,58 +70,37 @@ export const Chip = memo(
 				color = 'primary',
 				size = 'medium',
 				label,
-				onClick,
-				onClose,
-				stopFocus,
-				stopPropagation,
 				disabled,
 				tabIndex = 0,
 				to,
 				href,
 				Avatar,
 				Icon,
+				onClick,
+				onClose,
 				buttonProps,
 				linkProps,
 				...otherProps
 			} = props
 
 			const rippleWrapperRef = useRef<HTMLSpanElement | null>(null)
-			const localLinkRef = useRef<HTMLAnchorElement | null>(null)
-			const linkRef = ref ? (ref as React.RefObject<HTMLAnchorElement>) : localLinkRef
 
-			const handleKeyUp = (event: React.KeyboardEvent) => {
+			const handleKeyDown = (event: React.KeyboardEvent) => {
 				if (event.key === 'Backspace' && onClose) {
 					event.preventDefault()
-					onClose?.(event)
+					onClose(event)
 				}
+			}
 
+			const handleKeyUp = (event: React.KeyboardEvent) => {
 				if (event.key === 'Enter' || event.key === ' ') {
-					event.preventDefault()
-
-					if (to || href) {
-						linkRef.current?.click()
-					} else {
-						onClick?.(event)
-					}
-
 					handleRipple(rippleWrapperRef)
 				}
 			}
 
-			const handleKeyDown = (event: React.KeyboardEvent) => {
-				if (event.key === 'Enter') {
-					event.preventDefault()
-				}
-			}
-
 			const handleClick = (event: React.MouseEvent) => {
-				if (stopPropagation) event.stopPropagation()
 				onClick?.(event)
-				handleRippleMousePosition(rippleWrapperRef, event)
-			}
-
-			const handleMouseDown = (event: React.MouseEvent) => {
-				stopFocus && event.preventDefault()
+				handleRippleCursorPosition(rippleWrapperRef, event)
 			}
 
 			const mods: Record<string, boolean | undefined> = {
@@ -146,15 +125,14 @@ export const Chip = memo(
 							onClick={handleClick}
 							onKeyUp={handleKeyUp}
 							onKeyDown={handleKeyDown}
-							onMouseDown={handleMouseDown}
 							tabIndex={localTabIndex}
 							disabled={disabled}
-							ref={ref && ref as React.RefObject<HTMLButtonElement>}
+							ref={ref as React.RefObject<HTMLButtonElement>}
 							{...buttonProps}
 							{...otherProps}
 						>
 							{children}
-							<RippleWrapper ref={rippleWrapperRef} />
+							<RippleWrapper ref={rippleWrapperRef}/>
 						</button>
 					)
 				if (href)
@@ -164,10 +142,9 @@ export const Chip = memo(
 							onClick={handleClick}
 							onKeyUp={handleKeyUp}
 							onKeyDown={handleKeyDown}
-							onMouseDown={handleMouseDown}
 							tabIndex={localTabIndex}
 							href={href}
-							ref={linkRef}
+							ref={ref as React.RefObject<HTMLAnchorElement>}
 							{...linkProps}
 							{...otherProps}
 						>
@@ -176,28 +153,28 @@ export const Chip = memo(
 					)
 				if (to)
 					return (
-						<Link
-							className={classNames(styles['chip'], additionalClasses, mods)}
-							onClick={handleClick}
-							onKeyUp={handleKeyUp}
-							onKeyDown={handleKeyDown}
-							onMouseDown={handleMouseDown}
-							tabIndex={localTabIndex}
-							to={to}
-							ref={linkRef}
-							{...linkProps}
-							{...otherProps}
-						>
-							{children}
-							<RippleWrapper ref={rippleWrapperRef} />
-						</Link>
+						<Suspense>
+							<LazyLink
+								className={classNames(styles['chip'], additionalClasses, mods)}
+								onClick={handleClick}
+								onKeyUp={handleKeyUp}
+								onKeyDown={handleKeyDown}
+								tabIndex={localTabIndex}
+								to={to}
+								ref={ref as React.RefObject<HTMLAnchorElement>}
+								{...linkProps}
+								{...otherProps}
+							>
+								{children}
+								<RippleWrapper ref={rippleWrapperRef}/>
+							</LazyLink>
+						</Suspense>
 					)
 				return (
 					<div
 						className={classNames(styles['chip'], additionalClasses, mods)}
-						onMouseDown={handleMouseDown}
 						tabIndex={tabIndex}
-						ref={ref && ref as React.RefObject<HTMLDivElement>}
+						ref={ref as React.RefObject<HTMLDivElement>}
 						{...otherProps}
 					>
 						{children}
@@ -209,12 +186,11 @@ export const Chip = memo(
 				<Parent>
 					{Avatar &&
 						cloneElement(Avatar, {
-							height: '100%',
-							width: 'auto',
 							defaultBgColor: false,
+							size: 'custom',
 							className: styles['avatar'],
 						})}
-					{Icon && cloneElement(Icon, { className: styles['icon'] })}
+					{Icon && <span className={styles['icon']}>{Icon}</span>}
 					<span className={styles['label']}>{label}</span>
 					{onClose && (
 						<IconButton
@@ -225,8 +201,8 @@ export const Chip = memo(
 							onClick={onClose}
 							disabled={disabled}
 							tabIndex={-1}
-							stopFocus
 							stopPropagation
+							stopFocus
 						>
 							<XMark />
 						</IconButton>

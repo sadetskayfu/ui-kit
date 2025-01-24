@@ -35,6 +35,6 @@ const PaginationWrapper = (args: any) => {
     )
 }
 
-export const DefaultPagination: Story = {
+export const Default: Story = {
 	render: (args) => PaginationWrapper(args)
 }

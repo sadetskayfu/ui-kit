@@ -1,13 +1,13 @@
 @use '@/app/styles/helpers' as *;
 
 .accordion {
-  --paddingInline: var(--padding-34);
-  --paddingBlock: var(--padding-24);
-  --bgColor: var(--theme-color-grey-900);
+  --paddingInline: #{rem(34)};
+  --paddingBlock: #{rem(24)};
+  --bgColor: var(--theme-color-grey-dark);
   --titleColor: var(--font-color-hard);
   --dividerColor: var(--border-color-grey);
   width: 100%;
-  border-radius: var(--border-radius-m);
+  border-radius: var(--border-radius-l);
   border: var(--border-weight-soft) solid var(--border-color-grey);
   background-color: var(--bgColor);
 }
@@ -20,19 +20,19 @@
   padding-block: var(--paddingBlock);
   padding-inline: var(--paddingInline);
   cursor: pointer;
-  transition-duration: 0.2s;
+  transition: 0s;
   position: relative;
-  font-size: fluid-text(20, 16);
   &:after {
     @include divider-bottom;
     background-color: var(--dividerColor);
   }
   @include hover {
-    --titleColor: var(--theme-color-primary-500);
+    --titleColor: var(--theme-color-primary-main);
   }
   &:focus-visible {
-    --titleColor: var(--theme-color-primary-500);
-    --dividerColor: var(--theme-color-primary-500);
+    --titleColor: var(--theme-color-primary-main);
+    --dividerColor: var(--theme-color-primary-main);
+    @include focus-outline-inset;
   }
 }
 
@@ -42,7 +42,7 @@
 }
 
 .open-icon {
-  color: var(--theme-color-primary-500);
+  color: var(--theme-color-primary-main);
   opacity: 1;
   transition-duration: 1s;
 }
@@ -55,7 +55,6 @@
 .body {
   padding-block: var(--paddingBlock);
   padding-inline: var(--paddingInline);
-  color: var(--font-color-description);
 }
 
 .title {
@@ -68,7 +67,7 @@
 // Variants
 .accordion {
   &.filled {
-    --bgColor: var(--theme-color-grey-900);
+    --bgColor: var(--theme-color-grey-dark);
   }
   &.outlined {
     --bgColor: transparent;
@@ -98,7 +97,7 @@
 // Media
 .accordion {
   @include laptop {
-    --paddingInline: var(--padding-24);
-    --paddingBlock: var(--padding-20);
+    --paddingInline: #{rem(24)};
+    --paddingBlock: #{rem(20)};
   }
 }

@@ -1,5 +1,5 @@
 import { Children, cloneElement, HTMLAttributes, ReactElement, useId } from 'react'
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { classNames } from '@/shared/helpers/classNames/classNames'
 import { Typography } from '@/shared/ui/Typography'
 import styles from './style.module.scss'
 

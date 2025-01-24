@@ -1,5 +1,5 @@
 import { useId } from 'react'
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { classNames } from '@/shared/helpers/classNames'
 import styles from './style.module.scss'
 
 export type StarSize = 'small' | 'medium'
@@ -10,16 +10,16 @@ interface StarProps {
 	value: number
 	selectedValue: number
 	name: string
-	onChange: (value: number) => void
-	onChangeFillValue: (value: number) => void
 	isFullFilled: boolean
 	isThreeQuartersFilled: boolean
 	isHalfFilled: boolean
 	isQuarterFilled: boolean
-	readonly?: boolean
+	readOnly?: boolean
 	disabled?: boolean
-	precise?: boolean
+	isPrecise?: boolean
 	tabIndex?: number
+	onChange: (value: number) => void
+	onChangeFillValue: (value: number) => void
 }
 
 export const Star = (props: StarProps) => {
@@ -29,29 +29,29 @@ export const Star = (props: StarProps) => {
 		value,
 		selectedValue,
 		name,
-		onChange,
-		onChangeFillValue,
 		isFullFilled,
 		isThreeQuartersFilled,
 		isHalfFilled,
 		isQuarterFilled,
 		disabled,
-		readonly,
-		precise,
+		readOnly,
+		isPrecise,
 		tabIndex = 0,
+		onChange,
+		onChangeFillValue,
 	} = props
 
 	const halfLabelId = useId()
 	const labelId = useId()
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		if (readonly) return
+		if (readOnly) return
 
 		onChange(Number(event.target.value))
 	}
 
 	const handleChangeFillValue = (value: number) => {
-		if (readonly) return
+		if (readOnly) return
 
 		onChangeFillValue(value)
 	}
@@ -65,17 +65,17 @@ export const Star = (props: StarProps) => {
 		[styles['three-quarters-filled']]: isThreeQuartersFilled,
 		[styles['half-filled']]: isHalfFilled,
 		[styles['quarter-filled']]: isQuarterFilled,
-		[styles['readonly']]: readonly,
+		[styles['readonly']]: readOnly,
 		[styles['disabled']]: disabled,
 	}
 
 	const additionalClasses: Array<string | undefined> = [className, styles[size]]
 
-	const localTabIndex = disabled ? -1 : tabIndex
+	const localTabIndex = disabled || readOnly ? -1 : tabIndex
 
 	return (
 		<div className={classNames(styles['star'], additionalClasses, mods)}>
-			{precise && (
+			{isPrecise && (
 				<label
 					className={styles['label']}
 					onMouseEnter={() => handleChangeFillValue(halfValue)}
@@ -88,7 +88,7 @@ export const Star = (props: StarProps) => {
 						name={name}
 						onChange={handleChange}
 						checked={selectedValue === halfValue}
-						readOnly={readonly}
+						readOnly={readOnly}
 						disabled={disabled}
 						tabIndex={localTabIndex}
 						aria-labelledby={halfLabelId}
@@ -111,7 +111,7 @@ export const Star = (props: StarProps) => {
 					name={name}
 					onChange={handleChange}
 					checked={selectedValue === value}
-					readOnly={readonly}
+					readOnly={readOnly}
 					disabled={disabled}
 					tabIndex={localTabIndex}
 					aria-labelledby={labelId}

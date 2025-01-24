@@ -2,7 +2,7 @@
 
 .thumb {
 	--thumbHeight: ;
-	--boxShadow: 0 0 0 0.5px var(--theme-color-primary-500);
+	--boxShadow: 0 0 0 var(--border-weight-soft) var(--theme-color-primary-main);
 	@include user-select-off;
 	position: absolute;
 	height: var(--thumbHeight);
@@ -10,8 +10,8 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: var(--theme-color-primary-500);
-	box-shadow: 0 0 0.5px var(--border-color-grey);
+	background-color: var(--theme-color-primary-main);
+	box-shadow: 0 0 var(--border-weight-soft) var(--border-color-grey);
 	border-radius: 50%;
 	z-index: 10;
 	&:before {

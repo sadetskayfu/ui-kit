@@ -1,5 +1,5 @@
 import { cloneElement, ReactElement, useId } from "react";
-import { classNames } from "@/shared/lib/classNames/classNames";
+import { classNames } from "@/shared/helpers/classNames";
 import styles from "./style.module.scss";
 
 type LabelPosition = 'right' | 'left' | 'top' | 'bottom'
@@ -29,7 +29,7 @@ export const FormLabel = (props: FormLabelProps) => {
   return (
     <label className={classNames(styles['label-wrapper'], additionalClasses, mods)} {...otherProps}>
       {cloneElement(Component, { labelId, required, disabled })}
-      <span id={labelId} className={styles["label"]}>
+      <span id={labelId}>
         {label}
       </span>
     </label>

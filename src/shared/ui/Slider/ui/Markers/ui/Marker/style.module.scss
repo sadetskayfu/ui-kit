@@ -22,15 +22,15 @@
 		content: '';
 		width: 40%;
 		height: 40%;
-		background-color: var(--theme-color-primary-500);
+		background-color: var(--theme-color-primary-main);
 		border-radius: inherit;
 		transform: scale(var(--emulatorScale));
 		transition-duration: inherit;
 	}
 	&.active {
         --emulatorScale: 1;
-		--color: var(--theme-color-primary-500);
-		border-color: var(--theme-color-primary-500);
+		--color: var(--font-color-hard);
+		border-color: var(--theme-color-primary-main);
 	}
 }
 

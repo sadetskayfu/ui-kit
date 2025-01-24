@@ -11,25 +11,21 @@ import {
 	memo,
 	ReactElement,
 	ReactNode,
+	Suspense,
 	TextareaHTMLAttributes,
-	useCallback,
 	useEffect,
 	useId,
 	useRef,
 	useState,
 } from 'react'
-import { classNames } from '@/shared/lib/classNames/classNames'
-import { IconButton } from '@/shared/ui/IconButton'
+import { classNames } from '@/shared/helpers/classNames/classNames'
+import { IconButtonLazy } from '@/shared/ui/IconButton'
 import { XMark } from '@/shared/assets/icons'
 import styles from './style.module.scss'
 
 interface BaseTextFieldProps {
 	className?: string
-	value?: string
-	onChange?: (value: string, name: string) => void
-	onClear?: () => void
-	onBlur?: () => void
-	onFocus?: () => void
+	value?: string | number
 	label: string
 	labelId?: string
 	placeholder?: string
@@ -49,6 +45,10 @@ interface BaseTextFieldProps {
 	children?: ReactNode
 	fieldRef?: React.Ref<HTMLDivElement>
 	fieldProps?: HTMLFieldProps
+	onChange?: (value: string, name: string) => void
+	onClear?: () => void
+	onBlur?: () => void
+	onFocus?: () => void
 }
 
 type HTMLInputProps = Omit<
@@ -107,22 +107,21 @@ export const TextField = memo((props: TextFieldProps) => {
 	const errorMessageId = useId()
 	const labelId = externalLabelId ? externalLabelId : localLabelId
 
-	const handleChange = useCallback(
-		(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-			onChange?.(event.target.value, event.target.name)
-		},
-		[onChange]
-	)
+	const handleChange = (
+		event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	) => {
+		onChange?.(event.target.value, event.target.name)
+	}
 
-	const handleFocus = useCallback(() => {
+	const handleFocus = () => {
 		setIsFocused(true)
 		onFocus?.()
-	}, [onFocus])
+	}
 
-	const handleBlur = useCallback(() => {
+	const handleBlur = () => {
 		setIsFocused(false)
 		onBlur?.()
-	}, [onBlur])
+	}
 
 	// Update height textarea
 	useEffect(() => {
@@ -141,16 +140,19 @@ export const TextField = memo((props: TextFieldProps) => {
 
 	const Actions = onClear
 		? [
-				<IconButton
-					className={styles['clear-button']}
-					onClick={!readonly ? onClear : undefined}
-					size="small-xx"
-					variant="clear"
-					color="secondary"
-					tabIndex={-1}
-				>
-					<XMark />
-				</IconButton>,
+				<Suspense>
+					<IconButtonLazy
+						className={styles['clear-button']}
+						onClick={!readonly ? onClear : undefined}
+						size="small-xx"
+						variant="clear"
+						color="secondary"
+						tabIndex={-1}
+						stopFocus
+					>
+						<XMark />
+					</IconButtonLazy>
+				</Suspense>,
 				...ExternalActions,
 			]
 		: ExternalActions
@@ -158,16 +160,16 @@ export const TextField = memo((props: TextFieldProps) => {
 	const sharedProps = {
 		value,
 		placeholder,
+		disabled,
+		readOnly: readonly,
+		required,
+		tabIndex: disabled ? -1 : tabIndex,
 		onChange: handleChange,
 		onFocus: handleFocus,
 		onBlur: handleBlur,
 		onMouseDown: (event: React.MouseEvent) => event.stopPropagation(),
 		'aria-labelledby': labelId,
 		'aria-errormessage': errorMessage ? errorMessageId : undefined,
-		disabled,
-		readOnly: readonly,
-		required,
-		tabIndex: disabled ? -1 : tabIndex,
 	}
 
 	const mods: Record<string, boolean | undefined> = {
@@ -176,7 +178,11 @@ export const TextField = memo((props: TextFieldProps) => {
 	}
 
 	return (
-		<div className={classNames(styles['text-field'], [className], {[styles['default-width']]: defaultWidth})}>
+		<div
+			className={classNames(styles['text-field'], [className], {
+				[styles['default-width']]: defaultWidth,
+			})}
+		>
 			<Field
 				className={classNames(styles['field'], [], mods)}
 				label={label}
@@ -197,7 +203,7 @@ export const TextField = memo((props: TextFieldProps) => {
 				ref={fieldRef}
 				htmlProps={{
 					onMouseDown: (event) => event.preventDefault(),
-					...fieldProps
+					...fieldProps,
 				}}
 			>
 				<div className={styles['content']}>

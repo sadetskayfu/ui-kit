@@ -21,7 +21,7 @@ type Story = StoryObj<typeof Chip>
 
 export const Default: Story = {}
 
-export const ButtonChip: Story = {
+export const Button: Story = {
 	args: {
 		label: 'Button chip'
 	},
@@ -30,14 +30,14 @@ export const ButtonChip: Story = {
 	},
 }
 
-export const LinkChip: Story = {
+export const Link: Story = {
 	args: {
 		to: '/example',
 		label: 'Link chip'
 	},
 }
 
-export const ExternalLinkChip: Story = {
+export const ExternalLink: Story = {
 	args: {
 		href: 'https://example.com',
 		label: 'External link chip'

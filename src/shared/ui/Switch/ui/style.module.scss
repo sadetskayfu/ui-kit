@@ -4,27 +4,25 @@
   --height: ;
   --paddingInline: ;
   --width: var(--height);
-  --translateX: calc((var(--width) - var(--height) / 2) / 2);
-  --trackColor: var(--theme-color-grey-900);
-  --trackColorChecked: var(--theme-color-primary-500);
-  --borderColor: var(--border-color-grey);
-  --borderColorChecked: var(--trackColorChecked);
-  --thumbColor: var(--color-grey-500);
-  --thumbColorChecked: var(--theme-color-primary-600);
-  cursor: pointer;
-  padding-inline: var(--paddingInline);
+  --boxShadow: 0 0 0 var(--border-weight-soft) var(--border-color-grey);
   height: var(--height);
+  padding-inline: var(--paddingInline);
   display: flex;
   align-items: center;
-  color: var(--theme-color-primary-500);
+  color: var(--theme-color-primary-main);
+  cursor: pointer;
   @include hover {
     .thumb {
-      box-shadow: 0 0 0 var(--border-weight-soft) var(--borderColor);
+      box-shadow: var(--boxShadow);
     }
   }
 }
 
 .track {
+  --translateX: calc((var(--width) - var(--height) / 2) / 2);
+  --trackColor: var(--theme-color-grey-dark);
+  --borderColor: var(--border-color-grey);
+  --thumbColor: var(--color-grey-500);
   height: 30%;
   width: var(--width);
   background-color: var(--trackColor);
@@ -66,22 +64,25 @@
   @include visually-hidden;
   &:focus-visible + .track {
     .thumb:after {
-      box-shadow: 0 0 0 var(--border-weight-soft) var(--borderColor);
+      box-shadow: var(--boxShadow);
       animation: ripple 1s infinite;
+    }
+  }
+  &:checked + .track {
+    --trackColor: var(--theme-color-primary-main);
+    --borderColor: var(--theme-color-primary-main);
+    --thumbColor: var(--theme-color-primary-secondary);
+    .thumb {
+      transform: translateX(var(--translateX));
+      &:before {
+        box-shadow: 0 0 0 1px var(--theme-color-primary-secondary);
+      }
     }
   }
 }
 
 // Mods
 .switch {
-  &.checked {
-    --trackColor: var(--trackColorChecked);
-    --borderColor: var(--borderColorChecked);
-    --thumbColor: var(--thumbColorChecked);
-    .thumb {
-      transform: translateX(var(--translateX));
-    }
-  }
   &.disabled {
     @include disabled;
   }

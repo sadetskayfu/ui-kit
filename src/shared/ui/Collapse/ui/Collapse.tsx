@@ -1,5 +1,5 @@
 import { ReactElement, useEffect, useRef } from 'react'
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { classNames } from '@/shared/helpers/classNames'
 import styles from './style.module.scss'
 
 interface CollapseProps {

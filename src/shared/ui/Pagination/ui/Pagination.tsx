@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { classNames } from '@/shared/lib/classNames/classNames'
+import { classNames } from '@/shared/helpers/classNames'
 import { IconButton, IconButtonBorderRadius } from '@/shared/ui/IconButton'
 import { Arrow } from '@/shared/assets/icons'
 import styles from './style.module.scss'
