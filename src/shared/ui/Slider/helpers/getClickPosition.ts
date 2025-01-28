@@ -8,7 +8,7 @@ export const getClickPosition = (
 	const isTouchEvent = event instanceof TouchEvent || 'touches' in event
 	const isHorizontal = orientation === 'horizontal'
 	const offset = isHorizontal ? sliderRect.left : sliderRect.top
-
+	
 	if (isTouchEvent) {
 		if (event.touches.length === 0) return 0
 

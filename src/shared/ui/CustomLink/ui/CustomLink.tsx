@@ -1,10 +1,7 @@
 import { classNames } from '@/shared/helpers/classNames'
-import { AnchorHTMLAttributes, lazy, memo, ReactNode, Suspense } from 'react'
+import { AnchorHTMLAttributes, forwardRef, memo, ReactNode } from 'react'
+import { Link } from 'react-router-dom'
 import styles from './style.module.scss'
-
-const LazyLink = lazy(() =>
-	import('react-router-dom').then((module) => ({ default: module.Link }))
-)
 
 type CustomLinkUnderline = 'none' | 'hover' | 'always'
 type CustomLinkColor = 'primary' | 'inherit'
@@ -27,8 +24,8 @@ interface CustomLinkProps extends BaseCustomLinkProps {
 	linkProps?: HTMLLinkProps
 }
 
-export const CustomLink = memo((props: CustomLinkProps) => {
-	const { children, className, to, href, underline = 'hover', color = 'primary', linkProps } = props
+export const CustomLink = memo(forwardRef((props: CustomLinkProps, ref: React.ForwardedRef<HTMLAnchorElement>) => {
+	const { children, className, to, href, underline = 'hover', color = 'primary', linkProps, ...otherProps } = props
 
 	const additionalClasses: Array<string | undefined> = [
 		className,
@@ -38,15 +35,15 @@ export const CustomLink = memo((props: CustomLinkProps) => {
 
 	if (to) {
 		return (
-			<Suspense>
-				<LazyLink
+				<Link
 					to={to}
 					className={classNames(styles['link'], additionalClasses)}
+					ref={ref}
 					{...linkProps}
+					{...otherProps}
 				>
 					{children}
-				</LazyLink>
-			</Suspense>
+				</Link>
 		)
 	}
 
@@ -54,9 +51,11 @@ export const CustomLink = memo((props: CustomLinkProps) => {
 		<a
 			href={href}
 			className={classNames(styles['link'], additionalClasses)}
+			ref={ref}
 			{...linkProps}
+			{...otherProps}
 		>
 			{children}
 		</a>
 	)
-})
+}))

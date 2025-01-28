@@ -39,7 +39,9 @@ export const OptionItem = memo((props: OptionItemProps) => {
 	}
 
 	const handleClick = (event: React.MouseEvent) => {
-		handleRippleCursorPosition(rippleWrapperRef, event)
+		if(event.clientX) {
+			handleRippleCursorPosition(rippleWrapperRef, event)
+		}
 	}
 
 	return (

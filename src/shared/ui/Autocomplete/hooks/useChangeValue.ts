@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react'
 import { Option } from '../ui/Autocomplete'
-import { checkValue } from '@/shared/helpers/formOptions'
+import { isValueSelected } from '@/shared/helpers/checkingValues'
 
 type UseChangeValueArgs = {
 	value: string
@@ -66,7 +66,7 @@ export const useChangeValue = (args: UseChangeValueArgs) => {
 			const selectedValue = selectedValueRef.current
 			const value = valueRef.current
 			
-			const isSelected = checkValue(optionValue, selectedValue)
+			const isSelected = isValueSelected(optionValue, selectedValue)
 
 			if (isSelected) {
 				if (value !== '' && isFilterOptionsRef.current) {

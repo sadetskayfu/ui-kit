@@ -54,7 +54,11 @@
 .container {
     &.primary {
         --bgColor: var(--theme-color-primary-main);
-        --color: var(--color-light);
+        --color: var(--font-color-onDark);
+    }
+    &.secondary {
+        --bgColor: var(--theme-color-grey-light);
+        --color: var(--font-color-hard);
     }
     &.green {
         --bgColor: var(--color-green-500);

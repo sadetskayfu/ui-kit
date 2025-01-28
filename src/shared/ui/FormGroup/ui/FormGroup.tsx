@@ -3,7 +3,6 @@ import { classNames } from '@/shared/helpers/classNames/classNames'
 import { Typography } from '@/shared/ui/Typography'
 import styles from './style.module.scss'
 
-type FormGroupSize = 'medium'
 type FormGroupOrientation = 'horizontal' | 'vertical'
 
 interface BaseFormGroupProps {
@@ -12,7 +11,6 @@ interface BaseFormGroupProps {
 	label: string
 	errorMessage?: string
 	helperText?: string
-	size?: FormGroupSize
 	orientation?: FormGroupOrientation
 	required?: boolean
 	hiddenLegend?: boolean
@@ -31,7 +29,6 @@ export const FormGroup = (props: FormGroupProps) => {
 		label,
 		errorMessage,
 		helperText,
-		size = 'medium',
 		orientation = 'horizontal',
 		required,
 		hiddenLegend,
@@ -43,7 +40,6 @@ export const FormGroup = (props: FormGroupProps) => {
 	const renderChildren = () => {
 		return Children.map(children, (child: ReactElement) => {
 			return cloneElement(child, {
-				size,
 				onMouseDown: (event: React.MouseEvent) => event.preventDefault(),
 			})
 		})
@@ -51,7 +47,6 @@ export const FormGroup = (props: FormGroupProps) => {
 
 	const additionalClasses: Array<string | undefined> = [
 		className,
-		styles[size],
 		styles[orientation],
 	]
 
@@ -71,12 +66,12 @@ export const FormGroup = (props: FormGroupProps) => {
 			<legend className={styles['legend']}>{label}</legend>
 			<div className={styles['items']}>{renderChildren()}</div>
 			{errorMessage && (
-				<Typography className={styles['helper-text']} id={errorMessageId} color="error" variant="helper-text">
+				<Typography id={errorMessageId} color="error" variant="helper-text">
 					{errorMessage}
 				</Typography>
 			)}
 			{helperText && !errorMessage && (
-				<Typography className={styles['helper-text']} variant="helper-text">{helperText}</Typography>
+				<Typography variant="helper-text">{helperText}</Typography>
 			)}
 		</fieldset>
 	)

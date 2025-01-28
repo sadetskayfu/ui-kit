@@ -9,8 +9,10 @@ const meta: Meta<typeof Tab> = {
 		iconPosition: 'left',
 		size: 'medium',
 		variant: 'filled',
-		tabIndex: 0,
+		indicatorPosition: 'bottom',
+		isIndicator: false,
 		disabled: false,
+		tabIndex: 0,
 	},
 	argTypes: {
 		onClick: { action: 'clicked' },

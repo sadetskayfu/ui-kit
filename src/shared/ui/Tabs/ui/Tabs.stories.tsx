@@ -10,6 +10,7 @@ const meta: Meta<typeof Tabs> = {
 	args: {
 		orientation: 'horizontal',
 		indicatorPosition: 'bottom',
+		isScrollable: false,
 		isIndicator: false,
 	},
 }
@@ -18,7 +19,83 @@ export default meta
 
 type Story = StoryObj<typeof Tabs>
 
-const TabsWrapper = (args: any, tabVariant: TabVariant = 'filled') => {
+const TabsWrapper = (args: any, tabVariant: TabVariant) => {
+	const [selectedTab, setSelectedTab] = useState<string>('1')
+
+	const handleChange = useCallback((value: string) => {
+		setSelectedTab(value)
+	}, [])
+
+	return (
+		<Tabs
+			selectedValue={selectedTab}
+			onChange={handleChange}
+			style={{ gap: tabVariant === 'filled' ? '10px' : '' }}
+			{...args}
+		>
+			{Array.from({ length: 5 }, (_, index) => {
+				const tabValue = index + 1 + ''
+				const isDisabled = index === 3
+				return (
+					<Tab
+						disabled={isDisabled}
+						value={tabValue}
+						label={`Tab ${tabValue} ${isDisabled ? 'disabled' : ''}`}
+						variant={tabVariant}
+						id=""
+						panelId=""
+					/>
+				)
+			})}
+		</Tabs>
+	)
+}
+
+const ScrollableTabsWrapper = (args: any, tabVariant: TabVariant) => {
+	const [selectedTab, setSelectedTab] = useState<string>('1')
+
+	const handleChange = useCallback((value: string) => {
+		setSelectedTab(value)
+	}, [])
+
+	const isHorizontal = args.orientation === 'horizontal'
+	const maxWidth = isHorizontal ? '500px' : ''
+	const width = isHorizontal ? '100%' : ''
+	const maxHeight = !isHorizontal ? '500px' : ''
+	const height = !isHorizontal ? '100%' : ''
+
+	return (
+		<Tabs
+			selectedValue={selectedTab}
+			onChange={handleChange}
+			style={{
+				gap: tabVariant === 'filled' ? '10px' : '',
+				maxWidth,
+				width,
+				maxHeight,
+				height,
+			}}
+			{...args}
+		>
+			{Array.from({ length: 15 }, (_, index) => {
+				const tabValue = index + 1 + ''
+				const isDisabled = index === 3
+				return (
+					<Tab
+						disabled={isDisabled}
+						value={tabValue}
+						label={`Tab ${tabValue} ${isDisabled ? 'disabled' : ''}`}
+						variant={tabVariant}
+						id=""
+						panelId=""
+					/>
+				)
+			})}
+		</Tabs>
+	)
+}
+
+const TabsWithPanelWrapper = (args: any, tabVariant: TabVariant = 'filled') => {
 	const [selectedTab, setSelectedTab] = useState<string>('1')
 
 	const handleChange = useCallback((value: string) => {
@@ -42,71 +119,66 @@ const TabsWrapper = (args: any, tabVariant: TabVariant = 'filled') => {
 			<Tabs
 				selectedValue={selectedTab}
 				onChange={handleChange}
-				aria-label="Storybook tabs"
+				aria-label="Tabs"
 				{...args}
 			>
-				<Tab
-					id={getTabId('1')}
-					panelId={getPanelId('1')}
-					variant={tabVariant}
-					label="First tab"
-					value="1"
-				/>
-				<Tab
-					id={getTabId('2')}
-					panelId={getPanelId('1')}
-					variant={tabVariant}
-					label="Second tab"
-					value="2"
-				/>
-				<Tab
-					id={getTabId('3')}
-					panelId={getPanelId('1')}
-					variant={tabVariant}
-					label="Third disabled tab"
-					value="3"
-					disabled
-				/>
-				<Tab
-					id={getTabId('4')}
-					panelId={getPanelId('1')}
-					variant={tabVariant}
-					label="Fourth tab"
-					value="4"
-				/>
+				{Array.from({ length: 5 }, (_, index) => {
+					const tabValue = index + 1 + ''
+					return (
+						<Tab
+							value={tabValue}
+							label={`Tab ${tabValue}`}
+							variant={tabVariant}
+							id={getTabId(tabValue)}
+							panelId={getPanelId(tabValue)}
+						/>
+					)
+				})}
 			</Tabs>
-			<TabPanel
-				id={getPanelId('1')}
-				labelId={getTabId('1')}
-				isActive={selectedTab === '1'}
-			>
-				<div style={{ padding: '20px' }}>First panel</div>
-			</TabPanel>
-			<TabPanel
-				id={getPanelId('2')}
-				labelId={getTabId('2')}
-				isActive={selectedTab === '2'}
-			>
-				<div style={{ padding: '20px' }}>Second panel</div>
-			</TabPanel>
-			<TabPanel
-				id={getPanelId('4')}
-				labelId={getTabId('4')}
-				isActive={selectedTab === '4'}
-			>
-				<div style={{ padding: '20px' }}>Fourth panel</div>
-			</TabPanel>
+			{Array.from({ length: 5 }, (_, index) => {
+				const panelValue = index + 1 + ''
+				return (
+					<TabPanel
+						id={getPanelId(panelValue)}
+						labelId={getTabId(panelValue)}
+						isActive={selectedTab === panelValue}
+					>
+						<div style={{ padding: '20px' }}>{`Panel ${panelValue}`}</div>
+					</TabPanel>
+				)
+			})}
 		</div>
 	)
 }
 
 export const FilledTabs: Story = {
-	render: (args) => TabsWrapper(args),
+	render: (args) => TabsWrapper(args, 'filled'),
+	args: {
+		'aria-label': 'Filled tabs',
+	},
 }
 
-export const ClearTabsWithIndicator: Story = {
+export const ClearedTabsWithIndicator: Story = {
 	render: (args) => TabsWrapper(args, 'clear'),
 	args: {
+		'aria-label': 'Clear tabs',
+		isIndicator: true,
+	},
+}
+
+export const ScrollableTabs: Story = {
+	render: (args) => ScrollableTabsWrapper(args, 'clear'),
+	args: {
+		isScrollable: true,
+		isIndicator: true,
+		'aria-label': 'Scrollable tabs',
+	},
+}
+
+export const TabsWithPanel: Story = {
+	render: (args) => TabsWithPanelWrapper(args, 'clear'),
+	args: {
+		'aria-label': 'Tabs with panel',
 		isIndicator: true,
 	},
 }

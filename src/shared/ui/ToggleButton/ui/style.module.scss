@@ -1,0 +1,64 @@
+@use '@/app/styles/helpers' as *;
+
+.button {
+    --selectedColor: ;
+    --selectedBgColor: ;
+    --hoverBgColor: var(--color-grey-opacity-soft);
+    --height: ;
+    min-height: var(--height);
+    min-width: var(--height);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: var(--border-weight-soft) solid var(--border-color-grey);
+    border-radius: var(--border-radius-m);
+    background-color: transparent;
+    color: inherit;
+    &:focus-visible {
+        @include focus-outline;
+    }
+    &.selected {
+        background-color: var(--selectedBgColor);
+        color: var(--selectedColor);
+    }
+    @include hover {
+        background-color: var(--hoverBgColor);
+    }
+    &:disabled {
+        @include disabled;
+    }
+}
+
+// Colors
+.button {
+    &.primary {
+        --selectedColor: var(--theme-color-primary-main);
+        --selectedBgColor: var(--color-primary-opacity-medium);
+        &.selected {
+            --hoverBgColor: var(--color-primary-opacity-hard);
+        }
+    }
+    &.secondary {
+        --selectedBgColor: var(--color-grey-opacity-medium);
+        &.selected {
+            --hoverBgColor: var(--color-grey-opacity-hard);
+        }
+    }
+}
+
+// Sizes
+.button {
+    &.small {
+        --height: var(--button-height-s);
+        padding: var(--button-padding-block-s);
+    }
+    &.medium {
+        --height: var(--button-height-m);
+        padding: var(--button-padding-block-m);
+    }
+    &.large {
+        --height: var(--button-height-l);
+        padding: var(--button-padding-block-l);
+    }
+}

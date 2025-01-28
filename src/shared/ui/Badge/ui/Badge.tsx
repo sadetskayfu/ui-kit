@@ -3,7 +3,7 @@ import { classNames } from "@/shared/helpers/classNames";
 import styles from "./style.module.scss";
 
 type BadgePosition = "top-left" | "top-right" | "bottom-right" | "bottom-left";
-type BadgeColor = "primary" | "green";
+type BadgeColor = "primary" | "secondary" | "green";
 type BadgeOverlap = 'circular' | 'square'
 type BadgeSize = 'small' | 'medium'
 

@@ -97,7 +97,6 @@ const ControlledSliderWrapper = (args: any) => {
 				value={value[0]}
 				onChange={handleChangeMinValue}
 				variant="clear"
-				size="small"
 				labelVariant="hidden"
 				label="Min slider value"
 				inputProps={{ type: 'number', step, min: 0, max: 100000 }}
@@ -114,7 +113,6 @@ const ControlledSliderWrapper = (args: any) => {
 				value={value[1]}
 				onChange={handleChangeMaxValue}
 				variant="clear"
-				size="small"
 				labelVariant="hidden"
 				label="Min slider value"
 				inputProps={{ type: 'number', step, min: 0, max: 100000 }}

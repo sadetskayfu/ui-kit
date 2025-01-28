@@ -1,27 +1,17 @@
-import {
-	Children,
-	cloneElement,
-	ReactElement,
-	Suspense,
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-} from 'react'
+import { Children, cloneElement, ReactElement, Suspense, useRef } from 'react'
 import { TabProps } from '@/shared/ui/Tab'
 import { classNames } from '@/shared/helpers/classNames'
 import {
 	useElements,
 	useKeyboardNavigation,
 } from '@/shared/lib/KeyboardNavigation/floatingIndex'
-import {
-	FloatingIndicatorLazy,
-	FloatingIndicatorPosition,
-} from '@/shared/ui/FloatingIndicator'
+import { ScrollableContentLazy } from '@/shared/ui/ScrollableContent'
+import { IndicatorPosition } from '@/shared/ui/Indicator'
 import styles from './style.module.scss'
 
 interface AriaAttributes {
-	'aria-label': string
+	'aria-label'?: string
+	'aria-labelledby'?: string
 }
 
 export type TabsOrientation = 'horizontal' | 'vertical'
@@ -31,8 +21,11 @@ export interface TabsProps extends AriaAttributes {
 	children: ReactElement<TabProps>[]
 	selectedValue: string
 	orientation?: TabsOrientation
+	isScrollable?: boolean
 	isIndicator?: boolean
-	indicatorPosition?: FloatingIndicatorPosition
+	indicatorPosition?: IndicatorPosition
+	gap?: number
+	style?: React.CSSProperties
 	onChange: (value: string) => void
 }
 
@@ -42,78 +35,69 @@ export const Tabs = (props: TabsProps) => {
 		children,
 		selectedValue,
 		orientation = 'horizontal',
+		isScrollable,
 		isIndicator,
-		indicatorPosition = 'bottom',
+		indicatorPosition,
+		gap,
+		style,
 		onChange,
 		...otherProps
 	} = props
 
 	const tabListRef = useRef<HTMLDivElement | null>(null)
-	const activeTabRef = useRef<HTMLElement | null>(null)
 
-	const tabsRef = useElements(tabListRef)
+	const tabsRef = useElements(tabListRef, true, 'tab')
 
-	const { handleKeyDown, handleFocus } = useKeyboardNavigation(tabsRef)
+	const { handleKeyDown, updateActiveIndex } = useKeyboardNavigation(tabsRef)
 
-	// Set ref active tab
-	useEffect(() => {
-		if (!isIndicator) return
-
-		const tabs = tabsRef.current
-
-		if (tabs.length > 0) {
-			const selectedTab = tabs.find((tab) => {
-				if (tab.getAttribute('data-value') === selectedValue) {
-					return tab
-				}
-			})
-			if (selectedTab) {
-				activeTabRef.current = selectedTab
-			}
-		}
-	}, [selectedValue, isIndicator])
-
-	const renderTabs = useMemo(() => {
+	const renderTabs = () => {
 		return Children.map(children, (tab, index) => {
 			const tabValue = tab.props.value
 			const isSelected = tabValue === selectedValue
 
-			const callbackHandleFocus = useCallback(() => {
-				handleFocus(index)
-			}, [handleFocus])
-
 			return cloneElement(tab, {
 				isSelected,
+				isIndicator,
+				indicatorPosition,
 				onClick: onChange,
-				onKeyDown: handleKeyDown,
-				onFocus: callbackHandleFocus,
+				onFocus: isScrollable ? undefined : () => updateActiveIndex(index),
+				key: tabValue,
 			})
 		})
-	}, [handleKeyDown, handleFocus, selectedValue, onChange, children])
+	}
 
 	const additionalClasses: Array<string | undefined> = [
 		className,
 		styles[orientation],
 	]
 
+	const isHorizontal = orientation === 'horizontal'
+
 	return (
 		<div
 			className={classNames(styles['tabs'], additionalClasses)}
 			ref={tabListRef}
+			onKeyDown={handleKeyDown}
 			role="tablist"
+			style={{ ...style }}
 			{...otherProps}
 		>
-			{renderTabs}
-			{isIndicator && (
+			{isScrollable ? (
 				<Suspense>
-					<FloatingIndicatorLazy
-						selectedValue={selectedValue}
-						activeElementRef={activeTabRef}
-						elementListRef={tabListRef}
+					<ScrollableContentLazy
+						style={{
+							width: isHorizontal ? '100%' : '',
+							height: !isHorizontal ? '100%' : '',
+						}}
+						onFocus={updateActiveIndex}
 						orientation={orientation}
-						position={indicatorPosition}
-					/>
+						itemsGap={gap}
+					>
+						{renderTabs()}
+					</ScrollableContentLazy>
 				</Suspense>
+			) : (
+				renderTabs()
 			)}
 		</div>
 	)

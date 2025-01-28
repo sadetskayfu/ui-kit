@@ -1,12 +1,13 @@
-export const checkValue = (
+export const isValueSelected = (
 	value: string,
 	selectedValue: string | string[]
 ): boolean => {
 	let isSelected: boolean
 
 	if (Array.isArray(selectedValue)) {
-		isSelected =
-			selectedValue.filter((selectedValue) => selectedValue === value).length > 0
+		isSelected = Boolean(
+			selectedValue.find((selectedValue) => selectedValue === value)
+		)
 	} else {
 		isSelected = selectedValue === value
 	}

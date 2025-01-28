@@ -1,61 +1,26 @@
 @use '@/app/styles/helpers' as *;
 
-.menu-item {
-    --color: var(--font-color-hard);
-    --padding: var(--padding-15);
-    --fzStartIcon: var(--fz-icon-xs);
-    --fzEndIcon: var(--fz-icon-xxs);
-    --paddingLeftDesc: 0px;
-    --paddingRightDesc: 0px;
-    &.with-start-icon {
-        --paddingLeftDesc: calc(var(--fzStartIcon) + var(--padding));
-    };
-    &.with-end-icon {
-        --paddingRightDesc: var(--fzEndIcon);
-    }
+.item {
+    display: flex;
 }
 
 .button {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    width: 100%;
-    padding: var(--padding);
-    column-gap: var(--padding);
     background-color: transparent;
     border: none;
-    cursor: pointer;
+    color: inherit;
+    padding: 0px;
+}
+
+.button,
+.link {
+    position: relative;
     border-radius: inherit;
-    text-align: start;
-    color: var(--color);
+    width: 100%;
     &:focus-visible {
-        background-color: var(--color-grey-opacity);
+        background-color: var(--color-grey-opacity-soft);
     }
     @include hover {
-        background-color: var(--color-grey-opacity);
-    }
-    p {
-        padding-right: var(--paddingRightDesc);
-        padding-left: var(--paddingLeftDesc);
+        background-color: var(--color-grey-opacity-soft);
     }
 }
 
-.title {
-    color: var(--color);
-    display: flex;
-    align-items: center;
-    column-gap: var(--padding);
-    width: 100%;
-}
-
-.start-icon {
-    display: inline-flex;
-    font-size: var(--fzStartIcon);
-}
-
-.end-icon {
-    display: inline-flex;
-    margin-left: auto;
-    font-size: var(--fzEndIcon);
-}

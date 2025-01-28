@@ -7,5 +7,9 @@
 .tabs {
     &.vertical {
         flex-direction: column;
+        overflow-y: hidden;
+    }
+    &.horizontal {
+        overflow-x: hidden;
     }
 }

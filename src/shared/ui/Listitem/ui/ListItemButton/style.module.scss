@@ -1,0 +1,27 @@
+@use '@/app/styles/helpers' as *;
+
+.button {
+    --hoveredBgColor: var(--color-grey-opacity-soft);
+    position: relative;
+    display: flex;
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    transition: background-color 0.2s, color 0.2s;
+    padding: 0px;
+    @include user-select-off;
+    &:focus-visible {
+        @include focus-outline-inset;
+    }
+    &:disabled {
+        @include disabled;
+    }
+    &.selected {
+        background-color: var(--color-primary-opacity-medium);
+        --hoveredBgColor: var(--color-primary-opacity-hard);
+    }
+    @include hover {
+        background-color: var(--hoveredBgColor);
+    }
+}
+

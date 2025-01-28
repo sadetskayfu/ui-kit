@@ -1,21 +1,16 @@
 import {
 	ButtonHTMLAttributes,
 	forwardRef,
-	lazy,
 	LinkHTMLAttributes,
 	memo,
 	ReactNode,
-	Suspense,
 	useRef,
 } from 'react'
 import { classNames } from '@/shared/helpers/classNames'
 import { RippleWrapper } from '@/shared/ui/RippleWrapper'
 import { handleRipple, handleRippleCursorPosition } from '@/shared/lib/ripple'
+import { Link } from 'react-router-dom'
 import styles from './style.module.scss'
-
-const LazyLink = lazy(() =>
-	import('react-router-dom').then((module) => ({ default: module.Link }))
-)
 
 type ButtonVariant = 'filled' | 'outlined' | 'clear'
 type ButtonColor = 'primary' | 'secondary'
@@ -33,6 +28,7 @@ interface BaseButtonProps {
 	children: ReactNode
 	type?: 'submit' | 'reset' | 'button'
 	tabIndex?: number
+	style?: React.CSSProperties
 	onClick?: (event: any) => void
 }
 
@@ -65,9 +61,10 @@ export const Button = memo(
 				to,
 				variant = 'filled',
 				size = 'medium',
-				color = 'primary',
+				color = 'secondary',
 				type = 'button',
 				tabIndex,
+				style,
 				onClick,
 				linkProps,
 				buttonProps,
@@ -76,15 +73,14 @@ export const Button = memo(
 
 			const rippleWrapperRef = useRef<HTMLSpanElement | null>(null)
 
-			const handleKeyUp = (event: React.KeyboardEvent) => {
-				if (event.key === ' ' || event.key === 'Enter') {
-					handleRipple(rippleWrapperRef)
-				}
-			}
-
 			const handleClick = (event: React.MouseEvent) => {
 				onClick?.(event)
-				handleRippleCursorPosition(rippleWrapperRef, event)
+
+				if (event.clientX) {
+					handleRippleCursorPosition(rippleWrapperRef, event)
+				} else {
+					handleRipple(rippleWrapperRef)
+				}
 			}
 
 			const additionalClasses: Array<string | undefined> = [
@@ -94,26 +90,22 @@ export const Button = memo(
 				styles[size],
 			]
 
-			const localTabIndex = disabled ? -1 : tabIndex
-
 			if (to) {
 				return (
-					<Suspense>
-						<LazyLink
-							className={classNames(styles['button'], additionalClasses)}
-							id={id}
-							onKeyUp={handleKeyUp}
-							onClick={handleClick}
-							to={to}
-							tabIndex={localTabIndex}
-							ref={ref as React.ForwardedRef<HTMLAnchorElement>}
-							{...linkProps}
-							{...otherProps}
-						>
-							{children}
-							<RippleWrapper ref={rippleWrapperRef}/>
-						</LazyLink>
-					</Suspense>
+					<Link
+						className={classNames(styles['button'], additionalClasses)}
+						id={id}
+						onClick={handleClick}
+						to={to}
+						tabIndex={tabIndex}
+						ref={ref as React.ForwardedRef<HTMLAnchorElement>}
+						style={{...style}}
+						{...linkProps}
+						{...otherProps}
+					>
+						{children}
+						<RippleWrapper ref={rippleWrapperRef} />
+					</Link>
 				)
 			}
 
@@ -122,11 +114,11 @@ export const Button = memo(
 					<a
 						className={classNames(styles['button'], additionalClasses)}
 						id={id}
-						onKeyUp={handleKeyUp}
 						onClick={handleClick}
 						href={href}
-						tabIndex={localTabIndex}
+						tabIndex={tabIndex}
 						ref={ref as React.ForwardedRef<HTMLAnchorElement>}
+						style={{...style}}
 						{...linkProps}
 						{...otherProps}
 					>
@@ -140,16 +132,16 @@ export const Button = memo(
 					className={classNames(styles['button'], additionalClasses)}
 					id={id}
 					type={type}
-					onKeyUp={handleKeyUp}
 					onClick={handleClick}
-					tabIndex={localTabIndex}
+					tabIndex={disabled ? -1 : tabIndex}
 					disabled={disabled}
 					ref={ref as React.ForwardedRef<HTMLButtonElement>}
+					style={{...style}}
 					{...buttonProps}
 					{...otherProps}
 				>
 					{children}
-					<RippleWrapper ref={rippleWrapperRef}/>
+					<RippleWrapper ref={rippleWrapperRef} />
 				</button>
 			)
 		}

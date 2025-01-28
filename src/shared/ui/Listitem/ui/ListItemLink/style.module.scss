@@ -1,0 +1,18 @@
+@use '@/app/styles/helpers' as *;
+
+.link {
+    position: relative;
+    display: flex;
+    transition: background-color 0.2s, color 0.2s;
+    @include user-select-off;
+	&.active {
+		color: var(--theme-color-primary-main);
+	}
+    @include hover {
+        background-color: var(--color-grey-opacity-soft);
+    }
+    &:focus-visible {
+        @include focus-outline-inset;
+    }
+}
+

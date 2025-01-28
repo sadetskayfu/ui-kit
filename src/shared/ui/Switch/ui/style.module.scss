@@ -75,7 +75,7 @@
     .thumb {
       transform: translateX(var(--translateX));
       &:before {
-        box-shadow: 0 0 0 1px var(--theme-color-primary-secondary);
+        box-shadow: 0 0 0 var(--border-weight-soft) var(--theme-color-primary-secondary);
       }
     }
   }
@@ -92,6 +92,31 @@
 .switch {
   &.medium {
     --height: var(--button-height-s);
-    --paddingInline: calc(var(--height) / 4);
+    --paddingInline: calc(var(--form-margin-m) * -1);
+  }
+}
+
+// Offset
+.switch {
+	&.left {
+		margin-left: var(--form-margin-m);
+	}
+	&.right {
+		margin-right: var(--form-margin-m);
+	}
+	&.center-horizontal {
+		margin-inline: var(--form-margin-m);
+	}
+	&.top {
+		margin-top: var(--form-margin-m);
+	}
+	&.bottom {
+		margin-bottom: var(--form-margin-m);
+	}
+	&.center-vertical {
+		margin-block: var(--form-margin-m);
+	}
+  &.all {
+    margin: var(--form-margin-m);
   }
 }

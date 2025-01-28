@@ -22,7 +22,7 @@ import {
 	useNavigation,
 	useOptions,
 } from '@/shared/hooks/formOptions'
-import { checkValue } from '@/shared/helpers/formOptions'
+import { isValueSelected } from '@/shared/helpers/checkingValues'
 import styles from './style.module.scss'
 
 export type Option = {
@@ -290,7 +290,7 @@ export const Autocomplete = (props: SelectProps) => {
 			const optionProps: OptionProps = {
 				id: optionId + (index + 1),
 				disabled: getDisabledOptions ? getDisabledOptions(optionValue) : false,
-				isSelected: checkValue(optionValue, selectedValue),
+				isSelected: isValueSelected(optionValue, selectedValue),
 			}
 
 			return renderOption ? (

@@ -2,34 +2,24 @@ import {
 	AriaRole,
 	ButtonHTMLAttributes,
 	forwardRef,
-	lazy,
 	LinkHTMLAttributes,
 	memo,
-	ReactElement,
 	ReactNode,
-	Suspense,
 	useRef,
 } from 'react'
 import { classNames } from '@/shared/helpers/classNames'
-import { Typography } from '@/shared/ui/Typography'
 import { RippleWrapper } from '@/shared/ui/RippleWrapper'
 import { handleRipple, handleRippleCursorPosition } from '@/shared/lib/ripple'
+import { Link } from 'react-router-dom'
 import styles from './style.module.scss'
-
-const LazyLink = lazy(() =>
-	import('react-router-dom').then((module) => ({ default: module.Link }))
-)
 
 interface BaseMenuItemProps {
 	className?: string
-	label: string
-	description?: string
-	tabIndex?: number
-	StartIcon?: ReactElement
-	EndIcon?: ReactElement
+	children: ReactNode
 	to?: string
 	href?: string
 	role?: AriaRole
+	tabIndex?: number
 	onClick?: (event: any) => void
 }
 
@@ -55,14 +45,11 @@ export const MenuItem = memo(
 		) => {
 			const {
 				className,
-				label,
-				description,
-				tabIndex = 0,
-				StartIcon,
-				EndIcon,
+				children,
 				to,
 				href,
 				role = 'menuitem',
+				tabIndex = 0,
 				onClick,
 				buttonProps,
 				linkProps,
@@ -73,43 +60,40 @@ export const MenuItem = memo(
 
 			const handleClick = (event: React.MouseEvent) => {
 				onClick?.(event)
-				handleRippleCursorPosition(rippleWrapperRef, event)
-			}
 
-			const handleKeyUp = (event: React.KeyboardEvent) => {
-				if (event.key === 'Enter' || event.key === ' ') {
+				if(event.clientX) {
+					handleRippleCursorPosition(rippleWrapperRef, event)
+				} else {
 					handleRipple(rippleWrapperRef)
 				}
 			}
 
-			const Component = ({ children }: { children: ReactNode }) => {
-				if (to)
-					return (
-						<Suspense>
-							<LazyLink
-								className={styles['button']}
-								role={role}
-								tabIndex={tabIndex}
-								to={to}
-								onKeyUp={handleKeyUp}
-								onClick={handleClick}
-								ref={ref as React.ForwardedRef<HTMLAnchorElement>}
-								{...linkProps}
-								{...otherProps}
-							>
-								{children}
-								<RippleWrapper ref={rippleWrapperRef}/>
-							</LazyLink>
-						</Suspense>
-					)
-				if (href)
-					return (
+			if (to)
+				return (
+					<li className={classNames(styles['item'], [className])} role='none'>
+						<Link
+							className={styles['link']}
+							role={role}
+							tabIndex={tabIndex}
+							to={to}
+							onClick={handleClick}
+							ref={ref as React.ForwardedRef<HTMLAnchorElement>}
+							{...linkProps}
+							{...otherProps}
+						>
+							{children}
+							<RippleWrapper ref={rippleWrapperRef} />
+						</Link>
+					</li>
+				)
+			if (href)
+				return (
+					<li className={classNames(styles['item'], [className])} role='none'>
 						<a
-							className={styles['button']}
+							className={styles['link']}
 							role={role}
 							tabIndex={tabIndex}
 							href={href}
-							onKeyUp={handleKeyUp}
 							onClick={handleClick}
 							ref={ref as React.ForwardedRef<HTMLAnchorElement>}
 							{...linkProps}
@@ -117,46 +101,22 @@ export const MenuItem = memo(
 						>
 							{children}
 						</a>
-					)
-				return (
+					</li>
+				)
+			return (
+				<li className={classNames(styles['item'], [className])} role='none'>
 					<button
 						className={styles['button']}
 						role={role}
 						onClick={handleClick}
-						onKeyUp={handleKeyUp}
 						tabIndex={tabIndex}
 						ref={ref as React.ForwardedRef<HTMLButtonElement>}
 						{...buttonProps}
 						{...otherProps}
 					>
 						{children}
-						<RippleWrapper ref={rippleWrapperRef}/>
+						<RippleWrapper ref={rippleWrapperRef} />
 					</button>
-				)
-			}
-
-			const mods: Record<string, boolean | undefined> = {
-				[styles['with-start-icon']]: !!StartIcon,
-				[styles['with-end-icon']]: !!EndIcon,
-			}
-
-			return (
-				<li
-					className={classNames(styles['menu-item'], [className], mods)}
-					role="none"
-				>
-					<Component>
-						<div className={styles['title']}>
-							{StartIcon && <span className={styles['start-icon']}>{StartIcon}</span>}
-							{label}
-							{EndIcon && <span className={styles['end-icon']}>{EndIcon}</span>}
-						</div>
-						{description && (
-							<Typography color="soft" component="p" variant="helper-text">
-								{description}
-							</Typography>
-						)}
-					</Component>
 				</li>
 			)
 		}

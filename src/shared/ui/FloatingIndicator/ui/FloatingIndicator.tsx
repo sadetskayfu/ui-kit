@@ -12,6 +12,7 @@ interface FloatingIndicatorProps {
 	elementListRef: React.RefObject<HTMLElement>
 	activeElementRef: React.RefObject<HTMLElement>
 	selectedValue: string
+	updateTriggers?: any[]
 }
 
 const FloatingIndicator = (props: FloatingIndicatorProps) => {
@@ -21,6 +22,7 @@ const FloatingIndicator = (props: FloatingIndicatorProps) => {
 		elementListRef,
 		activeElementRef,
 		selectedValue,
+		updateTriggers = [],
 	} = props
 
 	const indicatorRef = useRef<HTMLSpanElement | null>(null)
@@ -29,12 +31,12 @@ const FloatingIndicator = (props: FloatingIndicatorProps) => {
 		const indicator = indicatorRef.current
 		const activeElement = activeElementRef.current
 		const elementList = elementListRef.current
-
+	
 		if (!indicator || !activeElement || !elementList) return
-
+		console.log('change position')
 		const activeElementRect = activeElement.getBoundingClientRect()
 		const elementListRect = elementList.getBoundingClientRect()
-
+		
 		if (orientation === 'horizontal') {
 			const left = activeElementRect.left - elementListRect.left
 
@@ -61,12 +63,17 @@ const FloatingIndicator = (props: FloatingIndicatorProps) => {
 			handleChangePosition,
 			100
 		)
+		const resizeObserver = new ResizeObserver(throttledHandleChangePosition)
 
-		window.addEventListener('resize', throttledHandleChangePosition)
+		const elementList = elementListRef.current
+
+		if(elementList) {
+			resizeObserver.observe(elementList)
+		}
 
 		return () => {
-			window.removeEventListener('resize', throttledHandleChangePosition)
 			throttledHandleChangePosition.cancel()
+			resizeObserver.disconnect()
 		}
 	}, [handleChangePosition])
 
@@ -74,7 +81,7 @@ const FloatingIndicator = (props: FloatingIndicatorProps) => {
 		setTimeout(() => {
 			handleChangePosition()
 		}, 0)
-	}, [selectedValue, orientation])
+	}, [selectedValue, orientation, [...updateTriggers]])
 
 	const additionalClasses: Array<string | undefined> = [styles[position]]
 
@@ -82,6 +89,7 @@ const FloatingIndicator = (props: FloatingIndicatorProps) => {
 		<span
 			ref={indicatorRef}
 			className={classNames(styles['indicator'], additionalClasses)}
+			aria-hidden='true'
 		></span>
 	)
 }

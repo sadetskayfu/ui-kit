@@ -1,12 +1,14 @@
 import { classNames } from '@/shared/helpers/classNames'
 import { AnchorHTMLAttributes, forwardRef, memo, ReactNode } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { Indicator, IndicatorPosition } from '@/shared/ui/Indicator'
 import styles from './style.module.scss'
 
 interface BaseNavigateLinkProps {
 	className?: string
 	children: ReactNode
 	to: string
+	indicatorPosition?: IndicatorPosition
 }
 
 type HTMLLinkProps = Omit<
@@ -21,7 +23,7 @@ interface NavigateLinkProps extends BaseNavigateLinkProps {
 export const NavigateLink = memo(
 	forwardRef(
 		(props: NavigateLinkProps, ref: React.ForwardedRef<HTMLAnchorElement>) => {
-			const { className, children, to, linkProps, ...otherProps } = props
+			const { className, children, to, indicatorPosition = 'bottom', linkProps, ...otherProps } = props
 
 			const location = useLocation()
 			const isActive = location.pathname === to
@@ -39,6 +41,7 @@ export const NavigateLink = memo(
 					{...otherProps}
 				>
 					{children}
+					<Indicator isActive={isActive} position={indicatorPosition}/>
 				</Link>
 			)
 		}

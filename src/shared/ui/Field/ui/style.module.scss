@@ -12,7 +12,7 @@
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	row-gap: var(--form-margin-m);
+	row-gap: calc(var(--form-margin-m) * -1);
 }
 
 .field {
@@ -105,11 +105,6 @@
 
 // Sizes
 .field-wrapper {
-	&.small {
-		--height: var(--button-height-s);
-		--paddingBlock: #{rem(6)};
-		--paddingInline: var(--padding-15);
-	}
 	&.medium {
 		--height: var(--button-height-m);
 		--paddingBlock: #{rem(8)};
@@ -120,11 +115,15 @@
 		--paddingBlock: #{rem(13)};
 		--paddingInline: var(--padding-15);
 	}
-	&.small,
 	&.medium,
 	&.large {
 		&.clear {
-			--paddingInline: var(--actions-margin);
+			.field {
+				--height: auto;
+				padding-left: 0px;
+				padding-right: var(--actions-margin);
+				padding-block: 0px;
+			}
 		}
 	}
 }

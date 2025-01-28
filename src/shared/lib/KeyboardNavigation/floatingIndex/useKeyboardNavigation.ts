@@ -35,11 +35,11 @@ export const useKeyboardNavigation = (
 		}
 	}, [])
 
-	const handleFocus = useCallback((index: number) => {
+	const updateActiveIndex = useCallback((index: number) => {
 		if (index !== activeIndexRef.current) {
 			activeIndexRef.current = index
 		}
 	}, [])
 
-	return { handleKeyDown, handleFocus }
+	return { handleKeyDown, updateActiveIndex }
 }

@@ -1,0 +1,40 @@
+@use '@/app/styles/helpers' as *;
+
+.content {
+    --padding: var(--padding-15);
+    --fzStartIcon: var(--fz-icon-xs);
+    --fzEndIcon: var(--fz-icon-xxs);
+    --paddingLeftDesc: 0px;
+    --paddingRightDesc: 0px;
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    padding: var(--padding);
+    &.with-start-icon {
+        --paddingLeftDesc: calc(var(--fzStartIcon) + var(--padding));
+    };
+    &.with-end-icon {
+        --paddingRightDesc: var(--fzEndIcon);
+    }
+}
+
+.header {
+    display: flex;
+    column-gap: var(--padding);
+}
+
+.description {
+    padding-right: var(--paddingRightDesc);
+    padding-left: var(--paddingLeftDesc); 
+}
+
+.start-icon {
+    display: inline-flex;
+    font-size: var(--fzStartIcon);
+}
+
+.end-icon {
+    display: inline-flex;
+    margin-left: auto;
+    font-size: var(--fzEndIcon);
+}

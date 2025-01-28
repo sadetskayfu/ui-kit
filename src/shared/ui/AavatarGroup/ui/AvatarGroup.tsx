@@ -14,6 +14,7 @@ interface AvatarGroupProps {
   maxCount?: number;
   orientation?: AvatarGroupOrientation;
   spacing?: AvatarGroupSpacing;
+  style?: React.CSSProperties
 }
 
 export const AvatarGroup = memo((props: AvatarGroupProps) => {
@@ -25,6 +26,7 @@ export const AvatarGroup = memo((props: AvatarGroupProps) => {
     maxCount,
     orientation = "vertical",
     spacing = "medium",
+    style,
   } = props;
 
   const renderAvatars = () => {
@@ -68,7 +70,7 @@ export const AvatarGroup = memo((props: AvatarGroupProps) => {
   ];
 
   return (
-    <div className={classNames(styles["avatar-group"], additionalClasses)}>
+    <div className={classNames(styles["avatar-group"], additionalClasses)} style={{...style}}>
       {renderAvatars()}
     </div>
   );

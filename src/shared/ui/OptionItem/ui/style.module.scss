@@ -12,7 +12,7 @@
     text-align: start;
     &.selected {
         .bg {
-            background-color: var(--color-primary-opacity);
+            background-color: var(--color-primary-opacity-soft);
         }
     }
     &.disabled {

@@ -1,0 +1,44 @@
+@use '@/app/styles/helpers' as *;
+
+.container {
+    --scrollButtonSize: #{rem(35)};
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    &.vertical {
+        flex-direction: column;
+        .items-container {
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .scroll-button {
+            height: var(--scrollButtonSize);
+        }
+    }
+    &.horizontal {
+        .items-container {
+            overflow-x: auto;
+        }
+        .scroll-button {
+            width: var(--scrollButtonSize);
+        }
+    }
+}
+
+.items-container {
+    display: flex;
+    scroll-behavior: smooth;
+    flex-grow: 1;
+    scrollbar-width: none; /* Скрыть скроллбар в Firefox */
+    -ms-overflow-style: none; /* Скрыть скроллбар в IE/Edge */
+    &::-webkit-scrollbar {
+        display: none; /* Скрыть скроллбар в Chrome/Safari */
+    }
+}
+
+.scroll-button {
+    color: var(--font-color-soft);
+    border: none;
+    background-color: transparent;
+    transition: 0.2s;
+}

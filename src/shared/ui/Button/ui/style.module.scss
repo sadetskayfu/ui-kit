@@ -27,13 +27,13 @@
 .button {
 	&.primary {
 		--color: var(--theme-color-primary-main);
-		--bgColorHover: var(--color-primary-opacity);
+		--bgColorHover: var(--color-primary-opacity-soft);
 		--borderColor: var(--border-color-primary);
 	}
 	&.secondary {
 		--color: var(--font-color-hard);
 		--borderColor: var(--border-color-grey);
-		--bgColorHover: var(--color-grey-opacity);
+		--bgColorHover: var(--color-grey-opacity-soft);
 	}
 }
 // Variants

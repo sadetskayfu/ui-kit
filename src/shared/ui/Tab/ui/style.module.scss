@@ -1,25 +1,19 @@
 @use '@/app/styles/helpers' as *;
 
 .tab {
-    --paddingBlock: ;
-    --paddingInline: ;
-    --color: var(--font-color-hard);
-    --colorActive: var(--theme-color-primary-main);
-    --bgColor: ;
-    --bgColorHover: var(--theme-color-grey-dark);
-    --bgColorActive: ;
+    --activeColor: var(--theme-color-primary-main);
+    --hoverBgColor: var(--color-grey-opacity-soft);
+    --activeBgColor: ;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-block: var(--paddingBlock);
-    padding-inline: var(--paddingInline);
     column-gap: rem(8);
     row-gap: rem(6);
-    background-color: var(--bgColor);
-    color: var(--color);
+    background-color: transparent;
     transition: background-color 0.2s, color 0.2s;
     white-space: nowrap;
+    color: inherit;
 }
 
 .icon {
@@ -30,14 +24,15 @@
 // Variants
 .tab {
     &.filled {
-        --bgColor: var(--theme-color-dark);
-        --bgColorActive: var(--theme-color-grey-dark);
+        --activeBgColor: var(--color-grey-opacity-soft);
         border: var(--border-weight-soft) solid var(--border-color-grey);
         border-radius: var(--border-radius-m);
+        &.selected {
+            --hoverBgColor: var(--color-grey-opacity-medium);
+        }
     }
     &.clear {
-        --bgColor: transparent;
-        --bgColorActive: transparent;
+        --activeBgColor: transparent;
         border: none;
     }
 }
@@ -45,12 +40,12 @@
 // Sizes
 .tab {
     &.medium {
-        --paddingBlock: var(--button-padding-block-m);
-        --paddingInline: var(--button-padding-inline-m);
+        padding-block: var(--button-padding-block-m);
+        padding-inline: var(--button-padding-inline-m);
     }
     &.large {
-        --paddingBlock: var(--button-padding-block-l);
-        --paddingInline: var(--button-padding-inline-l);
+        padding-block: var(--button-padding-block-l);
+        padding-inline: var(--button-padding-inline-l);
     }
 }
 
@@ -72,14 +67,14 @@
     &:focus-visible {
         @include focus-outline-inset;
     }
-    &.disabled {
+    &:disabled {
         @include disabled;
     }
     &.selected {
-        --bgColor: var(--bgColorActive);
-        --color: var(--colorActive);
+        background-color: var(--activeBgColor);
+        color: var(--activeColor);
     }
     @include hover {
-        --bgColor: var(--bgColorHover);
+        background-color: var(--hoverBgColor);
     }
 }

@@ -4,7 +4,7 @@ import { Typography } from '@/shared/ui/Typography'
 import styles from './style.module.scss'
 
 export type FieldVariant = 'filled' | 'outlined' | "clear"
-export type FieldSize = 'small' | 'medium' | 'large'
+export type FieldSize = 'medium' | 'large'
 export type FieldLabelVariant = 'default' | 'on-border' | 'hidden'
 
 interface BaseFieldProps {

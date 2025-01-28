@@ -35,8 +35,8 @@ const DropdownPortalWrapper = (args: any) => {
 			<Button
 				buttonProps={{
 					onMouseDown: handleMouseDown,
-					style: { position: 'absolute' },
 				}}
+				style={{ position: 'absolute' }}
 				onClick={handleToggle}
 				ref={buttonRef}
 				color="secondary"

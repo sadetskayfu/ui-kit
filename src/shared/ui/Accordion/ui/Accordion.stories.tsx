@@ -9,6 +9,8 @@ const meta: Meta<typeof Accordion> = {
 	args: {
 		titleVariant: 'h4',
 		disabled: false,
+		isLazy: false,
+		isUnmount: false,
 		variant: 'filled',
 		title: 'Accordion header',
 		children: (

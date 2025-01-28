@@ -9,10 +9,11 @@ interface DividerProps {
 	className?: string
 	orientation?: DividerOrientation
 	component?: DividerComponent
+	style?: React.CSSProperties
 }
 
 export const Divider = memo((props: DividerProps) => {
-	const { orientation = 'vertical', component = 'div', className } = props
+	const { orientation = 'vertical', component = 'div', className, style } = props
 
 	const additionalClasses: Array<string | undefined> = [
 		styles[orientation],
@@ -24,6 +25,7 @@ export const Divider = memo((props: DividerProps) => {
 	return (
 		<Tag
 			className={classNames(styles['divider'], additionalClasses)}
+			style={{...style}}
 			role="separator"
 			aria-orientation={orientation}
 		/>

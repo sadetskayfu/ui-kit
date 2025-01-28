@@ -3,12 +3,10 @@ import {
 	ButtonHTMLAttributes,
 	cloneElement,
 	forwardRef,
-	lazy,
 	LinkHTMLAttributes,
 	memo,
 	ReactElement,
 	ReactNode,
-	Suspense,
 	useRef,
 } from 'react'
 import { IconButton } from '@/shared/ui/IconButton'
@@ -16,11 +14,8 @@ import { AvatarProps } from '@/shared/ui/Avatar'
 import { XMark } from '@/shared/assets/icons'
 import { RippleWrapper } from '@/shared/ui/RippleWrapper'
 import { handleRipple, handleRippleCursorPosition } from '@/shared/lib/ripple'
+import { Link } from 'react-router-dom'
 import styles from './style.module.scss'
-
-const LazyLink = lazy(() =>
-	import('react-router-dom').then((module) => ({ default: module.Link }))
-)
 
 type ChipVariant = 'filled' | 'outlined'
 type ChipColor = 'primary' | 'secondary'
@@ -92,20 +87,18 @@ export const Chip = memo(
 				}
 			}
 
-			const handleKeyUp = (event: React.KeyboardEvent) => {
-				if (event.key === 'Enter' || event.key === ' ') {
+			const handleClick = (event: React.MouseEvent) => {
+				onClick?.(event)
+
+				if(event.clientX) {
+					handleRippleCursorPosition(rippleWrapperRef, event)
+				} else {
 					handleRipple(rippleWrapperRef)
 				}
 			}
 
-			const handleClick = (event: React.MouseEvent) => {
-				onClick?.(event)
-				handleRippleCursorPosition(rippleWrapperRef, event)
-			}
-
 			const mods: Record<string, boolean | undefined> = {
 				[styles['clickable']]: Boolean(onClick || to || href),
-				[styles['disabled']]: disabled,
 			}
 
 			const additionalClasses: Array<string | undefined> = [
@@ -115,17 +108,14 @@ export const Chip = memo(
 				styles[size],
 			]
 
-			const localTabIndex = disabled ? -1 : tabIndex
-
 			const Parent = ({ children }: { children: ReactNode }) => {
 				if (onClick)
 					return (
 						<button
 							className={classNames(styles['chip'], additionalClasses, mods)}
 							onClick={handleClick}
-							onKeyUp={handleKeyUp}
 							onKeyDown={handleKeyDown}
-							tabIndex={localTabIndex}
+							tabIndex={disabled ? -1 : tabIndex}
 							disabled={disabled}
 							ref={ref as React.RefObject<HTMLButtonElement>}
 							{...buttonProps}
@@ -140,9 +130,8 @@ export const Chip = memo(
 						<a
 							className={classNames(styles['chip'], additionalClasses, mods)}
 							onClick={handleClick}
-							onKeyUp={handleKeyUp}
 							onKeyDown={handleKeyDown}
-							tabIndex={localTabIndex}
+							tabIndex={tabIndex}
 							href={href}
 							ref={ref as React.RefObject<HTMLAnchorElement>}
 							{...linkProps}
@@ -153,13 +142,11 @@ export const Chip = memo(
 					)
 				if (to)
 					return (
-						<Suspense>
-							<LazyLink
+							<Link
 								className={classNames(styles['chip'], additionalClasses, mods)}
 								onClick={handleClick}
-								onKeyUp={handleKeyUp}
 								onKeyDown={handleKeyDown}
-								tabIndex={localTabIndex}
+								tabIndex={tabIndex}
 								to={to}
 								ref={ref as React.RefObject<HTMLAnchorElement>}
 								{...linkProps}
@@ -167,8 +154,7 @@ export const Chip = memo(
 							>
 								{children}
 								<RippleWrapper ref={rippleWrapperRef}/>
-							</LazyLink>
-						</Suspense>
+							</Link>
 					)
 				return (
 					<div

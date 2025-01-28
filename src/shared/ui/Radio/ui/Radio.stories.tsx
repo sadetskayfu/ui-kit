@@ -33,6 +33,7 @@ const RadioGroupWrapper = (args: any) => {
 						<Radio
 							name="radio"
 							value="1"
+							offset='left'
 							checked={selectedValue === '1'}
 							onChange={handleChange}
 							{...args}

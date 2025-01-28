@@ -74,6 +74,31 @@
   }
 }
 
+// Offset
+.radio-wrapper {
+	&.left {
+		margin-left: var(--form-margin-m);
+	}
+	&.right {
+		margin-right: var(--form-margin-m);
+	}
+	&.center-horizontal {
+		margin-inline: var(--form-margin-m);
+	}
+	&.top {
+		margin-top: var(--form-margin-m);
+	}
+	&.bottom {
+		margin-bottom: var(--form-margin-m);
+	}
+	&.center-vertical {
+		margin-block: var(--form-margin-m);
+	}
+  &.all {
+    margin: var(--form-margin-m);
+  }
+}
+
 // Mods
 .radio-wrapper {
   &.checked {

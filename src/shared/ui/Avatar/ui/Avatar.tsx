@@ -5,7 +5,7 @@ import styles from './style.module.scss'
 
 type AvatarVariant = 'circular' | 'rounded' | 'square'
 type AvatarSize = 'small' | 'medium' | 'large' | 'custom'
-type AvatarBorderColor = 'dark' | 'primary' | "none"
+type AvatarBorderColor = 'dark' | 'primary' | 'none'
 
 interface BaseAvatarProps {
 	className?: string
@@ -15,13 +15,14 @@ interface BaseAvatarProps {
 	alt?: string
 	variant?: AvatarVariant
 	border?: AvatarBorderColor
-	bgColor?: string
-	height?: string
-	width?: string
 	defaultBgColor?: boolean
+	style?: React.CSSProperties
 }
 
-type HTMLImgProps = Omit<ImgHTMLAttributes<HTMLImageElement>, keyof BaseAvatarProps>
+type HTMLImgProps = Omit<
+	ImgHTMLAttributes<HTMLImageElement>,
+	keyof BaseAvatarProps
+>
 
 export interface AvatarProps extends BaseAvatarProps {
 	imgProps?: HTMLImgProps
@@ -36,11 +37,9 @@ export const Avatar = memo((props: AvatarProps) => {
 		alt,
 		variant = 'circular',
 		border = 'none',
-		bgColor,
-		imgProps,
-		height,
-		width,
+		style,
 		defaultBgColor = true,
+		imgProps,
 	} = props
 
 	const [imageError, setImageError] = useState(false)
@@ -62,7 +61,7 @@ export const Avatar = memo((props: AvatarProps) => {
 
 	return (
 		<div
-			style={{ backgroundColor: bgColor, height, width }}
+			style={{ ...style }}
 			className={classNames(styles['avatar'], additionalClasses, mods)}
 		>
 			{imageError || isEmptySrc ? (

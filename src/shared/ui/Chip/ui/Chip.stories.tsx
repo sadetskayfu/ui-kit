@@ -10,7 +10,6 @@ const meta: Meta<typeof Chip> = {
 		variant: 'filled',
 		color: 'primary',
 		size: 'medium',
-		label: 'I am Chip',
 		disabled: false,
 	},
 }
@@ -19,9 +18,13 @@ export default meta
 
 type Story = StoryObj<typeof Chip>
 
-export const Default: Story = {}
+export const DefaultChip: Story = {
+	args: {
+		label: 'Default chip'
+	}
+}
 
-export const Button: Story = {
+export const ButtonChip: Story = {
 	args: {
 		label: 'Button chip'
 	},
@@ -30,21 +33,21 @@ export const Button: Story = {
 	},
 }
 
-export const Link: Story = {
+export const LinkChip: Story = {
 	args: {
 		to: '/example',
 		label: 'Link chip'
 	},
 }
 
-export const ExternalLink: Story = {
+export const ExternalLinkChip: Story = {
 	args: {
 		href: 'https://example.com',
 		label: 'External link chip'
 	},
 }
 
-export const WithCloseButton: Story = {
+export const ChipWithCloseButton: Story = {
 	args: {
 		label: 'With close button'
 	},
@@ -54,7 +57,7 @@ export const WithCloseButton: Story = {
 	},
 }
 
-export const WithIcon: Story = {
+export const ChipWithIcon: Story = {
 	args: {
 		Icon: <Heart />,
 		label: 'With icon'

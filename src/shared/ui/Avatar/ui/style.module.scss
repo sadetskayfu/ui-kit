@@ -28,18 +28,14 @@
 		height: #{rem(40)};
 		width: #{rem(40)};
 		font-size: calc(var(--height) / 1.75);
-		@include laptop {
-			height: #{rem(35)};
-			width: #{rem(35)};
-		}
 	}
 	&.medium {
 		height: #{rem(60)};
 		width: #{rem(60)};
 		font-size: calc(var(--height) / 1.75);
 		@include laptop {
-			height: #{rem(45)};
-			width: #{rem(45)};
+			height: #{rem(50)};
+			width: #{rem(50)};
 		}
 	}
 	&.large {

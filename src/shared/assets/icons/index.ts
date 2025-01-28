@@ -1,6 +1,6 @@
 export type { IconProps } from './types/IconProps'
 export { House } from './ui/House'
-export { Arrow } from './ui/Arrow'
+export { Arrow } from './ui/Arrow/Arrow'
 export { Bell } from './ui/Bell'
 export { BookMark } from './ui/BookMark'
 export { Cart } from './ui/Cart'

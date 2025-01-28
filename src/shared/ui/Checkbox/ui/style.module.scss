@@ -22,9 +22,6 @@
 	cursor: pointer;
 	font-size: var(--fz);
 	color: var(--color);
-	@include hover {
-		box-shadow: var(--boxShadow);
-	}
 	&:before {
 		position: absolute;
 		content: '';
@@ -40,6 +37,9 @@
 		position: absolute;
 		inset: 0;
 		border-radius: inherit;
+	}
+	@include hover {
+		box-shadow: var(--boxShadow);
 	}
 }
 
@@ -90,7 +90,7 @@
 .checkbox {
 	&.filled {
 		--checkedIconColor: var(--font-color-onDark);
-		--bgColor: var(--theme-color-grey-dark)
+		--bgColor: var(--theme-color-grey-dark);
 	}
 	&.outlined {
 		--bgColor: transparent;
@@ -114,6 +114,31 @@
 		&.clear {
 			--fz: var(--fz-icon-s);
 		}
+	}
+}
+
+// Offset
+.checkbox {
+	&.left {
+		margin-left: var(--form-margin-m);
+	}
+	&.right {
+		margin-right: var(--form-margin-m);
+	}
+	&.center-horizontal {
+		margin-inline: var(--form-margin-m);
+	}
+	&.top {
+		margin-top: var(--form-margin-m);
+	}
+	&.bottom {
+		margin-bottom: var(--form-margin-m);
+	}
+	&.center-vertical {
+		margin-block: var(--form-margin-m);
+	}
+	&.all {
+		margin: var(--form-margin-m);
 	}
 }
 

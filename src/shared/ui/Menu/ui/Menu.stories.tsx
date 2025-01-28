@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { Menu } from './Menu'
 import { Button } from '@/shared/ui/Button'
 import { useCallback, useRef, useState } from 'react'
-import { MenuItem } from '@/shared/ui/MenuItem'
+import { MenuItem, MenuItemContent } from '@/shared/ui/MenuItem'
 
 const meta: Meta<typeof Menu> = {
 	title: 'shared/Menu',
@@ -39,18 +39,28 @@ const MenuWrapper = (args: any) => {
 	}, [])
 
 	return (
-			<Menu
-				{...args}
-				onClose={handleClose}
-				onOpen={handleOpen}
-				isOpen={isOpen}
-				openingElementRef={buttonRef}
-				Component={<Button onClick={handleToggle} ref={buttonRef}>Open menu</Button>}
-			>
-				<MenuItem onClick={handleClose} label="Menu item 1 zxc" />
-				<MenuItem onClick={handleClose} label="Menu item 2 zxc" />
-				<MenuItem onClick={handleClose} label="Menu item 3 zxc" />
-			</Menu>
+		<Menu
+			{...args}
+			onClose={handleClose}
+			onOpen={handleOpen}
+			isOpen={isOpen}
+			openingElementRef={buttonRef}
+			Component={
+				<Button onClick={handleToggle} ref={buttonRef}>
+					Open menu
+				</Button>
+			}
+		>
+			<MenuItem onClick={handleClose}>
+				<MenuItemContent title="Menu item 1 zxc" />
+			</MenuItem>
+			<MenuItem onClick={handleClose}>
+				<MenuItemContent title="Menu item 2 zxc" />
+			</MenuItem>
+			<MenuItem onClick={handleClose}>
+				<MenuItemContent title="Menu item 3 zxc" />
+			</MenuItem>
+		</Menu>
 	)
 }
 

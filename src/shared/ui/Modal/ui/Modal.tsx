@@ -78,7 +78,6 @@ export const Modal = (props: ModalProps) => {
 					tabIndex={-1}
 					style={{ zIndex }}
 					onClick={(event: React.MouseEvent) => event.stopPropagation()}
-					onKeyDown={(e) => console.log(e.key)}
 				>
 					{children}
 				</div>

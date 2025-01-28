@@ -1,8 +1,9 @@
-import { useEffect, useRef } from 'react'
+import { AriaRole, useEffect, useRef } from 'react'
 
 export const useElements = (
 	elementRef: React.RefObject<HTMLElement | null>,
-    isVisible: boolean = true
+    isVisible: boolean = true,
+	role?: AriaRole
 ) => {
 	const interactiveElementsRef = useRef<
 		Array<HTMLButtonElement | HTMLAnchorElement>
@@ -18,7 +19,11 @@ export const useElements = (
 			const interactiveElements = Array.from(
 				element.querySelectorAll<HTMLButtonElement | HTMLAnchorElement>('a, button')
 			)
-			interactiveElementsRef.current = interactiveElements
+			if(role) {
+				interactiveElementsRef.current = interactiveElements.filter((element) => element.role === role)
+			} else {
+				interactiveElementsRef.current = interactiveElements
+			}
 		}
 
 		const observer = new MutationObserver(updateInteractiveElements)

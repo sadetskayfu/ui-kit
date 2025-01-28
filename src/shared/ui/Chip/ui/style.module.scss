@@ -33,9 +33,9 @@
 		@include hover {
 			background-color: var(--bgColorHover);
 		}
-	}
-	&.disabled {
-		@include disabled;
+		&:disabled {
+			@include disabled;
+		}
 	}
 	&:focus-visible {
 		@include focus-outline;
@@ -112,11 +112,11 @@
 		--avatarBgColor: var(--borderColor);
 		border: var(--border-weight-soft) solid var(--borderColor);
 		&.primary {
-			--bgColorHover: var(--color-primary-opacity);
+			--bgColorHover: var(--color-primary-opacity-soft);
 			--fontColor: var(--theme-color-primary-main);
 		}
 		&.secondary {
-			--bgColorHover: var(--color-grey-opacity);
+			--bgColorHover: var(--color-grey-opacity-soft);
 		}
 	}
 }
@@ -125,16 +125,9 @@
 	&.small {
 		--height: #{rem(30)};
 		--paddingInline: #{rem(14)};
-		@include laptop {
-			--height: #{rem(27)};
-			--paddingInline: #{rem(13)};
-		}
 	}
 	&.medium {
 		--height: var(--button-height-xs);
 		--paddingInline: #{rem(16)};
-		@include laptop {
-			--paddingInline: #{rem(14)};
-		}
 	}
 }

@@ -25,7 +25,6 @@
 		background-color: var(--theme-color-primary-main);
 		border-radius: inherit;
 		transform: scale(var(--emulatorScale));
-		transition-duration: inherit;
 	}
 	&.active {
         --emulatorScale: 1;

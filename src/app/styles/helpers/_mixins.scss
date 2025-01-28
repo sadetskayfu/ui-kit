@@ -54,7 +54,7 @@
 
 @mixin focus-outline-inset {
 	outline: rem(2) dashed var(--theme-color-primary-secondary);
-	outline-offset: rem(-10);
+	outline-offset: rem(-6);
 }
 
 @mixin divider-bottom {

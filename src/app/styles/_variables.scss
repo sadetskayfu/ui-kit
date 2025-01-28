@@ -10,14 +10,18 @@
     --color-primary-500: #b28bf5;
 	--color-primary-300: #d1c4e9;
     --color-primary-100: #d1c4e9;
-	--color-primary-opacity: hsl(262, 84%, 75%, 0.1);
+	--color-primary-opacity-soft: hsl(262, 84%, 75%, 0.1);
+	--color-primary-opacity-medium: hsl(262, 84%, 75%, 0.2);
+	--color-primary-opacity-hard: hsl(262, 84%, 75%, 0.3);
 
     --color-grey-900: #212121;
     --color-grey-800: #424242;
 	--color-grey-500: #9e9e9e;
     --color-grey-300: #e0e0e0;
     --color-grey-100: #f3f3f3;
-	--color-grey-opacity: hsl(0, 0%, 62%, 0.1);
+	--color-grey-opacity-soft: hsl(0, 0%, 62%, 0.1);
+	--color-grey-opacity-medium: hsl(0, 0%, 62%, 0.2);
+	--color-grey-opacity-hard: hsl(0, 0%, 62%, 0.3);
 
     --color-green-800: #0c3f0f;
 	--color-green-500: #4caf50;
@@ -38,8 +42,8 @@
 
 	// Font
 	--font-family-base: 'Kumbh Sans', 'sans-serif';
-	--font-size-default: #{fluid-text(18, 14)};
-	--font-size-s: #{fluid-text(14, 12)};
+	--font-size-default: #{rem(16)};
+	--font-size-s: #{rem(14)};
 
 	// Border
 	--border-weight-soft: #{rem(1)};
@@ -55,7 +59,11 @@
 	// Button height
 	--button-height-xxs: #{rem(25)};
 	--button-height-xs: #{rem(35)};
+
+	// Button small
 	--button-height-s: #{rem(45)};
+	--button-padding-inline-s: #{rem(16)};
+	--button-padding-block-s: #{rem(10)};
 
 	// Button medium
 	--button-height-m: #{rem(55)};
@@ -70,7 +78,7 @@
 	--actions-margin: calc(var(--button-height-xxs) / 4);
 
 	// Form
-	--form-margin-m: calc(var(--button-height-s) / 4);
+	--form-margin-m: calc(var(--button-height-s) / 4 * -1);
 	--field-default-width: #{rem(350)};
 
 	// Icon size
@@ -89,23 +97,5 @@
 
 	@include laptop {
         --container-width: #{rem(1280)};
-
-		// Button l
-		--button-height-l: #{rem(59)};
-		--button-padding-inline-l: #{rem(21)};
-		--button-padding-block-l: #{rem(16)};
-
-		// Button m
-		--button-height-m: #{rem(50)};
-		--button-padding-inline-m: #{rem(18)};
-		--button-padding-block-m: #{rem(12)};
-
-		--button-height-s: #{rem(40)};
-		--button-height-xs: #{rem(32)};
-		--button-height-xxs: #{rem(23)};
-
-		--padding-20: #{rem(18)};
-		--padding-15: #{rem(13)};
-		--padding-10: #{rem(9)};
     }
 }

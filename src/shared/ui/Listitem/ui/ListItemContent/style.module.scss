@@ -1,0 +1,22 @@
+.content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: var(--padding-20);
+    padding-inline: var(--padding-20);
+    padding-block: var(--padding-15);
+}
+
+.text-wrapper {
+    text-align: start;
+}
+
+.description {
+    color: var(--font-color-soft);
+    font-size: var(--font-size-s);
+}
+
+.end-slot {
+    display: inline-flex;
+    margin-left: auto;
+}

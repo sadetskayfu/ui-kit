@@ -2,7 +2,6 @@
 
 .form-group {
 	--marginLeft: ;
-	--gap: var(--marginLeft);
 	--legendColor: var(--font-color-hard);
 	margin: 0px;
 	&:focus-within {
@@ -28,30 +27,18 @@
 
 .legend {
 	padding: 0px;
-	margin-left: var(--marginLeft);
 	color: var(--legendColor);
-}
-
-.helper-text {
-	margin-left: var(--marginLeft);
 }
 
 .items {
 	display: flex;
 }
 
-// Sizes
-.form-group {
-	&.medium {
-		--marginLeft: var(--form-margin-m);
-	}
-}
-
 // Directions
 .form-group {
 	&.horizontal {
 		.items {
-			column-gap: var(--gap);
+			column-gap: var(--padding-10);
 		}
 	}
 	&.vertical {

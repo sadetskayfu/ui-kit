@@ -14,6 +14,8 @@ export interface AccordionProps {
 	titleVariant?: AccordionTitleVariant
 	variant?: AccordionVariant
 	disabled?: boolean
+	isLazy?: boolean
+	isUnmount?: boolean
 	tabIndex?: number
 	isOpen?: boolean
 	onToggle?: () => void
@@ -27,6 +29,8 @@ export const Accordion = (props: AccordionProps) => {
 		titleVariant = 'h4',
 		variant = 'filled',
 		disabled,
+		isLazy,
+		isUnmount,
 		tabIndex = 0,
 		isOpen: externalIsOpen,
 		onToggle,
@@ -96,7 +100,7 @@ export const Accordion = (props: AccordionProps) => {
 					<Minus className={styles['close-icon']} />
 				</div>
 			</div>
-			<Collapse isOpen={localIsOpen} headerId={headerId} bodyId={bodyId}>
+			<Collapse isOpen={localIsOpen} headerId={headerId} bodyId={bodyId} isLazy={isLazy} isUnmount={isUnmount}>
 				<div className={styles['body']}>{children}</div>
 			</Collapse>
 		</div>
