@@ -47,7 +47,7 @@ const FieldWrapper = (args: any) => {
 
 	return (
 		<TextField
-			inputProps={{ placeholder: 'Enter email', type: 'number' }}
+			inputProps={{ placeholder: 'Enter password', type: 'password' }}
 			errorMessage={error}
 			onBlur={handleValidate}
 			value={value}

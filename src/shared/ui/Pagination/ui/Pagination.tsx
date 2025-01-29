@@ -105,10 +105,8 @@ export const Pagination = memo(
 							color={isCurrentPage ? color : 'secondary'}
 							size="custom-size"
 							onClick={() => (!isCurrentPage ? handleChangePage(page) : undefined)}
-							buttonProps={{
-								'aria-current': isCurrentPage ? 'true' : undefined,
-								'aria-label': isCurrentPage ? `Page ${page}` : `Go to page ${page}`,
-							}}
+							aria-current={isCurrentPage ? 'true' : undefined}
+							aria-label={isCurrentPage ? `Page ${page}` : `Go to page ${page}`}
 						>
 							{page}
 						</IconButton>
@@ -134,9 +132,7 @@ export const Pagination = memo(
 							borderRadius={borderRadius}
 							onClick={() => handleChangePage(currentPage - 1)}
 							disabled={currentPage === 1 && !infinity}
-							buttonProps={{
-								'aria-label': 'Preview page',
-							}}
+							aria-label="Preview page"
 						>
 							<Arrow className={styles['arrow-icon']} />
 						</IconButton>
@@ -151,9 +147,7 @@ export const Pagination = memo(
 							borderRadius={borderRadius}
 							onClick={() => handleChangePage(currentPage + 1)}
 							disabled={currentPage === totalPages && !infinity}
-							buttonProps={{
-								'aria-label': 'Next page',
-							}}
+							aria-label="Next page"
 						>
 							<Arrow className={styles['arrow-icon']} />
 						</IconButton>

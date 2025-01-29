@@ -44,7 +44,7 @@ export const Tabs = (props: TabsProps) => {
 		...otherProps
 	} = props
 
-	const tabListRef = useRef<HTMLDivElement | null>(null)
+	const tabListRef = useRef<HTMLDivElement>(null)
 
 	const tabsRef = useElements(tabListRef, true, 'tab')
 
@@ -73,13 +73,15 @@ export const Tabs = (props: TabsProps) => {
 
 	const isHorizontal = orientation === 'horizontal'
 
+	const remGap = gap && (gap / 16 + 'rem')
+
 	return (
 		<div
 			className={classNames(styles['tabs'], additionalClasses)}
 			ref={tabListRef}
 			onKeyDown={handleKeyDown}
 			role="tablist"
-			style={{ ...style }}
+			style={{ gap: isScrollable ? '' : remGap, ...style }}
 			{...otherProps}
 		>
 			{isScrollable ? (

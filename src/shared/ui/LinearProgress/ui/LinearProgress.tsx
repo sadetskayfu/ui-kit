@@ -16,7 +16,7 @@ interface LinearProgressProps {
 export const LinearProgress = (props: LinearProgressProps) => {
 	const { className, color = 'primary', label, value, maxValue = 100, minValue = 0 } = props
 
-	const fillRef = useRef<HTMLSpanElement | null>(null)
+	const fillRef = useRef<HTMLSpanElement>(null)
 
 	const isControlled = typeof value === 'number'
 

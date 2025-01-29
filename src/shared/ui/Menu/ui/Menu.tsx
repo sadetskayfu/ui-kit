@@ -56,7 +56,7 @@ export const Menu = (props: MenuProps) => {
 		onClose,
 	} = props
 
-	const menuRef = useRef<HTMLUListElement | null>(null)
+	const menuRef = useRef<HTMLUListElement>(null)
 
 	const { isTouchDevice } = useTouchDevice()
 	const focusableElementsRef = getFocusableElements(menuRef, isOpen)

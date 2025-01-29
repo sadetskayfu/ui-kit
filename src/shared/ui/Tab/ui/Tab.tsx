@@ -71,7 +71,7 @@ export const Tab = memo(
 			...otherProps
 		} = props
 
-		const rippleWrapperRef = useRef<HTMLSpanElement | null>(null)
+		const rippleWrapperRef = useRef<HTMLSpanElement>(null)
 
 		const handleClick = (event: React.MouseEvent) => {
 			if (!isSelected) {

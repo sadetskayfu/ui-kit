@@ -8,7 +8,6 @@
 	--borderColor: var(--border-color-grey);
 	--borderColorHover: var(--color-grey-500);
 	--borderColorFocus: var(--theme-color-primary-main);
-	--actionsMarginRight: ;
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -34,13 +33,13 @@
 }
 
 .start-adornment {
-	margin-left: var(--paddingInline);
+	padding-inline: var(--paddingInline);
+	border-right: var(--border-weight-soft) solid var(--border-color-grey);
 }
 
 .actions {
 	display: flex;
-	margin-left: calc(var(--actions-margin) * -1);
-	margin-right: var(--actionsMarginRight);
+	padding-inline: calc(var(--paddingInline) - var(--actions-margin));
 }
 
 // Variants
@@ -60,8 +59,8 @@
 
 	&.clear {
 		--paddingInline: 0px;
-		--actionsMarginRight: 0px;
 		.start-adornment {
+			padding-right: var(--padding-15);
 			margin-right: var(--padding-15);
 		}
 		.field {

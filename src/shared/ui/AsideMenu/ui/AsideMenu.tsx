@@ -39,7 +39,7 @@ export const AsideMenu = (props: AsideMenuProps) => {
 		onClose,
 	} = props
 
-	const menuRef = useRef<HTMLDivElement | null>(null)
+	const menuRef = useRef<HTMLDivElement>(null)
 
 	const focusableElementsRef = getFocusableElements(menuRef, isOpen)
 

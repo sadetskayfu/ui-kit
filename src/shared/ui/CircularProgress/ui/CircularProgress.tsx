@@ -32,8 +32,8 @@ const getCircumferenceLength = (element: HTMLSpanElement) => {
 export const CircularProgress = (props: CircularProgressProps) => {
 	const { className, size = 'large', color = 'primary', value, maxValue = 100, minValue = 0, label, absCenter, zIndex = 1 } = props
 
-	const progressRef = useRef<HTMLSpanElement | null>(null)
-	const circleRef = useRef<SVGCircleElement | null>(null)
+	const progressRef = useRef<HTMLSpanElement>(null)
+	const circleRef = useRef<SVGCircleElement>(null)
 
 	const isControlled = typeof value === 'number'
 

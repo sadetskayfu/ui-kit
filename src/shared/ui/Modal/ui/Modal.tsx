@@ -36,7 +36,7 @@ export const Modal = (props: ModalProps) => {
 		onClose,
 	} = props
 
-	const modalRef = useRef<HTMLDivElement | null>(null)
+	const modalRef = useRef<HTMLDivElement>(null)
 
 	const focusableElementsRef = getFocusableElements(modalRef, isOpen)
 

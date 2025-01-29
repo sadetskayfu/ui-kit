@@ -43,7 +43,7 @@ export const DropdownPortal = forwardRef(
 			onClose,
 		} = props
 
-		const dropdownRef = useRef<HTMLDivElement | null>(null)
+		const dropdownRef = useRef<HTMLDivElement>(null)
 
 		useImperativeHandle(ref, () => dropdownRef.current!, [])
 

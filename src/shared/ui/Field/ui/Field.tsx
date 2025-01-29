@@ -106,11 +106,7 @@ export const Field = forwardRef(
 						<div className={styles['start-adornment']}>{StartAdornment}</div>
 					)}
 					{children}
-					{Actions.length > 0 && (
-						<div className={styles['actions']}>
-							{Actions}
-						</div>
-					)}
+					{Actions.length > 0 && <div className={styles['actions']}>{Actions}</div>}
 					{labelVariant === 'on-border' && (
 						<fieldset className={styles['fieldset']} aria-hidden="true">
 							<legend className={styles['legend']}>

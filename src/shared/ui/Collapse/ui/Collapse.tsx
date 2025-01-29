@@ -18,7 +18,7 @@ export const Collapse = (props: CollapseProps) => {
 		props
 
 	const isMountedRef = useRef<boolean>(false)
-	const bodyRef = useRef<HTMLDivElement | null>(null)
+	const bodyRef = useRef<HTMLDivElement>(null)
 	const autoHeighTimeoutIdRef = useRef<NodeJS.Timeout | null>(null)
 	const closeTimeoutIdRef = useRef<NodeJS.Timeout | null>(null)
 

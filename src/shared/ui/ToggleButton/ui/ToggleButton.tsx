@@ -47,7 +47,7 @@ export const ToggleButton = memo(forwardRef((props: ToggleButtonProps, ref: Reac
 		...otherProps
 	} = props
 
-    const rippleWrapperRef = useRef<HTMLSpanElement | null>(null)
+    const rippleWrapperRef = useRef<HTMLSpanElement>(null)
 
     const handleClick = (event: React.MouseEvent) => {
         onChange!(value)

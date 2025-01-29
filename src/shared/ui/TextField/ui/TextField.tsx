@@ -103,7 +103,7 @@ export const TextField = memo((props: TextFieldProps) => {
 
 	const isDirty = value !== ''
 
-	const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(null)
+	const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
 
 	const localLabelId = useId()
 	const errorMessageId = useId()
@@ -177,7 +177,6 @@ export const TextField = memo((props: TextFieldProps) => {
 	const mods: Record<string, boolean | undefined> = {
 		[styles['dirty']]: isDirty,
 		[styles['focused']]: isFocused,
-		[styles['content-padding']]: contentPadding,
 	}
 
 	const fieldContainerMods: Record<string, boolean | undefined> = {

@@ -56,7 +56,7 @@ export const Radio = memo((props: RadioProps) => {
 		inputProps,
 	} = props
 
-	const rippleWrapperRef = useRef<HTMLSpanElement | null>(null)
+	const rippleWrapperRef = useRef<HTMLSpanElement>(null)
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		onChange(event.target.value)

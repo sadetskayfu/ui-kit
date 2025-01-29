@@ -77,10 +77,10 @@ export const Slider = memo((props: SliderProps) => {
 	const valueRef = useRef<ValueType>(value)
 	const { isTouchDevice } = useTouchDevice()
 
-	const sliderRef = useRef<HTMLDivElement | null>(null)
-	const minThumbRef = useRef<HTMLDivElement | null>(null)
-	const maxThumbRef = useRef<HTMLDivElement | null>(null)
-	const fillRef = useRef<HTMLDivElement | null>(null)
+	const sliderRef = useRef<HTMLDivElement>(null)
+	const minThumbRef = useRef<HTMLDivElement>(null)
+	const maxThumbRef = useRef<HTMLDivElement>(null)
+	const fillRef = useRef<HTMLDivElement>(null)
 	const activeThumbIndexRef = useRef<0 | 1>(0)
 	const isHorizontal = orientation === 'horizontal'
 

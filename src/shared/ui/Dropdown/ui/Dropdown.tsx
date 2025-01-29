@@ -34,7 +34,7 @@ export const Dropdown = (props: DropdownProps) => {
 		onClose,
 	} = props
 
-	const dropdownRef = useRef<HTMLDivElement | null>(null)
+	const dropdownRef = useRef<HTMLDivElement>(null)
 
 	const handleClose = useCallback(
 		(event: MouseEvent) => {

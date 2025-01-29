@@ -112,8 +112,8 @@ export const Select = (props: SelectProps) => {
 	const [isMountedMenu, setIsMountedMenu] = useState<boolean>(false)
 	const [isFocused, setIsFocused] = useState<boolean>(false)
 
-	const fieldRef = useRef<HTMLDivElement | null>(null)
-	const optionsListRef = useRef<HTMLUListElement | null>(null)
+	const fieldRef = useRef<HTMLDivElement>(null)
+	const optionsListRef = useRef<HTMLUListElement>(null)
 	const selectedValueRef = useRef<string | string[]>(selectedValue)
 	const isOpenRef = useRef<boolean>(false)
 	const isMountedMenuRef = useRef<boolean>(false)

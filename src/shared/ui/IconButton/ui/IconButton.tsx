@@ -12,6 +12,11 @@ import { handleRipple, handleRippleCursorPosition } from '@/shared/lib/ripple'
 import { Link } from 'react-router-dom'
 import styles from './style.module.scss'
 
+type AriaAttributes = {
+	'aria-label'?: string
+	'aria-current'?: 'true' | 'false'
+}
+
 type IconButtonVariant = 'filled' | 'outlined' | 'clear'
 type IconButtonSize =
 	| 'small-xx'
@@ -28,7 +33,7 @@ export type IconButtonBorderRadius =
 	| 'circular'
 	| 'square'
 
-interface BaseIconButtonProps {
+interface BaseIconButtonProps extends AriaAttributes {
 	className?: string
 	id?: string
 	variant?: IconButtonVariant
@@ -89,7 +94,7 @@ const IconButton = memo(
 				...otherProps
 			} = props
 
-			const rippleWrapperRef = useRef<HTMLSpanElement | null>(null)
+			const rippleWrapperRef = useRef<HTMLSpanElement>(null)
 
 			const handleKeyUp = (event: React.KeyboardEvent) => {
 				if (event.key === ' ' || event.key === 'Enter') {

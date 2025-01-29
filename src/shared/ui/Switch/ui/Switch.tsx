@@ -55,7 +55,7 @@ export const Switch = memo((props: SwitchProps) => {
 		htmlProps,
 	} = props
 
-	const rippleWrapperRef = useRef<HTMLSpanElement | null>(null)
+	const rippleWrapperRef = useRef<HTMLSpanElement>(null)
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		onChange?.(event.target.checked, event.target.name)

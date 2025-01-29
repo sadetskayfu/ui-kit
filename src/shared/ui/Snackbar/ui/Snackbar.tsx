@@ -34,7 +34,7 @@ export const Snackbar = (props: SnackbarProps) => {
 		onClose,
 	} = props
 
-	const snackbarRef = useRef<HTMLDivElement | null>(null)
+	const snackbarRef = useRef<HTMLDivElement>(null)
 	const autoHideTimeoutIdRef = useRef<NodeJS.Timeout | null>(null)
 
 	// Auto hide

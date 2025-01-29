@@ -30,7 +30,7 @@ const TabsWrapper = (args: any, tabVariant: TabVariant) => {
 		<Tabs
 			selectedValue={selectedTab}
 			onChange={handleChange}
-			style={{ gap: tabVariant === 'filled' ? '10px' : '' }}
+			gap={tabVariant === 'filled' ? 10 : undefined}
 			{...args}
 		>
 			{Array.from({ length: 5 }, (_, index) => {

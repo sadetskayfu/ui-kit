@@ -64,9 +64,9 @@ export const Tooltip = (props: TooltipProps) => {
 
 	const [isVisible, setIsVisible] = useState<boolean>(false)
 
-	const localParentRef = useRef<HTMLElement | null>(null)
+	const localParentRef = useRef<HTMLElement>(null)
 	const parentRef = externalParentRef ? externalParentRef : localParentRef
-	const tooltipRef = useRef<HTMLDivElement | null>(null)
+	const tooltipRef = useRef<HTMLDivElement>(null)
 	const setPositionRef = useRef<
 		((args: SetPositionPortalElementArgs) => void) | null
 	>(null)

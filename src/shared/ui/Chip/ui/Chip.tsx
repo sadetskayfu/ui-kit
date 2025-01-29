@@ -77,7 +77,7 @@ export const Chip = memo(
 				...otherProps
 			} = props
 
-			const rippleWrapperRef = useRef<HTMLSpanElement | null>(null)
+			const rippleWrapperRef = useRef<HTMLSpanElement>(null)
 
 			const handleKeyDown = (event: React.KeyboardEvent) => {
 				if (event.key === 'Backspace' && onClose) {

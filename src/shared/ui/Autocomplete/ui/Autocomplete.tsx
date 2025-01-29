@@ -106,8 +106,8 @@ export const Autocomplete = (props: SelectProps) => {
 	const [isMountedMenu, setIsMountedMenu] = useState<boolean>(false)
 	const [isFilterOptions, setIsFilterOptions] = useState<boolean>(false)
 
-	const fieldRef = useRef<HTMLDivElement | null>(null)
-	const optionsListRef = useRef<HTMLUListElement | null>(null)
+	const fieldRef = useRef<HTMLDivElement>(null)
+	const optionsListRef = useRef<HTMLUListElement>(null)
 	const selectedValueRef = useRef<string | string[]>(selectedValue)
 	const valueRef = useRef<string>(value)
 	const isOpenRef = useRef<boolean>(false)

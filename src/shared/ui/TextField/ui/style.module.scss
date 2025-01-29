@@ -50,6 +50,11 @@
 	&::placeholder {
 		color: var(--font-color-soft);
 	}
+    &:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0 30px var(--border-color-primary) inset;
+        box-shadow: 0 0 0 30px var(--border-color-primary) inset;
+        -webkit-text-fill-color: var(--font-color-hard);
+    }
 }
 
 .text-area {

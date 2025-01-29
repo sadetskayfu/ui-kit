@@ -30,7 +30,7 @@ export const OptionItem = memo((props: OptionItemProps) => {
 		role = 'option',
 	} = props
 
-	const rippleWrapperRef = useRef<HTMLSpanElement | null>(null)
+	const rippleWrapperRef = useRef<HTMLSpanElement>(null)
 
 	const mods: Record<string, boolean | undefined> = {
 		[styles['disabled']]: disabled,
