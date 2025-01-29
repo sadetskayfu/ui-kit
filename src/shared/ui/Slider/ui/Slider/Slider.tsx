@@ -89,7 +89,7 @@ export const Slider = memo((props: SliderProps) => {
 			setValue(value)
 			externalOnChange?.(value, name)
 		},
-		[externalOnChange]
+		[externalOnChange, name]
 	)
 
 	const { handleChange } = useChangeValue({

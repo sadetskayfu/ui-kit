@@ -239,7 +239,7 @@ export const Autocomplete = (props: SelectProps) => {
 
 		handleClose()
 		onBlur?.()
-	}, [onBlur, handleClose, handleStopFiler, isMulti])
+	}, [onBlur, handleClose, handleStopFiler, isMulti, onChange, selectedOptionsRef])
 
 	const handleChange = useCallback(
 		(value: string) => {
@@ -253,7 +253,7 @@ export const Autocomplete = (props: SelectProps) => {
 			setFocusedOption(-1)
 			onChange(value)
 		},
-		[onChange, setFocusedOption, noFilter]
+		[onChange, setFocusedOption, noFilter, handleOpen]
 	)
 
 	// Reset filter after close menu if value === selected value
@@ -286,7 +286,7 @@ export const Autocomplete = (props: SelectProps) => {
 
 		return options.map((option, index) => {
 			const optionValue = option.value
-
+			
 			const optionProps: OptionProps = {
 				id: optionId + (index + 1),
 				disabled: getDisabledOptions ? getDisabledOptions(optionValue) : false,
@@ -304,7 +304,7 @@ export const Autocomplete = (props: SelectProps) => {
 				/>
 			)
 		})
-	}, [selectedValue, getDisabledOptions, options, isLoading])
+	}, [selectedValue, getDisabledOptions, renderOption, optionId, options, isLoading])
 
 	const renderFilteredOptions = useMemo(() => {
 		if (
@@ -314,7 +314,7 @@ export const Autocomplete = (props: SelectProps) => {
 			Array.isArray(renderOptions)
 		) {
 			const filteredOptions = renderOptions.filter((option) => {
-
+				
 				const optionLabel = localOptions[option.props.value].label
 
 				return filterOptions
@@ -329,7 +329,7 @@ export const Autocomplete = (props: SelectProps) => {
 			return filteredOptions
 		}
 		return renderOptions
-	}, [value, isFilterOptions, renderOptions, noFilter, filterOptions])
+	}, [value, isFilterOptions, renderOptions, noFilter, filterOptions, localOptions])
 
 	const renderSelectedValues = useMemo(() => {
 		if (isMulti) {
@@ -350,7 +350,7 @@ export const Autocomplete = (props: SelectProps) => {
 				}
 			}
 		}
-	}, [selectedValue, isMulti, handleDeleteValue, readonly])
+	}, [selectedValue, isMulti, handleDeleteValue, renderTags, readonly, selectedOptionsRef])
 
 	const mods: Record<string, boolean | undefined> = {
 		[styles['opened']]: isOpen,

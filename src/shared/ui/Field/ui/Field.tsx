@@ -1,5 +1,6 @@
 import { classNames } from '@/shared/helpers/classNames'
 import {
+	cloneElement,
 	ForwardedRef,
 	forwardRef,
 	HTMLAttributes,
@@ -106,7 +107,7 @@ export const Field = forwardRef(
 						<div className={styles['start-adornment']}>{StartAdornment}</div>
 					)}
 					{children}
-					{Actions.length > 0 && <div className={styles['actions']}>{Actions}</div>}
+					{Actions.length > 0 && <div className={styles['actions']}>{Actions.map((action, index) => cloneElement(action as ReactElement, {key: index}))}</div>}
 					{labelVariant === 'on-border' && (
 						<fieldset className={styles['fieldset']} aria-hidden="true">
 							<legend className={styles['legend']}>

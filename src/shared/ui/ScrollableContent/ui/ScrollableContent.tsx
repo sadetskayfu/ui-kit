@@ -56,10 +56,10 @@ const ScrollableContent = (props: ScrollableContentProps) => {
 
 	const renderChildren = () =>
 		Children.map(children, (child, index) => {
-			const handleFocus = useCallback(() => {
+			const handleFocus = () => {
 				scrollToItem(index)
 				onFocus?.(index)
-			}, [scrollToItem, onFocus])
+			}
 
 			return cloneElement(child as ReactElement, {
 				onFocus: handleFocus,

@@ -65,17 +65,17 @@ export const SubMenu = (props: SubMenuProps) => {
 			setIsMounting(true)
 		}
 		setIsOpen(true)
-	}, [])
+	}, [setIsOpen])
 
 	const handleCloseMenu = useCallback(() => {
 		setIsOpen(false)
 		openingElementRef.current?.focus()
-	}, [])
+	}, [setIsOpen])
 
 	const handleMouseEnter = useCallback(() => {
 		if (isTouchDeviceRef.current) return
 		handleOpenMenu()
-	}, [handleOpenMenu])
+	}, [handleOpenMenu, isTouchDeviceRef])
 
 	const handleMouseLeave = () => {
 		if (isTouchDeviceRef.current) return
@@ -117,18 +117,18 @@ export const SubMenu = (props: SubMenuProps) => {
 		}
 	}, [isOpen])
 
-	const openingElementProps = {
+	const openingElementProps = useMemo(() => ({
 		ref: openingElementRef,
 		id: labelId,
 		onMouseEnter: handleMouseEnter,
 		onClick: handleOpenMenu,
 		'aria-controls': menuId,
 		'aria-haspopup': 'menu',
-	}
+	}), [handleMouseEnter, handleOpenMenu, labelId, menuId])
 
 	const memoizeOpeningElement = useMemo(
 		() => cloneElement(Component, { ...openingElementProps }),
-		[handleOpenMenu, handleMouseEnter]
+		[Component, openingElementProps]
 	)
 
 	return (

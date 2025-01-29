@@ -26,7 +26,7 @@ export const LinearProgress = (props: LinearProgressProps) => {
 		if (isControlled && fill) {
 			fill.style.transform = `translateX(${-100 + ((value - minValue) / (maxValue - minValue) * 100)}%)`
 		}
-	}, [value])
+	}, [value, isControlled, maxValue, minValue])
 
 	const additionalClasses: Array<string | undefined> = [className, styles[color]]
 

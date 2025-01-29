@@ -159,7 +159,7 @@ export const Tooltip = (props: TooltipProps) => {
 				handleClose()
 			}
 		},
-		[isClickableTooltip, handleClose]
+		[isClickableTooltip, handleClose, parentRef]
 	)
 
 	// Import change position function
@@ -208,7 +208,7 @@ export const Tooltip = (props: TooltipProps) => {
 			window.removeEventListener('resize', throttledHandleChanges)
 			throttledHandleChanges.cancel()
 		}
-	}, [isVisible, isFollowCursor])
+	}, [isVisible, isFollowCursor, parentRef, position])
 
 	useEffect(() => {
 		if (isVisible && !disabledClick) {

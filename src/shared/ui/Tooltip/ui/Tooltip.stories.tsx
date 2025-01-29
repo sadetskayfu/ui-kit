@@ -36,8 +36,8 @@ const TooltipWrapper = (args: any) => {
 			<Button
 				ref={buttonRef}
 				color="secondary"
+				style={ {position: 'absolute'} }
 				buttonProps={{
-					style: { position: 'absolute' },
 					onMouseDown: handleMouseDown,
 				}}
 			>

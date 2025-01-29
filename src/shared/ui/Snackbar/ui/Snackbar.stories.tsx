@@ -64,7 +64,7 @@ export const CustomContentWithAlert: Story = {
 				severity="success"
 				Icon={<CheckMark size="small" />}
 				Action={
-					<IconButton variant="clear" color="custom-color" size="small-xx">
+					<IconButton variant="clear" color="inherit" size="small-xx">
 						<XMark />
 					</IconButton>
 				}

@@ -98,12 +98,16 @@ const IconButton = memo(
 
 			const handleKeyUp = (event: React.KeyboardEvent) => {
 				if (event.key === ' ' || event.key === 'Enter') {
-					stopPropagation && event.stopPropagation()
+					if(stopPropagation) {
+						event.stopPropagation()
+					}
 				}
 			}
 
 			const handleClick = (event: React.MouseEvent) => {
-				stopPropagation && event.stopPropagation()
+				if(stopPropagation) {
+					event.stopPropagation()
+				}
 
 				onClick?.(event)
 

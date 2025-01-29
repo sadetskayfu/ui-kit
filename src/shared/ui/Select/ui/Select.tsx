@@ -237,7 +237,7 @@ export const Select = (props: SelectProps) => {
 				disabled: isDisabled,
 			})
 		})
-	}, [selectedValue, getDisabledOptions, children])
+	}, [selectedValue, getDisabledOptions, children, optionId])
 
 	const renderSelectedValue = useMemo(() => {
 		if (selectedValue.length > 0) {
@@ -258,7 +258,7 @@ export const Select = (props: SelectProps) => {
 				return <p>{localOptions[selectedValue].label}</p>
 			}
 		}
-	}, [selectedValue, readonly, localOptions, isMulti, handleDeleteValue])
+	}, [selectedValue, readonly, localOptions, isMulti, handleDeleteValue, renderTags])
 
 	const mods: Record<string, boolean | undefined> = {
 		[styles['opened']]: isOpen,

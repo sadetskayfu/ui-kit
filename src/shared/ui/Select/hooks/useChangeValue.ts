@@ -27,7 +27,7 @@ export const useChangeValue = (inputValues: UseChangeValueInputValues) => {
 		}
 
 		onChange(newSelectedValues)
-	}, [onChange])
+	}, [onChange, selectedValueRef])
 
 	const handleSelectValue = useCallback(
 		(value: string) => {
@@ -59,7 +59,7 @@ export const useChangeValue = (inputValues: UseChangeValueInputValues) => {
 				onChange(newSelectedValues)
 			}
 		},
-		[handleDeleteValue, onChange, onClose, focusedClassName]
+		[handleDeleteValue, onChange, onClose, focusedClassName, activeIndexRef, optionsRef, selectedValueRef]
 	)
 
     const handleClick = useCallback((event: React.MouseEvent) => {

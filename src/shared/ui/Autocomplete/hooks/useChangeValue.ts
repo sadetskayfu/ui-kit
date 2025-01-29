@@ -58,7 +58,7 @@ export const useChangeValue = (args: UseChangeValueArgs) => {
 			onChange('')
 			onStopFilter()
 		},
-		[onSelect, onChange, onStopFilter] 
+		[onSelect, onChange, onStopFilter, selectedValueRef] 
 	)
 
 	const handleSelectValue = useCallback(
@@ -114,7 +114,12 @@ export const useChangeValue = (args: UseChangeValueArgs) => {
 			onStopFilter,
 			setFocusedOption,
 			focusedClassName,
-			options
+			options,
+			activeIndexRef,
+			isFilterOptionsRef,
+			optionsRef,
+			selectedValueRef,
+			valueRef
 		]
 	)
 

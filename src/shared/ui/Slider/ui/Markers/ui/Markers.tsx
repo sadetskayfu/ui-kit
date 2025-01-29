@@ -5,7 +5,6 @@ import {
 } from '../helpers'
 import { Marker, MarkerLabelPosition } from './Marker/Marker'
 import { SliderOrientation, SliderSize, ValueType } from '../../Slider/Slider'
-import { useMemo } from 'react'
 
 export type CustomMarker = {
 	value: number
@@ -61,7 +60,7 @@ const Markers = (props: MarkersProps) => {
 				)
 			})
 		} else {
-			const markersArray = useMemo(() => getMarkersArray(min, max, step), [min, max, step])
+			const markersArray = getMarkersArray(min, max, step)
 
 			return markersArray.map((markerValue) => {
 				const position = getMarkerPosition(markerValue, min, max)

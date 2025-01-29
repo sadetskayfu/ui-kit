@@ -46,7 +46,7 @@ export const CircularProgress = (props: CircularProgressProps) => {
             const offset = circumferenceLength - ((value - minValue) / (maxValue - minValue)) * circumferenceLength
             circle.style.strokeDashoffset = `${offset}rem`
         }
-	}, [value, size])
+	}, [value, size, isControlled, maxValue, minValue])
 
 	const additionalClasses: Array<string | undefined> = [
 		className,
