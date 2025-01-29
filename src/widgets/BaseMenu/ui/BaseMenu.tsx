@@ -11,8 +11,8 @@ export const BaseMenu = memo(() => {
 	const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false)
 	const [isOpenSubMenu, setIsOpenSubMenu] = useState<boolean>(false)
 
-	const mainMenuRef = useRef<HTMLDivElement | null>(null)
-	const buttonRef = useRef<HTMLButtonElement | null>(null)
+	const mainMenuRef = useRef<HTMLDivElement>(null)
+	const buttonRef = useRef<HTMLButtonElement>(null)
 
 	const handleOpen = useCallback(() => {
 		setIsOpenMenu(true)
