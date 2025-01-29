@@ -1,7 +1,12 @@
 @use '@/app/styles/helpers' as *;
 
+.list-item {
+    list-style: none;
+}
+
 .button {
     --hoveredBgColor: var(--color-grey-opacity-soft);
+    width: 100%;
     position: relative;
     display: flex;
     background-color: transparent;

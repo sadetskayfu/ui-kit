@@ -52,7 +52,7 @@ export const ListItemButton = memo(
 			const handleClick = (event: React.MouseEvent) => {
 				onClick?.(event)
 
-				if(event.clientX) {
+				if (event.clientX) {
 					handleRippleCursorPosition(rippleWrapperRef, event)
 				} else {
 					handleRipple(rippleWrapperRef)
@@ -67,23 +67,30 @@ export const ListItemButton = memo(
 			const additionalClasses: Array<string | undefined> = [className]
 
 			return (
-				<button
-					className={classNames(styles['button'], additionalClasses, mods)}
-					id={id}
-					onClick={handleClick}
-					tabIndex={disabled ? -1 : tabIndex}
-					type="button"
-					role={role}
-					disabled={disabled}
-					ref={ref}
-					style={{ ...style }}
-					{...buttonProps}
-					{...otherProps}
-				>
-					{children}
-					<RippleWrapper ref={rippleWrapperRef} />
-					<Indicator color='secondary' isActive={isActive} position='bottom' weight='soft'/>
-				</button>
+				<li className={styles['list-item']} role='none'>
+					<button
+						className={classNames(styles['button'], additionalClasses, mods)}
+						id={id}
+						onClick={handleClick}
+						tabIndex={disabled ? -1 : tabIndex}
+						type="button"
+						role={role}
+						disabled={disabled}
+						ref={ref}
+						style={{ ...style }}
+						{...buttonProps}
+						{...otherProps}
+					>
+						{children}
+						<RippleWrapper ref={rippleWrapperRef} />
+						<Indicator
+							color="secondary"
+							isActive={isActive}
+							position="bottom"
+							weight="soft"
+						/>
+					</button>
+				</li>
 			)
 		}
 	)

@@ -1,8 +1,13 @@
 @use '@/app/styles/helpers' as *;
 
+.list-item {
+    list-style: none;
+}
+
 .link {
     position: relative;
     display: flex;
+    width: 100%;
     transition: background-color 0.2s, color 0.2s;
     @include user-select-off;
 	&.active {

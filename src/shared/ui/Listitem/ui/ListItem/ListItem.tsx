@@ -3,14 +3,14 @@ import { BaseListItemProps } from '../../types/BaseListItemProps'
 import { classNames } from '@/shared/helpers/classNames'
 import styles from './style.module.scss'
 
-type HTMLProps = Omit<HTMLAttributes<HTMLDivElement>, keyof BaseListItemProps>
+type HTMLProps = Omit<HTMLAttributes<HTMLLIElement>, keyof BaseListItemProps>
 
 interface ListItemProps extends BaseListItemProps {
 	htmlProps?: HTMLProps
 }
 
 export const ListItem = memo(
-	forwardRef((props: ListItemProps, ref: React.ForwardedRef<HTMLDivElement>) => {
+	forwardRef((props: ListItemProps, ref: React.ForwardedRef<HTMLLIElement>) => {
 		const {
 			className,
 			children,
@@ -21,7 +21,7 @@ export const ListItem = memo(
 		} = props
 
 		return (
-			<div
+			<li
 				className={classNames(styles['item'], [className])}
 				role={role}
 				ref={ref}
@@ -30,7 +30,7 @@ export const ListItem = memo(
 				{...otherProps}
 			>
 				{children}
-			</div>
+			</li>
 		)
 	})
 )

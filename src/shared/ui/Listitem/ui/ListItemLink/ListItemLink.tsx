@@ -14,7 +14,7 @@ interface BaseListItemLinkProps extends BaseListItemProps {
 	isExternalLink?: boolean
 	tabIndex?: number
 	indicatorPosition?: ListItemIndicatorPosition
-    onClick?: (event: any) => void
+	onClick?: (event: any) => void
 }
 
 type HTMLLinkProps = Omit<
@@ -38,7 +38,7 @@ export const ListItemLink = memo(
 				tabIndex = 0,
 				role = 'listitem',
 				style,
-                onClick,
+				onClick,
 				linkProps,
 				...otherProps
 			} = props
@@ -49,7 +49,7 @@ export const ListItemLink = memo(
 			const rippleWrapperRef = useRef<HTMLSpanElement | null>(null)
 
 			const handleClick = (event: React.MouseEvent) => {
-                onClick?.(event)
+				onClick?.(event)
 
 				if (event.clientX) {
 					handleRippleCursorPosition(rippleWrapperRef, event)
@@ -69,9 +69,29 @@ export const ListItemLink = memo(
 
 			if (isExternalLink) {
 				return (
-					<a
+					<li className={styles['list-item']}>
+						<a
+							className={classNames(styles['link'], additionalClasses, mods)}
+							href={to}
+							onClick={handleClick}
+							tabIndex={tabIndex}
+							role={role}
+							ref={ref}
+							style={{ ...style }}
+							{...linkProps}
+							{...otherProps}
+						>
+							{children}
+						</a>
+					</li>
+				)
+			}
+
+			return (
+				<li className={styles['list-item']}>
+					<Link
 						className={classNames(styles['link'], additionalClasses, mods)}
-						href={to}
+						to={to}
 						onClick={handleClick}
 						tabIndex={tabIndex}
 						role={role}
@@ -81,27 +101,10 @@ export const ListItemLink = memo(
 						{...otherProps}
 					>
 						{children}
-					</a>
-				)
-			}
-
-			return (
-				<Link
-					className={classNames(styles['link'], additionalClasses, mods)}
-					to={to}
-					onClick={handleClick}
-					tabIndex={tabIndex}
-					role={role}
-					ref={ref}
-					style={{ ...style }}
-					{...linkProps}
-					{...otherProps}
-				>
-					{children}
-					<Indicator isActive={isActive} position={indicatorPosition
-					}/>
-					<RippleWrapper ref={rippleWrapperRef} />
-				</Link>
+						<Indicator isActive={isActive} position={indicatorPosition} />
+						<RippleWrapper ref={rippleWrapperRef} />
+					</Link>
+				</li>
 			)
 		}
 	)
