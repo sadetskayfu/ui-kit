@@ -3,7 +3,7 @@ import { classNames } from "@/shared/helpers/classNames";
 import styles from "./style.module.scss";
 
 type BadgePosition = "top-left" | "top-right" | "bottom-right" | "bottom-left";
-type BadgeColor = "primary" | "secondary" | "green";
+type BadgeColor = "primary" | "secondary" | "green" | "red";
 type BadgeOverlap = 'circular' | 'square'
 type BadgeSize = 'small' | 'medium'
 
@@ -49,7 +49,6 @@ export const Badge = (props: BadgeProps) => {
   } = props;
 
   const additionalClasses: Array<string | undefined> = [
-    className,
     styles[position],
     styles[color],
     styles[overlap],
@@ -66,9 +65,9 @@ export const Badge = (props: BadgeProps) => {
   };
 
   return (
-    <div className={classNames(styles["container"], additionalClasses, mods)}>
+    <div className={classNames(styles["container"], [className])}>
       {children}
-      <span className={styles["badge"]}>{content}</span>
+      <span className={classNames(styles["badge"], additionalClasses, mods)}>{content}</span>
     </div>
   );
 };

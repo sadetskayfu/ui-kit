@@ -122,6 +122,7 @@ export const Menu = (props: MenuProps) => {
 						role="menu"
 						ref={menuRef}
 						id={menuId}
+						tabIndex={-1}
 						aria-labelledby={labelId}
 					>
 						{children}

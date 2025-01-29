@@ -11,7 +11,7 @@ type ListItemIndicatorPosition = 'left' | 'right'
 
 interface BaseListItemLinkProps extends BaseListItemProps {
 	to: string
-	externalLink?: boolean
+	isExternalLink?: boolean
 	tabIndex?: number
 	indicatorPosition?: ListItemIndicatorPosition
     onClick?: (event: any) => void
@@ -33,7 +33,7 @@ export const ListItemLink = memo(
 				className,
 				children,
 				to,
-				externalLink,
+				isExternalLink,
 				indicatorPosition = 'left',
 				tabIndex = 0,
 				role = 'listitem',
@@ -67,7 +67,7 @@ export const ListItemLink = memo(
 				styles[indicatorPosition],
 			]
 
-			if (externalLink) {
+			if (isExternalLink) {
 				return (
 					<a
 						className={classNames(styles['link'], additionalClasses, mods)}

@@ -23,16 +23,9 @@ export const Default: Story = {
   }
 };
 
-export const WithTitle: Story = {
-  args: {
-    title: 'Title',
-    children: <p>Alert with title</p>
-  }
-};
-
 export const WithAction: Story = {
   args: {
-    Action: <IconButton size="small-xx" color="custom-color" variant="clear"><XMark /></IconButton>,
+    Action: <IconButton size="small-xx" variant="clear" color="inherit"><XMark /></IconButton>,
     children: <p>Alert with action button</p>
   }
 };

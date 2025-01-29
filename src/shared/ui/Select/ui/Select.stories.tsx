@@ -115,7 +115,7 @@ export const MultiWithChips: Story = {
 	render: (args) => MultiSelectWrapper(args),
 	args: {
 		renderTags: (value, label, params) => (
-			<Chip key={value} label={label} size="small" color="secondary" {...params} />
+			<Chip key={value} label={label} tabIndex={-1} size="small" color="secondary" {...params} />
 		),
 	},
 }

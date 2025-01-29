@@ -29,7 +29,7 @@ export const FormLabel = (props: FormLabelProps) => {
   return (
     <label className={classNames(styles['label-wrapper'], additionalClasses, mods)} {...otherProps}>
       {cloneElement(Component, { labelId, required, disabled })}
-      <span id={labelId}>
+      <span className={styles['label']} id={labelId}>
         {label}
       </span>
     </label>

@@ -25,7 +25,7 @@
 .link {
     &.none {
         @include hover {
-            color: var(--theme-color-primary-secondary);
+            color: var(--theme-color-primary-light);
         }
     }
     &.hover,

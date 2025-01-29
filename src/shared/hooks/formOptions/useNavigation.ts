@@ -1,4 +1,4 @@
-import { getNextEnabledIndex, setScroll } from '@/shared/lib/KeyboardNavigation'
+import { getNextEnabledIndex, scrollToItem } from '@/shared/lib/KeyboardNavigation'
 import { useCallback, useEffect } from 'react'
 import {
 	getLastSelectedOption,
@@ -94,7 +94,7 @@ export const useNavigation = (args: UseNavigationArgs) => {
 				setFocusedOption(nextIndex)
 
 				if (optionsList) {
-					setScroll(options[nextIndex], optionsList)
+					scrollToItem(options[nextIndex], optionsList)
 				}
 			}
 		},
@@ -109,9 +109,10 @@ export const useNavigation = (args: UseNavigationArgs) => {
 
 			if (!option) return
 
-			const optionIndex = option.getAttribute('data-index')
+			const optionIndex = Number(option.getAttribute('data-index'))
+			const currentIndex = activeIndexRef.current
 
-			if (optionIndex) {
+			if (optionIndex !== currentIndex) {
 				setFocusedOption(Number(optionIndex))
 			}
 		}, 10),
@@ -138,9 +139,9 @@ export const useNavigation = (args: UseNavigationArgs) => {
 
 			if (lastSelectedOption && lastSelectedOptionIndex) {
 				setFocusedOption(Number(lastSelectedOptionIndex))
-
+	
 				if (optionsList) {
-					setScroll(lastSelectedOption, optionsList)
+					scrollToItem(lastSelectedOption, optionsList)
 				}
 			}
 		}

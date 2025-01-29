@@ -1,6 +1,9 @@
 @use '@/app/styles/helpers' as *;
 
 .avatar {
+	--avatarHeight: ;
+	height: var(--avatarHeight);
+	width: var(--avatarHeight);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -25,26 +28,21 @@
 // Sizes
 .avatar {
 	&.small {
-		height: #{rem(40)};
-		width: #{rem(40)};
-		font-size: calc(var(--height) / 1.75);
+		--avatarHeight: #{rem(40)};
+		font-size: calc(var(--avatarHeight) / 1.75);
 	}
 	&.medium {
-		height: #{rem(60)};
-		width: #{rem(60)};
-		font-size: calc(var(--height) / 1.75);
+		--avatarHeight: #{rem(60)};
+		font-size: calc(var(--avatarHeight) / 1.75);
 		@include laptop {
-			height: #{rem(50)};
-			width: #{rem(50)};
+			--avatarHeight: #{rem(50)};
 		}
 	}
 	&.large {
-		height: #{rem(80)};
-		width: #{rem(80)};
-		font-size: calc(var(--height) / 1.75);
+		--avatarHeight: #{rem(80)};
+		font-size: calc(var(--avatarHeight) / 1.75);
         @include laptop {
-			height: #{rem(80)};
-			width: #{rem(80)};
+			--avatarHeight: #{rem(80)};
 		}
 	}
 }

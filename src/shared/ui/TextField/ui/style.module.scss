@@ -1,55 +1,103 @@
 @use '@/app/styles/helpers' as *;
 
 .text-field {
-    &.default-width {
-        width: var(--field-default-width);
+	--inputHeight: ;
+	--inputPaddingBlock: ;
+	--inputPaddingRight: ;
+	--inputPaddingLeft: ;
+	&.default-width {
+		width: var(--field-default-width);
+	}
+    // For autocomplete
+    &.content-padding {
+        .content {
+            padding-left: var(--inputPaddingLeft);
+            padding-right: var(--inputPaddingRight);
+            padding-block: var(--inputPaddingBlock);
+        }
     }
 }
 
 .field {
-    --clearButtonOpacity: 0;
-    --clearButtonPointerEvents: none;
-    cursor: text;
-    &.dirty {
-        @include hover {
-            --clearButtonOpacity: 1;
-            --clearButtonPointerEvents: all;
-        }
-        &.focused {
-            --clearButtonOpacity: 1;
-            --clearButtonPointerEvents: all;
-        }
-    }
+	cursor: text;
+	&.dirty {
+		@include hover {
+			.clear-button {
+				opacity: 1;
+				pointer-events: all;
+			}
+		}
+		&.focused {
+			.clear-button {
+				opacity: 1;
+				pointer-events: all;
+			}
+		}
+	}
 }
 
 .input,
 .text-area {
-    color: var(--font-color-hard);
-    background-color: transparent;
-    background-color: rgb(59, 40, 40);
-    border: none;
-    padding: 0px;
-    text-overflow: ellipsis;
-    width: 100%;
-    &::placeholder {
-        color: var(--font-color-soft);
-    }
+	color: var(--font-color-hard);
+	background-color: transparent;
+	border: none;
+	text-overflow: ellipsis;
+	width: 100%;
+	height: var(--inputHeight);
+	padding-left: var(--inputPaddingLeft);
+	padding-right: var(--inputPaddingRight);
+	padding-block: var(--inputPaddingBlock);
+	&::placeholder {
+		color: var(--font-color-soft);
+	}
 }
 
 .text-area {
-    resize: none;
-    overflow-y: hidden;
+	resize: none;
+	overflow-y: hidden;
 }
 
 .content {
-    display: flex;
-    flex-wrap: wrap;
-    gap: rem(5);
-    width: 100%;
-    overflow: hidden;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: rem(5);
+	width: 100%;
+	overflow: hidden;
 }
 
 .clear-button {
-    opacity: var(--clearButtonOpacity);
-    pointer-events: var(--clearButtonPointerEvents);
+	opacity: 0;
+	pointer-events: none;
+}
+
+// Sizes
+.text-field {
+	&:not(.clear) {
+		&.medium {
+			--inputHeight: calc(var(--button-height-m) - var(--border-weight-soft) * 2);
+			--inputPaddingBlock: #{rem(12)};
+		}
+		&.large {
+			--inputHeight: calc(var(--button-height-l) - var(--border-weight-soft) * 2);
+			--inputPaddingBlock: #{rem(15)};
+		}
+	}
+	&.clear {
+		&.clear {
+			--inputHeight: calc(var(--button-height-xs) - var(--border-weight-soft) * 2);
+		}
+	}
+}
+
+.text-field {
+	&.clear {
+		--inputPaddingLeft: 0px;
+		--inputPaddingRight: var(--padding-15);
+	}
+	&.filled,
+	&.outlined {
+		--inputPaddingLeft: var(--padding-15);
+		--inputPaddingRight: var(--padding-15);
+	}
 }

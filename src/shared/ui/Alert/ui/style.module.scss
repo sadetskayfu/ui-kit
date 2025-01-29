@@ -1,12 +1,8 @@
 @use '@/app/styles/helpers' as *;
 
 .alert {
-    --bgColor: ;
-    --fontColor: ;
     --borderColor: ;
     --actionsMargin: calc(var(--actions-margin) * -1);
-    background-color: var(--bgColor);
-    color: var(--fontColor);
     display: flex;
     align-items: center;
     padding-inline: var(--padding-20);
@@ -19,14 +15,6 @@
     }
 }
 
-.content {
-  display: flex;
-  flex-direction: column;
-}
-
-.title {
-    font-weight: 500;
-}
 
 .actions {
      display: flex;
@@ -48,24 +36,24 @@
 // Severity
 .alert {
     &.success {
-        --bgColor: var(--color-green-100);
-        --fontColor: var(--color-green-800);  
         --borderColor: var(--border-color-green);
+        background-color: var(--color-green-300);
+        color: var(--color-green-700);  
     }
     &.info {
-        --bgColor: var(--theme-color-grey-light);
-        --fontColor: var(--font-color-hard);
         --borderColor: var(--border-color-grey);
+        background-color: var(--theme-color-grey-light);
+        color: var(--font-color-hard);
     }
     &.warning {
-        --bgColor: var(--color-orange-100);
-        --fontColor: var(--color-orange-800);
         --borderColor: var(--border-color-orange);
+        background-color: var(--color-orange-300);
+        color: var(--color-orange-700);
     }
     &.error {
-        --bgColor: var(--color-red-100);
-        --fontColor: var(--color-red-800);
         --borderColor: var(--border-color-red);
+        background-color: var(--color-red-300);
+        color: var(--color-red-700);
     }
 }
 
@@ -81,16 +69,16 @@
     &.outlined,
     &.clear {
         &.success {
-            --fontColor: var(--color-green-500);
+            color: var(--color-green-500);
         }
         &.info {
-            --fontColor: var(--font-color-hard);
+            color: var(--font-color-hard);
         }
         &.warning {
-            --fontColor: var(--color-orange-500);
+            color: var(--color-orange-500);
         }
         &.error {
-            --fontColor: var(--color-red-500);
+            color: var(--color-red-500);
         }
     }
 }

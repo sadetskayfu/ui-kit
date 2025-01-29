@@ -60,7 +60,8 @@ export const ListItemButton = memo(
 			}
 
 			const mods: Record<string, boolean | undefined> = {
-				[styles['selected']]: isSelected
+				[styles['selected']]: isSelected,
+				[styles['active']]: isActive,
 			}
 
 			const additionalClasses: Array<string | undefined> = [className]

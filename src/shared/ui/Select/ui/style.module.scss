@@ -9,6 +9,16 @@
             rotate: 180deg;
         }
     }
+    &.medium {
+        .content {
+            padding-block: rem(12);
+        }
+    }
+    &.large {
+        .content {
+            padding-block: rem(15);
+        }
+    }
 }
 
 .field {
@@ -17,6 +27,7 @@
 
 .content {
     width: 100%;
+    padding-inline: var(--padding-15);
 }
 
 .selected-values {

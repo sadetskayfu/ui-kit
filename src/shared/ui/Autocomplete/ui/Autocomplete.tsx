@@ -372,6 +372,7 @@ export const Autocomplete = (props: SelectProps) => {
 						readonly,
 						disabled,
 						required,
+						contentPadding: isMulti ? true : false,
 						fieldRef,
 						fieldProps: {
 							onClick: readonly ? undefined : handleToggle,

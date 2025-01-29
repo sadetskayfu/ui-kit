@@ -52,18 +52,17 @@ const ListWrapperWithCollapse = () => {
 						<Arrow
 							size="small-xx"
 							direction={isOpen ? 'bottom' : 'right'}
-							color={isOpen ? 'primary' : 'inherit'}
 						/>
 					}
 				/>
 			</ListItemButton>
 			<Collapse isOpen={isOpen} bodyId={bodyId} headerId={headerId} isUnmount>
-					<ListItemLink style={{ paddingLeft: '15px' }} to="/example3.1">
-						<ListItemContent title="List item 3.1" />
-					</ListItemLink>
-					<ListItemLink style={{ paddingLeft: '15px' }} to="/example3.2">
-						<ListItemContent title="List item 3.2" />
-					</ListItemLink>
+				<ListItemLink style={{ paddingLeft: '15px' }} to="/example3.1">
+					<ListItemContent title="List item 3.1" />
+				</ListItemLink>
+				<ListItemLink style={{ paddingLeft: '15px' }} to="/example3.2">
+					<ListItemContent title="List item 3.2" />
+				</ListItemLink>
 			</Collapse>
 			<ListItemLink to="/example4">
 				<ListItemContent title="List item 4" />
@@ -72,6 +71,6 @@ const ListWrapperWithCollapse = () => {
 	)
 }
 
-export const ItemListWithCollapse: Story = {
+export const ExampleItemListWithCollapse: Story = {
 	render: () => ListWrapperWithCollapse(),
 }

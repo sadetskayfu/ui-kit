@@ -1,8 +1,6 @@
 @use '@/app/styles/helpers' as *;
 
 .button {
-	--bgColor: transparent;
-	--color: ;
 	--bgColorHover: ;
 	--borderColor: ;
 	--height: ;
@@ -10,9 +8,6 @@
 	height: var(--height);
 	width: var(--height);
 	border: none;
-	cursor: pointer;
-	background-color: var(--bgColor);
-	color: var(--color);
 	position: relative;
 	display: flex;
 	justify-content: center;
@@ -20,38 +15,67 @@
 	padding: 0px;
 	transition: background-color 0.2s, color 0.2s, opacity 0.2s;
 	flex-shrink: 0;
+	font-weight: 500;
+	color: inherit;
 	@include user-select-off;
 }
 
 // Colors
 .button {
 	&.primary {
-		--color: var(--theme-color-primary-main);
 		--borderColor: var(--border-color-primary);
+		color: var(--theme-color-primary-main);
 	}
 	&.secondary {
-		--color: var(--font-color-hard);
 		--borderColor: var(--border-color-grey);
+		color: var(--font-color-hard);
+	}
+	&.green {
+		--borderColor: var(--border-color-green);
+		color: var(--theme-color-green-main);
+	}
+	&.red {
+		--borderColor: var(--border-color-red);
+		color: var(--theme-color-red-main);
+	}
+	&.orange {
+		--borderColor: var(--border-color-orange);
+		color: var(--theme-color-orange-main);
 	}
 }
 
 // Variants
 .button {
 	&.filled {
-		&:not(.custom-color) {
+		&.primary {
+			--bgColorHover: var(--theme-color-primary-light);
+			color: var(--font-color-onDark);
+			background-color: var(--theme-color-primary-main);
+		}
+		&.secondary {
+			--bgColorHover: var(--theme-color-dark);
+			background-color: var(--theme-color-grey-dark);
+			border: var(--border-weight-soft) solid var(--borderColor);
+		}
+		&.green {
+			--bgColorHover: var(--theme-color-green-light);
+			background-color: var(--theme-color-green-main);
+			color: var(--font-color-onDark);
+		}
+		&.red {
+			--bgColorHover: var(--theme-color-red-light);
+			background-color: var(--theme-color-red-main);
+			color: var(--font-color-onDark);
+		}
+		&.orange {
+			--bgColorHover: var(--theme-color-orange-light);
+			background-color: var(--theme-color-orange-main);
+			color: var(--font-color-onDark);
+		}
+		&:not(.inherit) {
 			@include hover {
 				background-color: var(--bgColorHover);
 			}
-		}
-		&.primary {
-			--color: var(--font-color-onDark);
-			--bgColor: var(--theme-color-primary-main);
-			--bgColorHover: var(--theme-color-primary-secondary);
-		}
-		&.secondary {
-			--bgColor: var(--theme-color-grey-dark);
-			--bgColorHover: var(--theme-color-dark);
-			border: var(--border-weight-soft) solid var(--borderColor);
 		}
 	}
   &.outlined {
@@ -59,6 +83,7 @@
   }
 	&.clear,
 	&.outlined {
+		background-color: transparent;
 		&:after {
 			content: '';
 			border-radius: inherit;

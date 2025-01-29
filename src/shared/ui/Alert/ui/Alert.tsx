@@ -11,7 +11,6 @@ interface AlertProps {
 	Action?: ReactElement | ReactElement[]
 	Icon?: ReactElement
 	children: ReactNode
-	title?: string
 	variant?: AlertVariant
 	severity?: AlertSeverity
 	borderRadius?: AlertBorderRadius
@@ -23,7 +22,6 @@ export const Alert = (props: AlertProps) => {
 		Action,
 		Icon,
 		children,
-		title,
 		variant = 'filled',
 		severity = 'info',
 		borderRadius = 'medium ',
@@ -47,8 +45,7 @@ export const Alert = (props: AlertProps) => {
 		>
 			{Icon}
 			<div className={styles['content']}>
-				{title && <span className={styles['title']}>{title}</span>}
-				{children}
+			{children}
 			</div>
 			{Action && <div className={styles['actions']}>{Action}</div>}
 		</div>

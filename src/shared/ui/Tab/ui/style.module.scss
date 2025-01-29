@@ -24,11 +24,11 @@
 // Variants
 .tab {
     &.filled {
-        --activeBgColor: var(--color-grey-opacity-soft);
+        --activeBgColor: var(--color-grey-opacity-medium);
         border: var(--border-weight-soft) solid var(--border-color-grey);
         border-radius: var(--border-radius-m);
         &.selected {
-            --hoverBgColor: var(--color-grey-opacity-medium);
+            --hoverBgColor: var(--color-grey-opacity-hard);
         }
     }
     &.clear {

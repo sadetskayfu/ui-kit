@@ -20,7 +20,7 @@ type IconButtonSize =
 	| 'medium'
 	| 'large'
 	| 'custom-size'
-export type IconButtonColor = 'primary' | 'secondary' | 'custom-color'
+export type IconButtonColor = 'primary' | 'secondary' | 'green' | 'orange' | 'red' | 'inherit'
 export type IconButtonBorderRadius =
 	| 'rounded-left'
 	| 'rounded-right'

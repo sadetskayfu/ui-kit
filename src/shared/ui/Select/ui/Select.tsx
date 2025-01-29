@@ -29,7 +29,7 @@ import {
 	useNavigation,
 	useOptions,
 } from '@/shared/hooks/formOptions'
-import { checkValue } from '@/shared/helpers/formOptions'
+import { isValueSelected } from '@/shared/helpers/checkingValues'
 import styles from './style.module.scss'
 
 export type Option = {
@@ -229,7 +229,7 @@ export const Select = (props: SelectProps) => {
 			const isDisabled = getDisabledOptions
 				? getDisabledOptions(optionValue)
 				: false
-			const isSelected = checkValue(optionValue, selectedValue)
+			const isSelected = isValueSelected(optionValue, selectedValue)
 
 			return cloneElement(child as ReactElement<OptionItemProps>, {
 				id: optionId + (index + 1),
@@ -265,9 +265,14 @@ export const Select = (props: SelectProps) => {
 		[styles['default-width']]: defaultWidth
 	}
 
+	const additionalClasses: Array<string | undefined> = [
+		className,
+		styles[size]
+	]
+
 	return (
 		<>
-			<div className={classNames(styles['select'], [className], mods)}>
+			<div className={classNames(styles['select'], additionalClasses, mods)}>
 				<Field
 					className={styles['field']}
 					label={label}

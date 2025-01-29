@@ -17,8 +17,11 @@
         @include disabled;
     }
     &.selected {
-        background-color: var(--color-primary-opacity-medium);
         --hoveredBgColor: var(--color-primary-opacity-hard);
+        background-color: var(--color-primary-opacity-medium);  
+    }
+    &.active {
+        color: var(--theme-color-primary-main);
     }
     @include hover {
         background-color: var(--hoveredBgColor);

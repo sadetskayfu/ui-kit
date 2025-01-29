@@ -1,133 +1,116 @@
 @use '@/app/styles/helpers' as *;
 
 .container {
-    --badgeWidth: ;
-    --fontSize: ;
-    --paddingInline: ;
-    --bgColor: ;
-    --color: ;
-    --translate: ;
-    --bottom: ;
-    --top: ;
-    --left: ;
-    --right: ;
-    --border: ;
     position: relative;
     display: inline-flex;
-    @include user-select-off;
-    &.visible {
-        .badge {
-            transform: scale(1);
-        }
-    }
 }
 .badge {
+    --badgeWidth: ;
     position: absolute;
     min-width: var(--badgeWidth);
     height: var(--badgeWidth);
-    font-size: var(--fontSize);
     border-radius: var(--border-radius-full);
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--color);
-    background-color: var(--bgColor);
     transform: scale(0);
-    translate: var(--translate);
     transition-duration: 0.2s;
-    padding-inline: var(--paddingInline);
-    top: var(--top);
-    left: var(--left);
-    bottom: var(--bottom);
-    right: var(--right);
-    border: var(--border);
+    font-weight: 500;
+    @include user-select-off;
+    &.visible {
+        transform: scale(1);
+    }
 }
 
 // Border
-.container {
+.badge {
     &.border {
-        --border: var(--border-weight-hard) solid var(--theme-color-dark);
+        border: var(--border-weight-hard) solid var(--theme-color-dark);
     }
 }
 
 // Colors
-.container {
+.badge {
     &.primary {
-        --bgColor: var(--theme-color-primary-main);
-        --color: var(--font-color-onDark);
+        background-color: var(--theme-color-primary-main);
+        color: var(--font-color-onDark);
     }
     &.secondary {
-        --bgColor: var(--theme-color-grey-light);
-        --color: var(--font-color-hard);
+        background-color: var(--theme-color-grey-light);
+        color: var(--font-color-hard);
     }
     &.green {
-        --bgColor: var(--color-green-500);
-        --color: var(--color-light);
+        background-color: var(--theme-color-green-main);
+        color: var(--color-light);
+    }
+    &.red {
+        background-color: var(--theme-color-red-main);
+        color: var(--color-light);
     }
 }
 
 // Sizes
-.container {
+.badge {
     &.small {
         --badgeWidth: #{rem(12)};
-        --fontSize: #{rem(8)};
-        --paddingInline: #{rem(2)};
+        font-size: #{rem(8)};
+        padding-inline: #{rem(2)};
     }
     &.medium {
         --badgeWidth: #{rem(20)};
-        --fontSize: #{rem(12)};
-        --paddingInline: #{rem(4)};
+        font-size: #{rem(12)};
+        padding-inline: #{rem(4)};
     }
 }
 
 // Position
-.container {
+.badge {
     // Top-left
     &.top-left {
-        --translate: -50% -50%;
+        translate: -50% -50%;
         &.square {
-            --top: 0px;
-            --left: 0px;
+            top: 0px;
+            left: 0px;
         }
         &.circular {
-            --top: 14%;
-            --left: 14%;
+            top: 14%;
+            left: 14%;
         }
     }
     // Top-right
     &.top-right {
-        --translate: 50% -50%;
+        translate: 50% -50%;
         &.square {
-            --top: 0px;
-            --right: 0px;
+            top: 0px;
+            right: 0px;
         }
         &.circular {
-            --top: 14%;
-            --right: 14%;
+            top: 14%;
+            right: 14%;
         }
     }
     // Bottom-right
     &.bottom-right {
-        --translate: 50% 50%;
+        translate: 50% 50%;
         &.square {
-            --bottom: 0px;
-            --right: 0px; 
+            bottom: 0px;
+            right: 0px; 
         }
         &.circular {
-            --bottom: 14%;
-            --right: 14%;
+            bottom: 14%;
+            right: 14%;
         }
     }
     // Bottom-left
     &.bottom-left {
-        --translate: -50% 50%;
+        translate: -50% 50%;
         &.square {
-            --bottom: 0px;
-            --left: 0px;
+            bottom: 0px;
+            left: 0px;
         }
         &.circular {
-            --bottom: 14%;
-            --left: 14%;
+            bottom: 14%;
+            left: 14%;
         }
     }
 }

@@ -3,12 +3,12 @@
 .field-wrapper {
 	--height: ;
 	--bgColor: ;
-	--paddingBlock: ;
 	--paddingInline: ;
 	--labelColor: var(--font-color-hard);
 	--borderColor: var(--border-color-grey);
 	--borderColorHover: var(--color-grey-500);
 	--borderColorFocus: var(--theme-color-primary-main);
+	--actionsMarginRight: ;
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -19,14 +19,13 @@
 	--border: var(--border-weight-soft) solid var(--borderColor);
 	position: relative;
 	min-height: var(--height);
-	padding-inline: var(--paddingInline);
-	padding-block: var(--paddingBlock);
 	border: var(--border);
 	border-radius: var(--border-radius-m);
 	background-color: var(--bgColor);
 	transition-duration: 0.2s;
 	display: flex;
 	align-items: center;
+	overflow: hidden;
 }
 
 .label {
@@ -35,24 +34,36 @@
 }
 
 .start-adornment {
-	margin-right: var(--paddingInline);
+	margin-left: var(--paddingInline);
 }
 
 .actions {
 	display: flex;
-	margin-left: calc(var(--paddingInline) - var(--actions-margin));
-	margin-right: calc(var(--actions-margin) * -1);
+	margin-left: calc(var(--actions-margin) * -1);
+	margin-right: var(--actionsMarginRight);
 }
 
 // Variants
 .field-wrapper {
 	&.filled {
 		--bgColor: var(--theme-color-grey-dark);
+		--paddingInline: var(--padding-15);
 	}
 	&.outlined {
 		--bgColor: transparent;
+		--paddingInline: var(--padding-15);
 	}
+	&.filled,
+	&.outlined {
+		--actionsMarginRight: calc(var(--paddingInline) + var(--actions-margin) * -1)
+	}
+
 	&.clear {
+		--paddingInline: 0px;
+		--actionsMarginRight: 0px;
+		.start-adornment {
+			margin-right: var(--padding-15);
+		}
 		.field {
 			--border: none;
 			border-bottom: var(--border-weight-soft) solid var(--borderColor);
@@ -64,7 +75,7 @@
 // Label variants
 .field-wrapper {
 	&.on-border {
-		--labelTranslateTop: #{rem(-9)};
+		--labelTranslateTop: #{rem(-10)};
 		.label {
 			position: absolute;
 			z-index: 1;
@@ -105,26 +116,16 @@
 
 // Sizes
 .field-wrapper {
-	&.medium {
-		--height: var(--button-height-m);
-		--paddingBlock: #{rem(8)};
-		--paddingInline: var(--padding-15);
-	}
-	&.large {
-		--height: var(--button-height-l);
-		--paddingBlock: #{rem(13)};
-		--paddingInline: var(--padding-15);
-	}
-	&.medium,
-	&.large {
-		&.clear {
-			.field {
-				--height: auto;
-				padding-left: 0px;
-				padding-right: var(--actions-margin);
-				padding-block: 0px;
-			}
+	&:not(.clear) {
+		&.medium {
+			--height: var(--button-height-m);
 		}
+		&.large {
+			--height: var(--button-height-l);
+		}
+	}
+	&.clear {
+		--height: var(--button-height-xs);
 	}
 }
 
@@ -154,7 +155,7 @@
 	}
     &.disabled {
         .field {
-            @include disabled;
+			@include disabled;
         }
     }
     &.required {

@@ -43,7 +43,8 @@
 .emulator {
   position: absolute;
   background-color: var(--emulatorColor);
-  height: 0%;
+  height: 10%;
+  opacity: 0;
   aspect-ratio: 1;
   transition-duration: inherit;
   border-radius: inherit;
@@ -105,6 +106,7 @@
     --borderColor: var(--borderColorChecked);
     .emulator {
       height: 25%;
+      opacity: 1;
     }
   }
   &.disabled {

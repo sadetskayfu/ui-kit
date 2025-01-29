@@ -2,7 +2,6 @@
 
 .checkbox {
 	--height: ;
-	--fz: ;
 	--bgColor: ;
 	--bgColorChecked: ;
 	--borderColor: var(--border-color-grey);
@@ -15,16 +14,15 @@
 	height: var(--height);
 	width: var(--height);
 	border-radius: 50%;
+	color: var(--color);
 	transition-duration: 0.2s;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
-	font-size: var(--fz);
-	color: var(--color);
 	&:before {
-		position: absolute;
 		content: '';
+		position: absolute;
 		height: 50%;
 		width: 50%;
 		border-radius: var(--border-radius-s);
@@ -110,9 +108,9 @@
 .checkbox {
 	&.medium {
 		--height: var(--button-height-s);
-		--fz: var(--fz-icon-xs);
+		font-size: var(--fz-icon-xs);
 		&.clear {
-			--fz: var(--fz-icon-s);
+			font-size: var(--fz-icon-s);
 		}
 	}
 }

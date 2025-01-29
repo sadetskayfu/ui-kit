@@ -1,4 +1,4 @@
-import { checkValue } from '@/shared/helpers/formOptions'
+import { isValueSelected } from '@/shared/helpers/checkingValues'
 import { useCallback } from 'react'
 
 type UseChangeValueInputValues = {
@@ -33,7 +33,7 @@ export const useChangeValue = (inputValues: UseChangeValueInputValues) => {
 		(value: string) => {
 			const selectedValue = selectedValueRef.current
 
-			const isSelected = checkValue(value, selectedValue)
+			const isSelected = isValueSelected(value, selectedValue)
 
 			if (isSelected) {
 				setTimeout(() => {

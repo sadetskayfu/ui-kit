@@ -34,11 +34,11 @@ const BadgeWrapper = (args: any) => {
 
 	return (
 		<div style={{ display: 'flex', gap: '10px' }}>
-			<IconButton size="small-x" variant="clear" onClick={handleDecrement}>
+			<IconButton size="small-x" variant="clear" color='red' onClick={handleDecrement}>
 				<Minus />
 			</IconButton>
 			<Badge badgeContent={count} {...args} />
-			<IconButton size="small-x" variant="clear" onClick={handleIncrement}>
+			<IconButton size="small-x" variant="clear" color='green' onClick={handleIncrement}>
 				<Plus />
 			</IconButton>
 		</div>

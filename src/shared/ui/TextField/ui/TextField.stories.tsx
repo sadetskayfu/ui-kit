@@ -16,7 +16,7 @@ const meta: Meta<typeof TextField> = {
 		disabled: false,
 		readonly: false,
 		required: false,
-        multiline: false,
+        isMultiline: false,
 		defaultWidth: true,
 	},
 }
@@ -88,6 +88,6 @@ export const WithClearButton: Story = {
 export const Multiline: Story = {
     render: (args) => FieldWrapper(args),
     args: {
-        multiline: true,
+        isMultiline: true,
     }
 }

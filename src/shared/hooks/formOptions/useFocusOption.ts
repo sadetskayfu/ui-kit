@@ -8,8 +8,6 @@ export const useFocusOption = (optionsRef: React.MutableRefObject<HTMLLIElement[
         const lastFocusedOptionRef = useRef<HTMLLIElement | null>(null)
     
         const setFocusedOption = useCallback((index: number) => {
-            if(index === activeIndexRef.current) return
-
             const lastFocusedOption = lastFocusedOptionRef.current
             const options = optionsRef.current
     
@@ -23,7 +21,7 @@ export const useFocusOption = (optionsRef: React.MutableRefObject<HTMLLIElement[
                 const optionId = nextOption.getAttribute('id')
     
                 nextOption.classList.add(focusedClassName)
-                
+   
                 lastFocusedOptionRef.current = nextOption
                 activeIndexRef.current = index
 

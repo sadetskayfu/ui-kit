@@ -2,72 +2,64 @@
 
 .chip {
 	--height: ;
-	--bgColor: ;
-	--bgColorHover: ;
-	--borderColor: ;
-	--fontColor: ;
-	--buttonBgColor: var(--fontColor);
-	--buttonFontColor: ;
-	--avatarBgColor: ;
-	--buttonHeight: ;
 	--paddingInline: ;
 	--paddingBlock: ;
+	--color: ;
+	--bgColorHover: ;
+	--borderColor: ;
+	--avatarBgColor: ;
+	--avatarColor: ;
+	--buttonBgColor: var(--color);
+	--buttonFontColor: ;
 	--buttonHeight: calc(var(--height) - var(--paddingInline));
 	--buttonMargin: calc((var(--height) - var(--paddingInline)) / 2);
 	height: var(--height);
 	padding-block: var(--paddingBlock);
 	border-radius: var(--border-radius-full);
+	color: var(--color);
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: var(--fontColor);
-	background-color: var(--bgColor);
 	text-wrap: nowrap;
 	cursor: inherit;
 	position: relative;
-	&.clickable {
-		cursor: pointer;
-		border: none;
-		transition: background-color 0.2s;
-		padding-inline: 0px;
-		@include hover {
-			background-color: var(--bgColorHover);
-		}
-		&:disabled {
-			@include disabled;
-		}
-	}
-	&:focus-visible {
-		@include focus-outline;
-	}
+	border: none;
 }
 
 .label {
 	padding-inline: var(--paddingInline);
 }
 
+.avatar {
+	height: 100%;
+	aspect-ratio: 1;
+	font-size: calc(var(--height) / 1.7);
+	background-color: var(--avatarBgColor);
+	margin-left: var(--paddingBlock);
+	margin-right: calc(var(--buttonMargin) * -1);
+	color: var(--avatarColor);
+}
+
 .close-button {
 	height: var(--buttonHeight);
 	width: var(--buttonHeight);
+	border-radius: 50%;
+	border: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition-duration: 0.2s;
 	font-size: calc(var(--buttonHeight) / 1.75);
 	margin-right: var(--buttonMargin);
 	margin-left: calc(var(--buttonMargin) * -1);
 	background-color: var(--buttonBgColor);
 	color: var(--buttonFontColor);
 	opacity: 0.5;
-	&:hover {
-		opacity: 1;
+	@include hover {
+		&:hover {
+			opacity: 1;
+		}
 	}
-}
-
-.avatar {
-	background-color: var(--avatarBgColor);
-	margin-left: var(--paddingBlock);
-	margin-right: calc(var(--buttonMargin) * -1);
-	height: 100%;
-	aspect-ratio: 1;
-	font-size: calc(var(--height) / 1.5);
-	color: var(--buttonFontColor);
 }
 
 .icon {
@@ -81,10 +73,11 @@
 .chip {
 	&.primary {
 		--borderColor: var(--border-color-primary);
+		--avatarBgColor: var(--border-color-primary);
 	}
 	&.secondary {
-		--fontColor: var(--font-color-hard);
 		--borderColor: var(--border-color-grey);
+		--color: var(--font-color-hard);
 	}
 }
 
@@ -92,31 +85,33 @@
 .chip {
 	&.filled {
 		--paddingBlock: #{rem(3)};
-		--buttonFontColor: var(--bgColor);
 		&.primary {
-			--fontColor: var(--font-color-onDark);
-			--bgColor: var(--theme-color-primary-main);
-			--bgColorHover: var(--theme-color-primary-secondary);
-			--avatarBgColor: var(--borderColor);
+			--bgColorHover: var(--theme-color-primary-light);
+			--color: var(--font-color-onDark);
+			--buttonFontColor: var(--theme-color-primary-main);
+			--avatarColor: var(--theme-color-primary-main);
+			background-color: var(--theme-color-primary-main);
 		}
 		&.secondary {
-			--bgColor: var(--theme-color-grey-light);
 			--bgColorHover: var(--theme-color-grey-dark);
+			--buttonFontColor: var(--theme-color-grey-light);
 			--avatarBgColor: var(--color-grey-500);
+			background-color: var(--theme-color-grey-light);
+			
 		}
 	}
 	&.outlined {
 		--paddingBlock: #{rem(2)};
-		--bgColor: transparent;
 		--buttonFontColor: var(--theme-color-dark);
-		--avatarBgColor: var(--borderColor);
+		background-color: transparent;
 		border: var(--border-weight-soft) solid var(--borderColor);
 		&.primary {
 			--bgColorHover: var(--color-primary-opacity-soft);
-			--fontColor: var(--theme-color-primary-main);
+			--color: var(--theme-color-primary-main);
 		}
 		&.secondary {
 			--bgColorHover: var(--color-grey-opacity-soft);
+			--avatarBgColor: var(--border-color-grey);
 		}
 	}
 }
@@ -129,5 +124,22 @@
 	&.medium {
 		--height: var(--button-height-xs);
 		--paddingInline: #{rem(16)};
+	}
+}
+
+.chip {
+	&.clickable {
+		cursor: pointer;
+		transition: background-color 0.2s;
+		padding-inline: 0px;
+		@include hover {
+			background-color: var(--bgColorHover);
+		}
+		&:disabled {
+			@include disabled;
+		}
+	}
+	&:focus-visible {
+		@include focus-outline;
 	}
 }

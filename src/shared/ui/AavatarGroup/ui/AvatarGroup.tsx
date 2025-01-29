@@ -1,4 +1,4 @@
-import { Children, cloneElement, memo, ReactElement } from "react";
+import { Children, cloneElement, ReactElement } from "react";
 import { Avatar, AvatarProps } from "@/shared/ui/Avatar";
 import { classNames } from "@/shared/helpers/classNames";
 import styles from "./style.module.scss";
@@ -17,7 +17,7 @@ interface AvatarGroupProps {
   style?: React.CSSProperties
 }
 
-export const AvatarGroup = memo((props: AvatarGroupProps) => {
+export const AvatarGroup = (props: AvatarGroupProps) => {
   const {
     className,
     children,
@@ -74,4 +74,4 @@ export const AvatarGroup = memo((props: AvatarGroupProps) => {
       {renderAvatars()}
     </div>
   );
-});
+};

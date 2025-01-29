@@ -1,9 +1,15 @@
 import { classNames } from '@/shared/helpers/classNames'
-import { ForwardedRef, forwardRef, HTMLAttributes, ReactElement, ReactNode } from 'react'
+import {
+	ForwardedRef,
+	forwardRef,
+	HTMLAttributes,
+	ReactElement,
+	ReactNode,
+} from 'react'
 import { Typography } from '@/shared/ui/Typography'
 import styles from './style.module.scss'
 
-export type FieldVariant = 'filled' | 'outlined' | "clear"
+export type FieldVariant = 'filled' | 'outlined' | 'clear'
 export type FieldSize = 'medium' | 'large'
 export type FieldLabelVariant = 'default' | 'on-border' | 'hidden'
 
@@ -27,7 +33,10 @@ interface BaseFieldProps {
 	required?: boolean
 }
 
-export type HTMLFieldProps = Omit<HTMLAttributes<HTMLDivElement>, keyof BaseFieldProps>
+export type HTMLFieldProps = Omit<
+	HTMLAttributes<HTMLDivElement>,
+	keyof BaseFieldProps
+>
 
 interface FieldProps extends BaseFieldProps {
 	htmlProps?: HTMLFieldProps
@@ -53,10 +62,10 @@ export const Field = forwardRef(
 			focusElementRef,
 			disabled,
 			required,
-			htmlProps = {}
+			htmlProps = {},
 		} = props
 
-		const {onClick, ...otherHtmlProps} = htmlProps
+		const { onClick, ...otherHtmlProps } = htmlProps
 
 		const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
 			const focusElement = focusElementRef?.current
@@ -97,7 +106,11 @@ export const Field = forwardRef(
 						<div className={styles['start-adornment']}>{StartAdornment}</div>
 					)}
 					{children}
-					{Actions.length > 0 && <div className={styles['actions']}>{Actions}</div>}
+					{Actions.length > 0 && (
+						<div className={styles['actions']}>
+							{Actions}
+						</div>
+					)}
 					{labelVariant === 'on-border' && (
 						<fieldset className={styles['fieldset']} aria-hidden="true">
 							<legend className={styles['legend']}>

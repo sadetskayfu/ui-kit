@@ -11,7 +11,11 @@ import {
 import { classNames } from '@/shared/helpers/classNames'
 import { Portal } from '@/shared/ui/Portal'
 import { Z_INDEX } from '@/shared/constants/zIndex'
-import { useDelayMouseHover, useLongTouch, useTouchDevice } from '@/shared/hooks'
+import {
+	useDelayMouseHover,
+	useLongTouch,
+	useTouchDevice,
+} from '@/shared/hooks'
 import type {
 	SetPositionPortalElementArgs,
 	Position,
@@ -75,25 +79,28 @@ export const Tooltip = (props: TooltipProps) => {
 	const tooltipId = useId()
 
 	const handleMouseMove = useCallback(
-		throttle((event: React.MouseEvent | React.TouchEvent | MouseEvent | TouchEvent) => {
-			const tooltip = tooltipRef.current
-      
-			if (tooltip && setPositionFollowCursorRef.current) {
-				setPositionFollowCursorRef.current({
-					event,
-					tooltip,
-				})
-			}
-		}, 20),
+		throttle(
+			(event: React.MouseEvent | React.TouchEvent | MouseEvent | TouchEvent) => {
+				const tooltip = tooltipRef.current
+
+				if (tooltip && setPositionFollowCursorRef.current) {
+					setPositionFollowCursorRef.current({
+						event,
+						tooltip,
+					})
+				}
+			},
+			20
+		),
 		[]
 	)
 
 	const handleOpen = (event: React.MouseEvent | React.TouchEvent) => {
 		setIsVisible(true)
 
-    if(isFollowCursor) {
-      handleMouseMove(event)
-    }
+		if (isFollowCursor) {
+			handleMouseMove(event)
+		}
 	}
 
 	const handleClose = useCallback(() => {
@@ -129,10 +136,7 @@ export const Tooltip = (props: TooltipProps) => {
 		}
 	}
 
-	const {
-		handleMouseEnterDelay,
-		handleMouseLeaveDelay,
-	} = useDelayMouseHover({
+	const { handleMouseEnterDelay, handleMouseLeaveDelay } = useDelayMouseHover({
 		onMouseEnter: handleMouseEnter,
 		onMouseLeave: handleMouseLeave,
 		delay,
@@ -240,7 +244,7 @@ export const Tooltip = (props: TooltipProps) => {
 					? handleClose
 					: handleTouchEnd
 				: undefined,
-    onTouchMove: isTouchDevice && isFollowCursor ? handleMouseMove : undefined,
+		onTouchMove: isTouchDevice && isFollowCursor ? handleMouseMove : undefined,
 		onClick: disabledClick ? undefined : handleToggle,
 		'aria-labelledby': isVisible ? tooltipId : undefined,
 	}

@@ -50,8 +50,8 @@ export const SubMenu = (props: SubMenuProps) => {
 	const [isMounting, setIsMounting] = useState<boolean>(false)
 	const isMountingRef = useRef<boolean>(isMounting)
 
-	const menuRef = useRef<HTMLDivElement | null>(null)
-	const openingElementRef = useRef<HTMLElement | null>(null)
+	const menuRef = useRef<HTMLUListElement>(null)
+	const openingElementRef = useRef<HTMLElement>(null)
 
 	const focusableElementsRef = getFocusableElements(menuRef, isMounting)
 
@@ -146,15 +146,16 @@ export const SubMenu = (props: SubMenuProps) => {
 						zIndex={zIndex}
 						transition
 					>
-						<div
+						<ul
 							className={classNames(styles['menu'], [className])}
 							role="menu"
 							ref={menuRef}
 							id={menuId}
 							aria-labelledby={labelId}
+							tabIndex={-1}
 						>
 							{children}
-						</div>
+						</ul>
 					</Dropdown>
 				</Portal>
 			)}

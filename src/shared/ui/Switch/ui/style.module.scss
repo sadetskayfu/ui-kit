@@ -71,7 +71,7 @@
   &:checked + .track {
     --trackColor: var(--theme-color-primary-main);
     --borderColor: var(--theme-color-primary-main);
-    --thumbColor: var(--theme-color-primary-secondary);
+    --thumbColor: var(--theme-color-primary-light);
     .thumb {
       transform: translateX(var(--translateX));
       &:before {

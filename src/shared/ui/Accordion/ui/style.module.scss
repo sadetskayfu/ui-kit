@@ -1,103 +1,110 @@
 @use '@/app/styles/helpers' as *;
 
 .accordion {
-  --paddingInline: #{rem(34)};
-  --paddingBlock: #{rem(24)};
-  --bgColor: var(--theme-color-grey-dark);
-  --titleColor: var(--font-color-hard);
-  --dividerColor: var(--border-color-grey);
-  width: 100%;
-  border-radius: var(--border-radius-l);
-  border: var(--border-weight-soft) solid var(--border-color-grey);
-  background-color: var(--bgColor);
+	--paddingInline: #{rem(34)};
+	--paddingBlock: #{rem(24)};
+	--titleColor: var(--font-color-hard);
+	--dividerColor: var(--border-color-grey);
+	border-radius: var(--border-radius-l);
+	border: var(--border-weight-soft) solid var(--border-color-grey);
 }
 
 .header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  column-gap: var(--paddingInline);
-  padding-block: var(--paddingBlock);
-  padding-inline: var(--paddingInline);
-  cursor: pointer;
-  transition: 0s;
-  position: relative;
-  &:after {
-    @include divider-bottom;
-    background-color: var(--dividerColor);
-  }
-  @include hover {
-    --titleColor: var(--theme-color-primary-main);
-  }
-  &:focus-visible {
-    --titleColor: var(--theme-color-primary-main);
-    --dividerColor: var(--theme-color-primary-main);
-    @include focus-outline-inset;
-  }
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	column-gap: var(--paddingInline);
+	padding-block: var(--paddingBlock);
+	padding-inline: var(--paddingInline);
+	cursor: pointer;
+	transition: 0s;
+	position: relative;
+	&:after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 50%;
+		translate: -50%;
+		height: var(--border-weight-soft);
+		width: 0%;
+		transition-duration: 0.2s;
+		background-color: var(--dividerColor);
+	}
+	@include hover {
+		--titleColor: var(--theme-color-primary-main);
+	}
+	&:focus-visible {
+		--titleColor: var(--theme-color-primary-main);
+		--dividerColor: var(--theme-color-primary-main);
+		@include focus-outline-inset;
+	}
 }
 
 .header-icon {
-    position: relative;
-    display: flex;
+	position: relative;
+	display: flex;
 }
 
 .open-icon {
-  color: var(--theme-color-primary-main);
-  opacity: 1;
-  transition-duration: 1s;
+	color: var(--theme-color-primary-main);
+	opacity: 1;
+	transition-duration: 1s;
 }
 .close-icon {
-  position: absolute;
-  opacity: 0;
-  color: var(--font-color-soft);
+	position: absolute;
+	opacity: 0;
+	color: var(--font-color-soft);
 }
 
 .body {
-  padding-block: var(--paddingBlock);
-  padding-inline: var(--paddingInline);
+	padding-block: var(--paddingBlock);
+	padding-inline: var(--paddingInline);
 }
 
 .title {
-  color: var(--titleColor);
-  font-weight: 500;
-  font-size: inherit;
-  transition-duration: 0.2s;
+	color: var(--titleColor);
+	font-weight: 500;
+	font-size: inherit;
+	transition-duration: 0.2s;
 }
 
 // Variants
 .accordion {
-  &.filled {
-    --bgColor: var(--theme-color-grey-dark);
-  }
-  &.outlined {
-    --bgColor: transparent;
-  }
+	&.filled {
+		background-color: var(--theme-color-grey-dark);
+	}
+	&.outlined {
+		background-color: transparent;
+	}
 }
 
 // Mods
 .accordion {
-  &.open {
-    .header:after {
-      width: calc(100% - var(--paddingInline) * 2);
-    }
-    .open-icon {
-      opacity: 0;
-      transition-duration: 0s;
-    }
-    .close-icon {
-      opacity: 1;
-      transition-duration: 1s;
-    }
-  }
-  &.disabled {
-    @include disabled;
-  }
+	&.open {
+		.header:after {
+			width: calc(100% - var(--paddingInline) * 2);
+		}
+		.open-icon {
+			opacity: 0;
+			transition-duration: 0s;
+		}
+		.close-icon {
+			opacity: 1;
+			transition-duration: 1s;
+		}
+	}
+	&.disabled {
+		@include disabled;
+		.header {
+			cursor: not-allowed;
+		}
+	}
 }
 
 // Media
 .accordion {
-  @include laptop {
-    --paddingInline: #{rem(24)};
-    --paddingBlock: #{rem(20)};
-  }
+	@include laptop {
+		--paddingInline: #{rem(24)};
+		--paddingBlock: #{rem(20)};
+	}
 }

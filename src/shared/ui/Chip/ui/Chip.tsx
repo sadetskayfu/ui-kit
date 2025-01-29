@@ -9,7 +9,6 @@ import {
 	ReactNode,
 	useRef,
 } from 'react'
-import { IconButton } from '@/shared/ui/IconButton'
 import { AvatarProps } from '@/shared/ui/Avatar'
 import { XMark } from '@/shared/assets/icons'
 import { RippleWrapper } from '@/shared/ui/RippleWrapper'
@@ -97,6 +96,11 @@ export const Chip = memo(
 				}
 			}
 
+			const handleClose = (event: React.MouseEvent) => {
+				event.stopPropagation()
+				onClose?.(event)
+			}
+
 			const mods: Record<string, boolean | undefined> = {
 				[styles['clickable']]: Boolean(onClick || to || href),
 			}
@@ -179,19 +183,15 @@ export const Chip = memo(
 					{Icon && <span className={styles['icon']}>{Icon}</span>}
 					<span className={styles['label']}>{label}</span>
 					{onClose && (
-						<IconButton
+						<button
 							className={styles['close-button']}
-							size="custom-size"
-							color="custom-color"
-							variant="filled"
-							onClick={onClose}
+							onClick={handleClose}
+							onMouseDown={(event) => event.preventDefault()}
 							disabled={disabled}
 							tabIndex={-1}
-							stopPropagation
-							stopFocus
 						>
 							<XMark />
-						</IconButton>
+						</button>
 					)}
 				</Parent>
 			)

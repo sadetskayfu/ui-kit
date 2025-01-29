@@ -3,7 +3,6 @@
 .thumb {
 	--thumbHeight: ;
 	--boxShadow: 0 0 0 var(--border-weight-soft) var(--theme-color-primary-main);
-	@include user-select-off;
 	position: absolute;
 	height: var(--thumbHeight);
 	width: var(--thumbHeight);
@@ -22,6 +21,7 @@
 		width: 200%;
 		transition-duration: 0.2s;
 	}
+	@include user-select-off;
 	@include hover {
 		&:before {
 			box-shadow: var(--boxShadow);

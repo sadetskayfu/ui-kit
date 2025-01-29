@@ -2,21 +2,18 @@
 
 .button {
 	--height: ;
-	--bgColor: transparent;
 	--bgColorHover: ;
-	--color: ;
 	--borderColor: ;
-	height: var(--height);
+	min-height: var(--height);
 	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	cursor: pointer;
 	border: none;
 	white-space: nowrap;
 	color: var(--color);
-	background-color: var(--bgColor);
 	border-radius: var(--border-radius-m);
+	font-weight: 500;
 	transition:
 		background-color 0.2s,
 		color 0.2s;
@@ -26,37 +23,90 @@
 // Colors
 .button {
 	&.primary {
-		--color: var(--theme-color-primary-main);
-		--bgColorHover: var(--color-primary-opacity-soft);
 		--borderColor: var(--border-color-primary);
+		color: var(--theme-color-primary-main);
 	}
 	&.secondary {
-		--color: var(--font-color-hard);
 		--borderColor: var(--border-color-grey);
-		--bgColorHover: var(--color-grey-opacity-soft);
+		color: var(--font-color-hard);
+	}
+	&.green {
+		--borderColor: var(--border-color-green);
+		color: var(--theme-color-green-main);
+	}
+	&.red {
+		--borderColor: var(--border-color-red);
+		color: var(--theme-color-red-main);
+	}
+	&.orange {
+		--borderColor: var(--border-color-orange);
+		color: var(--theme-color-orange-main);
 	}
 }
+
 // Variants
 .button {
 	&.filled {
 		&.primary {
-			--color: var(--font-color-onDark);
-			--bgColor: var(--theme-color-primary-main);
-			--bgColorHover: var(--theme-color-primary-secondary);
+			--bgColorHover: var(--theme-color-primary-light);
+			color: var(--font-color-onDark);
+			background-color: var(--theme-color-primary-main);
 		}
 		&.secondary {
-			--bgColor: var(--theme-color-grey-dark);
 			--bgColorHover: var(--theme-color-dark);
+			background-color: var(--theme-color-grey-dark);
 			border: var(--border-weight-soft) solid var(--borderColor);
 		}
+		&.green {
+			--bgColorHover: var(--theme-color-green-light);
+			background-color: var(--theme-color-green-main);
+			color: var(--font-color-onDark);
+		}
+		&.red {
+			--bgColorHover: var(--theme-color-red-light);
+			background-color: var(--theme-color-red-main);
+			color: var(--font-color-onDark);
+		}
+		&.orange {
+			--bgColorHover: var(--theme-color-orange-light);
+			background-color: var(--theme-color-orange-main);
+			color: var(--font-color-onDark);
+		}
+		@include hover {
+			background-color: var(--bgColorHover);
+		}
 	}
+  &.outlined {
+    border: var(--border-weight-soft) solid var(--borderColor);
+  }
+	&.clear,
 	&.outlined {
-		border: var(--border-weight-soft) solid var(--borderColor);
+		background-color: transparent;
+		&:after {
+			content: '';
+			border-radius: inherit;
+			position: absolute;
+			inset: 0;
+			background-color: currentColor;
+			opacity: 0;
+			transition-duration: inherit;
+		}
+		@include hover {
+			&:after {
+				opacity: 0.1;
+			}
+		}
 	}
 }
 
 // Sizes
 .button {
+	&.small {
+		--height: var(--button-height-s);
+		padding-inline: var(--button-padding-inline-s);
+		padding-block: var(--button-padding-block-s);
+		gap: rem(6);
+	}
 	&.medium {
 		--height: var(--button-height-m);
 		padding-inline: var(--button-padding-inline-m);

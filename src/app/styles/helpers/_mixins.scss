@@ -48,30 +48,18 @@
 }
 
 @mixin focus-outline {
-	outline: rem(2) dashed var(--theme-color-primary-secondary);
+	outline: rem(2) dashed var(--theme-color-primary-dark);
 	outline-offset: rem(2);
 }
 
 @mixin focus-outline-inset {
-	outline: rem(2) dashed var(--theme-color-primary-secondary);
+	outline: rem(2) dashed var(--theme-color-primary-dark);
 	outline-offset: rem(-6);
-}
-
-@mixin divider-bottom {
-	content: '';
-	position: absolute;
-	bottom: 0;
-	left: 50%;
-	translate: -50%;
-	height: var(--border-weight-soft);
-	background-color: currentColor;
-	width: 0%;
-	transition-duration: 0.2s;
 }
 
 @mixin disabled {
 	opacity: var(--opacity-disabled);
-    pointer-events: none;
+	pointer-events: none;
 }
 
 @mixin required-label {

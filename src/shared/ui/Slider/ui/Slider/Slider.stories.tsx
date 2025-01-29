@@ -2,7 +2,6 @@ import { Meta, StoryObj } from '@storybook/react'
 import { Slider } from './Slider'
 import { FormEvent, useCallback, useState } from 'react'
 import { Button } from '@/shared/ui/Button'
-import { TextField } from '@/shared/ui/TextField'
 
 const meta: Meta<typeof Slider> = {
 	title: 'shared/Slider',
@@ -73,34 +72,8 @@ const ControlledSliderWrapper = (args: any) => {
 		setValue(value as [number, number])
 	}, [])
 
-	const step = 1000
-
-	const handleChangeMinValue = (inputValue: string) => {
-		const numberValue = Number(inputValue)
-
-		if (numberValue + step >= value[1]) return
-
-		setValue([numberValue, value[1]])
-	}
-
-	const handleChangeMaxValue = (inputValue: string) => {
-		const numberValue = Number(inputValue)
-
-		if (numberValue - step <= value[0] || numberValue > 100000) return
-
-		setValue([value[0], numberValue])
-	}
-
 	return (
 		<div style={{ display: 'flex', gap: '10px', width: '350px' }}>
-			<TextField
-				value={value[0]}
-				onChange={handleChangeMinValue}
-				variant="clear"
-				labelVariant="hidden"
-				label="Min slider value"
-				inputProps={{ type: 'number', step, min: 0, max: 100000 }}
-			/>
 			<Slider
 				value={value}
 				onChange={handleChange}
@@ -108,14 +81,6 @@ const ControlledSliderWrapper = (args: any) => {
 				max={100000}
 				step={1000}
 				{...args}
-			/>
-			<TextField
-				value={value[1]}
-				onChange={handleChangeMaxValue}
-				variant="clear"
-				labelVariant="hidden"
-				label="Min slider value"
-				inputProps={{ type: 'number', step, min: 0, max: 100000 }}
 			/>
 		</div>
 	)

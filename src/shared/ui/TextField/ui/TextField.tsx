@@ -40,7 +40,8 @@ interface BaseTextFieldProps {
 	readonly?: boolean
 	required?: boolean
 	defaultWidth?: boolean
-	multiline?: boolean
+	contentPadding?: boolean
+	isMultiline?: boolean
 	tabIndex?: number
 	children?: ReactNode
 	fieldRef?: React.Ref<HTMLDivElement>
@@ -88,7 +89,8 @@ export const TextField = memo((props: TextFieldProps) => {
 		readonly,
 		required,
 		defaultWidth,
-		multiline,
+		contentPadding,
+		isMultiline,
 		tabIndex = 0,
 		children,
 		fieldRef,
@@ -125,7 +127,7 @@ export const TextField = memo((props: TextFieldProps) => {
 
 	// Update height textarea
 	useEffect(() => {
-		if (!multiline) return
+		if (!isMultiline) return
 
 		const textarea = inputRef.current
 
@@ -136,7 +138,7 @@ export const TextField = memo((props: TextFieldProps) => {
 
 			textarea.style.height = `${newHeight / 16}rem`
 		}
-	}, [value, multiline])
+	}, [value, isMultiline])
 
 	const Actions = onClear
 		? [
@@ -175,13 +177,27 @@ export const TextField = memo((props: TextFieldProps) => {
 	const mods: Record<string, boolean | undefined> = {
 		[styles['dirty']]: isDirty,
 		[styles['focused']]: isFocused,
+		[styles['content-padding']]: contentPadding,
 	}
+
+	const fieldContainerMods: Record<string, boolean | undefined> = {
+		[styles['content-padding']]: contentPadding,
+		[styles['default-width']]: defaultWidth,
+	}
+
+	const additionalClasses: Array<string | undefined> = [
+		className,
+		styles[size],
+		styles[variant],
+	]
 
 	return (
 		<div
-			className={classNames(styles['text-field'], [className], {
-				[styles['default-width']]: defaultWidth,
-			})}
+			className={classNames(
+				styles['text-field'],
+				additionalClasses,
+				fieldContainerMods
+			)}
 		>
 			<Field
 				className={classNames(styles['field'], [], mods)}
@@ -208,7 +224,7 @@ export const TextField = memo((props: TextFieldProps) => {
 			>
 				<div className={styles['content']}>
 					{children && children}
-					{multiline ? (
+					{isMultiline ? (
 						<textarea
 							className={styles['text-area']}
 							rows={1}
