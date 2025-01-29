@@ -37,7 +37,7 @@ export const useScroll = (args: UseScrollArgs) => {
 				setShowEndArrow(scrollTop < scrollHeight - clientHeight)
 			}
 		}
-	}, [orientation])
+	}, [orientation, containerRef])
 
 	const scroll = useCallback(
 		(direction: 'start' | 'end') => {
@@ -58,7 +58,7 @@ export const useScroll = (args: UseScrollArgs) => {
 
 			container.scrollBy(options)
 		},
-		[orientation]
+		[orientation, containerRef]
 	)
 
 	const scrollToItem = useCallback(
@@ -73,7 +73,7 @@ export const useScroll = (args: UseScrollArgs) => {
 				externalScrollToItem(item, container, orientation)
 			}
 		},
-		[orientation]
+		[orientation, containerRef]
 	)
 
 	const setScrollAmount = useCallback(() => {
@@ -88,7 +88,7 @@ export const useScroll = (args: UseScrollArgs) => {
 				scrollAmountRef.current = containerRect.height
 			}
 		}
-	}, [orientation])
+	}, [orientation, containerRef])
 
 	useEffect(() => {
 		const container = containerRef.current

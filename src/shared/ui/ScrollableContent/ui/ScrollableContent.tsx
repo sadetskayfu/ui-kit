@@ -20,7 +20,6 @@ interface ScrollableContentProps {
 	children: ReactElement[]
 	orientation?: ScrollableContentOrientation
 	style?: React.CSSProperties
-	isVisibleScrollButton?: boolean
 	onFocus?: (index: number) => void
 	onScroll?: () => void
 }
@@ -32,7 +31,6 @@ const ScrollableContent = (props: ScrollableContentProps) => {
 		children,
 		orientation = 'horizontal',
 		style,
-		isVisibleScrollButton = true,
 		onFocus,
 		onScroll,
 	} = props
@@ -80,7 +78,6 @@ const ScrollableContent = (props: ScrollableContentProps) => {
 			role="presentation"
 			style={{ ...style }}
 		>
-			{isVisibleScrollButton && (
 				<button
 					className={styles['scroll-button']}
 					style={{
@@ -93,7 +90,6 @@ const ScrollableContent = (props: ScrollableContentProps) => {
 				>
 					<Arrow direction={isHorizontal ? 'left' : 'top'} size="small-xx" />
 				</button>
-			)}
 			<div
 				className={styles['items-container']}
 				ref={containerRef}
@@ -105,7 +101,6 @@ const ScrollableContent = (props: ScrollableContentProps) => {
 			>
 				{renderChildren()}
 			</div>
-			{isVisibleScrollButton && (
 				<button
 					className={styles['scroll-button']}
 					style={{
@@ -118,7 +113,6 @@ const ScrollableContent = (props: ScrollableContentProps) => {
 				>
 					<Arrow direction={isHorizontal ? 'right' : 'bottom'} size="small-xx" />
 				</button>
-			)}
 		</div>
 	)
 }
