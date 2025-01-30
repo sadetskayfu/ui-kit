@@ -94,14 +94,7 @@
 	--fz-icon-m: calc(var(--button-height-m) / 2);
 	--fz-icon-l: calc(var(--button-height-l) / 2);
 
-	--container-width: #{rem(1600)};
-    --container-padding-x: #{rem(16)};
-
 	--padding-20: #{rem(20)};
 	--padding-15: #{rem(15)};
 	--padding-10: #{rem(10)};
-
-	@include laptop {
-        --container-width: #{rem(1280)};
-    }
 }
