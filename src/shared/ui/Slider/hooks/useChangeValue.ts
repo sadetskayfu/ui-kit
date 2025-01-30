@@ -38,6 +38,7 @@ export const useChangeValue = (inputValues: UseChangeValueInputValues) => {
 		onChange,
 	} = inputValues
 
+	// eslint-disable-next-line
 	const handleChange = useCallback(
 		throttle(
 			(event: React.MouseEvent | MouseEvent | React.TouchEvent | TouchEvent) => {

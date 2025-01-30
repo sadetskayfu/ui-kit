@@ -93,6 +93,7 @@ export const StarRating = memo((props: StarRatingProps) => {
 		if (localFillValue !== selectedValue) {
 			handleChangeFillValue(selectedValue)
 		}
+	// eslint-disable-next-line
 	}, [selectedValue])
 
 	const mods: Record<string, boolean | undefined> = {

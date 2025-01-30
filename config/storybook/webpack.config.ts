@@ -24,6 +24,7 @@ export default ({ config }: { config: Configuration }) => {
 	config!.module!.rules!.push(buildCssLoader(true))
 
 	// create new loaders, without svg
+	// eslint-disable-next-line
 	// @ts-ignore
 	const rules = config.module.rules.map((rule: RuleSetRule) => {
 		if (/svg/.test(rule.test as string)) {

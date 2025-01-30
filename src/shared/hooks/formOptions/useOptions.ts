@@ -33,7 +33,7 @@ export const useOptions = (
 		return () => {
 			observer.disconnect()
 		}
-	}, [isMounted])
+	}, [isMounted, optionsListRef])
 
 	return optionsRef
 }

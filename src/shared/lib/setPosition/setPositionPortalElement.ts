@@ -39,7 +39,7 @@ export const setPositionPortalElement = (
 	const isParentWidth = element.style.width === '100%'
 	const isParentHeight = element.style.height === '100%'
 
-	let translates: Translates = {
+	const translates: Translates = {
 		x: 0,
 		y: 0,
 	}

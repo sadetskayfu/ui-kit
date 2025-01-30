@@ -37,7 +37,7 @@ export const useElements = (
 		return () => {
 			observer.disconnect()
 		}
-	}, [isVisible])
+	}, [isVisible, role, elementRef])
 
 	return interactiveElementsRef
 }

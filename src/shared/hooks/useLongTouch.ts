@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-type EventType = any
+type EventType = React.TouchEvent<HTMLElement>
 
 type UseLongTouchArgs = {
 	onTouchStart: (event: EventType) => void
@@ -30,6 +30,7 @@ export const useLongTouch = (args: UseLongTouchArgs) => {
 	}
 
 	const handleTouchEnd = (event: EventType) => {
+		
 		if (startTouchTimeoutIdRef.current) {
 			clearTimeout(startTouchTimeoutIdRef.current)
 		}

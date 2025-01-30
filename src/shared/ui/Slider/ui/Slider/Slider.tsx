@@ -154,6 +154,7 @@ export const Slider = memo((props: SliderProps) => {
 				onChange(externalValue)
 			}
 		}
+	// eslint-disable-next-line
 	}, [externalValue])
 
 	const renderThumb = (

@@ -50,7 +50,7 @@ export const useDragging = (inputValues: UseDraggingInputValues) => {
 			setIsDragging(true)
 			handleChange(event)
 		},
-		[handleChange]
+		[handleChange, fillRef, maxThumbRef, minThumbRef]
 	)
 
 	const handleMouseMove = useCallback(
@@ -74,7 +74,7 @@ export const useDragging = (inputValues: UseDraggingInputValues) => {
 
 			handleChange(event)
 		},
-		[handleChange]
+		[handleChange, fillRef, maxThumbRef, minThumbRef]
 	)
 
 	const handleMouseUp = useCallback((event: MouseEvent | TouchEvent) => {
@@ -100,7 +100,7 @@ export const useDragging = (inputValues: UseDraggingInputValues) => {
 				document.removeEventListener('mousemove', handleMouseMove)
 				document.removeEventListener('mouseup', handleMouseUp)
 		}
-	}, [isDragging, isTouchDevice])
+	}, [isDragging, isTouchDevice, handleMouseMove, handleMouseUp])
 
 	useEffect(() => {
 		return () => {

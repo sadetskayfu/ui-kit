@@ -27,7 +27,7 @@ const meta: Meta<typeof Select> = {
 		variant: 'outlined',
 		labelVariant: 'on-border',
 		disabled: false,
-		readonly: false,
+		readOnly: false,
 		required: false,
 		menuHeight: '300px',
 		menuWidth: '100%',

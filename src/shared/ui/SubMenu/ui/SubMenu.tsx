@@ -13,7 +13,7 @@ import {
 import { Portal } from '@/shared/ui/Portal'
 import { useTouchDevice } from '@/shared/hooks'
 import {
-	getFocusableElements,
+	useFocusableElements,
 	useKeyboardNavigation,
 } from '@/shared/lib/KeyboardNavigation'
 import styles from './style.module.scss'
@@ -53,7 +53,7 @@ export const SubMenu = (props: SubMenuProps) => {
 	const menuRef = useRef<HTMLUListElement>(null)
 	const openingElementRef = useRef<HTMLElement>(null)
 
-	const focusableElementsRef = getFocusableElements(menuRef, isMounting)
+	const focusableElementsRef = useFocusableElements(menuRef, isMounting)
 
 	const { isTouchDeviceRef } = useTouchDevice()
 
@@ -100,6 +100,7 @@ export const SubMenu = (props: SubMenuProps) => {
 		if (!isOpenParentMenu && isOpen) {
 			setIsOpen(false)
 		}
+	// eslint-disable-next-line
 	}, [isOpenParentMenu])
 
 	// Set aria-attribute and toggle active class

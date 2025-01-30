@@ -8,10 +8,11 @@ import throttle from 'lodash/throttle'
 
 type UseNavigationArgs = {
 	optionsRef: React.MutableRefObject<HTMLLIElement[]>
-	optionsListRef: React.MutableRefObject<HTMLUListElement | null>
+	optionsListRef: React.RefObject<HTMLUListElement>
 	valueRef?: React.MutableRefObject<string>
 	selectedValueRef: React.MutableRefObject<string | string[]>
 	isOpen: boolean
+	isLoading?: boolean
 	isOpenRef: React.MutableRefObject<boolean>
 	activeIndexRef: React.MutableRefObject<number>
 	setFocusedOption: (index: number) => void
@@ -29,6 +30,7 @@ export const useNavigation = (args: UseNavigationArgs) => {
 		valueRef,
 		selectedValueRef,
 		isOpen,
+		isLoading,
 		isOpenRef,
 		activeIndexRef,
 		setFocusedOption,
@@ -84,7 +86,9 @@ export const useNavigation = (args: UseNavigationArgs) => {
 					break
 				case 'Escape':
 					event.preventDefault()
-					isOpen && onClose()
+					if(isOpen) {
+						onClose()
+					}
 					break
 				default:
 					break
@@ -98,7 +102,7 @@ export const useNavigation = (args: UseNavigationArgs) => {
 				}
 			}
 		},
-		[setFocusedOption, onSelect, onDelete, onOpen, onClose, onToggle]
+		[setFocusedOption, onSelect, onDelete, onOpen, onClose, onToggle, valueRef, selectedValueRef, isOpenRef, activeIndexRef]
 	)
 
 	const handleMouseMove = useCallback(
@@ -116,7 +120,7 @@ export const useNavigation = (args: UseNavigationArgs) => {
 				setFocusedOption(Number(optionIndex))
 			}
 		}, 10),
-		[setFocusedOption]
+		[setFocusedOption, activeIndexRef]
 	)
 
 	useEffect(() => {
@@ -129,23 +133,23 @@ export const useNavigation = (args: UseNavigationArgs) => {
 	useEffect(() => {
 		const selectedValue = selectedValueRef.current
 
-		if (isOpen && selectedValue.length > 0) {
+		if (isOpen && !isLoading && selectedValue.length > 0) {
 			const lastSelectedValue = getLastSelectedValue(selectedValue)
 			const options = optionsRef.current
 			const optionsList = optionsListRef.current
-
+			
 			const { lastSelectedOption, lastSelectedOptionIndex } =
 				getLastSelectedOption(lastSelectedValue, options)
 
 			if (lastSelectedOption && lastSelectedOptionIndex) {
 				setFocusedOption(Number(lastSelectedOptionIndex))
-	
+		
 				if (optionsList) {
 					scrollToItem(lastSelectedOption, optionsList)
 				}
 			}
 		}
-	}, [isOpen])
+	}, [isOpen, isLoading])
 
 	return { handleKeyDown, handleMouseMove }
 }

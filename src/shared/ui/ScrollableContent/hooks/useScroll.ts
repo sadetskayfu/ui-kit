@@ -105,7 +105,7 @@ export const useScroll = (args: UseScrollArgs) => {
 			handleChangeScrollAmount.cancel()
 			resizeObserver.disconnect()
 		}
-	}, [setScrollAmount])
+	}, [setScrollAmount, containerRef])
 
 	return { checkScroll, scroll, scrollToItem, showStartArrow, showEndArrow }
 }

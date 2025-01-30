@@ -7,7 +7,7 @@ import { cloneElement, ReactElement, useId, useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import {
 	useKeyboardNavigation,
-	getFocusableElements,
+	useFocusableElements,
 } from '@/shared/lib/KeyboardNavigation'
 import { useDelayMouseHover, useTouchDevice } from '@/shared/hooks'
 import styles from './style.module.scss'
@@ -59,7 +59,7 @@ export const Menu = (props: MenuProps) => {
 	const menuRef = useRef<HTMLUListElement>(null)
 
 	const { isTouchDevice } = useTouchDevice()
-	const focusableElementsRef = getFocusableElements(menuRef, isOpen)
+	const focusableElementsRef = useFocusableElements(menuRef, isOpen)
 
 	const isNotMouseHover = isTouchDevice || openVariant === 'mouse-click'
 

@@ -19,7 +19,7 @@ export const useAnimation = (duration: number = 500) => {
 				setIsAnimating(false)
 			}, duration)
 		}, 0)
-	}, [duration])
+	}, [duration, isAnimating])
 
 	return { isAnimating, startAnimation }
 }

@@ -92,7 +92,7 @@ export const useKeyboardNavigation = (
 					break
 			}
 		},
-		[onChange, minRange, max, min, step]
+		[onChange, minRange, max, min, step, activeThumbIndexRef, valueRef]
 	)
 
 	return { handleKeyDown }

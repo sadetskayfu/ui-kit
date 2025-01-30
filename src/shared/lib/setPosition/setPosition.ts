@@ -12,7 +12,7 @@ interface Styles {
 	bottom: string
 	left: string
 	right: string
-    translate: string
+	translate: string
 }
 
 export const setPosition = (
@@ -30,12 +30,12 @@ export const setPosition = (
 	const differenceWidth = Math.abs(parentWidth - elementWidth)
 	const differenceHeight = Math.abs(parentHeight - elementHeight)
 
-	let styles: Styles = {
+	const styles: Styles = {
 		top: '',
 		bottom: '',
 		left: '',
 		right: '',
-        translate: '',
+		translate: '',
 	}
 
 	const spaces: Spaces = {
@@ -69,33 +69,41 @@ export const setPosition = (
 				break
 			}
 			styles.top = '50%'
-            styles.translate = '0 -50%'
+			styles.translate = '0 -50%'
 			break
 		case 'left-start':
 		case 'right-start':
-			checks.isTop(differenceHeight)
-				? styles.bottom = '0'
-				: styles.top = '0'
+			if (checks.isTop(differenceHeight)) {
+				styles.bottom = '0'
+			} else {
+				styles.top = '0'
+			}
 			break
 		case 'left-end':
 		case 'right-end':
-			checks.isBottom(differenceHeight)
-				? styles.top = '0'
-				: styles.bottom = '0'
+			if (checks.isBottom(differenceHeight)) {
+				styles.top = '0'
+			} else {
+				styles.bottom = '0'
+			}
 			break
 		case 'top':
 		case 'top-start':
 		case 'top-end':
-			checks.isBottom(elementHeight)
-				? styles.top = '100%'
-				: styles.bottom = '100%'
+			if (checks.isBottom(elementHeight)) {
+				styles.top = '100%'
+			} else {
+				styles.bottom = '100%'
+			}
 			break
 		case 'bottom':
 		case 'bottom-start':
 		case 'bottom-end':
-			checks.isTop(elementHeight)
-				? styles.bottom = '100%'
-				: styles.top = '100%'
+			if (checks.isTop(elementHeight)) {
+				styles.bottom = '100%'
+			} else {
+				styles.top = '100%'
+			}
 			break
 	}
 	// Horizontal position
@@ -111,33 +119,41 @@ export const setPosition = (
 				break
 			}
 			styles.left = '50%'
-            styles.translate = '-50%'
+			styles.translate = '-50%'
 			break
 		case 'top-start':
 		case 'bottom-start':
-			checks.isLeft(differenceWidth)
-				? styles.right = '0'
-				: styles.left = '0'
+			if (checks.isLeft(differenceWidth)) {
+				styles.right = '0'
+			} else {
+				styles.left = '0'
+			}
 			break
 		case 'top-end':
 		case 'bottom-end':
-			checks.isRight(differenceWidth)
-				? styles.left = '0'
-				: styles.right = '0'
+			if (checks.isRight(differenceWidth)) {
+				styles.left = '0'
+			} else {
+				styles.right = '0'
+			}
 			break
 		case 'left':
 		case 'left-start':
 		case 'left-end':
-			checks.isRight(elementWidth)
-				? styles.left = '100%'
-				: styles.right = '100%'
+			if (checks.isRight(elementWidth)) {
+				styles.left = '100%'
+			} else {
+				styles.right = '100%'
+			}
 			break
 		case 'right':
 		case 'right-start':
 		case 'right-end':
-			checks.isLeft(elementWidth)
-				? styles.right = '100%'
-				: styles.left = '100%'
+			if (checks.isLeft(elementWidth)) {
+				styles.right = '100%'
+			} else {
+				styles.left = '100%'
+			}
 			break
 	}
 
@@ -146,6 +162,6 @@ export const setPosition = (
 		bottom: styles.bottom,
 		left: styles.left,
 		right: styles.right,
-		translate: styles.translate
+		translate: styles.translate,
 	})
 }

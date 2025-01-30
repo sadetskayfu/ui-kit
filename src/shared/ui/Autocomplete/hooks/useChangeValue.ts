@@ -79,8 +79,7 @@ export const useChangeValue = (args: UseChangeValueArgs) => {
 				handleDeleteValue(optionValue)
 			} else {
 				const optionLabel = options[optionValue].label
-				selectedOptionsRef.current[optionValue] = optionLabel
-
+				
 				let newSelectedValues: string | string[]
 
 				if (Array.isArray(selectedValue)) {
@@ -95,9 +94,11 @@ export const useChangeValue = (args: UseChangeValueArgs) => {
 							)
 						}, 0)
 					}
-
+					selectedOptionsRef.current[optionValue] = optionLabel
 					onChange('')
 				} else {
+					selectedOptionsRef.current = {}
+					selectedOptionsRef.current[optionValue] = optionLabel
 					newSelectedValues = optionValue
 					onClose()
 					onChange(optionLabel)
@@ -105,6 +106,8 @@ export const useChangeValue = (args: UseChangeValueArgs) => {
 				onStopFilter()
 				onSelect(newSelectedValues)
 			}
+
+			console.log(selectedOptionsRef.current)
 		},
 		[
 			handleDeleteValue,
@@ -152,6 +155,7 @@ export const useChangeValue = (args: UseChangeValueArgs) => {
 			delete selectedOptionsRef.current[selectedValue]
 			onSelect('')
 		}
+	// eslint-disable-next-line
 	}, [value])
 
 	return { handleSelectValue, handleDeleteValue, handleClick, selectedOptionsRef }

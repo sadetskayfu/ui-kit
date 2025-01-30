@@ -33,7 +33,7 @@ export const useKeyboardNavigation = (
 			activeIndexRef.current = nextIndex
 			elements[nextIndex].focus()
 		}
-	}, [])
+	}, [elementsRef])
 
 	const updateActiveIndex = useCallback((index: number) => {
 		if (index !== activeIndexRef.current) {

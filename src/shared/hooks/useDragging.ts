@@ -24,7 +24,7 @@ export const useDragging = (elementRef: React.RefObject<HTMLElement>) => {
 		}
 
 		setIsDragging(true)
-	}, [])
+	}, [elementRef])
 
 	const handleMouseUp = useCallback(() => {
 		setIsDragging(false)
@@ -42,7 +42,7 @@ export const useDragging = (elementRef: React.RefObject<HTMLElement>) => {
 				}
 			}
 		},
-		[isDragging]
+		[isDragging, elementRef]
 	)
 
 	useEffect(() => {
@@ -54,7 +54,7 @@ export const useDragging = (elementRef: React.RefObject<HTMLElement>) => {
 			document.removeEventListener('mouseup', handleMouseUp)
             document.removeEventListener('mousemove', handleMouseMove)
 		}
-	}, [isDragging])
+	}, [isDragging, handleMouseMove, handleMouseUp])
 
 	return { handleMouseDown }
 }

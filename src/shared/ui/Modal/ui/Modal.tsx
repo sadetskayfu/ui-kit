@@ -4,7 +4,7 @@ import { classNames } from '@/shared/helpers/classNames'
 import { Z_INDEX } from '@/shared/constants/zIndex'
 import { CSSTransition } from 'react-transition-group'
 import {
-	getFocusableElements,
+	useFocusableElements,
 	useKeyboardNavigation,
 } from '@/shared/lib/KeyboardNavigation'
 import styles from './style.module.scss'
@@ -38,7 +38,7 @@ export const Modal = (props: ModalProps) => {
 
 	const modalRef = useRef<HTMLDivElement>(null)
 
-	const focusableElementsRef = getFocusableElements(modalRef, isOpen)
+	const focusableElementsRef = useFocusableElements(modalRef, isOpen)
 
 	useKeyboardNavigation({
 		elementRef: modalRef,

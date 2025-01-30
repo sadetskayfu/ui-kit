@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useState } from 'react'
 
+// eslint-disable-next-line react-refresh/only-export-components
 export enum Theme {
   LIGHT = 'theme-color-light',
   DARK = 'theme-color-dark'
@@ -16,6 +17,7 @@ interface ThemeProviderProps {
 
 export const LOCAL_STORAGE_THEME_KEY = 'theme'
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const ThemeContext = createContext<ThemeContextProps>({
 	theme: Theme.LIGHT,
 	setTheme: () => undefined,

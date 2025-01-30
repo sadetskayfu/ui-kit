@@ -31,7 +31,7 @@ export const useFocusOption = (optionsRef: React.MutableRefObject<HTMLLIElement[
                 
                 setFocusedOptionId(undefined)
             }
-        }, [])
+        }, [focusedClassName, optionsRef])
 
         return {focusedOptionId, setFocusedOption, activeIndexRef, focusedClassName}
 }

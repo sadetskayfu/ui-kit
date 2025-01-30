@@ -40,6 +40,7 @@ const ScrollableContent = (props: ScrollableContentProps) => {
 	const { checkScroll, scroll, scrollToItem, showEndArrow, showStartArrow } =
 		useScroll({ containerRef, orientation })
 
+	// eslint-disable-next-line
 	const handleScroll = useCallback(
 		throttle(() => {
 			checkScroll()

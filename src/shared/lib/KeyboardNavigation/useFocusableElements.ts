@@ -1,7 +1,7 @@
 import { ID } from '@/shared/constants/id'
 import { useEffect, useRef } from 'react'
 
-export const getFocusableElements = (
+export const useFocusableElements = (
 	elementRef: React.RefObject<HTMLElement | null>,
 	isMounting: boolean
 ) => {
@@ -59,7 +59,7 @@ export const getFocusableElements = (
 		return () => {
 			observer.disconnect()
 		}
-	}, [isMounting])
+	}, [isMounting, elementRef])
 
     return focusableElementsRef
 }

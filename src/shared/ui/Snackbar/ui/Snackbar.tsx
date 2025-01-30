@@ -47,6 +47,7 @@ export const Snackbar = (props: SnackbarProps) => {
 		return () => {
 			if (autoHideTimeoutIdRef.current) clearTimeout(autoHideTimeoutIdRef.current)
 		}
+	// eslint-disable-next-line
 	}, [isVisible])
 
 	const additionalClasses: Array<string | undefined> = [

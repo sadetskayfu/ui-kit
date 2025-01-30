@@ -78,6 +78,7 @@ export const Tooltip = (props: TooltipProps) => {
 
 	const tooltipId = useId()
 
+	// eslint-disable-next-line
 	const handleMouseMove = useCallback(
 		throttle(
 			(event: React.MouseEvent | React.TouchEvent | MouseEvent | TouchEvent) => {

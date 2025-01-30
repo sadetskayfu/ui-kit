@@ -12,7 +12,6 @@ import {
 	DropdownPortal,
 	DropdownPortalPosition,
 } from '@/shared/ui/DropdownPortal'
-import { useChangeValue } from '../hooks/useChangeValue'
 import { OptionItem } from '@/shared/ui/OptionItem'
 import { classNames } from '@/shared/helpers/classNames'
 import { TextFieldProps } from '@/shared/ui/TextField'
@@ -23,6 +22,7 @@ import {
 	useOptions,
 } from '@/shared/hooks/formOptions'
 import { isValueSelected } from '@/shared/helpers/checkingValues'
+import { useRefValues, useChangeValue } from '../hooks'
 import styles from './style.module.scss'
 
 export type Option = {
@@ -108,11 +108,7 @@ export const Autocomplete = (props: SelectProps) => {
 
 	const fieldRef = useRef<HTMLDivElement>(null)
 	const optionsListRef = useRef<HTMLUListElement>(null)
-	const selectedValueRef = useRef<string | string[]>(selectedValue)
-	const valueRef = useRef<string>(value)
-	const isOpenRef = useRef<boolean>(false)
-	const isMountedMenuRef = useRef<boolean>(false)
-	const isFilterOptionsRef = useRef<boolean>(false)
+
 	const isMulti = Array.isArray(selectedValue)
 	const focusedClassName = styles['focused']
 
@@ -130,36 +126,25 @@ export const Autocomplete = (props: SelectProps) => {
 		)
 	}, [options])
 
+	const {
+		valueRef,
+		selectedValueRef,
+		isOpenRef,
+		isFilterOptionsRef,
+		isMountedMenuRef,
+	} = useRefValues({
+		value,
+		selectedValue,
+		isOpen,
+		isFilterOptions,
+		isMountedMenu,
+	})
+
 	const optionsRef = useOptions(optionsListRef, isMountedMenu)
 	const { activeIndexRef, focusedOptionId, setFocusedOption } = useFocusOption(
 		optionsRef,
 		focusedClassName
 	)
-
-	// Update ref value
-	useEffect(() => {
-		valueRef.current = value
-	}, [value])
-
-	// Update ref selected value
-	useEffect(() => {
-		selectedValueRef.current = selectedValue
-	}, [selectedValue])
-
-	// Update ref isOpen
-	useEffect(() => {
-		isOpenRef.current = isOpen
-	}, [isOpen])
-
-	// Update ref isMounted
-	useEffect(() => {
-		isMountedMenuRef.current = isMountedMenu
-	}, [isMountedMenu])
-
-	// Update ref isFilterOptions
-	useEffect(() => {
-		isFilterOptionsRef.current = isFilterOptions
-	}, [isFilterOptions])
 
 	const handleClose = useCallback(() => {
 		setIsOpen(false)
@@ -172,7 +157,7 @@ export const Autocomplete = (props: SelectProps) => {
 		}
 		setIsOpen(true)
 		onOpen?.()
-	}, [onOpen])
+	}, [onOpen, isMountedMenuRef])
 
 	const handleToggle = useCallback(() => {
 		if (isOpenRef.current) {
@@ -180,7 +165,7 @@ export const Autocomplete = (props: SelectProps) => {
 		} else {
 			handleOpen()
 		}
-	}, [handleClose, handleOpen])
+	}, [handleClose, handleOpen, isOpenRef])
 
 	const handleStopFiler = useCallback(() => {
 		setIsFilterOptions(false)
@@ -211,6 +196,7 @@ export const Autocomplete = (props: SelectProps) => {
 		optionsRef,
 		optionsListRef,
 		isOpen,
+		isLoading,
 		isOpenRef,
 		activeIndexRef,
 		setFocusedOption,
@@ -233,13 +219,23 @@ export const Autocomplete = (props: SelectProps) => {
 		} else {
 			const selectedValue = selectedValueRef.current as string
 
-			onChange(selectedValue.length > 0 ? selectedOptionsRef.current[selectedValue] : '')
+			onChange(
+				selectedValue.length > 0 ? selectedOptionsRef.current[selectedValue] : ''
+			)
 		}
 		handleStopFiler()
 
 		handleClose()
 		onBlur?.()
-	}, [onBlur, handleClose, handleStopFiler, isMulti, onChange, selectedOptionsRef])
+	}, [
+		selectedOptionsRef,
+		selectedValueRef,
+		isMulti,
+		onBlur,
+		handleClose,
+		handleStopFiler,
+		onChange,
+	])
 
 	const handleChange = useCallback(
 		(value: string) => {
@@ -253,7 +249,7 @@ export const Autocomplete = (props: SelectProps) => {
 			setFocusedOption(-1)
 			onChange(value)
 		},
-		[onChange, setFocusedOption, noFilter, handleOpen]
+		[onChange, setFocusedOption, handleOpen, noFilter, isOpenRef]
 	)
 
 	// Reset filter after close menu if value === selected value
@@ -267,18 +263,20 @@ export const Autocomplete = (props: SelectProps) => {
 		) {
 			handleStopFiler()
 		}
+		// eslint-disable-next-line
 	}, [isOpen])
 
 	useEffect(() => {
 		if (typeof externalIsOpen === 'boolean' && externalIsOpen !== isOpen) {
 			setIsOpen(externalIsOpen)
 		}
+		// eslint-disable-next-line
 	}, [externalIsOpen])
 
 	const renderOptions = useMemo(() => {
 		if (options.length === 0) {
 			return isLoading ? (
-				<OptionItem role='progressbar' readOnly label="Loading..." />
+				<OptionItem role="progressbar" readOnly label="Loading..." />
 			) : (
 				<OptionItem readOnly label="No options" />
 			)
@@ -286,7 +284,7 @@ export const Autocomplete = (props: SelectProps) => {
 
 		return options.map((option, index) => {
 			const optionValue = option.value
-			
+
 			const optionProps: OptionProps = {
 				id: optionId + (index + 1),
 				disabled: getDisabledOptions ? getDisabledOptions(optionValue) : false,
@@ -304,7 +302,14 @@ export const Autocomplete = (props: SelectProps) => {
 				/>
 			)
 		})
-	}, [selectedValue, getDisabledOptions, renderOption, optionId, options, isLoading])
+	}, [
+		selectedValue,
+		getDisabledOptions,
+		renderOption,
+		optionId,
+		options,
+		isLoading,
+	])
 
 	const renderFilteredOptions = useMemo(() => {
 		if (
@@ -314,7 +319,6 @@ export const Autocomplete = (props: SelectProps) => {
 			Array.isArray(renderOptions)
 		) {
 			const filteredOptions = renderOptions.filter((option) => {
-				
 				const optionLabel = localOptions[option.props.value].label
 
 				return filterOptions
@@ -329,7 +333,14 @@ export const Autocomplete = (props: SelectProps) => {
 			return filteredOptions
 		}
 		return renderOptions
-	}, [value, isFilterOptions, renderOptions, noFilter, filterOptions, localOptions])
+	}, [
+		value,
+		isFilterOptions,
+		renderOptions,
+		noFilter,
+		filterOptions,
+		localOptions,
+	])
 
 	const renderSelectedValues = useMemo(() => {
 		if (isMulti) {
@@ -350,7 +361,14 @@ export const Autocomplete = (props: SelectProps) => {
 				}
 			}
 		}
-	}, [selectedValue, isMulti, handleDeleteValue, renderTags, readonly, selectedOptionsRef])
+	}, [
+		selectedValue,
+		isMulti,
+		handleDeleteValue,
+		renderTags,
+		readonly,
+		selectedOptionsRef,
+	])
 
 	const mods: Record<string, boolean | undefined> = {
 		[styles['opened']]: isOpen,

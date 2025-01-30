@@ -10,9 +10,7 @@ type UseKeyboardNavigationArgs = {
 	onClose: () => void
 }
 
-export const useKeyboardNavigation = (
-	args: UseKeyboardNavigationArgs
-) => {
+export const useKeyboardNavigation = (args: UseKeyboardNavigationArgs) => {
 	const {
 		elementRef,
 		focusableElementsRef,
@@ -32,7 +30,7 @@ export const useKeyboardNavigation = (
 			let nextIndex = activeIndexRef.current
 
 			if (isDropdownMenu) {
-				if(isOpenSubMenu) return
+				if (isOpenSubMenu) return
 
 				switch (event.key) {
 					case 'ArrowDown':
@@ -90,7 +88,7 @@ export const useKeyboardNavigation = (
 				focusableElements[nextIndex].focus()
 			}
 		},
-		[onClose, isDropdownMenu, isOpenSubMenu]
+		[onClose, isDropdownMenu, isOpenSubMenu, focusableElementsRef]
 	)
 
 	// Reset active index
@@ -101,10 +99,12 @@ export const useKeyboardNavigation = (
 	}, [isOpen])
 
 	// Focus on element after open
+
 	useEffect(() => {
 		if (isOpen && activeIndexRef.current === -1) {
 			elementRef.current?.focus()
 		}
+		// eslint-disable-next-line
 	}, [isOpen])
 
 	useEffect(() => {
