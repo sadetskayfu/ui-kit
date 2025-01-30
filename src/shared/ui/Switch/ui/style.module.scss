@@ -75,7 +75,7 @@
     .thumb {
       transform: translateX(var(--translateX));
       &:before {
-        box-shadow: 0 0 0 var(--border-weight-soft) var(--theme-color-primary-secondary);
+        box-shadow: 0 0 0 var(--border-weight-soft) var(--theme-color-primary-light);
       }
     }
   }
