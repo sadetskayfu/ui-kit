@@ -69,6 +69,7 @@ export const Thumb = memo(
 				className={classNames(styles['thumb'], additionalClasses, mods)}
 				ref={ref}
 				style={{
+					transitionDuration: '0.2s',
 					left: isHorizontal ? translate : '',
 					bottom: !isHorizontal ? translate : '',
 				}}

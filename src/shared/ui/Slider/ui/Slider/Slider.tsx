@@ -237,6 +237,7 @@ export const Slider = memo((props: SliderProps) => {
 							<div
 								className={styles['fill']}
 								style={{
+									transitionDuration: '0.2s',
 									width: isHorizontal ? `${localCalculateTranslateThumb(value)}%` : '',
 									height: !isHorizontal ? `${localCalculateTranslateThumb(value)}%` : '',
 								}}
@@ -265,6 +266,7 @@ export const Slider = memo((props: SliderProps) => {
 							<div
 								className={styles['fill']}
 								style={{
+									transitionDuration: '0.2s',
 									left: isHorizontal ? `${localCalculateTranslateThumb(value[0])}%` : '',
 									bottom: !isHorizontal
 										? `${localCalculateTranslateThumb(value[0])}%`

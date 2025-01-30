@@ -13,44 +13,16 @@ export const useDragging = (inputValues: UseDraggingInputValues) => {
 
 	const [isDragging, setIsDragging] = useState<boolean>(false)
 
-	const timeoutIdRef = useRef<NodeJS.Timeout | null>(null)
 	const isTransitionClearedRef = useRef<boolean>(false)
 
 	const handleMouseDown = useCallback(
 		(event: React.MouseEvent | React.TouchEvent) => {
 			event.preventDefault()
 
-			if (timeoutIdRef.current) {
-				clearTimeout(timeoutIdRef.current)
-			}
-			isTransitionClearedRef.current = false
-
-			const minThumb = minThumbRef.current
-			const maxThumb = maxThumbRef.current
-			const fill = fillRef.current
-
-			if (minThumb && fill) {
-				minThumb.style.transition = '0.2s'
-				fill.style.transition = '0.2s'
-			}
-			if (maxThumb) {
-				maxThumb.style.transition = '0.2s'
-			}
-
-			timeoutIdRef.current = setTimeout(() => {
-				if (minThumb && fill) {
-					minThumb.style.transition = ''
-					fill.style.transition = ''
-				}
-				if (maxThumb) {
-					maxThumb.style.transition = ''
-				}
-			}, 200)
-
 			setIsDragging(true)
 			handleChange(event)
 		},
-		[handleChange, fillRef, maxThumbRef, minThumbRef]
+		[handleChange]
 	)
 
 	const handleMouseMove = useCallback(
@@ -63,11 +35,11 @@ export const useDragging = (inputValues: UseDraggingInputValues) => {
 
 			if (!isTransitionClearedRef.current) {
 				if (minThumb && fill) {
-					minThumb.style.transition = ''
-					fill.style.transition = ''
+					minThumb.style.transitionDuration = ''
+					fill.style.transitionDuration = ''
 				}
 				if (maxThumb) {
-					maxThumb.style.transition = ''
+					maxThumb.style.transitionDuration = ''
 				}
 				isTransitionClearedRef.current = true
 			}
@@ -80,8 +52,22 @@ export const useDragging = (inputValues: UseDraggingInputValues) => {
 	const handleMouseUp = useCallback((event: MouseEvent | TouchEvent) => {
 		event.preventDefault()
 
+		const minThumb = minThumbRef.current
+		const maxThumb = maxThumbRef.current
+		const fill = fillRef.current
+
 		setIsDragging(false)
-	}, [])
+
+		isTransitionClearedRef.current = false
+
+		if (minThumb && fill) {
+			minThumb.style.transitionDuration = '0.2s'
+			fill.style.transitionDuration = '0.2s'
+		}
+		if (maxThumb) {
+			maxThumb.style.transitionDuration = '0.2s'
+		}
+	}, [fillRef, maxThumbRef, minThumbRef])
 
 	useEffect(() => {
 		if (isDragging) {
@@ -101,14 +87,6 @@ export const useDragging = (inputValues: UseDraggingInputValues) => {
 				document.removeEventListener('mouseup', handleMouseUp)
 		}
 	}, [isDragging, isTouchDevice, handleMouseMove, handleMouseUp])
-
-	useEffect(() => {
-		return () => {
-			if (timeoutIdRef.current) {
-				clearTimeout(timeoutIdRef.current)
-			}
-		}
-	}, [])
 
 	return { isDragging, handleMouseDown }
 }
