@@ -16,8 +16,8 @@ import {
 	useLongTouch,
 	useTouchDevice,
 } from '@/shared/hooks'
-import type {
-	SetPositionPortalElementArgs,
+import {
+	setPositionPortalElement,
 	Position,
 } from '@/shared/lib/setPosition'
 import type { setPositionFollowCursorArgs } from '../lib'
@@ -67,9 +67,6 @@ export const Tooltip = (props: TooltipProps) => {
 	const localParentRef = useRef<HTMLElement>(null)
 	const parentRef = externalParentRef ? externalParentRef : localParentRef
 	const tooltipRef = useRef<HTMLDivElement>(null)
-	const setPositionRef = useRef<
-		((args: SetPositionPortalElementArgs) => void) | null
-	>(null)
 	const setPositionFollowCursorRef = useRef<
 		((args: setPositionFollowCursorArgs) => void) | null
 	>(null)
@@ -163,17 +160,12 @@ export const Tooltip = (props: TooltipProps) => {
 		[isClickableTooltip, handleClose, parentRef]
 	)
 
-	// Import change position function
+	// Import change position follow cursor function
 	useEffect(() => {
 		const loadPositioningFunction = async () => {
 			if (isFollowCursor) {
 				const { setPositionFollowCursor } = await import('../lib')
 				setPositionFollowCursorRef.current = setPositionFollowCursor
-			} else {
-				const { setPositionPortalElement } = await import(
-					'@/shared/lib/setPosition'
-				)
-				setPositionRef.current = setPositionPortalElement
 			}
 		}
 		loadPositioningFunction()
@@ -188,7 +180,7 @@ export const Tooltip = (props: TooltipProps) => {
 		if (!isVisible || !parent || !tooltip) return
 
 		const handleChangePosition = () => {
-			setPositionRef.current!({
+			setPositionPortalElement({
 				element: tooltip,
 				parent,
 				position,
