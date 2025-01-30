@@ -52,7 +52,7 @@ const UncontrolledSliderWrapper = (args: any) => {
 		>
 			<Slider
 				{...args}
-				value={[0, 100]}
+				defaultValue={[0, 100]}
 				min={0}
 				max={100}
 				minInputName="min-value"
@@ -74,14 +74,17 @@ const ControlledSliderWrapper = (args: any) => {
 
 	return (
 		<div style={{ display: 'flex', gap: '10px', width: '350px' }}>
+			<span>Min value: {value[0]}</span>
 			<Slider
 				value={value}
 				onChange={handleChange}
 				min={0}
 				max={100000}
 				step={1000}
+				debounceDelay={200}
 				{...args}
 			/>
+			<span>Max value: {value[1]}</span>
 		</div>
 	)
 }
@@ -89,7 +92,7 @@ const ControlledSliderWrapper = (args: any) => {
 export const Default: Story = {
 	render: (args) => SliderWrapper(args),
 	args: {
-		value: 0,
+		defaultValue: 0,
 		min: 0,
 		max: 100,
 		step: 1,
@@ -100,7 +103,7 @@ export const Default: Story = {
 export const WithMarkers: Story = {
 	render: (args) => SliderWrapper(args),
 	args: {
-		value: 40,
+		defaultValue: 40,
 		min: 40,
 		max: 200,
 		step: 40,
@@ -113,7 +116,7 @@ export const WithMarkers: Story = {
 export const WithCustomMarkers: Story = {
 	render: (args) => SliderWrapper(args),
 	args: {
-		value: 40,
+		defaultValue: 40,
 		min: 40,
 		max: 200,
 		step: 1,
@@ -131,7 +134,7 @@ export const WithCustomMarkers: Story = {
 export const CustomLabels: Story = {
 	render: (args) => SliderWrapper(args),
 	args: {
-		value: 0,
+		defaultValue: 0,
 		min: 0,
 		max: 2000,
 		step: 400,
@@ -146,7 +149,7 @@ export const CustomLabels: Story = {
 export const Range: Story = {
 	render: (args) => SliderWrapper(args),
 	args: {
-		value: [0, 1000],
+		defaultValue: [0, 1000],
 		min: 0,
 		max: 1000,
 		step: 100,

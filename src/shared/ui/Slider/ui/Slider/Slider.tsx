@@ -25,11 +25,13 @@ interface SliderProps extends AriaAttributes {
 	orientation?: SliderOrientation
 	tooltipPosition?: TooltipPosition
 	markerLabelPosition?: MarkerLabelPosition
-	value: ValueType
+	defaultValue?: ValueType
+	value?: ValueType
 	min: number
 	max: number
 	step?: number
 	minRange?: number
+	debounceDelay?: number
 	name?: string
 	minInputName?: string
 	maxInputName?: string
@@ -52,11 +54,13 @@ export const Slider = memo((props: SliderProps) => {
 		orientation = 'horizontal',
 		tooltipPosition = 'top',
 		markerLabelPosition = 'bottom',
+		defaultValue,
 		value: externalValue,
 		min = 1,
 		max = 100,
 		step = 1,
 		minRange = 1,
+		debounceDelay,
 		name = '',
 		minInputName,
 		maxInputName,
@@ -73,7 +77,7 @@ export const Slider = memo((props: SliderProps) => {
 		...otherProps
 	} = props
 
-	const [value, setValue] = useState<ValueType>(externalValue)
+	const [value, setValue] = useState<ValueType>(externalValue ? externalValue : defaultValue!)
 	const valueRef = useRef<ValueType>(value)
 	const { isTouchDevice } = useTouchDevice()
 
@@ -82,14 +86,27 @@ export const Slider = memo((props: SliderProps) => {
 	const maxThumbRef = useRef<HTMLDivElement>(null)
 	const fillRef = useRef<HTMLDivElement>(null)
 	const activeThumbIndexRef = useRef<0 | 1>(0)
+	const debounceTimeoutIdRef = useRef<NodeJS.Timeout | null>(null)
 	const isHorizontal = orientation === 'horizontal'
 
 	const onChange = useCallback(
 		(value: ValueType) => {
 			setValue(value)
-			externalOnChange?.(value, name)
+
+			if(externalOnChange) {
+				if(typeof debounceDelay === 'number' && debounceDelay > 0) {
+					if(debounceTimeoutIdRef.current) {
+						clearTimeout(debounceTimeoutIdRef.current)
+					}
+					debounceTimeoutIdRef.current = setTimeout(() => {
+						externalOnChange(value, name)
+					}, debounceDelay)
+				} else {
+					externalOnChange(value, name)
+				}
+			}
 		},
-		[externalOnChange, name]
+		[externalOnChange, name, debounceDelay]
 	)
 
 	const { handleChange } = useChangeValue({
@@ -140,22 +157,32 @@ export const Slider = memo((props: SliderProps) => {
 	}, [value])
 
 	useEffect(() => {
-		if (Array.isArray(externalValue)) {
-			const arrayValue = value as [number, number]
-
-			if (
-				externalValue[0] !== arrayValue[0] ||
-				externalValue[1] !== arrayValue[1]
-			) {
-				onChange(externalValue)
-			}
-		} else {
-			if (externalValue !== value) {
-				onChange(externalValue)
+		if(externalValue !== undefined) {
+			if (Array.isArray(externalValue)) {
+				const arrayValue = value as [number, number]
+	
+				if (
+					externalValue[0] !== arrayValue[0] ||
+					externalValue[1] !== arrayValue[1]
+				) {
+					setValue(externalValue)
+				}
+			} else {
+				if (externalValue !== value) {
+					setValue(externalValue)
+				}
 			}
 		}
 	// eslint-disable-next-line
 	}, [externalValue])
+
+	useEffect(() => {
+		return () => {
+			if(debounceTimeoutIdRef.current) {
+				clearTimeout(debounceTimeoutIdRef.current)
+			}
+		}
+	}, [])
 
 	const renderThumb = (
 		value: number,

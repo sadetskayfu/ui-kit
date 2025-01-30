@@ -53,6 +53,7 @@ const FieldWrapper = (args: any) => {
 			value={value}
 			onChange={handleChange}
 			onClear={handleClear}
+			debounceDelay={200}
 			{...args}
 		/>
 	)

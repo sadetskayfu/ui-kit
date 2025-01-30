@@ -106,8 +106,6 @@ export const useChangeValue = (args: UseChangeValueArgs) => {
 				onStopFilter()
 				onSelect(newSelectedValues)
 			}
-
-			console.log(selectedOptionsRef.current)
 		},
 		[
 			handleDeleteValue,

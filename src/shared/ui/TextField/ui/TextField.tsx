@@ -13,6 +13,7 @@ import {
 	ReactNode,
 	Suspense,
 	TextareaHTMLAttributes,
+	useCallback,
 	useEffect,
 	useId,
 	useRef,
@@ -39,6 +40,7 @@ interface BaseTextFieldProps {
 	disabled?: boolean
 	readonly?: boolean
 	required?: boolean
+	debounceDelay?: number
 	defaultWidth?: boolean
 	contentPadding?: boolean
 	isMultiline?: boolean
@@ -70,7 +72,7 @@ export interface TextFieldProps extends BaseTextFieldProps {
 export const TextField = memo((props: TextFieldProps) => {
 	const {
 		className,
-		value,
+		value: externalValue,
 		onChange,
 		onClear,
 		onBlur,
@@ -88,6 +90,7 @@ export const TextField = memo((props: TextFieldProps) => {
 		disabled,
 		readonly,
 		required,
+		debounceDelay,
 		defaultWidth,
 		contentPadding,
 		isMultiline,
@@ -99,9 +102,12 @@ export const TextField = memo((props: TextFieldProps) => {
 		textAreaProps,
 	} = props
 
+	const [localValue, setLocalValue] = useState<string | number | undefined>(externalValue)
+	const debounceTimeoutIdRef = useRef<NodeJS.Timeout | null>(null)
+
 	const [isFocused, setIsFocused] = useState<boolean>(false)
 
-	const isDirty = value !== ''
+	const isDirty = localValue !== ''
 
 	const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
 
@@ -109,11 +115,26 @@ export const TextField = memo((props: TextFieldProps) => {
 	const errorMessageId = useId()
 	const labelId = externalLabelId ? externalLabelId : localLabelId
 
-	const handleChange = (
+	const handleChange = useCallback((
 		event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 	) => {
-		onChange?.(event.target.value, event.target.name)
-	}
+		if(onChange) {
+			const newValue = event.target.value
+
+			setLocalValue(newValue)
+	
+			if(typeof debounceDelay === 'number' && debounceDelay > 0) {
+				if(debounceTimeoutIdRef.current) {
+					clearTimeout(debounceTimeoutIdRef.current)
+				}
+				debounceTimeoutIdRef.current = setTimeout(() => {
+					onChange(newValue, event.target.name)
+				}, debounceDelay)
+			} else {
+				onChange(newValue, event.target.name)
+			}
+		}
+	}, [onChange, debounceDelay])
 
 	const handleFocus = () => {
 		setIsFocused(true)
@@ -138,7 +159,23 @@ export const TextField = memo((props: TextFieldProps) => {
 
 			textarea.style.height = `${newHeight / 16}rem`
 		}
-	}, [value, isMultiline])
+	}, [localValue, isMultiline])
+
+	useEffect(() => {
+		if(externalValue !== localValue) {
+			
+			setLocalValue(externalValue)
+		}
+	// eslint-disable-next-line
+	}, [externalValue])
+
+	useEffect(() => {
+		return () => {
+			if (debounceTimeoutIdRef.current) {
+				clearTimeout(debounceTimeoutIdRef.current)
+			}
+		}
+	}, [])
 
 	const Actions = onClear
 		? [
@@ -160,7 +197,7 @@ export const TextField = memo((props: TextFieldProps) => {
 		: ExternalActions
 
 	const sharedProps = {
-		value,
+		value: localValue,
 		placeholder,
 		disabled,
 		readOnly: readonly,

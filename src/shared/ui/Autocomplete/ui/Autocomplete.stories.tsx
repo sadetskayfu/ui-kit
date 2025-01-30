@@ -169,6 +169,7 @@ const SingleAutocompleteWrapper = (args: any) => {
 					label="Label"
 					placeholder="Placeholder..."
 					Actions={actions}
+					debounceDelay={200}
 					{...params}
 				/>
 			)}
@@ -201,6 +202,7 @@ const MultiAutocompleteWrapper = (args: any) => {
 					size="large"
 					label="Label"
 					placeholder="Placeholder..."
+					debounceDelay={200}
 					Actions={actions}
 					{...params}
 				/>
@@ -280,6 +282,7 @@ const LocationAutocompleteWrapper = (args: any) => {
 						size="large"
 						label="Location"
 						placeholder="Select location..."
+						debounceDelay={200}
 						Actions={[
 							isLoading ? <CircularProgress size="medium" /> : undefined,
 							...actions,
@@ -354,6 +357,7 @@ const ControlledAutocompleteWrapper = (args: any) => {
 						size="large"
 						label="Label"
 						placeholder="Placeholder..."
+						debounceDelay={200}
 						Actions={[
 							isLoading ? <CircularProgress size="medium" /> : undefined,
 							...actions,
