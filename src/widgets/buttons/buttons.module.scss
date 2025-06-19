@@ -1,0 +1,11 @@
+@use '@/app/styles/helpers' as *;
+
+.button-list {
+	display: grid;
+	gap: 10px;
+	grid-template-columns: repeat(6, 1fr);
+
+	@include max-width(1000) {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}

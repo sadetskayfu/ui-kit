@@ -1,0 +1,113 @@
+:root {
+	--container-width: 1600px;
+	--container-padding-x: 16px;
+
+	--font-size-1: 14px;
+	--font-size-2: 16px;
+
+	--border-radius-s: 2px;
+	--border-radius-m: 9px;
+	--border-radius-full: 999px;
+
+	--border-weight-soft: 1px;
+	--border-weight-hard: 2px;
+
+	--button-height-s: 35px;
+	--button-padding-inline-s: 12px;
+
+	--button-height-m: 45px;
+	--button-padding-inline-m: 16px;
+
+	--button-height-l: 55px;
+	--button-padding-inline-l: 20px;
+
+	--icon-size-s: calc(var(--button-height-s) / 2);
+	--icon-size-m: calc(var(--button-height-m) / 2);
+	--icon-size-l: calc(var(--button-height-l) / 2);
+
+	// Colors
+	--color-dark: #141414;
+	--color-light: #fff;
+
+	--primary-hue: 262;
+	--primary-saturation: 33%;
+	--primary-lightness: 35%;
+	--color-primary-800: #4f3c70; // border dark theme
+	--color-primary-600: ; // main light theme
+	--color-primary-500: #b28bf5; // main dark theme
+	--color-primary-300: ; // border light theme
+	--color-primary-opacity-soft: hsla(
+		var(--primary-hue),
+		var(--primary-saturation),
+		var(--primary-lightness),
+		0.1
+	); // hover
+	--color-primary-opacity-medium: hsla(
+		var(--primary-hue),
+		var(--primary-saturation),
+		var(--primary-lightness),
+		0.2
+	); // selected
+	--color-primary-opacity-hard: hsla(
+		var(--primary-hue),
+		var(--primary-saturation),
+		var(--primary-lightness),
+		0.3
+	); // hover on selected
+
+	--grey-hue: 262;
+	--grey-saturation: 33%;
+	--grey-lightness: 35%;
+	--color-grey-900: ;
+	--color-grey-800: #707070;; // border dark theme
+	--color-grey-600: ; // main light theme
+	--color-grey-500: ; // main dark theme
+	--color-grey-300: ; // border light theme
+	--color-grey-200: ;
+	--color-grey-opacity-soft: hsla(
+		var(--grey-hue),
+		var(--grey-saturation),
+		var(--grey-lightness),
+		0.1
+	); // hover
+	--color-grey-opacity-medium: hsla(
+		var(--grey-hue),
+		var(--grey-saturation),
+		var(--grey-lightness),
+		0.2
+	); // selected
+	--color-grey-opacity-hard: hsla(
+		var(--grey-hue),
+		var(--grey-saturation),
+		var(--grey-lightness),
+		0.3
+	); // hover on selected
+
+	--red-hue: 262;
+	--red-saturation: 33%;
+	--red-lightness: 35%;
+	--color-red-800: ; // border dark theme
+	--color-red-600: ; // main light theme
+	--color-red-500: ; // main dark theme
+	--color-red-300: ; // border light theme
+	--color-red-opacity-soft: hsla(
+		var(--red-hue),
+		var(--red-saturation),
+		var(--red-lightness),
+		0.1
+	); // hover
+
+	--green-hue: 262;
+	--green-saturation: 33%;
+	--green-lightness: 35%;
+	--color-green-800: ; // border dark theme
+	--color-green-600: ; // main light theme
+	--color-green-500: ; // main dark theme
+	--color-green-300: ; // border light theme
+	--color-green-opacity-soft: hsla(
+		var(--green-hue),
+		var(--green-saturation),
+		var(--green-lightness),
+		0.1
+	); // hover
+}

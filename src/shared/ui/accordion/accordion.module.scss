@@ -1,0 +1,58 @@
+.accordion {
+    --paddingInline: 34px;
+	--paddingBlock: 24px;
+    width: 100%;
+	border-radius: var(--border-radius-m);
+	border: var(--border-weight-soft) solid var(--border-color-grey);
+
+    &.variant-filled {
+		background-color: var(--theme-color-grey-dark);
+	}
+	&.variant-outlined {
+		background-color: transparent;
+	}
+}
+
+.header {
+    position: relative;
+    width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: transparent;
+	column-gap: var(--paddingInline);
+	padding-block: var(--paddingBlock);
+	padding-inline: var(--paddingInline);
+	cursor: pointer;
+	border: none;
+    color: var(--font-color-hard);
+    transition: color 0.2s;
+    &:after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 50%;
+		translate: -50%;
+		height: var(--border-weight-soft);
+		width: 0%;
+		transition-duration: 0.2s;
+		background-color: var(--border-color-grey);
+	}
+    @include hover {
+		color: var(--theme-color-primary-main);
+	}
+    &:focus-visible {
+        color: var(--theme-color-primary-main);
+        @include outline-inset;
+    }
+    &[data-open] {
+		&:after {
+			width: calc(100% - var(--paddingInline) * 2);
+		}
+	}
+}
+
+.body {
+    padding-block: var(--paddingBlock);
+	padding-inline: var(--paddingInline);
+}

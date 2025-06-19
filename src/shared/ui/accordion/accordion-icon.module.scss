@@ -1,0 +1,34 @@
+.accordion-icon {
+	--accordionIconColor: var(--theme-color-primary-main);
+	--accordionIconTransitionDuration: 0.4s;
+	position: relative;
+	height: var(--icon-size-s);
+	width: var(--icon-size-s);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	&:before {
+		content: '';
+		width: 100%;
+		height: 1.5px;
+		background-color: var(--accordionIconColor);
+		transition: background-color var(--accordionIconTransitionDuration);
+	}
+	&:after {
+		content: '';
+		position: absolute;
+		height: 100%;
+		width: 1.5px;
+		opacity: 1;
+		background-color: var(--accordionIconColor);
+		transition:
+			background-color var(--accordionIconTransitionDuration),
+			opacity var(--accordionIconTransitionDuration);
+	}
+    &.open {
+        --accordionIconColor: var(--border-color-grey);
+        &:after {
+            opacity: 0;
+        }
+    }
+}

@@ -1,0 +1,57 @@
+.ripple-wrapper {
+	position: absolute;
+	inset: 0;
+	color: inherit;
+	overflow: hidden;
+	pointer-events: none;
+
+	&.size-default {
+		.ripple {
+			animation: ripple-default forwards;
+		}
+	}
+	&.size-small {
+		.ripple {
+			animation: ripple-small forwards;
+		}
+	}
+}
+
+.ripple {
+	position: absolute;
+	width: 0%;
+	aspect-ratio: 1;
+	top: 50%;
+	left: 50%;
+	translate: -50% -50%;
+	background-color: currentColor;
+	border-radius: 50%;
+}
+
+@keyframes ripple-default {
+	0% {
+		width: 0%;
+		opacity: 0.8;
+	}
+	20% {
+		opacity: 0.1;
+	}
+	100% {
+		width: 300%;
+		opacity: 0;
+	}
+}
+
+@keyframes ripple-small {
+	0% {
+		width: 0%;
+		opacity: 0.8;
+	}
+	20% {
+		opacity: 0.1;
+	}
+	100% {
+		width: 110%;
+		opacity: 0;
+	}
+}

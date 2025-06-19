@@ -1,0 +1,23 @@
+.overlay {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	&:not(.variant-transparent) {
+		opacity: 0;
+		transition: opacity 0.2s;
+		&.open {
+			opacity: 1;
+		}
+		&.close {
+			opacity: 0;
+		}
+	}
+
+	&.variant-transparent {
+		background-color: transparent;
+	}
+	&.variant-dark {
+		background-color: var(--color-dark-opacity);
+	}
+}

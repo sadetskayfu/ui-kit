@@ -1,0 +1,31 @@
+.theme-color-light {
+	--theme-color-dark: var(--color-light);
+	--theme-color-light: var(--color-dark);
+
+	--font-color-hard: var(--color-dark);
+	--font-color-hard-invert: var(--color-light);
+	--font-color-soft: var(--color-grey-600);
+	--font-color-soft-invert: var(--color-grey-500);
+
+	--box-shadow-paper: 0 0 5px hsla(
+		var(--grey-hue),
+		var(--grey-saturation),
+		var(--grey-lightness),
+		0.5
+	); // shadow for dropdown
+	--color-dark-opacity: hsla(0, 0, 0, 0.5); // overlay
+
+	--theme-color-primary-main: var(--color-primary-600);
+	--border-color-primary: var(--color-primary-300);
+	
+	--theme-color-grey-dark: var(--color-grey-200);
+	--theme-color-grey-light: var(--color-grey-300);
+	--theme-color-grey-main: var(--color-grey-600);
+	--border-color-grey: var(--color-grey-300);
+
+	--theme-color-red-main: var(--color-red-600);
+	--border-color-red: var(--color-red-300);
+
+	--theme-color-green-main: var(--color-green-600);
+	--border-color-green: var(--color-green-300);
+}

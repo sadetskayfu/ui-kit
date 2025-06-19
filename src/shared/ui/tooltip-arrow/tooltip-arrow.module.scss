@@ -1,0 +1,25 @@
+.arrow {
+	position: absolute;
+	width: 12px;
+	height: 12px;
+	background-color: inherit;
+	box-shadow: var(--box-shadow-paper);
+	clip-path: polygon(0 0, 0 100%, 100% 100%);
+
+	&.top {
+		transform: rotate(-45deg);
+		bottom: -5px;
+	}
+	&.bottom {
+		transform: rotate(-225deg);
+		top: -5px;
+	}
+	&.left {
+		transform: rotate(-135deg);
+		right: -5px;
+	}
+	&.right {
+		transform: rotate(-315deg);
+		left: -5px;
+	}
+}

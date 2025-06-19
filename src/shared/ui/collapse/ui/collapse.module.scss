@@ -1,0 +1,8 @@
+.collapse {
+	height: 0px;
+	overflow: hidden;
+
+	&.fade {
+		opacity: 0;
+	}
+}

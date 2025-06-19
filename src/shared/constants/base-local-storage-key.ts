@@ -1,0 +1,1 @@
+export const BASE_LOCAL_STORAGE_KEY = 'yar-ui-kit'

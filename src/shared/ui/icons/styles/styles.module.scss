@@ -1,0 +1,25 @@
+.icon {
+	height: 1em;
+	aspect-ratio: 1;
+	flex-shrink: 0;
+
+	&.color-inherit {
+		color: currentColor;
+	}
+	&.color-primary {
+		color: var(--theme-color-primary-main);
+	}
+
+	&.size-inherit {
+		font-size: inherit;
+	}
+	&.size-s {
+        font-size: var(--icon-size-s);
+	}
+	&.size-m {
+        font-size: var(--icon-size-m);
+	}
+	&.size-l {
+        font-size: var(--icon-size-l);
+	}
+}

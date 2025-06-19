@@ -1,0 +1,39 @@
+.circular-progress {
+	--color: ;
+	position: relative;
+	display: inline-block;
+	border-radius: 50%;
+	&.color-primary {
+		--color: var(--theme-color-primary-main);
+	}
+	&.color-secondary {
+		--color: var(--theme-color-grey-main);
+	}
+	&.color-inherit {
+		color: inherit;
+		--color: currentColor;
+	}
+
+	&.abs-center {
+		@include abs-center;
+	}
+}
+
+.svg {
+	width: inherit;
+	height: inherit;
+	transform: rotate(-90deg);
+}
+
+.circle {
+	stroke: var(--color);
+	fill: transparent;
+	transition: stroke-dashoffset 0.4s;
+}
+
+.label {
+	@include abs-center;
+	@include user-select-off;
+	white-space: nowrap;
+	color: inherit;
+}

@@ -1,0 +1,1 @@
+export { GearIcon } from './ui/gear-icon'

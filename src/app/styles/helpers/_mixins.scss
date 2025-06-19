@@ -1,0 +1,40 @@
+@mixin abs-center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	translate: -50% -50%;
+}
+
+@mixin visually-hidden {
+	position: absolute !important;
+	width: 1px !important;
+	height: 1px !important;
+	margin: -1px !important;
+	border: 0 !important;
+	padding: 0 !important;
+	white-space: nowrap !important;
+	clip-path: inset(100%) !important;
+	clip: rect(0 0 0 0) !important;
+	overflow: hidden !important;
+}
+
+@mixin user-select-off {
+	-webkit-user-select: none; /* Chrome/Safari */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+}
+
+@mixin disabled {
+	pointer-events: none;
+	opacity: 0.5;
+}
+
+@mixin outline {
+	outline: 2px solid var(--theme-color-primary-main);
+	outline-offset: 2px;
+}
+
+@mixin outline-inset {
+	outline: 2px solid var(--theme-color-primary-main);
+	outline-offset: -10px;
+}

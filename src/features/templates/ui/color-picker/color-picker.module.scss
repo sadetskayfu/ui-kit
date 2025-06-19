@@ -1,0 +1,43 @@
+.color-picker {
+	--colorPickerBgColor: var(--theme-color-dark);
+	position: relative;
+	height: 45px;
+	display: flex;
+	justify-content: space-between;
+	column-gap: 15px;
+	align-items: center;
+	padding-block: 1px;
+	padding-right: 1px;
+	padding-left: 15px;
+	border-radius: var(--border-radius-full);
+	background-color: var(--colorPickerBgColor);
+	color: var(--font-color-hard);
+	white-space: nowrap;
+}
+
+.button {
+	height: 100%;
+	aspect-ratio: 1;
+	border-radius: 50%;
+	border: none;
+	cursor: pointer;
+	&:focus-visible {
+		@include outline;
+	}
+}
+
+.color-label {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	translate: -50% -50%;
+	background-color: var(--colorPickerBgColor);
+	padding-inline: 8px;
+	color: inherit;
+	border-radius: 5px;
+}
+
+.popover {
+	//background-color: var(--theme-color)
+	padding: 10px;
+}
