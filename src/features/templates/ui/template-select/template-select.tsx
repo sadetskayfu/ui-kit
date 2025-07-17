@@ -1,35 +1,56 @@
 import { Button } from '@/shared/ui/button';
 import { useTemplatesStore } from '../../model/templates-store';
 import { Popover, PopoverContent, PopoverTrigger } from '@/shared/ui/popover';
-import { useState } from 'react';
+import { memo, useMemo } from 'react';
+import { TemplateItem } from './template-item/template-item';
+import { CreateTemplateItem } from './create-template-item/create-template-item';
+import { ArrowIcon } from '@/shared/ui/icons';
+import styles from './template-select.module.scss';
 
-export const TemplateSelect = () => {
-	const [isOpen, setIsOpen] = useState<boolean>(false);
-
-	const { templates, activeTemplateId, selectTemplate } = useTemplatesStore();
+export const TemplateSelect = memo(() => {
+	const templates = useTemplatesStore(state => state.templates);
+	const activeTemplateId = useTemplatesStore(state => state.activeTemplateId);
 
 	const activeTemplate = templates.find(template => template.id === activeTemplateId);
 
-	const renderOptions = () => {
-		return templates.map(template => (
-			<button
-				disabled={template.id === activeTemplateId}
-				onClick={() => selectTemplate(template.id)}
-				key={template.id}
-			>
-				{template.name}
-			</button>
-		));
-	};
+	const renderedItems = useMemo(() => {
+		const templateNames: string[] = [];
+
+		return templates.map(template => {
+			const matches = templateNames.filter(name => name === template.name).length;
+
+			templateNames.push(template.name);
+
+			return (
+				<TemplateItem
+					key={template.id}
+					id={template.id}
+					name={template.name}
+					displayName={matches > 0 ? `${template.name} (${matches})` : template.name}
+					active={template.id === activeTemplateId}
+					disableDelete={templates.length === 1}
+				/>
+			);
+		});
+	}, [templates, activeTemplateId]);
 
 	return (
-		<Popover open={isOpen} setOpen={setIsOpen}>
+		<Popover modal placement="bottom-start">
 			<PopoverTrigger>
-				<Button>{activeTemplate?.name || 'Default template'}</Button>
+				<Button className={styles['popover-trigger']}>
+					{activeTemplate?.name || 'Default template'}{' '}
+					<ArrowIcon direction="bottom" size="xs" />
+				</Button>
 			</PopoverTrigger>
-			<PopoverContent>
-				<div>{renderOptions()}</div>
+			<PopoverContent
+				className={styles['popover']}
+				contentClassName={styles['popover-content']}
+			>
+				<div className={styles['template-item-list']}>{renderedItems}</div>
+				<div className={styles['popover-footer']}>
+					<CreateTemplateItem />
+				</div>
 			</PopoverContent>
 		</Popover>
 	);
-};
+});

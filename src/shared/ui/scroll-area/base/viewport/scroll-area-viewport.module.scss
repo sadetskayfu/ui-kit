@@ -1,0 +1,8 @@
+.base-viewport {
+	scrollbar-width: none;
+	overflow: scroll;
+}
+
+.base-viewport::-webkit-scrollbar {
+	display: none;
+}

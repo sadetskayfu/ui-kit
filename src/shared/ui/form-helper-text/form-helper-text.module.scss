@@ -1,0 +1,8 @@
+.form-helper-text {
+    font-size: var(--font-size-2);
+    color: var(--font-color-soft);
+
+    &.errored {
+        color: var(--theme-color-red-main);
+    }
+}

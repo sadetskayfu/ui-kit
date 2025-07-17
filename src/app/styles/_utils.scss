@@ -9,3 +9,27 @@
 .visually-hidden {
 	@include visually-hidden;
 }
+
+.fc-soft {
+	color: var(--font-color-soft);
+}
+.fc-hard {
+	color: var(--font-color-hard);
+}
+
+
+.fz-1 {
+	font-size: var(--font-size-1);
+}
+.fz-2 {
+	font-size: var(--font-size-2);
+}
+.fz-3 {
+	font-size: var(--font-size-3);
+}
+.fz-4 {
+	font-size: var(--font-size-4);
+}
+.fz-5 {
+	font-size: var(--font-size-5);
+}

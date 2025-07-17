@@ -1,18 +1,17 @@
 import { classNames, type AdditionalClasses } from '@/shared/helpers/class-names';
-import type { Ripple as RippleType } from '../model/ripple';
 import { forwardRef } from 'react';
+import type { Ripple as RippleType } from '../model/ripple';
 import styles from './ripple.module.scss';
 
-type RippleSize = 'default' | 'small';
-
 interface RippleProps {
-	ripples?: RippleType[];
-	size?: RippleSize;
+	ripples: RippleType[];
+	size?: 'default' | 'small';
+	removeRipple: (rippleId: number) => void;
 }
 
 export const Ripple = forwardRef(
 	(
-		{ ripples, size = 'default' }: RippleProps,
+		{ ripples, size = 'default', removeRipple }: RippleProps,
 		ref: React.ForwardedRef<HTMLSpanElement>
 	) => {
 		const additionalClasses: AdditionalClasses = [styles[`size-${size}`]];
@@ -22,14 +21,21 @@ export const Ripple = forwardRef(
 				{ripples &&
 					ripples.map(ripple => (
 						<span
-							className={styles['ripple']}
+							className={classNames(styles['ripple'], [], {
+								[styles['fade']]: ripple.isRemove,
+							})}
 							key={ripple.id}
 							style={{
 								top: ripple.y,
 								left: ripple.x,
 								animationDuration: `${size === 'default' ? 1000 : 600}ms`,
 							}}
-						></span>
+							onTransitionEnd={event => {
+								if (event.propertyName === 'opacity') {
+									removeRipple(ripple.id);
+								}
+							}}
+						/>
 					))}
 			</span>
 		);

@@ -1,3 +1,7 @@
-export function applyStyles(element: HTMLElement, styles: Partial<CSSStyleDeclaration>) {
-	Object.assign(element.style, styles);
+
+export function applyStyles(element: HTMLElement | null, styles: Partial<CSSStyleDeclaration>) {
+	if(element) {
+		Object.assign(element.style, styles);
+	}
 }
+

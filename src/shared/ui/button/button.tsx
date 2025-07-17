@@ -9,8 +9,9 @@ import {
 } from 'react';
 import { classNames, type AdditionalClasses, type Mods } from '@/shared/helpers/class-names';
 import { Ripple, useRipple } from '@/shared/lib/ripple';
-import { mergeEventHandlers } from '@/shared/helpers/merge-event-handlers/merge-event-handlers';
 import { CircularProgress } from '@/shared/ui/circular-progress';
+import type { ButtonContextType } from './model/button-context';
+import { useButtonContext } from './model/use-button-context';
 import styles from './button.module.scss';
 
 type HTMLProps = HTMLAttributes<HTMLElement>;
@@ -20,26 +21,14 @@ type HTMLButtonProps = Omit<
 >;
 type HTMLLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof HTMLProps | 'href'>;
 
-type ButtonVariant = 'filled' | 'outlined' | 'clear';
-type ButtonSize = 's' | 'm' | 'l';
-type ButtonColor = 'primary' | 'secondary' | 'red' | 'green';
-type BorderPlacement = 'left' | 'right' | 'top' | 'bottom' | 'all';
-type BorderRadius = 'm' | 'full' | 'circular' | 'none';
-
-interface ButtonProps extends HTMLProps {
+interface ButtonProps extends ButtonContextType, Omit<HTMLProps, 'color'> {
 	type?: 'submit' | 'reset' | 'button';
 	buttonProps?: HTMLButtonProps;
 	linkProps?: HTMLLinkProps;
 	to?: string;
 	linkComponent?: ReactElement<HTMLProps>;
-	variant?: ButtonVariant;
-	color?: ButtonColor;
-	size?: ButtonSize;
-	borderPlacement?: BorderPlacement;
-	borderRadius?: BorderRadius;
-	disabled?: boolean;
 	loading?: boolean;
-	iconButton?: boolean;
+	fullWidth?: boolean
 }
 
 export const Button = memo(
@@ -53,45 +42,62 @@ export const Button = memo(
 				linkProps,
 				to,
 				linkComponent,
-				variant = 'filled',
-				color = 'primary',
-				size = 'm',
-				borderPlacement = 'all',
-				borderRadius = 'm',
-				disabled: isDisabled,
+				variant,
+				color,
+				size,
+				borderPlacement,
+				borderRadius,
+				iconButton,
+				disabled,
 				loading: isLoading,
-				iconButton: isIconButton,
+				fullWidth: isFullWidth,
 				onKeyUp,
+				onKeyDown,
 				onMouseUp,
+				onMouseDown,
+				onMouseLeave,
+				onBlur,
 				...otherProps
 			} = props;
 
-			const { ripples, containerRef, handleKeyUp, handleMouseUp } = useRipple();
+			const { ripples, containerRef, removeRipple, ...handlers } = useRipple({
+				onKeyDown,
+				onKeyUp,
+				onMouseDown,
+				onMouseLeave,
+				onMouseUp,
+				onBlur,
+			});
+
+			const context = useButtonContext();
+
+			const isDisabled = disabled || context?.disabled || false;
+			const isIconButton = iconButton || context?.iconButton || false;
 
 			const additionalClasses: AdditionalClasses = [
 				className,
-				styles[`variant-${variant}`],
-				styles[`color-${color}`],
-				styles[`size-${size}`],
-				styles[`border-placement-${borderPlacement}`],
-				styles[`border-radius-${borderRadius}`],
+				styles[`variant-${variant || context?.variant || 'filled'}`],
+				styles[`color-${color || context?.color || 'primary'}`],
+				styles[`size-${size || context?.size || 'm'}`],
+				styles[`border-placement-${borderPlacement || context?.borderPlacement || 'all'}`],
+				styles[`border-radius-${borderRadius || context?.borderRadius || 'm'}`],
 			];
 
 			const mods: Mods = {
 				[styles['disabled']]: isDisabled,
 				[styles['loading']]: isLoading,
 				[styles['icon-button']]: isIconButton,
+				[styles['full-width']]: isFullWidth
 			};
 
 			if (linkComponent) {
 				return cloneElement(linkComponent, {
 					className: classNames(styles['button'], additionalClasses, mods),
 					children,
-					onKeyUp,
-					onMouseUp,
 					'aria-disabled': isDisabled ? 'true' : undefined,
 					...otherProps,
 					...linkProps,
+					...handlers,
 				});
 			}
 
@@ -102,10 +108,9 @@ export const Button = memo(
 						className={classNames(styles['button'], additionalClasses, mods)}
 						href={to}
 						aria-disabled={isDisabled ? 'true' : undefined}
-						onKeyUp={onKeyUp}
-						onMouseUp={onMouseUp}
 						{...linkProps}
 						{...otherProps}
+						{...handlers}
 					>
 						{children}
 					</a>
@@ -118,24 +123,24 @@ export const Button = memo(
 					className={classNames(styles['button'], additionalClasses, mods)}
 					type={type}
 					disabled={isDisabled}
-					onMouseUp={mergeEventHandlers([onMouseUp, handleMouseUp])}
-					onKeyUp={mergeEventHandlers([onKeyUp, handleKeyUp])}
 					{...buttonProps}
 					{...otherProps}
+					{...handlers}
 				>
 					{children}
 					{isLoading && (
 						<CircularProgress
 							className={styles['loader']}
-							size='s'
-							color='inherit'
+							size="s"
+							color="inherit"
 							absCenter
 						/>
 					)}
 					<Ripple
-						size={isIconButton ? 'small' : 'default'}
 						ref={containerRef}
 						ripples={ripples}
+						size={isIconButton ? 'small' : 'default'}
+						removeRipple={removeRipple}
 					/>
 				</button>
 			);

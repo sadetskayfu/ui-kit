@@ -1,4 +1,4 @@
-type IconSize = "s" | "m" | "l" | "inherit";
+type IconSize = "xs" | "s" | "m" | "l" | "inherit";
 type IconColor = 'primary' | 'inherit'
 
 export interface IconProps {

@@ -9,12 +9,11 @@ interface OverlayProps {
 	children?: ReactNode;
 	open?: boolean;
 	close?: boolean;
-	zIndex?: number;
 	variant?: OverlayVariant;
 }
 
 export const Overlay = (props: OverlayProps) => {
-	const { children, open, close, variant = 'dark', zIndex = 1500 } = props;
+	const { children, open, close, variant = 'dark' } = props;
 
 	const additionalClasses: AdditionalClasses = [styles[`variant-${variant}`]];
 
@@ -26,7 +25,6 @@ export const Overlay = (props: OverlayProps) => {
 	return (
 		<FloatingOverlay
 			className={classNames(styles['overlay'], additionalClasses, mods)}
-			style={{ zIndex }}
 		>
 			{children}
 		</FloatingOverlay>

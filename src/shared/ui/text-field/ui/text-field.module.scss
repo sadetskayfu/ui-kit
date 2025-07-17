@@ -1,0 +1,33 @@
+.field {
+    cursor: text;
+	&.dirty {
+		&:not(.readonly) {
+			@include hover {
+				.clear-button {
+					opacity: 1;
+					pointer-events: all;
+				}
+			}
+			&.focused {
+				.clear-button {
+					opacity: 1;
+					pointer-events: all;
+				}
+			}
+		}
+	}
+}
+
+.input {
+	color: var(--font-color-hard);
+	background-color: transparent;
+	text-overflow: ellipsis;
+	&::placeholder {
+		color: var(--font-color-soft);
+	}
+}
+
+.clear-button {
+	opacity: 0;
+	pointer-events: none;
+}

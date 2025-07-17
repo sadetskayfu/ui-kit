@@ -1,0 +1,35 @@
+.list-item {
+    --hoveredBgColor: var(--color-grey-opacity-soft);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding: 0px;
+    display: flex;
+    background-color: transparent;
+    color: inherit;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color 0.2s, color 0.2s;
+    @include user-select-off;
+
+    &:focus-visible {
+        @include outline-inset;
+    }
+    &.disabled {
+        @include disabled;
+    }
+    &.pressed {
+        --hoveredBgColor: var(--color-primary-opacity-hard);
+        background-color: var(--color-primary-opacity-medium);  
+    }
+    @include hover {
+        background-color: var(--hoveredBgColor);
+    }
+    &.border-radius-m {
+        border-radius: var(--border-radius-m);
+    }
+    &.border-radius-none {
+        border-radius: 0px;
+    }
+}

@@ -1,0 +1,1 @@
+export * as BaseScrollArea from './index.parts'

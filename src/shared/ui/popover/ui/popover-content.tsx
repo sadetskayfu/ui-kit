@@ -12,12 +12,11 @@ interface PopoverContentProps {
 	contentClassName?: string;
 	children: ReactNode;
 	style?: React.CSSProperties;
-	zIndex?: number;
 	id?: string; // If we don't using PopoverTrigger, we can provider id for content body
 }
 
 export const PopoverContent = (props: PopoverContentProps) => {
-	const { className, contentClassName, children, style, id, zIndex = 1500 } = props;
+	const { className, contentClassName, children, style, id } = props;
 
 	const {
 		context,
@@ -77,7 +76,7 @@ export const PopoverContent = (props: PopoverContentProps) => {
 
 	return (
 		<FloatingPortal root={portalTargetRef}>
-			{modal && <Overlay variant="transparent" />}
+			{ modal && <Overlay variant="transparent" /> }
 			<FloatingFocusManager
 				initialFocus={initialFocusValue}
 				returnFocus={false}
@@ -87,7 +86,7 @@ export const PopoverContent = (props: PopoverContentProps) => {
 				<div
 					className={classNames(styles['popover'], [className])}
 					ref={refs.setFloating}
-					style={{ ...floatingStyles, zIndex }}
+					style={floatingStyles}
 					role="presentation"
 				>
 					<RemoveScroll enabled={removeScroll}>

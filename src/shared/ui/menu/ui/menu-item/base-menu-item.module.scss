@@ -1,0 +1,23 @@
+.menu-item {
+    --menuItemFontColor: ;
+    width: 100%;
+    position: relative;
+    background-color: transparent;
+    border: none;
+    padding: 0px;
+    color: var(--menuItemFontColor);
+    border-radius: var(--border-radius-m);
+    cursor: pointer;
+    overflow: hidden;
+
+    &.disabled {
+        @include disabled;
+    }
+    &:focus {
+        background-color: var(--color-grey-opacity-medium);
+    }
+    &[data-open] {
+        background-color: var(--color-grey-opacity-soft);
+        --menuItemFontColor: var(--theme-color-primary-main);
+    }
+}

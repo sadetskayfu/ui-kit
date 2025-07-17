@@ -1,0 +1,14 @@
+.template-list-item-content {
+    padding-block: 0px;
+    height: var(--field-height-m);
+}
+
+.option-button {
+    &[data-open] {
+        color: var(--theme-color-primary-main);
+    }
+}
+
+.list-item-actions {
+    margin-right: calc(var(--button-height-s) / 4 * -1);
+}

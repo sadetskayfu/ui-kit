@@ -1,0 +1,9 @@
+.base-thumb {
+    &.orientation-vertical {
+        height: var(--scroll-area-thumb-height);
+    }
+
+    &.orientation-horizontal {
+        width: var(--scroll-area-thumb-width);
+    }
+}

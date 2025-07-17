@@ -7,7 +7,7 @@
 	padding-block: 0px;
 	padding-inline: var(--buttonPaddingInline);
 	cursor: pointer;
-	transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+	transition: background-color 0.2s, color 0.2s, border-color 0.2s, opacity 0.2s;
 	overflow: hidden;
 	display: flex;
 	align-items: center;
@@ -17,12 +17,9 @@
 	&:focus-visible {
 		@include outline;
 	}
-	&:active {
-		transform: scale(0.99);
-	}
 
 	&:not(.icon-button) {
-		column-gap: calc(var(--buttonPaddingInline) / 3);
+		column-gap: calc(var(--buttonPaddingInline) / 2);
 	}
 	&.icon-button {
 		--padding-inline: 0px !important;
@@ -31,15 +28,21 @@
 		flex-shrink: 0;
 	}
 
+	&.full-width {
+		width: 100%;
+	}
+
+	&.size-xs {
+		--buttonPaddingInline: var(--button-padding-inline-xs);
+		--buttonHeight: var(--button-height-xs);
+	}
 	&.size-s {
 		--buttonPaddingInline: var(--button-padding-inline-s);
 		--buttonHeight: var(--button-height-s);
-		
 	}
 	&.size-m {
 		--buttonPaddingInline: var(--button-padding-inline-m);
-		--buttonHeight: var(--button-height-m);
-		
+		--buttonHeight: var(--button-height-m);	
 	}
 	&.size-l {
 		--buttonPaddingInline: var(--button-padding-inline-l);

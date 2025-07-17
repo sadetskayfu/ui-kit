@@ -20,11 +20,6 @@
 			opacity 0.2s,
 			transform 0.2s;
 	}
-	&.instant-phase {
-		transition:
-			opacity 0.1s,
-			transform 0.1s;
-	}
 	&.open {
 		opacity: 1;
 		transform: scale(1);
@@ -33,5 +28,9 @@
 		opacity: 0;
 		transform: scale(0.8);
 		pointer-events: none;
+	}
+
+	&.centering-text {
+		text-align: center;
 	}
 }

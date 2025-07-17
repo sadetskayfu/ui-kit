@@ -13,6 +13,7 @@ export interface UseDialogProps {
 	returnFocus?: boolean | React.RefObject<HTMLElement | null>; // By default on reference element
     portalTargetRef?: React.RefObject<HTMLElement | null>;
     removeScroll?: boolean
+	disableDefaultClick?: boolean
 	open?: boolean
 	setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -24,6 +25,7 @@ export const useDialog = (props: UseDialogProps) => {
 		returnFocus = true,
         portalTargetRef,
         removeScroll = true,
+		disableDefaultClick,
 		open: controlledOpen,
 		setOpen: setControlledOpen,
 	} = props
@@ -43,7 +45,7 @@ export const useDialog = (props: UseDialogProps) => {
 	const context = data.context
 
 	const click = useClick(context, {
-		enabled: controlledOpen == null,
+		enabled: !disableDefaultClick,
 	})
 	const dismiss = useDismiss(context)
 	const role = useRole(context, { role: 'dialog' })

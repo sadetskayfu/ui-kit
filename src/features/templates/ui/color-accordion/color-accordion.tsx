@@ -13,6 +13,8 @@ export const ColorAccordion = memo(({ title, variables: cssVariables }: ColorAcc
 	const variables = useTemplatesStore(state => state.templates[0]?.variables || {});
 	const setVariable = useTemplatesStore(state => state.setColorVariable);
 
+	console.log(variables)
+
 	const renderItems = useMemo(() => {
 		return cssVariables.map(cssVariable => (
 			<ColorPicker

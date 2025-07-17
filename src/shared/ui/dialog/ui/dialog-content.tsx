@@ -23,11 +23,10 @@ export const DialogContent = (props: DialogContentProps) => {
 		refs,
 		labelId,
 		descriptionId,
-		floatingStyles,
 		initialFocus,
 		returnFocus,
 		removeScroll,
-        portalTargetRef,
+		portalTargetRef,
 		getFloatingProps,
 	} = useDialogContext();
 
@@ -62,35 +61,36 @@ export const DialogContent = (props: DialogContentProps) => {
 
 	return (
 		<FloatingPortal root={portalTargetRef}>
-			<Overlay variant="dark" />
-			<FloatingFocusManager
-				initialFocus={initialFocusValue}
-				returnFocus={false}
-				context={context}
-				modal
-			>
-				<div
-					className={classNames(styles['dialog'], [className])}
-					ref={refs.setFloating}
-					style={{ ...floatingStyles, zIndex }}
-					role="presentation"
+			<Overlay open={status === 'open'} close={status === 'close'} variant="dark">
+				<FloatingFocusManager
+					initialFocus={initialFocusValue}
+					returnFocus={false}
+					context={context}
+					modal
 				>
-					<RemoveScroll enabled={removeScroll}>
-						<div
-							className={classNames(styles['content'], [contentClassName], mods)}
-							style={style}
-							ref={contentRef}
-							aria-labelledby={labelId}
-							aria-describedby={descriptionId}
-							aria-modal={'true'}
-							{...getFloatingProps()}
-							{...(id != null && { id })}
-						>
-							{children}
-						</div>
-					</RemoveScroll>
-				</div>
-			</FloatingFocusManager>
+					<div
+						className={classNames(styles['dialog'], [className])}
+						ref={refs.setFloating}
+						style={{ zIndex }}
+						role="presentation"
+					>
+						<RemoveScroll enabled={removeScroll}>
+							<div
+								className={classNames(styles['content'], [contentClassName], mods)}
+								style={style}
+								ref={contentRef}
+								aria-labelledby={labelId}
+								aria-describedby={descriptionId}
+								aria-modal="true"
+								{...getFloatingProps()}
+								{...(id != null && { id })}
+							>
+								{children}
+							</div>
+						</RemoveScroll>
+					</div>
+				</FloatingFocusManager>
+			</Overlay>
 		</FloatingPortal>
 	);
 };

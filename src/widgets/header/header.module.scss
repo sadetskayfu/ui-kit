@@ -1,0 +1,11 @@
+.header {
+    background-color: var(--theme-color-grey-dark);
+    
+}
+
+.inner {
+    height: var(--header-height);
+    //background-color: red;
+    display: flex;
+    align-items: center;
+}

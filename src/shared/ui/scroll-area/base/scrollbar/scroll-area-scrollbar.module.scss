@@ -1,0 +1,16 @@
+.base-scrollbar {
+    position: absolute;
+    touch-action: none;
+
+    &.orientation-vertical {
+        top: 0;
+        bottom: var(--scroll-area-corner-height);
+        inset-inline-end: 0;
+    }
+
+    &.orientation-horizontal {
+        inset-inline-start: 0;
+        inset-inline-end: var(--scroll-area-corner-width);
+        bottom: 0,
+    }
+}

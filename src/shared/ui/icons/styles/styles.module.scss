@@ -13,6 +13,9 @@
 	&.size-inherit {
 		font-size: inherit;
 	}
+	&.size-xs {
+		font-size: var(--icon-size-xs);
+	}
 	&.size-s {
         font-size: var(--icon-size-s);
 	}

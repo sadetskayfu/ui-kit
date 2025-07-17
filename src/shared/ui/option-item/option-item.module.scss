@@ -1,0 +1,35 @@
+.option {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--field-padding-inline) - 5px);
+    padding-inline: calc(var(--field-padding-inline) - 5px);
+    padding-block: 10px;
+    border-radius: var(--border-radius-m);
+    cursor: pointer;
+    text-align: start;
+    &.active {
+        background-color: var(--color-grey-opacity-soft);
+    }
+    &.selected {
+        color: var(--theme-color-primary-main);
+        background-color: var(--color-primary-opacity-soft);
+        &.active {
+            background-color: var(--color-primary-opacity-hard);
+        } 
+    }
+    &.disabled {
+        @include disabled;
+    }
+    &.not-option {
+        pointer-events: none;
+    }
+    &.center-content {
+        justify-content: center;
+    }
+    &:not(.center-content) {
+        .check-mark-icon {
+            margin-left: auto;
+        }
+    }
+}

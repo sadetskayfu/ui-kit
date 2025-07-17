@@ -25,6 +25,7 @@ export interface UsePopoverProps {
 	portalTargetRef?: React.RefObject<HTMLElement | null>;
 	referenceRef?: React.RefObject<HTMLElement | null>; // If we don't using PopoverTrigger, we can use external component (referenceRef need for popover position)
 	removeScroll?: boolean;
+	disableDefaultClick?: boolean
 	arrow?: boolean;
 	initialOpen?: boolean;
 	open?: boolean;
@@ -45,6 +46,7 @@ export const usePopover = (props: UsePopoverProps) => {
 		portalTargetRef,
 		referenceRef,
 		removeScroll = false,
+		disableDefaultClick,
 		arrow: showArrow,
 		open: controlledOpen,
 		setOpen: setControlledOpen,
@@ -84,7 +86,7 @@ export const usePopover = (props: UsePopoverProps) => {
 	const context = data.context;
 
 	const click = useClick(context, {
-		enabled: controlledOpen == null,
+		enabled: !disableDefaultClick,
 	});
 	const dismiss = useDismiss(context);
 	const role = useRole(context, { role: 'dialog' });

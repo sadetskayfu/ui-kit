@@ -1,2 +1,2 @@
 export { Ripple } from './ui/ripple';
-export { useRipple } from './hooks/useRipple';
+export { useRipple } from './hooks/use-ripple';

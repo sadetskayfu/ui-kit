@@ -1,0 +1,31 @@
+.content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--theme-color-grey-dark);
+    border-radius: var(--border-radius-m);
+    box-shadow: var(--box-shadow-paper);
+    opacity: 0;
+    &.root-menu {
+        transform: scale(0.9);
+        transition: opacity 0.2s, transform 0.2s;
+        &.instant-phase {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        &.open {
+            transform: scale(1);
+        }
+        &.close {
+            transform: scale(0.9);
+        }
+    }
+    &.open {
+        opacity: 1;
+    }
+    &.close {
+        opacity: 0;
+        pointer-events: none;
+    }
+}

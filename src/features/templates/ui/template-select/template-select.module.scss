@@ -1,0 +1,35 @@
+.popover {
+    width: 360px;
+}
+
+.popover-trigger {
+    min-width: 200px;
+    svg {
+        margin-left: auto;
+        transition: transform 0.2s;
+    }
+    &[data-open] {
+        svg {
+            transform: rotate(180deg);
+        }
+    }
+}
+
+.popover-content {
+    padding: var(--padding-10);
+}
+
+.popover-footer {
+    margin-top: 5px;
+    padding-top: 5px;
+    border-top: var(--border-weight-soft) solid var(--border-color-grey);
+}
+
+.template-item-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    padding-right: 5px;
+    max-height: 400px;
+    overflow-y: auto;
+}

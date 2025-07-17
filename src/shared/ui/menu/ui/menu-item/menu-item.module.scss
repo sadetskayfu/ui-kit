@@ -1,0 +1,44 @@
+.menu-item-content {
+    --menuItemPaddingInline: var(--button-padding-inline-m);
+    --menuItemDescriptionPaddingLeft: 0px;
+    --menuItemDescriptionPaddingRight: 0px;
+    --menuItemStartIconSize: var(--font-size-3);
+    --menuItemEndIconSize: var(--font-size-1);
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    padding-inline: var(--menuItemPaddingInline);
+    padding-block: var(--padding-10);
+
+    &.with-start-icon {
+        --menuItemDescriptionPaddingLeft: calc(var(--menuItemStartIconSize) + var(--menuItemPaddingInline));
+    }
+    &.with-end-icon {
+        --menuItemDescriptionPaddingRight: var(--menuItemEndIconSize);
+    }
+}
+
+.main {
+    display: flex;
+    align-items: center;
+    column-gap: var(--menuItemPaddingInline);
+    color: var(--menuItemFontColor);
+}
+
+.start-icon {
+    display: inline-flex;
+    font-size: var(--menuItemStartIconSize);
+}
+
+.end-icon {
+    display: inline-flex;
+    font-size: var(--menuItemEndIconSize);
+    margin-left: auto;
+}
+
+.description {
+    color: var(--font-color-soft);
+    font-size: var(--font-size-2);
+    padding-left: var(--menuItemDescriptionPaddingLeft);
+    padding-right: var(--menuItemDescriptionPaddingRight);
+}

@@ -1,0 +1,204 @@
+.field-container {
+	--height: ;
+    --paddingBlock: ;
+	--paddingInline: calc(var(--field-padding-inline) - var(--border-weight-soft));
+    --borderRadius: var(--border-radius-m);
+	--bgColor: ;
+	--childPaddingLeft: var(--paddingInline);
+	--childPaddingRight: var(--paddingInline);
+    --adornmentPaddingLeft: var(--paddingInline);
+	--actionsPaddingRight: var(--paddingInline);
+	--helperTextMarginLeft: var(--paddingInline);
+    position: relative;
+	display: flex;
+	flex-direction: column;
+	row-gap: 5px;
+}
+
+.field {
+	--borderColor: var(--border-color-grey);
+	position: relative;
+	display: flex;
+	align-items: center;
+	background-color: var(--bgColor);
+	width: 100%;
+	min-height: var(--height);
+}
+
+.children {
+	min-height: calc(var(--height) - var(--border-weight-soft) * 2);
+	padding-left: var(--childPaddingLeft);
+	padding-right: var(--childPaddingRight);
+	padding-block: var(--paddingBlock);
+	border-radius: inherit;
+	border: none;
+	width: 100%;
+}
+
+.start-adornment {
+	padding-left: var(--adornmentPaddingLeft);
+	padding-right: var(--paddingInline);
+	border-right: var(--border-weight-soft) solid var(--border-color-grey);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-shrink: 0;
+}
+
+.actions {
+	display: flex;
+	align-items: center;
+	padding-left: calc(var(--paddingInline) - var(--button-height-xs) / 4);
+	padding-right: calc(var(--actionsPaddingRight) - var(--button-height-xs) / 4);
+}
+
+.helper-text {
+	margin-left: var(--helperTextMarginLeft);
+}
+
+.field-container {
+    // border-placement
+	&.border-placement-left {
+		.field {
+			border-radius: var(--borderRadius) 0 0 var(--borderRadius);
+		}
+	}
+	&.border-placement-right {
+		.field {
+			border-radius: 0 var(--borderRadius) var(--borderRadius) 0;
+		}
+	}
+	&.border-placement-all {
+		.field {
+			border-radius: var(--borderRadius);
+		}
+	}
+
+    // variants
+    &.variant-filled {
+        --bgColor: var(--theme-color-grey-dark);
+        .field {
+			border: var(--border-weight-soft) solid var(--borderColor);
+			transition: border-color 0.2s;
+		}
+    }
+    &.variant-standard {
+        --bgColor: transparent;
+        --borderRadius: 0px;
+        .field {
+			border-bottom: var(--border-weight-soft) solid var(--borderColor);
+            transition: border-color 0.2s;
+		}
+    }
+    &.variant-outlined {
+        --bgColor: transparent;
+        --labelTranslateTop: calc(-10.5px + var(--border-weight-soft) / 2);
+        .label {
+			position: absolute;
+			font-size: var(--font-size-2);
+			z-index: 1;
+			left: 0px;
+			top: 0px;
+			translate: var(--paddingInline) var(--labelTranslateTop);
+			cursor: text;
+		}
+        .fieldset {
+			position: absolute;
+			inset: var(--labelTranslateTop) 0 0;
+			border: var(--border-weight-soft) solid var(--borderColor);
+			border-radius: inherit;
+			margin: 0px;
+			pointer-events: none;
+			z-index: 1;
+			transition: border-color 0.2s;
+		}
+		.legend {
+			padding-inline: 7px;
+			margin-left: calc(var(--paddingInline) - 8px);
+			font-size: var(--font-size-2);
+			opacity: 0;
+			z-index: -1;
+		}
+        &.hidden-label {
+			.fieldset {
+				inset: 0;
+			}
+			.legend {
+				padding-inline: 0px;
+				margin-left: 0px;
+			}
+		}
+    }
+
+    // sizes
+    &.variant-standard {
+		--childPaddingLeft: 0px;
+		--childPaddingRight: 0px;
+		--adornmentPaddingLeft: 0px;
+		--actionsPaddingRight: 0px;
+		--helperTextMarginLeft: 0px;
+        &.with-adornment {
+			--childPaddingLeft: var(--paddingInline);
+		}
+        &.size-m {
+            --height: var(--field-height-s);
+            --paddingBlock: calc(var(--field-height-s) / 7);
+        }
+        &.size-l {
+            --height: var(--field-height-m);
+            --paddingBlock: calc(var(--field-height-m) / 7);
+        }
+    }
+    &:not(.variant-standard) {
+        &.with-actions {
+			--childPaddingRight: 0px;
+		}
+		&.size-m {
+			--height: var(--field-height-m);
+			--paddingBlock: calc(var(--field-height-m) / 6);
+		}
+		&.size-l {
+			--height: var(--field-height-l);
+			--paddingBlock: calc(var(--field-height-l) / 6);
+		}
+    }
+
+    // mods
+	&.focused {
+		.field {
+			@include outline-inset;
+		}
+	}
+    &.errored {
+		.field {
+			--borderColor: var(--border-color-red);
+		}
+		&.focused {
+			.field {
+				--borderColor: var(--theme-color-red-main);
+			}
+		}
+	}
+    &:not(.errored) {
+		&.focused {
+			.field {
+				--borderColor: var(--theme-color-primary-main);
+			}
+		}
+	}
+    &:not(.focused):not(.errored) {
+		.field {
+			@include hover {
+				--borderColor: var(--font-color-hard);
+			}
+		}
+	}
+    &.disabled {
+		.field {
+			@include disabled;
+		}
+	}
+	&.full-width {
+		width: 100%;
+	}
+}

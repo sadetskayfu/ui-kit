@@ -1,0 +1,29 @@
+.list-item-content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: var(--button-padding-inline-m);
+    padding-inline: var(--button-padding-inline-m);
+    padding-block: calc(var(--button-padding-inline-m) - 5px);
+}
+
+.title-wrapper {
+    text-align: start;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    color: var(--font-color-hard);
+}
+
+.description {
+    color: var(--font-color-soft);
+    font-size: var(--font-size-2);
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}

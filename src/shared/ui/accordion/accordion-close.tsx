@@ -3,7 +3,7 @@ import { useAccordionGroupContext } from './accordion-group/use-accordion-group-
 import { cloneElement, useCallback } from 'react';
 
 export const AccordionClose = ({ children }: CollapseCloseProps) => {
-	const context = useAccordionGroupContext();
+	const {} = useAccordionGroupContext();
 
 	const childrenOnClick = children.props.onClick;
 

@@ -5,17 +5,17 @@ import { classNames, type Mods } from '@/shared/helpers/class-names';
 import { TooltipArrow, type TooltipArrowSide } from '@/shared/ui/tooltip-arrow';
 import styles from './tooltip.module.scss';
 
-interface TooltipContentProps {
+export interface TooltipContentProps {
 	className?: string;
 	contentClassName?: string;
 	children: ReactNode;
 	maxWidth?: number;
 	style?: React.CSSProperties;
-	zIndex?: number;
+	centeringText?: boolean
 }
 
 export const TooltipContent = (props: TooltipContentProps) => {
-	const { className, contentClassName, children, maxWidth, style, zIndex = 1500 } = props;
+	const { className, contentClassName, children, maxWidth, style, centeringText: isCenteringText } = props;
 
 	const {
 		tooltipId,
@@ -53,6 +53,7 @@ export const TooltipContent = (props: TooltipContentProps) => {
 		[styles['open']]: status === 'open',
 		[styles['close']]: status === 'close',
 		[styles['instant-phase']]: isInstantPhase,
+		[styles['centering-text']]: isCenteringText
 	};
 
     useEffect(() => {
@@ -72,7 +73,6 @@ export const TooltipContent = (props: TooltipContentProps) => {
 				style={{
 					...floatingStyles,
 					pointerEvents: isInteractive ? 'all' : 'none',
-					zIndex,
 					maxWidth,
 				}}
 			>
