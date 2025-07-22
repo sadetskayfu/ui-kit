@@ -1,0 +1,90 @@
+.tab {
+    --tabs-selected-bg-color: ;
+    --tabs-hover-bg-color: var(--color-grey-opacity-soft);
+    --tabs-padding-inline: ;
+    --tabs-padding-block: ;
+    padding-inline: var(--tabs-padding-inline);
+    padding-block: var(--tabs-padding-block);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    transition: background-color 0.2s, color 0.2s;
+    background-color: transparent;
+    color: var(--font-color-hard);
+    border: none;
+    
+    @include hover {
+        background-color: var(--tabs-hover-bg-color);
+    }
+
+    &.selected {
+        color: var(--theme-color-primary-main);
+    }
+    &.disabled {
+        @include disabled;
+    }
+
+    &.variant-filled {
+        --tabs-selected-bg-color: var(--color-grey-opacity-medium);
+        outline: var(--border-weight-soft) solid var(--border-color-grey);
+        outline-offset: calc(var(--border-weight-soft) * -1);
+        border-radius: var(--border-radius-m);
+
+        &.selected {
+            --tabs-hover-bg-color: var(--color-grey-opacity-hard);
+        }
+    }
+    &.variant-clear {
+        --tabs-selected-bg-color: transparent;
+    }
+
+    &.size-s {
+        --tabs-padding-inline: var(--button-padding-inline-s);
+
+        &.icon-position-top,
+        &.icon-position-bottom {
+            --tabs-padding-block: var(--button-padding-inline-xs);
+        }
+
+        &.icon-position-left,
+        &.icon-position-right { 
+            height: var(--button-height-s);
+        }
+    }
+    &.size-m {
+        --tabs-padding-inline: var(--button-padding-inline-m);
+
+        &.icon-position-top,
+        &.icon-position-bottom {
+            --tabs-padding-block: var(--button-padding-inline-s);
+        }
+
+        &.icon-position-left,
+        &.icon-position-right { 
+            height: var(--button-height-m);
+        }
+    }
+
+    &.icon-position-left {
+        flex-direction: row;
+        column-gap: calc(var(--tabs-padding-inline) / 2);
+    }
+    &.icon-position-right {
+        flex-direction: row-reverse;
+        column-gap: calc(var(--tabs-padding-inline) / 2);
+    }
+    &.icon-position-top {
+        flex-direction: column;
+        row-gap: calc(var(--tabs-padding-block) / 2);
+    }
+    &.icon-position-bottom {
+        flex-direction: column-reverse;
+        row-gap: calc(var(--tabs-padding-block) / 2);
+    }
+
+    &:focus-visible {
+        outline: var(--border-weight-hard) solid var(--theme-color-primary-main);
+        outline-offset: calc(var(--border-weight-soft) * -1);
+    }
+}

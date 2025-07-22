@@ -12,6 +12,8 @@ export function scrollToItem({
 	const itemListRect = itemList.getBoundingClientRect();
 	const activeItemRect = activeItem.getBoundingClientRect();
 
+	// add isOverflowing
+
 	if (orientation === 'vertical') {
 		const activeItemBottom = activeItemRect.bottom;
 		const activeItemTop = activeItemRect.top;

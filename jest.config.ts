@@ -2,7 +2,7 @@ export default {
 	preset: 'ts-jest',
 	testEnvironment: 'jest-environment-jsdom',
 	transform: {
-		'^.+\\.tsx?$': 'ts-jest', // Обработка .ts и .tsx файлов
+		'^.+\\.tsx?$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.app.json' }], // Обработка .ts и .tsx файлов
 		'^.+\\.jsx?$': 'babel-jest', // Обработка .js и .jsx файлов
 		'.+\\.(css|scss|png|jpg|svg)$': 'jest-transform-stub', // Обработка стилей и изображений
 	},
@@ -15,4 +15,5 @@ export default {
 	roots: ['<rootDir>/src'],
 	setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 	verbose: true,
+	extensionsToTreatAsEsm: ['.ts', '.tsx'], // Указываем, что .ts/.tsx — это ESM
 };

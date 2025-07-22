@@ -88,7 +88,7 @@ export const ScrollAreaRoot = React.forwardRef(
 
 		const handlePointerDown = useEventCallback((event: React.PointerEvent) => {
 			thumbDraggingRef.current = true;
-
+			console.log('down')
 			startYRef.current = event.clientY;
 			startXRef.current = event.clientX;
 			currentOrientationRef.current = event.currentTarget.getAttribute(ScrollAreaScrollbarDataAttributes.orientation) as Orientation
@@ -107,6 +107,7 @@ export const ScrollAreaRoot = React.forwardRef(
 
 		const handlePointerUp = useEventCallback((event: React.PointerEvent) => {
 			thumbDraggingRef.current = false;
+			console.log('up')
 
 			if (thumbYRef.current && currentOrientationRef.current === 'vertical') {
 				thumbYRef.current.releasePointerCapture(event.pointerId);
@@ -120,7 +121,7 @@ export const ScrollAreaRoot = React.forwardRef(
 			if (!thumbDraggingRef.current || !viewportRef.current) {
 				return;
 			}
-
+			console.log('move')
 			const deltaY = event.clientY - startYRef.current;
 			const deltaX = event.clientX - startXRef.current;
 

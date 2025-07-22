@@ -1,4 +1,3 @@
-import { describe, expect, jest, test } from '@jest/globals';
 import { mergeProps } from './merge-props';
 
 describe('mergeProps', () => {

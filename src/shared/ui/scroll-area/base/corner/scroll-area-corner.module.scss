@@ -4,4 +4,6 @@
     inset-inline-end: 0;
     width: var(--scroll-area-corner-width);
     height: var(--scroll-area-corner-height);
+
+    @include user-select-off;
 }

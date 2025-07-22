@@ -1,0 +1,1 @@
+export * as BaseTabs from './index.parts'

@@ -1,6 +1,7 @@
 import React from 'react';
 import { mergePropsN } from '../helpers/merge-props';
 import type {
+	ComponentClassName,
 	ComponentRender,
 	ComponentState,
 } from '../helpers/types';
@@ -23,7 +24,7 @@ interface UseRenderElementParams<
 	props:
 		| Props<TagName>
 		| Array<Props<TagName> | undefined | ((props: Props<TagName>) => Props<TagName>)>;
-	className?: string | ((state: State) => string)
+	className?: ComponentClassName<State>
 	render?: ComponentRender<React.HTMLAttributes<any>, State>
 	state?: State;
 	ref?: React.Ref<ElementType> | (React.Ref<ElementType> | undefined)[];
@@ -47,7 +48,7 @@ export function useRenderElement<
 			: props
 		: EMPTY_OBJECT;
 
-	outProps.ref = useMergeRefs(enabled ? (Array.isArray(ref) ? ref : [ref]) : [null]);
+	outProps.ref = useMergeRefs(enabled ? (Array.isArray(ref) ? [outProps.ref, ...ref] : [outProps.ref, ref]) : [null]);
 
 	if (!enabled) return null as Enabled extends false ? null : React.ReactElement;
 

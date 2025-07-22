@@ -1,0 +1,5 @@
+export { TabsIndicator as Indicator } from './indicator/tabs-indicator'
+export { TabsTab as Tab } from './tab/tabs-tab'
+export { TabsPanel as Panel } from '../base/panel/tabs-panel'
+export { TabsRoot as Root} from '../base/root/tabs-root'
+export { TabsList as List} from '../base/list/tabs-list'

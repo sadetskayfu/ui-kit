@@ -1,2 +1,2 @@
-export { useDirection } from './direction-context'
+export { useDirection, type TextDirection } from './direction-context'
 export { DirectionProvider } from './direction-provider'
