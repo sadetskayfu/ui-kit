@@ -4,7 +4,7 @@ type ButtonVariant = 'filled' | 'outlined' | 'clear';
 type ButtonSize = 'xs' | 's' | 'm' | 'l';
 type ButtonColor = 'primary' | 'secondary' | 'red' | 'green';
 type ButtonBorderPlacement = 'left' | 'right' | 'top' | 'bottom' | 'all';
-type ButtonBorderRadius = 'm' | 'full' | 'circular' | 'none';
+type ButtonBorderRadius = 's' | 'm' | 'full' | 'circular' | 'none';
 
 export type ButtonContextType = {
 	variant?: ButtonVariant;

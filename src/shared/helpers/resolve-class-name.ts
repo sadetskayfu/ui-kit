@@ -1,6 +1,4 @@
-import type { ComponentState } from './types';
-
-export function resolveClassName<State extends ComponentState>(
+export function resolveClassName<State extends Record<string, any>>(
 	className: string | ((state: State) => string | undefined),
 	state: State
 ) {

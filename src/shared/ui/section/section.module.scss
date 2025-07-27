@@ -1,0 +1,21 @@
+.section {
+    margin-top: var(--padding-30);
+    border: var(--border-weight-soft) solid var(--border-color-grey);
+    border-radius: var(--border-radius-m);
+    overflow: hidden;
+}
+
+.title {
+    font-size: var(--font-size-5);
+    background-color: var(--theme-color-grey-dark);
+    padding-inline: var(--padding-30);
+    padding-block: var(--padding-10);
+    text-align: center;
+}
+
+.content {
+    padding-inline: var(--padding-30);
+    padding-block: var(--padding-10);
+}
+
+

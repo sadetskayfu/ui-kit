@@ -7,7 +7,9 @@ interface ListItemLinkProps
 	extends Omit<UseClassNameProps, 'pressed'>,
 		AnchorHTMLAttributes<HTMLAnchorElement> {
 	disableRipple?: boolean;
-	renderLink?: (props: AnchorHTMLAttributes<HTMLAnchorElement>) => ReactElement<AnchorHTMLAttributes<HTMLAnchorElement>>;
+	renderLink?: (
+		props: AnchorHTMLAttributes<HTMLAnchorElement>
+	) => ReactElement<AnchorHTMLAttributes<HTMLAnchorElement>>;
 }
 
 export const ListItemLink = memo(

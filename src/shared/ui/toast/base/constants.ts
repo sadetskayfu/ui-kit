@@ -1,0 +1,1 @@
+export const DATA_SWIPE_IGNORE = 'data-swipe-ignore'

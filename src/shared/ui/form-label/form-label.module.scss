@@ -14,7 +14,7 @@
         color: var(--theme-color-primary-main);
     }
     &.errored {
-        color: var(--theme-color-red-main);
+        color: var(--font-color-red-soft);
     }
     &.disabled {
         @include disabled;

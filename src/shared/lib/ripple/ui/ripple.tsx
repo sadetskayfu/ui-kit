@@ -22,7 +22,7 @@ export const Ripple = forwardRef(
 					ripples.map(ripple => (
 						<span
 							className={classNames(styles['ripple'], [], {
-								[styles['fade']]: ripple.isRemove,
+								[styles['fade']]: ripple.ending,
 							})}
 							key={ripple.id}
 							style={{
@@ -31,7 +31,7 @@ export const Ripple = forwardRef(
 								animationDuration: `${size === 'default' ? 1000 : 600}ms`,
 							}}
 							onTransitionEnd={event => {
-								if (event.propertyName === 'opacity') {
+								if (ripple.ending && event.propertyName === 'opacity') {
 									removeRipple(ripple.id);
 								}
 							}}

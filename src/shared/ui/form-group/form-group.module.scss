@@ -1,0 +1,42 @@
+.form-group {
+    --form-group-label-color: ;
+    margin-right: 0px;
+
+    legend {
+        color: var(--form-group-label-color);
+        transition: color 0.2s;
+
+        span {
+            color: var(--font-color-soft);
+            @include user-select-off;
+        }
+    }
+
+    &.label-color-soft {
+        --form-group-label-color: var(--font-color-soft);
+    }
+    &.label-color-hard {
+        --form-group-label-color: var(--font-color-hard);
+    }
+
+    &:focus-within {
+        --form-group-label-color: var(--theme-color-primary-main);
+    }
+
+    &.error {
+        --form-group-label-color: var(--font-color-red-hard);
+    }
+
+    &.orientation-vertical {
+        .group {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+    &.orientation-horizontal {
+        .group {
+            display: flex;
+            column-gap: 15px;
+        }
+    }
+}

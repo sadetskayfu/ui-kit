@@ -1,28 +1,33 @@
+import * as React from 'react'
 import { classNames, type Mods } from '@/shared/helpers/class-names';
-import { memo } from 'react';
 import styles from './form-helper-text.module.scss';
 
-interface FormHelperTextProps {
-	children: string;
-	id?: string;
-	className?: string;
-	errored?: boolean;
-}
-
-export const FormHelperText = memo((props: FormHelperTextProps) => {
-	const { children, id, className, errored: isErrored } = props;
+/**
+ * Renders a `<p>` element
+ */
+export const FormHelperText = React.memo((props: FormHelperText.Props) => {
+	const { children, id, className, error } = props;
 
 	const mods: Mods = {
-		[styles['errored']]: isErrored,
+		[styles['error']]: error,
 	};
 
 	return (
-		<span
+		<p
 			className={classNames(styles['form-helper-text'], [className], mods)}
 			id={id}
-			role={isErrored ? 'alert' : undefined}
+			role={error ? 'alert' : undefined}
 		>
 			{children}
-		</span>
+		</p>
 	);
 });
+
+export namespace FormHelperText {
+	export interface Props {
+		children: string
+		id?: string
+		className?: string
+		error?: boolean
+	}
+}

@@ -1,9 +1,7 @@
-import React from 'react';
-import { mergePropsN } from '../helpers/merge-props';
+import * as React from 'react';
+import { mergeProps, mergePropsN } from '../helpers/merge-props';
 import type {
-	ComponentClassName,
-	ComponentRender,
-	ComponentState,
+	ModernComponentProps,
 } from '../helpers/types';
 import { resolveClassName } from '../helpers/resolve-class-name';
 import { useMergeRefs } from '@floating-ui/react';
@@ -18,14 +16,16 @@ type Props<TagName> = TagName extends keyof React.JSX.IntrinsicElements
 interface UseRenderElementParams<
 	TagName extends IntrinsicTagName,
 	ElementType extends Element,
-	State extends ComponentState,
+	State extends Record<string, any>,
 	Enabled extends boolean | undefined = undefined,
 > {
 	props:
 		| Props<TagName>
 		| Array<Props<TagName> | undefined | ((props: Props<TagName>) => Props<TagName>)>;
-	className?: ComponentClassName<State>
-	render?: ComponentRender<React.HTMLAttributes<any>, State>
+	className?: string | ((state: State) => string);
+	render?:
+		| React.ReactElement<Record<string, unknown>>
+		| ((props: React.HTMLAttributes<any>, state: State) => React.ReactElement<Record<string, any>>);
 	state?: State;
 	ref?: React.Ref<ElementType> | (React.Ref<ElementType> | undefined)[];
 	enabled?: Enabled;
@@ -34,13 +34,13 @@ interface UseRenderElementParams<
 export function useRenderElement<
 	TagName extends IntrinsicTagName,
 	ElementType extends Element,
-	State extends ComponentState,
+	State extends Record<string, any>,
 	Enabled extends boolean | undefined = undefined,
 >(
 	tagName: TagName,
 	params: UseRenderElementParams<TagName, ElementType, State, Enabled>
-): Enabled extends false ? null : React.ReactElement {
-	const { props, className, render, state = EMPTY_OBJECT as State, ref, enabled = true } = params;
+): Enabled extends false ? null : React.ReactElement<Record<string, any>> {
+	const { render, className, props, state = EMPTY_OBJECT as State, ref, enabled = true } = params;
 
 	const outProps: React.HTMLAttributes<any> & React.RefAttributes<any> = enabled
 		? Array.isArray(props)
@@ -48,21 +48,29 @@ export function useRenderElement<
 			: props
 		: EMPTY_OBJECT;
 
-	outProps.ref = useMergeRefs(enabled ? (Array.isArray(ref) ? [outProps.ref, ...ref] : [outProps.ref, ref]) : [null]);
+	const childRef = getChildRef(render)
 
-	if (!enabled) return null as Enabled extends false ? null : React.ReactElement;
+	outProps.ref = useMergeRefs(
+		enabled ? Array.isArray(ref) ? [childRef, outProps.ref, ...ref] : [childRef, outProps.ref, ref] : [null]
+	);
 
-	const resolvedClassName = className ? resolveClassName(className, state) : undefined;
+	if (!enabled) return null as Enabled extends false ? null : React.ReactElement<Record<string, any>>
 
-	if (resolvedClassName) {
-		outProps.className = classNames(resolvedClassName, [outProps.className]);
+	if (className) {
+		outProps.className = classNames(outProps.className, [resolveClassName(className, state)]);
 	}
 
 	if (render) {
-		return render(outProps, state) as Enabled extends false ? null : React.ReactElement;
+		if (typeof render === 'function') {
+			return render(outProps, state) as Enabled extends false ? null : React.ReactElement<Record<string, any>>
+		}
+
+		const mergedProps = mergeProps(outProps, render.props)
+
+		return React.cloneElement(render, mergedProps) as Enabled extends false ? null : React.ReactElement<Record<string, any>>
 	}
 
-	return renderTag(tagName, outProps) as Enabled extends false ? null : React.ReactElement;
+	return renderTag(tagName, outProps) as Enabled extends false ? null : React.ReactElement<Record<string, any>>
 }
 
 function renderTag(TagName: React.ElementType, props: Record<string, any>) {
@@ -73,4 +81,13 @@ function renderTag(TagName: React.ElementType, props: Record<string, any>) {
 		return <img alt="" {...props} />;
 	}
 	return React.createElement(TagName, props);
+}
+
+function getChildRef<ElementType extends React.ElementType, State>(
+	render: ModernComponentProps<ElementType, State>['render']
+): React.RefCallback<any> | null {
+	if (render && typeof render !== 'function') {
+		return render.props.ref // only work in react v.19+ / render.ref for <19
+	}
+	return null;
 }

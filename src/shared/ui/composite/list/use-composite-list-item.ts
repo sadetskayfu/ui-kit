@@ -2,9 +2,8 @@ import * as React from 'react';
 import { useCompositeListContext } from './composite-list-context';
 import { useModernLayoutEffect } from '@/shared/hooks';
 import { EMPTY_OBJECT } from '@/shared/constants';
-import type { CompositeCustomMetadata } from './composite-list';
 
-export interface UseCompositeListItemParams<Metadata extends CompositeCustomMetadata> {
+export interface UseCompositeListItemParams<Metadata extends Record<string, any>> {
 	label?: string | null;
 	metadata?: Metadata;
 	/**
@@ -14,7 +13,7 @@ export interface UseCompositeListItemParams<Metadata extends CompositeCustomMeta
 	guessIndex?: boolean;
 }
 
-export function useCompositeListItem<Metadata extends CompositeCustomMetadata>(params: UseCompositeListItemParams<Metadata> = EMPTY_OBJECT) {
+export function useCompositeListItem<Metadata extends Record<string, any>>(params: UseCompositeListItemParams<Metadata> = EMPTY_OBJECT) {
 	const { label, metadata, guessIndex = true } = params;
 
 	const { register, unregister, subscribeMapChange, elementsRef, labelsRef, nextIndexRef } =

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { ComponentRender, ModernComponentPropsWithClassName } from '@/shared/helpers/types';
+import type { ModernComponentProps } from '@/shared/helpers/types';
 import { useRenderElement } from '@/shared/hooks';
 import { useTabsRootContext } from '../root/tabs-root-context';
 import type { TabsRoot } from '../root/tabs-root';
@@ -75,12 +75,11 @@ export namespace TabsPanel {
 		orientation: TabsRoot.Orientation;
 	}
 
-	export interface Props extends ModernComponentPropsWithClassName<'div', State> {
+	export interface Props extends ModernComponentProps<'div', State> {
 		/**
 		 * Если не передано value используется index элемента
 		 */
 		value?: TabsRoot.Value;
-		render?: ComponentRender<React.ComponentProps<'div'>, State>;
 		/**
 		 * Нужно ли монтировать содержимое панели, когда она hidden
 		 * @default false

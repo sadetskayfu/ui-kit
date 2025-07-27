@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { ComponentRender, ModernComponentPropsWithClassName } from '@/shared/helpers/types';
+import type { ModernComponentProps } from '@/shared/helpers/types';
 import type { TabsRoot } from '../root/tabs-root';
 import { useEventCallback, useModernLayoutEffect, useRenderElement } from '@/shared/hooks';
 import { useTabsRootContext } from '../root/tabs-root-context';
@@ -11,7 +11,7 @@ import { useTabsListContext } from '../list/tabs-list-context';
  */
 export const TabsTab = React.forwardRef(
 	(props: TabsTab.Props, forwardedRef: React.ForwardedRef<HTMLButtonElement>) => {
-		const { className, id: externalId, value, disabled = false, render, ...otherProps } = props;
+		const { render, className, id: externalId, value, disabled = false, ...otherProps } = props;
 
 		const localId = React.useId();
 		const id = externalId ?? localId;
@@ -38,7 +38,7 @@ export const TabsTab = React.forwardRef(
 
 		const state: TabsTab.State = React.useMemo(
 			() => ({ selected, disabled, orientation }),
-			[selected, disabled, orientation]
+			[selected, disabled, orientation] 
 		);
 
 		const panelId = React.useMemo(
@@ -111,11 +111,10 @@ export namespace TabsTab {
 	}
 
 	export interface Props
-		extends Omit<ModernComponentPropsWithClassName<'button', State>, 'value'> {
+		extends Omit<ModernComponentProps<'button', State>, 'value'> {
 		/**
 		 * Если не передано value используется index элемента
 		 */
 		value?: TabsRoot.Value;
-		render?: ComponentRender<React.ComponentProps<'button'>, State>;
 	}
 }

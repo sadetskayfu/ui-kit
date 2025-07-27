@@ -12,7 +12,7 @@ interface ColorPickerProps {
 export const ColorPicker = memo(
 	({ value: externalValue, onChange, cssVariable }: ColorPickerProps) => {
 		const [value, setValue] = useState<string>(externalValue);
-
+		
 		const handleChange = useCallback((color: ColorResult) => {
 			setValue(color.hex);
 		}, []);

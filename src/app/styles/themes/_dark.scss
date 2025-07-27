@@ -7,12 +7,8 @@
 	--font-color-soft: var(--color-grey-500);
 	--font-color-soft-invert: var(--color-grey-600);
 
-	--box-shadow-paper: 0 0 5px hsla(
-		var(--grey-hue),
-		var(--grey-saturation),
-		var(--grey-lightness),
-		0.5
-	); // shadow for dropdown
+	--box-shadow-paper: 0 0 5px
+		hsla(var(--grey-hue), var(--grey-saturation), var(--grey-lightness), 0.5); // shadow for dropdown
 	--color-dark-opacity: hsla(0, 0, 0, 0.5); // overlay
 
 	--theme-color-primary-main: var(--color-primary-500);
@@ -23,9 +19,24 @@
 	--theme-color-grey-main: var(--color-grey-500);
 	--border-color-grey: var(--color-grey-800);
 
+	// Red color
+	--font-color-red-hard: var(--color-red-500);
+	--font-color-red-soft: var(--color-red-600);
+	--theme-color-red-dark: var(--color-red-900);
 	--theme-color-red-main: var(--color-red-500);
 	--border-color-red: var(--color-red-800);
 
+	// Green color
+	--font-color-green-hard: var(--color-green-500);
+	--font-color-green-soft: var(--color-green-600);
+	--theme-color-green-dark: var(--color-green-900);
 	--theme-color-green-main: var(--color-green-500);
 	--border-color-green: var(--color-green-800);
+
+	// Orange color
+	--font-color-orange-hard: var(--color-orange-500);
+	--font-color-orange-soft: var(--color-orange-600);
+	--theme-color-orange-dark: var(--color-orange-900);
+	--theme-color-orange-main: var(--color-orange-500);
+	--border-color-orange: var(--color-orange-800);
 }

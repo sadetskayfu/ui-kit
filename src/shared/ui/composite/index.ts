@@ -1,4 +1,4 @@
-export { CompositeList, type CompositeMetadata, type CompositeCustomMetadata } from './list/composite-list'
+export { CompositeList, type CompositeMetadata } from './list/composite-list'
 export { useCompositeListItem } from './list/use-composite-list-item'
 
 export { useCompositeItem } from './item/use-composite-item'

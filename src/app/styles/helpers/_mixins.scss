@@ -29,12 +29,18 @@
 	opacity: 0.5;
 }
 
-@mixin outline {
-	outline: 2px solid var(--theme-color-primary-main);
-	outline-offset: 2px;
-}
-
 @mixin outline-inset {
 	outline: 2px solid var(--theme-color-primary-main);
 	outline-offset: -2px;
 }
+
+@mixin outline {
+	outline: var(--border-weight-soft) var(--theme-color-primary-main);
+	outline-inset: var(--border-weight-soft);
+}
+
+@mixin focus-outline {
+	outline: var(--border-weight-hard) var(--theme-color-primary-main);
+	outline-inset: var(--border-weight-soft);
+}
+

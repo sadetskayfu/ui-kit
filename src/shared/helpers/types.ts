@@ -24,21 +24,10 @@ export type WithModernEvent<T> = {
 	[K in keyof T]: WithPreventHandler<T[K]>;
 };
 
-export type ComponentRenderProps = Omit<React.HTMLAttributes<any> & React.RefAttributes<any>, 'color' | 'size'>
-export type ComponentState = Record<string, any>;
-export type ComponentRender<Props, State extends ComponentState> = (
-	props: Props,
-	state: State
-) => React.ReactElement;
-export type ComponentClassName<State extends ComponentState> = string | ((state: State) => string);
-
-export type ModernComponentProps<ElementType extends React.ElementType> = Omit<
+export type ModernComponentProps<ElementType extends React.ElementType, State, RenderFunctionProps = HTMLProps> = Omit<
 	WithModernEvent<React.ComponentPropsWithoutRef<ElementType>>,
-	'color' | 'size'
->;
-export type ModernComponentPropsWithClassName<
-	ElementType extends React.ElementType,
-	State extends ComponentState,
-> = Omit<WithModernEvent<React.ComponentPropsWithoutRef<ElementType>>, 'className' | 'color' | 'size'> & {
-	className?: ComponentClassName<State>;
+	'color' | 'size' | 'className'
+> & {
+	className?: string | ((state: State) => string)
+	render?: React.ReactElement<Record<string, any>> | ((props: RenderFunctionProps, state: State) => React.ReactElement<Record<string, any>>)
 };

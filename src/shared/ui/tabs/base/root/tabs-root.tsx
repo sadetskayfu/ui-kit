@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { ModernComponentPropsWithClassName } from '@/shared/helpers/types';
+import type { ModernComponentProps } from '@/shared/helpers/types';
 import { TabsRootContext } from './tabs-root-context';
 import { useRenderElement } from '@/shared/hooks';
 import { CompositeList, type CompositeMetadata } from '@/shared/ui/composite';
@@ -12,6 +12,7 @@ import type { TabsTab } from '../tab/tabs-tab';
 export const TabsRoot = React.forwardRef(
 	(props: TabsRoot.Props, forwardedRef: React.ForwardedRef<HTMLDivElement>) => {
 		const {
+			render,
 			className,
 			defaultValue = 0,
 			value: controlledValue,
@@ -133,6 +134,7 @@ export const TabsRoot = React.forwardRef(
 		);
 
 		const element = useRenderElement('div', {
+			render,
 			className,
 			state,
 			ref: forwardedRef,
@@ -163,7 +165,7 @@ export namespace TabsRoot {
 
 	export interface Props
 		extends Omit<
-			ModernComponentPropsWithClassName<'div', State>,
+			ModernComponentProps<'div', State>,
 			'onChange' | 'value' | 'defaultValue'
 		> {
 		/**

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { HTMLProps, ModernComponentPropsWithClassName } from '@/shared/helpers/types';
+import type { HTMLProps, ModernComponentProps } from '@/shared/helpers/types';
 import { useEventCallback, useRenderElement } from '@/shared/hooks';
 import { TabsIndicatorCssVars } from './tabs-indicator-css-vars';
 import { useTabsRootContext } from '../root/tabs-root-context';
@@ -24,7 +24,7 @@ type SelectedTabSize = {
  */
 export const TabsIndicator = React.forwardRef(
 	(props: TabsIndicator.Props, forwardedRef: React.ForwardedRef<HTMLSpanElement>) => {
-		const { className, ...otherProps } = props;
+		const { render, className, ...otherProps } = props;
 
 		const [isMounted, setIsMounted] = React.useState(false);
 		const [selectedTabPosition, setSelectedTabPosition] = React.useState<SelectedTabPosition>({
@@ -125,6 +125,7 @@ export const TabsIndicator = React.forwardRef(
 		};
 
 		const element = useRenderElement('span', {
+			render,
 			className,
 			ref: forwardedRef,
 			state,
@@ -149,5 +150,5 @@ export namespace TabsIndicator {
 		orientation: TabsRoot.Orientation;
 	}
 
-	export interface Props extends ModernComponentPropsWithClassName<'span', State> {}
+	export interface Props extends ModernComponentProps<'span', State> {}
 }

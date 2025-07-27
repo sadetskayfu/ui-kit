@@ -1,0 +1,1 @@
+export * as BaseAlert from './index.parts'

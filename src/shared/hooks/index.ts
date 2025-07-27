@@ -5,7 +5,9 @@ export { useOnMount } from './use-on-mount'
 export { useOnFirstRender } from './use-on-first-render'
 export { useTimeout } from './use-timeout'
 export { useRenderElement } from './use-render-element'
-
-
+export { AnimationFrame, useAnimationFrame } from './use-animation-frame'
+export { useAnimationsFinished } from './use-animation-finished'
+export { useId } from './use-id'
+ 
 export { useLongTouch } from './use-long-touch'
 export { useTouchDevice } from './use-touch-device'

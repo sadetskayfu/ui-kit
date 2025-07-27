@@ -1,36 +1,57 @@
-import { useCallback, useRef, useState } from 'react';
+import * as React from 'react'
 import type { Ripple } from '../model/ripple';
+import { useEventCallback } from '@/shared/hooks';
+import { getTarget } from '@floating-ui/react/utils';
 
 type UseRippleProps = {
+	elementRef?: React.RefObject<HTMLElement | null>
 	disableRipple?: boolean
 	disableSpaceKey?: boolean
-	onBlur?: React.FocusEventHandler
-	onKeyDown?: React.KeyboardEventHandler
-	onKeyUp?: React.KeyboardEventHandler
-	onMouseDown?: React.MouseEventHandler
-	onMouseUp?: React.MouseEventHandler
-	onMouseLeave?: React.MouseEventHandler
+	centering?: boolean
 }
 
-export function useRipple({ disableRipple, disableSpaceKey, onBlur, onKeyDown, onKeyUp, onMouseDown, onMouseLeave, onMouseUp }: UseRippleProps) {
-	const [ripples, setRipples] = useState<Ripple[]>([]);
-	const containerRef = useRef<HTMLSpanElement>(null);
+export function useRipple({ elementRef, disableRipple, disableSpaceKey, centering }: UseRippleProps) {
+	const [ripples, setRipples] = React.useState<Ripple[]>([]);
 
-	const markLastRippleAsRemoved = useCallback(() => {
+	const containerRef = React.useRef<HTMLSpanElement>(null);
+	const hasKeyClickRef = React.useRef<boolean>(false)
+
+	const hasInteractiveElement = React.useCallback((event: Event) => {
+		if(!elementRef?.current) {
+			return false
+		}
+
+		const target = getTarget(event);
+
+		const interactiveElement =
+			target instanceof Element
+				? target.closest(
+						`button,a,input,textarea,[role="button"]`
+					)
+				: null
+
+		if (interactiveElement && interactiveElement !== elementRef.current) {
+			return true
+		}
+
+		return false
+	}, [elementRef])
+
+	const markLastRippleAsEnding = useEventCallback(() => {
 		if(ripples.length > 0) {
 			setRipples(prev =>
 				prev.map((ripple, index) =>
-					index === prev.length - 1 ? { ...ripple, isRemove: true } : ripple
+					index === prev.length - 1 ? { ...ripple, ending: true } : ripple
 				)
 			);
 		}
-	}, [ripples.length]);
+	})
 
-	const removeRipple = useCallback((rippleId: number) => {
+	const removeRipple = React.useCallback((rippleId: number) => {
 		setRipples(prev => prev.filter(ripple => ripple.id !== rippleId));
 	}, []);
 
-	const createRipple = useCallback((event: React.MouseEvent | React.KeyboardEvent) => {
+	const createRipple = React.useCallback((event: React.PointerEvent | React.KeyboardEvent) => {
 		const container = containerRef.current;
 
 		if (!container) return;
@@ -39,7 +60,7 @@ export function useRipple({ disableRipple, disableSpaceKey, onBlur, onKeyDown, o
 		let x: number;
 		let y: number;
 
-		if ('clientX' in event) {
+		if ('clientX' in event && !centering) {
 			x = event.clientX - rect.left;
 			y = event.clientY - rect.top;
 		} else {
@@ -54,75 +75,76 @@ export function useRipple({ disableRipple, disableSpaceKey, onBlur, onKeyDown, o
 		};
 
 		setRipples(prev => [...prev, newRipple]);
-	}, []);
+	}, [centering]);
 
-	const handleMouseUp = useCallback((event: React.MouseEvent) => {
-		onMouseUp?.(event)
-
+	const handlePointerUp = React.useCallback(() => {
 		if(!disableRipple) {
-			markLastRippleAsRemoved();
+			markLastRippleAsEnding();
 		}
-	}, [markLastRippleAsRemoved, onMouseUp, disableRipple]);
+	}, [markLastRippleAsEnding, disableRipple]);
 
-	const handleMouseLeave = useCallback((event: React.MouseEvent) => {
-		onMouseLeave?.(event)
-
+	const handlePointerLeave = React.useCallback(() => {
 		if(!disableRipple) {
-			markLastRippleAsRemoved();
+			markLastRippleAsEnding();
 		}
-	}, [markLastRippleAsRemoved, onMouseLeave, disableRipple]);
+	}, [markLastRippleAsEnding, disableRipple]);
 
-	const handleKeyUp = useCallback(
+	const handlePointerDown = React.useCallback(
+		(event: React.PointerEvent) => {
+			if(disableRipple || hasInteractiveElement(event.nativeEvent)) {
+				return
+			}
+
+			createRipple(event);
+		},
+		[createRipple, hasInteractiveElement, disableRipple]
+	);
+
+	const handleKeyDown = React.useCallback(
 		(event: React.KeyboardEvent) => {
-			onKeyUp?.(event)
-
-			if (!disableRipple && !disableSpaceKey && event.key === ' ') {
-				markLastRippleAsRemoved();
+			if(disableRipple || disableSpaceKey || event.key !== ' ' || hasKeyClickRef.current) {
+				return
 			}
-			
+
+			hasKeyClickRef.current = true
+
+			if(hasInteractiveElement(event.nativeEvent)) {
+				return
+			}
+
+			createRipple(event);
 		},
-		[markLastRippleAsRemoved, onKeyUp, disableRipple, disableSpaceKey]
+		[createRipple, hasInteractiveElement, disableRipple, disableSpaceKey]
 	);
 
-	const handleMouseDown = useCallback(
-		(event: React.MouseEvent) => {
-			onMouseDown?.(event)
-
-			if(!disableRipple) {
-				createRipple(event);
-			}
-		},
-		[createRipple, onMouseDown, disableRipple]
-	);
-
-	const handleKeyDown = useCallback(
+	const handleKeyUp = React.useCallback(
 		(event: React.KeyboardEvent) => {
-			onKeyDown?.(event)
+			if(disableRipple || disableSpaceKey) {
+				return
+			}
 
-			if(!disableRipple && !disableSpaceKey && event.key === ' ') {
-				if(ripples.length > 0 && !ripples[ripples.length - 1].isRemove) return
-
-				createRipple(event);
+			if (event.key === ' ') {
+				hasKeyClickRef.current = false
+				markLastRippleAsEnding();
 			}
 		},
-		[createRipple, onKeyDown, ripples, disableRipple, disableSpaceKey]
+		[markLastRippleAsEnding, disableRipple, disableSpaceKey]
 	);
 
-    const handleBlur = useCallback((event: React.FocusEvent) => {
-		onBlur?.(event)
-
-        if(!disableRipple) {
-			markLastRippleAsRemoved();	
+    const handleBlur = React.useCallback((event: React.FocusEvent) => {
+		if(disableRipple || event.target !== elementRef?.current) {
+			return
 		}
-    }, [markLastRippleAsRemoved, onBlur, disableRipple])
+		markLastRippleAsEnding();	
+    }, [markLastRippleAsEnding, disableRipple, elementRef])
 
 	return {
 		ripples,
 		containerRef,
 		removeRipple,
-		onMouseDown: handleMouseDown,
-		onMouseLeave: handleMouseLeave,
-		onMouseUp: handleMouseUp,
+		onPointerDown: handlePointerDown,
+		onPointerLeave: handlePointerLeave,
+		onPointerUp: handlePointerUp,
 		onKeyDown: handleKeyDown,
 		onKeyUp: handleKeyUp,
 		onBlur: handleBlur,

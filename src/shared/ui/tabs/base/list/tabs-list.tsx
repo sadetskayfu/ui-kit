@@ -1,7 +1,5 @@
 import * as React from 'react';
 import type {
-	ComponentRender,
-	ComponentRenderProps,
 	HTMLProps,
 	ModernComponentProps,
 } from '@/shared/helpers/types';
@@ -52,7 +50,7 @@ export const TabsList = React.forwardRef(
 );
 
 export namespace TabsList {
-	export interface Props extends ModernComponentProps<'div'> {
-		render?: ComponentRender<ComponentRenderProps, Record<string, any>>;
-	}
+	export interface State {}
+
+	export interface Props extends ModernComponentProps<'div', State> {}
 }

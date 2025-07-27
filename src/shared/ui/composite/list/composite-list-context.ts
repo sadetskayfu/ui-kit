@@ -1,7 +1,7 @@
 import * as React from 'react';
-import type { CompositeMetadata, CompositeCustomMetadata } from './composite-list';
+import type { CompositeMetadata } from './composite-list';
 
-export interface CompositeListContext<Metadata extends CompositeCustomMetadata> {
+export interface CompositeListContext<Metadata extends Record<string, any>> {
 	register: (node: Element, metadata: Metadata) => void;
 	unregister: (node: Element) => void;
 	subscribeMapChange: (

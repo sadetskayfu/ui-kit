@@ -2,10 +2,9 @@ import * as React from 'react';
 import { useEventCallback, useLazyRef, useModernLayoutEffect } from '@/shared/hooks';
 import { CompositeListContext } from './composite-list-context';
 
-export type CompositeCustomMetadata = Record<string, any>
-export type CompositeMetadata<CustomMetadata extends CompositeCustomMetadata> = { index?: number | null } & CustomMetadata;
+export type CompositeMetadata<CustomMetadata extends Record<string, any>> = { index?: number | null } & CustomMetadata;
 
-export function CompositeList<Metadata extends CompositeCustomMetadata>(props: CompositeList.Props<Metadata>) {
+export function CompositeList<Metadata extends Record<string, any>>(props: CompositeList.Props<Metadata>) {
 	const { children, elementsRef, labelsRef, onMapChange } = props;
 
 	const nextIndexRef = React.useRef<number>(0);
@@ -84,7 +83,7 @@ function createListeners() {
 	return new Set<Function>();
 }
 
-function createMap<Metadata extends CompositeCustomMetadata>() {
+function createMap<Metadata extends Record<string, any>>() {
 	return new Map<Element, CompositeMetadata<Metadata> | null>();
 }
 
@@ -108,7 +107,7 @@ function sortByDocumentPosition(a: Element, b: Element) {
 }
 
 export namespace CompositeList {
-	export interface Props<Metadata extends CompositeCustomMetadata> {
+	export interface Props<Metadata extends Record<string, any>> {
 		children: React.ReactNode;
 		elementsRef: React.RefObject<Array<HTMLElement | null>>;
 		/**

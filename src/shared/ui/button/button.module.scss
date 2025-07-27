@@ -6,7 +6,6 @@
 	position: relative;
 	padding-block: 0px;
 	padding-inline: var(--buttonPaddingInline);
-	cursor: pointer;
 	transition: background-color 0.2s, color 0.2s, border-color 0.2s, opacity 0.2s;
 	overflow: hidden;
 	display: flex;
@@ -23,7 +22,7 @@
 	}
 	&.icon-button {
 		--padding-inline: 0px !important;
-		font-size: calc(var(--buttonHeight) / 2);
+		font-size: calc(var(--buttonHeight) / 1.75);
 		aspect-ratio: 1;
 		flex-shrink: 0;
 	}
@@ -134,6 +133,9 @@
 		}
 	}
 
+	&.border-radius-s {
+		--borderRadius: var(--border-radius-s);
+	}
 	&.border-radius-m {
 		--borderRadius: var(--border-radius-m);
 	}

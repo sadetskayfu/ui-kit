@@ -1,6 +1,6 @@
 import type { Preview } from '@storybook/react'
 import { Theme } from '@/app/providers/theme-provider';
-import { ThemeDecorator, StyleDecorator } from './decorators';
+import { ToastDecorator, ThemeDecorator, StyleDecorator } from './decorators';
 import '@/app/styles/main.scss'
 
 const preview: Preview = {
@@ -24,7 +24,7 @@ const preview: Preview = {
 			}
 		}
 	},
-  decorators: [ThemeDecorator, StyleDecorator],
+  decorators: [ToastDecorator, ThemeDecorator, StyleDecorator],
 };
 
 export default preview;

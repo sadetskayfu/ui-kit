@@ -1,0 +1,42 @@
+.form-control-label {
+    display: inline-flex;
+    align-items: center;
+
+    &.placement-right {
+        column-gap: 3px;
+    }
+    &.placement-left {
+        flex-direction: row-reverse;
+        column-gap: 3px;
+    }
+    &.placement-top {
+        flex-direction: column-reverse;
+    }
+    &.placement-bottom {
+        flex-direction: column;
+    }
+
+    &.color-soft {
+        .label {
+            color: var(--font-color-soft);
+        }
+    }
+    &.color-hard {
+        .label {
+            color: var(--font-color-hard);
+        }
+    }
+
+    &.disabled {
+        .label {
+            @include disabled;
+        }
+    }
+}
+
+.label {
+    @include user-select-off;
+    span {
+        color: var(--font-color-soft);
+    }
+}
