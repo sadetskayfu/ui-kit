@@ -1,2 +1,2 @@
 export { BorderProvider } from './border-provider'
-export { BorderContext } from './border-context'
+export { BorderContext, useBorderContext } from './border-context'

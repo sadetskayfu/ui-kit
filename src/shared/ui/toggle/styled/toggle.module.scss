@@ -21,8 +21,8 @@
 
     &.icon-button {
         width: var(--toggle-height);
-        padding-inline: 0px;
-        font-size: calc(var(--toggle-height) / 1.75);
+        padding-inline: 5px;
+        font-size: calc(var(--toggle-height) / 2);
         flex-shrink: 0;
     }
     &:not(.icon-button) {

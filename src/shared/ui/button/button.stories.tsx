@@ -9,16 +9,27 @@ const meta: Meta<typeof Button> = {
         variant: 'filled',
         color: 'primary',
         size: 'm',
-        borderPlacement: 'all',
-        borderRadius: 'm',
         disabled: false,
         loading: false,
         iconButton: false,
-        type: 'button',
+        disableRipple: false,
+        disableRippleSpaceKey: false,
         children: 'Button'
 	},
     argTypes: {
 		onClick: { action: 'clicked' },
+        variant: {
+            control: 'radio',
+            options: ['filled', 'outlined', 'clear']
+        },
+        color: {
+            control: 'radio',
+            options: ['primary', 'secondary', 'red', 'green']
+        },
+        size: {
+            control: 'radio',
+            options: ['xs', 's', 'm', 'l']
+        }
 	},
 };
 
@@ -38,19 +49,14 @@ export const IconButton: Story = {
     args: {
         children: <GearIcon />,
         iconButton: true,
-        borderRadius: 'circular'
     }
 }
 
 export const LinkButton: Story = {
     args: {
-        to: 'https://example.com'
+        render: <a href='/example'/>,
+        disableRippleSpaceKey: true
     }
 }
 
-export const CustomLinkComponent: Story = {
-    args: {
-        linkComponent: <a href='https://example.com'></a>
-    }
-}
 

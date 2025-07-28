@@ -1,0 +1,14 @@
+.pagination {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+}
+
+.space {
+    width: var(--button-height-m);
+    height: var(--button-height-m);
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    @include user-select-off;
+}

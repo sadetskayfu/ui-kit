@@ -1,3 +1,3 @@
 export { Button } from './button'
-export { ButtonProvider } from './button-provider'
+export { ButtonVariantProvider } from './variant-provider/button-variant-provider'
 

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Toggle } from '@/shared/ui/toggle';
 import { BorderProvider } from './border-provider';
+import { Button } from '@/shared/ui/button';
 
 const meta: Meta<typeof BorderProvider> = {
 	title: 'shared/border-provider',
@@ -20,7 +21,6 @@ const meta: Meta<typeof BorderProvider> = {
             description: 'Border radius placement (single value or array)',
           },
     }
-    
 };
 
 export default meta;
@@ -31,6 +31,7 @@ const BorderProviderWrapper = (args: any) => {
 	return (
 		<div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
 			<BorderProvider {...args}>
+                <Button>Button</Button>
 				<Toggle value="1">Toggle button</Toggle>
 			</BorderProvider>
 		</div>

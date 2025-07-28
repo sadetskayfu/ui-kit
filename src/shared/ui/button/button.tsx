@@ -1,149 +1,101 @@
-import {
-	cloneElement,
-	forwardRef,
-	memo,
-	type AnchorHTMLAttributes,
-	type ButtonHTMLAttributes,
-	type HTMLAttributes,
-	type ReactElement,
-} from 'react';
+import * as React from 'react';
 import { classNames, type AdditionalClasses, type Mods } from '@/shared/helpers/class-names';
 import { Ripple, useRipple } from '@/shared/lib/ripple';
 import { CircularProgress } from '@/shared/ui/circular-progress';
-import type { ButtonContextType } from './model/button-context';
-import { useButtonContext } from './model/use-button-context';
+import { ModernComponentProps } from '@/shared/helpers/types';
+import {
+	ButtonVariantContext,
+	useButtonVariantContext,
+} from './variant-provider/button-variant-context';
+import { useBorderContext } from '@/shared/ui/border-provider';
+import { useRenderElement } from '@/shared/hooks';
 import styles from './button.module.scss';
 
-type HTMLProps = HTMLAttributes<HTMLElement>;
-type HTMLButtonProps = Omit<
-	ButtonHTMLAttributes<HTMLButtonElement>,
-	keyof HTMLProps | 'disabled' | 'type'
->;
-type HTMLLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof HTMLProps | 'href'>;
+export const Button = React.memo(
+	React.forwardRef((props: Button.Props, forwardedRef: React.ForwardedRef<HTMLButtonElement>) => {
+		const {
+			render,
+			className,
+			children,
+			variant,
+			color,
+			size,
+			iconButton,
+			disabled,
+			loading,
+			fullWidth,
+			disableRipple,
+			disableRippleSpaceKey,
+			...otherProps
+		} = props;
 
-interface ButtonProps extends ButtonContextType, Omit<HTMLProps, 'color'> {
-	type?: 'submit' | 'reset' | 'button';
-	buttonProps?: HTMLButtonProps;
-	linkProps?: HTMLLinkProps;
-	to?: string;
-	linkComponent?: ReactElement<HTMLProps>;
-	loading?: boolean;
-	fullWidth?: boolean
-}
+		const { ripples, containerRef, removeRipple, ...rippleHandlers } = useRipple({
+			disableRipple,
+			disableSpaceKey: disableRippleSpaceKey,
+		});
 
-export const Button = memo(
-	forwardRef(
-		(props: ButtonProps, ref: React.ForwardedRef<HTMLButtonElement | HTMLAnchorElement>) => {
-			const {
-				className,
-				children,
-				type = 'button',
-				buttonProps,
-				linkProps,
-				to,
-				linkComponent,
-				variant,
-				color,
-				size,
-				borderPlacement,
-				borderRadius,
-				iconButton,
-				disabled,
-				loading: isLoading,
-				fullWidth: isFullWidth,
-				onKeyUp,
-				onKeyDown,
-				onMouseUp,
-				onMouseDown,
-				onMouseLeave,
-				onBlur,
-				...otherProps
-			} = props;
+		const variantContext = useButtonVariantContext();
+		const borderContext = useBorderContext();
 
-			const { ripples, containerRef, removeRipple, ...handlers } = useRipple({
-				onKeyDown,
-				onKeyUp,
-				onMouseDown,
-				onMouseLeave,
-				onMouseUp,
-				onBlur,
-			});
+		const isDisabled = disabled || variantContext?.disabled || false;
+		const isIconButton = iconButton || variantContext?.iconButton || false;
 
-			const context = useButtonContext();
+		const additionalClasses: AdditionalClasses = [
+			borderContext?.borderClassName,
+			styles[`variant-${variant || variantContext?.variant || 'filled'}`],
+			styles[`color-${color || variantContext?.color || 'primary'}`],
+			styles[`size-${size || variantContext?.size || 'm'}`],
+		];
 
-			const isDisabled = disabled || context?.disabled || false;
-			const isIconButton = iconButton || context?.iconButton || false;
+		const mods: Mods = {
+			[styles['disabled']]: isDisabled,
+			[styles['loading']]: loading,
+			[styles['icon-button']]: isIconButton,
+			[styles['full-width']]: fullWidth,
+		};
 
-			const additionalClasses: AdditionalClasses = [
-				className,
-				styles[`variant-${variant || context?.variant || 'filled'}`],
-				styles[`color-${color || context?.color || 'primary'}`],
-				styles[`size-${size || context?.size || 'm'}`],
-				styles[`border-placement-${borderPlacement || context?.borderPlacement || 'all'}`],
-				styles[`border-radius-${borderRadius || context?.borderRadius || 'm'}`],
-			];
-
-			const mods: Mods = {
-				[styles['disabled']]: isDisabled,
-				[styles['loading']]: isLoading,
-				[styles['icon-button']]: isIconButton,
-				[styles['full-width']]: isFullWidth
-			};
-
-			if (linkComponent) {
-				return cloneElement(linkComponent, {
+		const element = useRenderElement('button', {
+			className,
+			render,
+			ref: forwardedRef,
+			props: [
+				{
 					className: classNames(styles['button'], additionalClasses, mods),
-					children,
-					'aria-disabled': isDisabled ? 'true' : undefined,
-					...otherProps,
-					...linkProps,
-					...handlers,
-				});
-			}
+					disabled: isDisabled,
+					...rippleHandlers,
+					children: (
+						<>
+							{children}
+							{loading && (
+								<CircularProgress
+									className={styles['loader']}
+									size="s"
+									color="inherit"
+									absCenter
+								/>
+							)}
+							<Ripple
+								ref={containerRef}
+								ripples={ripples}
+								removeRipple={removeRipple}
+							/>
+						</>
+					),
+				},
+				otherProps,
+			],
+		});
 
-			if (to) {
-				return (
-					<a
-						ref={ref as React.ForwardedRef<HTMLAnchorElement>}
-						className={classNames(styles['button'], additionalClasses, mods)}
-						href={to}
-						aria-disabled={isDisabled ? 'true' : undefined}
-						{...linkProps}
-						{...otherProps}
-						{...handlers}
-					>
-						{children}
-					</a>
-				);
-			}
-
-			return (
-				<button
-					ref={ref as React.ForwardedRef<HTMLButtonElement>}
-					className={classNames(styles['button'], additionalClasses, mods)}
-					type={type}
-					disabled={isDisabled}
-					{...buttonProps}
-					{...otherProps}
-					{...handlers}
-				>
-					{children}
-					{isLoading && (
-						<CircularProgress
-							className={styles['loader']}
-							size="s"
-							color="inherit"
-							absCenter
-						/>
-					)}
-					<Ripple
-						ref={containerRef}
-						ripples={ripples}
-						size={isIconButton ? 'small' : 'default'}
-						removeRipple={removeRipple}
-					/>
-				</button>
-			);
-		}
-	)
+		return element;
+	})
 );
+
+export namespace Button {
+	export interface State {}
+	export interface Props extends ModernComponentProps<'button', State>, ButtonVariantContext {
+		loading?: boolean;
+		fullWidth?: boolean;
+		disableRipple?: boolean;
+		disableRippleSpaceKey?: boolean;
+	}
+}
