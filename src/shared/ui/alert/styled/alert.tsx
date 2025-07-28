@@ -1,16 +1,34 @@
 import * as React from 'react';
 import { BaseAlert } from '../base';
 import { classNames } from '@/shared/helpers/class-names';
+import { useBorderContext } from '@/shared/ui/border-provider';
 import styles from './alert.module.scss';
 
 export const Alert = React.memo(
 	React.forwardRef((props: Alert.Props, forwardedRef: React.ForwardedRef<HTMLDivElement>) => {
-		const { className, title, description, icon, actions, severity = 'info', variant = 'filled', ...otherProps } = props;
+		const {
+			className,
+			actionsClassName,
+			title,
+			description,
+			icon,
+			actions,
+			severity = 'info',
+			variant = 'filled',
+			...otherProps
+		} = props;
+
+		const borderContext = useBorderContext();
 
 		return (
 			<BaseAlert.Root
 				ref={forwardedRef}
-				className={classNames(styles['alert'], [className, styles[`severity-${severity}`], styles[`variant-${variant}`]])}
+				className={classNames(styles['alert'], [
+					className,
+					borderContext?.borderClassName,
+					styles[`severity-${severity}`],
+					styles[`variant-${variant}`],
+				])}
 				{...otherProps}
 			>
 				{icon && <span className={styles['icon']}>{icon}</span>}
@@ -22,7 +40,11 @@ export const Alert = React.memo(
 						</BaseAlert.Description>
 					)}
 				</div>
-				{actions && <div className={styles['actions']}>{actions}</div>}
+				{actions && (
+					<div className={classNames(styles['actions'], [actionsClassName])}>
+						{actions}
+					</div>
+				)}
 			</BaseAlert.Root>
 		);
 	})
@@ -30,7 +52,8 @@ export const Alert = React.memo(
 
 export namespace Alert {
 	export interface Props extends Omit<BaseAlert.Root.Props, 'className' | 'render'> {
-		className?: string
+		className?: string;
+		actionsClassName?: string;
 		title: string;
 		description?: string | React.ReactElement;
 		icon?: React.ReactElement;
@@ -39,6 +62,9 @@ export namespace Alert {
 		 * @default 'info'
 		 */
 		severity?: 'info' | 'warning' | 'error' | 'success';
-		variant?: 'filled' | 'outlined'
+		/**
+		 * @default 'filled'
+		 */
+		variant?: 'filled' | 'outlined';
 	}
 }

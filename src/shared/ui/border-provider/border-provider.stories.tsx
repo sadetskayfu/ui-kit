@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Toggle } from '@/shared/ui/toggle';
 import { BorderProvider } from './border-provider';
 import { Button } from '@/shared/ui/button';
+import { Alert } from '@/shared/ui/alert';
 
 const meta: Meta<typeof BorderProvider> = {
 	title: 'shared/border-provider',
@@ -33,6 +34,7 @@ const BorderProviderWrapper = (args: any) => {
 			<BorderProvider {...args}>
                 <Button>Button</Button>
 				<Toggle value="1">Toggle button</Toggle>
+                <Alert title='Alert' description='Description'/>
 			</BorderProvider>
 		</div>
 	);
