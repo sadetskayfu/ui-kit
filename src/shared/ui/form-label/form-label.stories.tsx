@@ -5,12 +5,12 @@ const meta: Meta<typeof FormLabel> = {
 	title: 'shared/form-label',
 	component: FormLabel,
 	args: {
+		Tag: 'span',
 		color: 'soft',
-		component: 'label',
-		disabled: false,
 		required: false,
 		errored: false,
 		focused: false,
+		hidden: false,
 	},
 };
 

@@ -79,34 +79,6 @@ export const ToastRoot = React.forwardRef(
 				.reduce((acc, toast) => acc + (toast.height || 0), 0);
 		}, [toasts, toast]);
 
-		// // Спорно
-		// const onAnimationsFinished = useAnimationsFinished(
-		// 	rootRef,
-		// 	toast.transitionStatus !== 'ending'
-		// );
-
-		// React.useEffect(() => {
-		// 	onAnimationsFinished(() => {
-		// 		if (toast.transitionStatus === 'ending') {
-		// 			remove(toast.id);
-		// 		}
-		// 	});
-		// }, [remove, onAnimationsFinished, toast.id, toast.transitionStatus]);
-
-		// const onAnimationsFinished = useAnimationsFinished(rootRef, true)
-
-		console.log(toasts)
-
-		// const onComplete = useEventCallback(() => {
-		// 	if (toast.transitionStatus === 'ending') {
-		// 		remove(toast.id)
-		// 	}
-		// })
-
-		// React.useEffect(() => {
-		// 	onAnimationsFinished(onComplete)
-		// }, [onAnimationsFinished, onComplete])
-
 		React.useEffect(() => {
 			if (!rootRef.current) {
 				return undefined;

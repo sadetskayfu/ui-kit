@@ -1,8 +1,6 @@
 .form-label {
 	width: max-content;
-	transition: color 0.2s;
-	cursor: inherit;
-
+    
     &.color-soft {
         color: var(--font-color-soft);
     }
@@ -14,9 +12,11 @@
         color: var(--theme-color-primary-main);
     }
     &.errored {
-        color: var(--font-color-red-soft);
+        color: var(--font-color-red-hard);
     }
-    &.disabled {
-        @include disabled;
-    }
+}
+
+.required-indicator {
+    color: var(--font-color-soft);
+    @include user-select-off;
 }

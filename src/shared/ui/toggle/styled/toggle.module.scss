@@ -1,0 +1,85 @@
+.toggle {
+    --toggle-height: ;
+    --toggle-padding-inline: ;
+    --toggle-pressed-bg-color: ;
+    --toggle-pressed-color: ;
+    --toggle-hover-bg-color: ;
+    position: relative;
+    overflow: hidden;
+    height: var(--toggle-height);
+    padding-block: 0px;
+    border-radius: var(--border-radius-m);
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    color: var(--font-color-hard);
+    transition: background-color 0.2s, color 0.2s;
+    white-space: nowrap;
+    @include outline;
+
+    &.icon-button {
+        width: var(--toggle-height);
+        padding-inline: 0px;
+        font-size: calc(var(--toggle-height) / 1.75);
+        flex-shrink: 0;
+    }
+    &:not(.icon-button) {
+        padding-inline: var(--toggle-padding-inline);
+        column-gap: calc(var(--toggle-padding-inline) / 2);
+    }
+
+    &:focus-visible {
+        @include focus-outline;
+    }
+
+    &.pressed {
+        color: var(--toggle-pressed-color);
+        background-color: var(--toggle-pressed-bg-color);
+    }
+
+    @include hover {
+        background-color: var(--toggle-hover-bg-color);
+    }
+
+    &.color-primary {
+        --toggle-pressed-bg-color: var(--color-primary-opacity-medium);
+        --toggle-pressed-color: var(--theme-color-primary-main);
+        --toggle-hover-bg-color: var(--color-grey-opacity-soft);
+
+        &.pressed {
+            --toggle-hover-bg-color: var(--color-primary-opacity-hard);
+        }
+    }
+    &.color-secondary {
+        --toggle-pressed-bg-color: var(--color-grey-opacity-medium);
+        --toggle-pressed-color: var(--font-color-hard);
+        --toggle-hover-bg-color: var(--color-grey-opacity-soft);
+
+        &.pressed {
+            --toggle-hover-bg-color: var(--color-grey-opacity-hard);
+        }
+    }
+
+    &.size-xs {
+        --toggle-height: var(--button-height-xs);
+        --toggle-padding-inline: var(--button-padding-inline-xs);
+    }
+    &.size-s {
+        --toggle-height: var(--button-height-s);
+        --toggle-padding-inline: var(--button-padding-inline-s);
+    }
+    &.size-m {
+        --toggle-height: var(--button-height-m);
+        --toggle-padding-inline: var(--button-padding-inline-m);
+    }
+    &.size-l {
+        --toggle-height: var(--button-height-l);
+        --toggle-padding-inline: var(--button-padding-inline-l);
+    }
+
+    &.disabled {
+        @include disabled;
+    }
+}

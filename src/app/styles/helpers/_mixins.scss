@@ -35,12 +35,12 @@
 }
 
 @mixin outline {
-	outline: var(--border-weight-soft) var(--theme-color-primary-main);
-	outline-inset: var(--border-weight-soft);
+	outline: var(--border-weight-soft) solid var(--border-color-grey);
+	outline-offset: var(--outline-offset);
 }
 
 @mixin focus-outline {
-	outline: var(--border-weight-hard) var(--theme-color-primary-main);
-	outline-inset: var(--border-weight-soft);
+	outline: var(--border-weight-hard) solid var(--theme-color-primary-main);
+	outline-offset: var(--outline-offset);
 }
 

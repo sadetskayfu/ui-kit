@@ -1,6 +1,14 @@
 .viewport {
     position: fixed;
-    right: var(--padding-20);
-    bottom: var(--padding-20);
     width: 360px;
+
+    &.position-bottom-right {
+        right: var(--padding-25);
+        bottom: var(--padding-25);
+    }
+    &.position-top-center {
+        top: var(--padding-25);
+        left: 50%;
+        transform: translateX(-50%);
+    }
 }

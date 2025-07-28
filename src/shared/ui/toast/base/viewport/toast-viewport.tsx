@@ -54,7 +54,7 @@ export const ToastViewport = React.forwardRef(
             
 			resumeTimers();
 			setHovering(false);
-            setFocused(false)
+            //setFocused(false)
             
 		};
         

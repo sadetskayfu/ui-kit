@@ -1,97 +1,82 @@
-import { memo, type ReactNode, useCallback } from 'react'
-import { classNames, type AdditionalClasses, type Mods } from '@/shared/helpers/class-names'
-import styles from './form-label.module.scss'
+import * as React from 'react';
+import { classNames, type AdditionalClasses, type Mods } from '@/shared/helpers/class-names';
+import { useRenderElement } from '@/shared/hooks';
+import { activeElement, getTarget } from '@floating-ui/react/utils';
+import { ownerDocument } from '@/shared/helpers/owner';
+import styles from './form-label.module.scss';
 
-interface FormLabelProps {
-    id?: string
-    className?: string
-    children: ReactNode
-	inputId?: string
-	focusTarget?: React.RefObject<HTMLElement | null>
-	component?: 'label' | 'legend' | 'span'
-	color?: 'soft' | 'hard'
-	required?: boolean
-	focused?: boolean
-	errored?: boolean
-	disabled?: boolean
-    onClick?: React.MouseEventHandler<HTMLElement>
-}
-
-export const FormLabel = memo((props: FormLabelProps) => {
+/**
+ * Renders a `<span>` element.
+ */
+export const FormLabel = React.memo(React.forwardRef((props: FormLabel.Props, forwardedRef: React.ForwardedRef<HTMLElement>) => {
 	const {
 		className,
 		children,
-		id,
-		inputId,
-		focusTarget: focusTargetRef,
-		component = 'label',
+		Tag = 'span',
+		focusTargetRef,
 		color = 'soft',
 		required,
 		focused,
 		errored,
-		disabled,
-		onClick,
-	} = props
+		hidden,
+		...otherProps
+	} = props;
 
-	const handleClick = useCallback(
+	const handleClick = React.useCallback(
 		(event: React.MouseEvent<HTMLElement>) => {
-			onClick?.(event)
-
-			if (focusTargetRef && focusTargetRef.current && (focusTargetRef.current !== document.activeElement)) {
-                focusTargetRef.current.focus()
+			if (
+				focusTargetRef?.current &&
+				focusTargetRef.current !==
+					activeElement(ownerDocument(getTarget(event.nativeEvent) as HTMLElement | null))
+			) {
+				focusTargetRef.current.focus();
 			}
 		},
-		[focusTargetRef, onClick]
-	)
+		[focusTargetRef]
+	);
 
-	const additionalClasses: AdditionalClasses = [
-		className,
-		styles[`color-${color}`]
-	]
+	const additionalClasses: AdditionalClasses = [className, hidden ? 'visually-hidden' : undefined, styles[`color-${color}`]];
 
 	const mods: Mods = {
 		[styles['focused']]: focused,
 		[styles['errored']]: errored,
-		[styles['disabled']]: disabled,
-	}
+	};
 
-	if (component === 'label') {
-		return (
-			<label
-				className={classNames(styles['form-label'], additionalClasses, mods)}
-				id={id}
-				htmlFor={inputId}
-				onClick={handleClick}
-			>
-				{children}
-				{required && <span aria-hidden="true"> *</span>}
-			</label>
-		)
-	}
+	return useRenderElement(Tag, {
+		ref: forwardedRef,
+		props: [
+			{
+				className: classNames(styles['form-label'], additionalClasses, mods),
+				onClick: handleClick,
+				children: (
+					<>
+						{children}
+						{required && <span className={styles['required-indicator']} aria-hidden='true'> *</span>}
+					</>
+				),
+			},
+			otherProps,
+		],
+	});
+}));
 
-	if (component === 'legend') {
-		return (
-			<legend
-				className={classNames(styles['form-label'], additionalClasses, mods)}
-				id={id}
-				onClick={handleClick}
-			>
-				{children}
-				{required && <span aria-hidden="true"> *</span>}
-			</legend>
-		)
+export namespace FormLabel {
+	export interface Props extends React.HTMLAttributes<HTMLElement> {
+		/**
+		 * @default 'span'
+		 */
+		Tag?: keyof React.JSX.IntrinsicElements;
+		/**
+		 * Ref элемента, на который нужно установить фокус при клике по лейблу
+		 */
+		focusTargetRef?: React.RefObject<HTMLElement | null>;
+		/**
+		 * @default 'soft'
+		 */
+		color?: 'soft' | 'hard';
+		required?: boolean;
+		focused?: boolean;
+		errored?: boolean;
+		hidden?: boolean
 	}
-
-	if (component === 'span') {
-		return (
-			<span
-				className={classNames(styles['form-label'], additionalClasses, mods)}
-				id={id}
-				onClick={handleClick}
-			>
-				{children}
-				{required && <span aria-hidden="true"> *</span>}
-			</span>
-		)
-	}
-})
+}

@@ -6,6 +6,9 @@ import { classNames } from '@/shared/helpers/class-names';
 import { Composite } from '@floating-ui/react';
 import styles from './form-group.module.scss';
 
+/**
+ * Renders a `<fieldset>` element with <legend>.
+ */
 const FormGroupComponent = <Value extends string[]>(props: FormGroup.Props<Value>) => {
 	const {
 		className,
@@ -66,6 +69,7 @@ const FormGroupComponent = <Value extends string[]>(props: FormGroup.Props<Value
 					aria-invalid={error ? 'true' : undefined}
 					aria-describedby={helperText ? helperTextId : undefined}
 					aria-required={required ? 'true' : undefined}
+					aria-readonly={readOnly ? 'true' : undefined}
 					aria-disabled={disabled ? 'true' : undefined}
 					style={style}
 				>
@@ -74,7 +78,7 @@ const FormGroupComponent = <Value extends string[]>(props: FormGroup.Props<Value
 						{required && <span aria-hidden="true"> *</span>}
 					</legend>
 					<FormGroupContext.Provider value={contextValue}>
-						<div className={styles['group']}>{children}</div>
+						<div role='group' className={styles['group']}>{children}</div>
 					</FormGroupContext.Provider>
 					{helperText && (
 						<FormHelperText id={helperTextId} error={error}>

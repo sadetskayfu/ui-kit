@@ -32,7 +32,7 @@ export namespace Alert {
 	export interface Props extends Omit<BaseAlert.Root.Props, 'className' | 'render'> {
 		className?: string
 		title: string;
-		description?: string | React.ReactNode;
+		description?: string | React.ReactElement;
 		icon?: React.ReactElement;
 		actions?: React.ReactNode;
 		/**

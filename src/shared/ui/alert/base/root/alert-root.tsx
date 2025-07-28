@@ -23,8 +23,9 @@ export const AlertRoot = React.forwardRef(
 			className,
 			ref: forwardedRef,
 			props: [
-				{ 'aria-labelledby': titleId, 'aria-describedby': descriptionId, role },
+				{ role },
 				otherProps,
+				{ 'aria-labelledby': titleId, 'aria-describedby': descriptionId },
 			],
 		});
 

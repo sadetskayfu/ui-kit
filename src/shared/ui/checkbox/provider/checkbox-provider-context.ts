@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export interface CheckboxVariantContext {
+export interface CheckboxProviderContext {
 	color?: 'primary';
 	variant?: 'filled' | 'outlined';
 	size?: 's' | 'm';
@@ -8,12 +8,15 @@ export interface CheckboxVariantContext {
 	 * Передайте смещение, чтобы компенсировать сдвиг, из за увеличенной кликабельной области
 	 */
 	offset?: 'left' | 'top' | 'right' | 'bottom' | ('left' | 'top' | 'right' | 'bottom')[];
+	disabled?: boolean
+	readOnly?: boolean
+	required?: boolean
 }
 
-export const CheckboxVariantContext = React.createContext<CheckboxVariantContext | undefined>(
+export const CheckboxProviderContext = React.createContext<CheckboxProviderContext | undefined>(
 	undefined
 );
 
-export function useCheckboxVariantContext() {
-	return React.useContext(CheckboxVariantContext);
+export function useCheckboxProviderContext() {
+	return React.useContext(CheckboxProviderContext);
 }

@@ -1,20 +1,20 @@
 .toast {
+	--toast-ratio: ;
+	--toast-invert-ration: ;
 	--toast-gap: 8px;
 	--toast-corrected-offset-y: calc(
-		var(--toast-offset-y) * -1 + (var(--toast-index) * var(--toast-gap) * -1) +
+		var(--toast-offset-y) * var(--toast-invert-ration) +
+			(var(--toast-index) * var(--toast-gap) * var(--toast-invert-ration)) +
 			var(--toast-swipe-movement-y)
 	);
 	position: absolute;
-	bottom: 0;
-	right: 0;
-	border-radius: var(--border-radius-m);
-	background-color: var(--theme-color-grey-dark);
-	background-clip: padding-box;
 	width: 100%;
-	padding: 20px;
+	background-clip: padding-box;
 	z-index: calc(1000 - var(--toast-index));
 	transform: translateX(var(--toast-swipe-movement-x))
-		translateY(calc(var(--toast-swipe-movement-y) + (min(var(--toast-index), 10) * -20%)))
+		translateY(
+			calc(var(--toast-swipe-movement-y) + (min(var(--toast-index), 10) * var(--toast-ratio)))
+		)
 		scale(calc(max(0, 1 - (var(--toast-index) * 0.1))));
 	transition:
 		transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
@@ -22,17 +22,16 @@
 	@include user-select-off;
 
 	&:focus-visible {
-		outline: var(--border-weight-soft) solid var(--theme-color-primary-main);
-		outline-offset: calc(var(--border-weight-soft) * -1);
+		@include focus-outline;
 	}
 
 	&::after {
 		content: '';
 		position: absolute;
-		top: 100%;
 		width: 100%;
 		left: 0;
 		height: calc(var(--toast-gap) + 1px);
+		background-color: red;
 	}
 
 	&.expanded {
@@ -44,9 +43,35 @@
 		opacity: 0;
 	}
 
-	&.transition-status-starting,
-	&.transition-status-ending {
-		transform: translateY(150%);
+	&.position-top-center {
+		--toast-ratio: 20%;
+		--toast-invert-ration: 1;
+		top: 0;
+		right: 0;
+
+		&:after {
+			bottom: 100%;
+		}
+
+		&.transition-status-starting,
+		&.transition-status-ending {
+			transform: translateY(-150%);
+		}
+	}
+	&.position-bottom-right {
+		--toast-ratio: -20%;
+		--toast-invert-ration: -1;
+		bottom: 0;
+		right: 0;
+
+		&:after {
+			top: 100%;
+		}
+
+		&.transition-status-starting,
+		&.transition-status-ending {
+			transform: translateY(150%);
+		}
 	}
 
 	&.transition-status-ending {
@@ -54,10 +79,6 @@
 
 		&.swipe-direction-up {
 			transform: translateY(calc(var(--toast-swipe-movement-y) - 150%));
-		}
-		&.swipe-direction-left {
-			transform: translateX(calc(var(--toast-swipe-movement-x) - 150%))
-				translateY(var(--toast-corrected-offset-y));
 		}
 		&.swipe-direction-right {
 			transform: translateX(calc(var(--toast-swipe-movement-x) + 150%))
@@ -67,10 +88,4 @@
 			transform: translateY(calc(var(--toast-swipe-movement-y) + 150%));
 		}
 	}
-}
-
-.close-button {
-	position: absolute;
-	top: 5px;
-	right: 5px;
 }

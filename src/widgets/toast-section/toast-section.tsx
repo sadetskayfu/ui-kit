@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Button } from '@/shared/ui/button';
 import { Section } from '@/shared/ui/section';
 import { Toast, useToast } from '@/shared/ui/toast';
-import styles from './toast-section.module.scss';
 import { Alert } from '@/shared/ui/alert';
+import styles from './toast-section.module.scss';
 
 export const ToastSection = () => {
 	const countRef = React.useRef(0);
@@ -56,7 +56,7 @@ export const ToastSection = () => {
 			>
 				Add Success toast
 			</Button>
-			<Toast.Viewport>
+			<Toast.Viewport position='top-center'>
 				{toasts.map(toast => (
 					<Toast.Toast
 						key={toast.id}
