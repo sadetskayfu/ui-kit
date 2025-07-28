@@ -1,0 +1,111 @@
+.radio {
+    --radio-size: ;
+    --radio-offset: calc(var(--radio-size) / 4 * -1);
+    --radio-bg-color: ;
+    display: block;
+    position: relative;
+    height: var(--radio-size);
+    width: var(--radio-size);
+    border-radius: 50%;
+    color: var(--theme-color-primary-main);
+    transition: background-color 0.2s;
+    overflow: hidden;
+
+    @include hover {
+        background-color: var(--color-grey-opacity-soft);
+    }
+
+    input {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+        opacity: 0;
+
+        &:checked + .body > .blank {
+            outline-color: var(--theme-color-primary-main);
+        }
+
+        &:checked + .body > .blank > .indicator {
+            opacity: 1;
+            width: 60%;
+            height: 60%;
+        }
+
+        &:focus-visible + .body {
+            background-color: var(--color-primary-opacity-medium);
+        }
+    }
+}
+
+.body {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+.blank {
+    width: 50%;
+    height: 50%;
+    border-radius: inherit;
+    background-color: var(--radio-bg-color);
+    outline: var(--border-weight-soft) solid var(--border-color-grey);
+    outline-offset: var(--outline-offset);
+    transition: background-color 0.2s, outline-color 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.indicator {
+    width: 30%;
+    height: 30%;
+    opacity: 0;
+    transition: opacity 0.2s, height 0.2s, width 0.2s;
+    border-radius: inherit;
+    background-color: var(--theme-color-primary-main);
+}
+
+.radio {
+    &.variant-filled {
+        --radio-bg-color: var(--theme-color-grey-dark);
+    }
+    &.variant-outlined {
+        --radio-bg-color: transparent;
+    }
+
+    &.color-primary {
+        --radio-color: var(--theme-color-primary-main);
+        --radio-focus-indicator-color: var(--color-primary-opacity-medium);
+    }
+
+    &.size-s {
+        --radio-size: var(--button-height-s);
+    }
+    &.size-m {
+        --radio-size: var(--button-height-m);
+    }
+
+    &.disabled {
+        @include disabled;
+    }
+
+    &.offset-left {
+        margin-left: var(--radio-offset);
+    }
+    &.offset-right {
+        margin-right: var(--radio-offset);
+    }
+    &.offset-top {
+        margin-top: var(--radio-offset);
+    }
+    &.offset-bottom {
+        margin-bottom: var(--radio-offset);
+    }
+}

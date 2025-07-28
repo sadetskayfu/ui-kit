@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { classNames } from '@/shared/helpers/class-names';
 import {
-	CheckboxProviderContext,
-	useCheckboxProviderContext,
-} from './provider/checkbox-provider-context';
+	CheckboxVariantContext,
+	useCheckboxVariantContext,
+} from './variant-provider/checkbox-variant-context';
 import { useFormGroupContext } from '@/shared/ui/form-group';
 import { CheckMarkIcon } from '@/shared/ui/icons';
 import { Ripple, useRipple } from '@/shared/lib/ripple';
@@ -30,7 +30,6 @@ export const Checkbox = React.forwardRef(
 			size,
 			offset,
 			disabled,
-			readOnly,
 			required,
 			checked,
 			disableRipple,
@@ -45,12 +44,12 @@ export const Checkbox = React.forwardRef(
 			disableRipple,
 		});
 
-		const providerContext = useCheckboxProviderContext();
+		const variantContext = useCheckboxVariantContext();
 		const groupContext = useFormGroupContext();
 		const formLabelContext = useFormControlLabelContext();
 
-		const isChecked = checked ?? (value ? groupContext?.value.includes(value) : undefined);
-		const isDisabled = disabled ?? formLabelContext?.disabled ?? providerContext?.disabled ?? groupContext?.disabled
+		const isChecked = checked || (value ? groupContext?.value.includes(value) : undefined);
+		const isDisabled = disabled || formLabelContext?.disabled || variantContext?.disabled || groupContext?.disabled || false
 
 		const mergedProps = mergeProps(rippleHandlers, otherProps);
 
@@ -59,8 +58,7 @@ export const Checkbox = React.forwardRef(
 			type: 'checkbox',
 			onChange: onChange ?? groupContext?.onChange ?? undefined,
 			disabled: isDisabled,
-			readOnly: readOnly ?? providerContext?.readOnly ?? groupContext?.readOnly,
-			required: required ?? providerContext?.required ?? formLabelContext?.required,
+			required: required || variantContext?.required || formLabelContext?.required,
 			checked: isChecked,
 			value,
 			'aria-labelledby': formLabelContext?.labelId,
@@ -73,10 +71,10 @@ export const Checkbox = React.forwardRef(
 					styles['checkbox'],
 					[
 						className,
-						parseOffset(styles, offset ?? providerContext?.offset),
-						styles[`color-${color || providerContext?.color || 'primary'}`],
-						styles[`variant-${variant || providerContext?.variant || 'filled'}`],
-						styles[`size-${size || providerContext?.size || 'm'}`],
+						parseOffset(styles, offset ?? variantContext?.offset),
+						styles[`color-${color || variantContext?.color || 'primary'}`],
+						styles[`variant-${variant || variantContext?.variant || 'filled'}`],
+						styles[`size-${size || variantContext?.size || 'm'}`],
 					],
 					{
 						[styles['disabled']]: isDisabled,
@@ -129,7 +127,7 @@ export const Checkbox = React.forwardRef(
 export namespace Checkbox {
 	export interface Props
 		extends Omit<React.ComponentPropsWithoutRef<'input'>, 'color' | 'size' | 'value'>,
-			CheckboxProviderContext {
+			CheckboxVariantContext {
 		className?: string;
 		style?: React.CSSProperties;
 		value?: string;

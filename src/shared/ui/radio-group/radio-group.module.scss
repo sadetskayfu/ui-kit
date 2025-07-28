@@ -1,0 +1,26 @@
+.radio-group {
+    margin-right: 0px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+
+    legend {
+        margin-bottom: 5px;
+    }
+
+    &.orientation-horizontal {
+        .item-group {
+            column-gap: var(--padding-15);
+        }
+    }
+
+    &.orientation-vertical {
+        .item-group {
+            flex-direction: column;
+        }
+    }
+}
+
+.item-group {
+    display: flex;
+}

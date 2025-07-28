@@ -1,2 +1,2 @@
 export { Checkbox } from './checkbox'
-export { CheckboxProvider } from './provider/checkbox-provider'
+export { CheckboxVariantProvider } from './variant-provider/checkbox-variant-provider'
