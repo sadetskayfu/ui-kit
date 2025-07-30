@@ -51,7 +51,7 @@ export function useRenderElement<
 	const childRef = getChildRef(render)
 
 	outProps.ref = useMergeRefs(
-		enabled ? Array.isArray(ref) ? [childRef, outProps.ref, ...ref] : [childRef, outProps.ref, ref] : [null]
+		Array.isArray(ref) ? [childRef, outProps.ref, ...ref] : [childRef, outProps.ref, ref]
 	);
 
 	if (!enabled) return null as Enabled extends false ? null : React.ReactElement<Record<string, any>>

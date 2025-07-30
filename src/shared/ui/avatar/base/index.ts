@@ -1,0 +1,1 @@
+export * as BaseAvatar from './index.parts'

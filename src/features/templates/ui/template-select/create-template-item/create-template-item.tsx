@@ -1,6 +1,6 @@
 import { validateTemplateName } from '../../../model/helpers/validate-template-name';
 import { useTemplatesStore } from '../../../model/templates-store';
-import { Button, ButtonProvider } from '@/shared/ui/button';
+import { Button, ButtonVariantProvider } from '@/shared/ui/button';
 import { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { CheckMarkIcon, XMarkIcon } from '@/shared/ui/icons';
 import { TextField } from '@/shared/ui/text-field';
@@ -88,10 +88,9 @@ export const CreateTemplateItem = memo(() => {
 
 	const actions = useMemo(() => {
 		return (
-			<ButtonProvider
+			<ButtonVariantProvider
 				iconButton
 				variant="clear"
-				borderRadius="circular"
 				size="s"
 				color="secondary"
 			>
@@ -114,7 +113,7 @@ export const CreateTemplateItem = memo(() => {
 						<CheckMarkIcon variant="clear" />
 					</Button>
 				</BaseTooltip>
-			</ButtonProvider>
+			</ButtonVariantProvider>
 		);
 	}, [isValidInputValue, cancelCreate, finishCreate]);
 
@@ -137,7 +136,7 @@ export const CreateTemplateItem = memo(() => {
 					actions={actions}
 				/>
 			) : (
-				<Button ref={buttonRef} fullWidth borderRadius="m" onClick={startCreate}>
+				<Button ref={buttonRef} fullWidth onClick={startCreate}>
 					Добавить шаблон
 				</Button>
 			)}

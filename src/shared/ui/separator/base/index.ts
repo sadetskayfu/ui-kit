@@ -1,0 +1,1 @@
+export { Separator as BaseSeparator } from './separator'

@@ -21,7 +21,7 @@ const UncontrolledRadioWrapper = (args: any) => {
 	return (
 		<div>
 			<Radio defaultChecked {...args} />
-			<Radio {...args} />
+			<Radio {...args} /> 
 			<Radio {...args} />
 		</div>
 	);

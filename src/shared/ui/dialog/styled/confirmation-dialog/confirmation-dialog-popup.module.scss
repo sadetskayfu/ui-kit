@@ -1,0 +1,17 @@
+.popup {
+    min-width: 500px;
+}
+
+.content {
+    padding: var(--padding-15);
+    display: flex;
+    flex-direction: column;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    column-gap: var(--padding-10);
+    margin-left: auto;
+    margin-top: var(--padding-20);
+}

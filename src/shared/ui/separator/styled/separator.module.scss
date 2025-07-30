@@ -1,0 +1,10 @@
+.separator {
+    background-color: var(--border-color-grey);
+
+    &.orientation-vertical {
+        width: 1px;
+    }
+    &.orientation-horizontal {
+        height: 1px;
+    }
+}

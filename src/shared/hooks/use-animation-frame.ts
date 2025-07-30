@@ -93,10 +93,10 @@ export class AnimationFrame {
 }
 
 export function useAnimationFrame() {
-    const timeout = useLazyRef(AnimationFrame.create).current
+    const frame = useLazyRef(AnimationFrame.create).current
 
-    useOnMount(timeout.disposeEffect)
+    useOnMount(frame.disposeEffect)
 
-    return timeout
+    return frame
 }
 

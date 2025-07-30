@@ -8,7 +8,7 @@ import {
 	RadioVariantContext,
 	useRadioVariantContext,
 } from './variant-provider/radio-variant-context';
-import { useRadioGroupContext } from '../radio-group';
+import { useRadioGroupContext } from '@/shared/ui/radio-group';
 import styles from './radio.module.scss';
 
 /**

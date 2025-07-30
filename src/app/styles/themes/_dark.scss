@@ -9,7 +9,7 @@
 
 	--box-shadow-paper: 0 0 5px
 		hsla(var(--grey-hue), var(--grey-saturation), var(--grey-lightness), 0.5); // shadow for dropdown
-	--color-dark-opacity: hsla(0, 0, 0, 0.5); // overlay
+	--backdrop-bg-color: hsla(0, 0, 0, 0.5);
 
 	--theme-color-primary-main: var(--color-primary-500);
 	--theme-color-primary-main-light: var(--color-primary-400);

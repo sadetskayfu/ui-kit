@@ -1,0 +1,1 @@
+export * as BaseDialog from './index.parts'

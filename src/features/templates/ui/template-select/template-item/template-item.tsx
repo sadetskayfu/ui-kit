@@ -1,4 +1,4 @@
-import { Button, ButtonProvider } from '@/shared/ui/button';
+import { Button, ButtonVariantProvider } from '@/shared/ui/button';
 import {
 	ListItemButton,
 	ListItemContent,
@@ -123,9 +123,8 @@ export const TemplateItem = memo(
 		const fieldActions = useMemo(() => {
 			return (
 				<>
-					<ButtonProvider
+					<ButtonVariantProvider
 						variant="clear"
-						borderRadius="circular"
 						color="secondary"
 						size="s"
 						iconButton
@@ -144,7 +143,7 @@ export const TemplateItem = memo(
 								<SaveIcon />
 							</Button>
 						</BaseTooltip>
-					</ButtonProvider>
+					</ButtonVariantProvider>
 				</>
 			);
 		}, [isValidInputValue, finishRename, cancelRename]);
@@ -166,7 +165,6 @@ export const TemplateItem = memo(
 								size="s"
 								variant="clear"
 								color="secondary"
-								borderRadius="circular"
 								iconButton
 							>
 								<MoreIcon />

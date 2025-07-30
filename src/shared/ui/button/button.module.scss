@@ -16,7 +16,6 @@
 	border: none;
 	color: var(--button-color);
 	background-color: var(--button-bg-color);
-	border-radius: var(--border-radius-m);
 	@include user-select-off;
 
 	@include hover {

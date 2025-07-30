@@ -3,6 +3,8 @@ import { Toggle } from '@/shared/ui/toggle';
 import { BorderProvider } from './border-provider';
 import { Button } from '@/shared/ui/button';
 import { Alert } from '@/shared/ui/alert';
+import { Avatar } from '@/shared/ui/avatar';
+import { Skeleton } from '@/shared/ui/skeleton';
 
 const meta: Meta<typeof BorderProvider> = {
 	title: 'shared/border-provider',
@@ -34,7 +36,9 @@ const BorderProviderWrapper = (args: any) => {
 			<BorderProvider {...args}>
                 <Button>Button</Button>
 				<Toggle value="1">Toggle button</Toggle>
-                <Alert title='Alert' description='Description'/>
+                <Alert title='Alert' description='Description' />
+				<Avatar width={50} height={50} fallback='U' src='https://avatars.mds.yandex.net/i?id=11d6fa77d91c24b56fd69300f1fc2c1a0490a998-5134183-images-thumbs&n=13'/>
+				<Skeleton style={{ width: '400px', height: '100px' }}/>
 			</BorderProvider>
 		</div>
 	);

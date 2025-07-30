@@ -1,0 +1,36 @@
+.avatar {
+    position: relative;
+    width: var(--avatar-size);
+    height: var(--avatar-size);
+    background-color: var(--theme-color-grey-light);
+    overflow: hidden;
+    @include user-select-off;
+
+    &.size-s {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+.skeleton {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+}
+
+.img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.fallback {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(var(--avatar-size) / 2);
+    color: var(--font-color-hard);
+}

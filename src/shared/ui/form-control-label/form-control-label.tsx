@@ -15,7 +15,7 @@ export const FormControlLabel = (props: FormControlLabel.Props) => {
 	const groupContext = useFormGroupContext();
 	const formControlLabelContext = useFormControlLabelContext();
 
-	const isDisabled = disabled ?? groupContext?.disabled;
+	const isDisabled = disabled || groupContext?.disabled || false;
 
 	const contextValue: FormControlLabelContext = React.useMemo(
 		() => ({ disabled: isDisabled, required, labelId }),

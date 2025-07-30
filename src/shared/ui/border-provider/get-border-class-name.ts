@@ -12,7 +12,7 @@ export function getBorderClassName(borderRadius?: BorderRadius, borderRadiusPlac
         borderClassName = borderClassName + ' ' + styles[`border-radius-${borderRadius}`]
     }
 
-    if (borderRadiusPlacement) {
+    if (borderRadiusPlacement && borderRadius !== 'none') {
         let className
 
         if (Array.isArray(borderRadiusPlacement)) {

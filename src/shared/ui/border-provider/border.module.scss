@@ -1,6 +1,5 @@
 .border-provider {
     --border-provider-border-radius: ;
-    border-radius: 0px;
 
     &.border-radius-s {
         --border-provider-border-radius: var(--border-radius-s);

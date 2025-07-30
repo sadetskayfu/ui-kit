@@ -1,7 +1,0 @@
-export { Dialog } from './dialog'
-export { DialogContent } from './dialog-content'
-export { DialogClose } from './dialog-close'
-export { DialogHeading } from './dialog-heading'
-export { DialogDescription } from './dialog-description'
-export { DialogTrigger } from './dialog-trigger'
-export { ConfirmDialog } from './confirm-dialog/confirm-dialog'

@@ -84,7 +84,6 @@
     }
 
     &:focus-visible {
-        outline: var(--border-weight-hard) solid var(--theme-color-primary-main);
-        outline-offset: calc(var(--border-weight-soft) * -1);
+        @include focus-outline;
     }
 }
