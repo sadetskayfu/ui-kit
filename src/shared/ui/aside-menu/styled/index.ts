@@ -1,0 +1,1 @@
+export * as AsideMenu from './index.parts'

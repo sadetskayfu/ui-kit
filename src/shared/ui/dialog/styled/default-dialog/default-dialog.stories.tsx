@@ -11,6 +11,9 @@ const meta: Meta<typeof Dialog.Root> = {
 		role: 'dialog',
 		returnFocus: true,
 		initialOpen: false,
+		modal: true,
+		closeOnFocusOut: true,
+		closeOnOutsidePress: true,
 	},
 };
 

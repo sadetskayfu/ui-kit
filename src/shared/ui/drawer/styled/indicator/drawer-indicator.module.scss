@@ -1,0 +1,30 @@
+.indicator {
+    border-radius: var(--border-radius-full);
+    background-color: var(--border-color-grey);
+
+    &.position-bottom,
+    &.position-top {
+        height: 4px;
+        width: 40px;
+    }
+
+    &.position-bottom {
+        margin-bottom: var(--padding-20);
+    }
+    &.position-top {
+        margin-top: var(--padding-20);
+    }
+
+    &.position-left,
+    &.position-right {
+        width: 4px;
+        height: 40px;
+    }
+
+    &.position-left {
+        margin-left: var(--padding-20);
+    }
+    &.position-right {
+        margin-right: var(--padding-20);
+    }
+}

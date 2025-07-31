@@ -6,7 +6,7 @@ import { getElementTransform } from '../helpers/get-element-transform';
 import { getDisplacement } from '../helpers/get-displacement';
 import { ToastRootCssVars } from './toast-root-css-vars';
 import { ToastRootContext } from './toast-root-context';
-import { useAnimationsFinished, useEventCallback, useRenderElement } from '@/shared/hooks';
+import { useRenderElement } from '@/shared/hooks';
 import { useToastProviderContext } from '../provider/toast-provider-context';
 import { ownerDocument } from '@/shared/helpers/owner';
 import { useToast } from '../use-toast';
@@ -465,8 +465,7 @@ export const ToastRoot = React.forwardRef(
 			inert: toast.limited ? true : undefined,
 			style: {
 				...getDragStyles(),
-				[ToastRootCssVars.index]:
-					toast.transitionStatus === 'ending' ? domIndex : visibleIndex,
+				[ToastRootCssVars.index]: toast.transitionStatus === 'ending' ? domIndex : visibleIndex,
 				[ToastRootCssVars.offsetY]: `${offsetY}px`,
 			},
 		};

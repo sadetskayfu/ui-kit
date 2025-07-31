@@ -1,0 +1,87 @@
+.popup {
+    --drawer-border-radius: 40px;
+    position: fixed;
+    transition: transform 0.2s;
+    background-color: var(--theme-color-dark);
+    padding: var(--padding-20);
+    @include user-select-off;
+
+    &::after {
+        content: '';
+        position: absolute;
+        background-color: var(--theme-color-dark);
+    }
+
+    &.position-top,
+    &.position-bottom {
+        width: 100%;
+        max-height: calc(100vh - var(--container-padding-x));
+
+        &::after {
+            width: 100%;
+            height: var(--drawer-footer-height);
+        }
+
+        &.open {
+            transform: translateY(var(--drawer-swipe-movement-y));
+        }
+    }
+
+    &.position-bottom {
+        bottom: 0;
+        transform: translateY(100%);
+        border-radius: var(--drawer-border-radius) var(--drawer-border-radius) 0 0;
+        border-top: var(--border-weight-soft) solid var(--border-color-grey);  
+
+        &::after {
+            top: 100%;
+        }
+    }
+    &.position-top {
+        top: 0;
+        transform: translateY(-100%);
+        border-radius: 0 0 var(--drawer-border-radius) var(--drawer-border-radius);
+        border-bottom: var(--border-weight-soft) solid var(--border-color-grey);
+
+        &::after {
+            bottom: 100%;
+        }
+    }
+
+    &.position-left,
+    &.position-right {
+        height: 100%;
+        max-width: calc(100vw - var(--container-padding-x));
+        top: 0;
+
+        &::after {
+            top: 0;
+            height: 100%;
+            width: var(--drawer-footer-height);
+        }
+
+        &.open {
+            transform: translateX(var(--drawer-swipe-movement-x));
+        }
+    }
+
+    &.position-left {
+        left: 0;
+        transform: translateX(-100%);
+        border-right: var(--border-weight-soft) solid var(--border-color-grey);
+
+        &::after {
+            right: 100%;
+        }
+    }
+    &.position-right {
+        right: 0;
+        transform: translateX(100%);
+        border-left: var(--border-weight-soft) solid var(--border-color-grey);
+
+        &::after {
+            left: 100%;
+        }
+    }
+}
+

@@ -1,10 +1,11 @@
 import * as React from 'react'
 import { FloatingContext, ReferenceType } from "@floating-ui/react"
 
-export interface DialogRootContext {
+export interface DrawerRootContext {
     open: boolean
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
     mounted: boolean
+    modal: boolean
     titleId: string | undefined
     setTitleId: React.Dispatch<React.SetStateAction<string | undefined>>
     descriptionId: string | undefined
@@ -19,17 +20,19 @@ export interface DialogRootContext {
     getReferenceProps: (userProps?: React.HTMLProps<Element>) => Record<string, unknown>
     closeElementRef: React.RefObject<HTMLElement | null>
     status: 'close' | 'open' | undefined
-    modal: boolean
     closeOnFocusOut: boolean
+    position: 'top' | 'right' | 'bottom' | 'left'
+    snapPoints: (number | string)[]
+    initialSnapPointIndex: number
 }
 
-export const DialogRootContext = React.createContext<DialogRootContext | undefined>(undefined)
+export const DrawerRootContext = React.createContext<DrawerRootContext | undefined>(undefined)
 
-export function useDialogRootContext() {
-    const context = React.useContext(DialogRootContext)
+export function useDrawerRootContext() {
+    const context = React.useContext(DrawerRootContext)
 
     if (!context) {
-        throw new Error('DialogRootContext is missing. Dialog parts must be used within <Dialog.Root>')
+        throw new Error('DrawerRootContext is missing. Drawer parts must be used within <Drawer.Root>')
     }
 
     return context

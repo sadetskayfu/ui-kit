@@ -2,20 +2,19 @@ import * as React from 'react';
 import { ModernComponentProps } from '@/shared/helpers/types';
 import { useRenderElement } from '@/shared/hooks';
 import { FloatingFocusManager } from '@floating-ui/react';
-import { useDialogRootContext } from '../root/dialog-root-context';
+import { useAsideMenuRootContext } from '../root/aside-menu-root-context';
 import { RemoveScroll } from 'react-remove-scroll';
 
 /**
  * Renders a `<div>` element.
  */
-export const DialogPopup = React.forwardRef(
-	(props: DialogPopup.Props, forwardedRef: React.ForwardedRef<HTMLDivElement>) => {
+export const AsideMenuPopup = React.forwardRef(
+	(props: AsideMenuPopup.Props, forwardedRef: React.ForwardedRef<HTMLDivElement>) => {
 		const { render, className, ...otherProps } = props;
 
 		const {
-			modal,
-			closeOnFocusOut,
 			mounted,
+			modal,
 			status,
 			floatingContext,
 			titleId,
@@ -23,15 +22,16 @@ export const DialogPopup = React.forwardRef(
 			initialFocus: initialFocusProp,
 			removeScroll,
 			closeElementRef,
+			closeOnFocusOut,
 			setFloating,
 			getFloatingProps,
-		} = useDialogRootContext();
+		} = useAsideMenuRootContext();
 
 		const popupRef = React.useRef<HTMLDivElement | null>(null);
 
 		const initialFocus = initialFocusProp ?? closeElementRef ?? popupRef;
 
-		const state: DialogPopup.State = React.useMemo(
+		const state: AsideMenuPopup.State = React.useMemo(
 			() => ({
 				status,
 			}),
@@ -73,7 +73,7 @@ export const DialogPopup = React.forwardRef(
 	}
 );
 
-export namespace DialogPopup {
+export namespace AsideMenuPopup {
 	export interface State {
 		status: 'open' | 'close' | undefined;
 	}

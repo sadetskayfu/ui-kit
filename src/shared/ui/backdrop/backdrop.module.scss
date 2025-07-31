@@ -1,0 +1,12 @@
+.backdrop {
+    &.visible {
+        background-color: var(--backdrop-bg-color);
+        opacity: 0;
+        transition: opacity 0.2s;
+        backdrop-filter: blur(2px);
+    
+        &.open {
+            opacity: 1;
+        }
+    }
+}

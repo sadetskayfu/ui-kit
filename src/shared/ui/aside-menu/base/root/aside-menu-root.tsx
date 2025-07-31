@@ -7,22 +7,21 @@ import {
 	useRole,
 	useTransitionStatus,
 } from '@floating-ui/react';
-import { DialogRootContext } from './dialog-root-context';
+import { AsideMenuRootContext } from './aside-menu-root-context';
 
-export const DialogRoot = (props: DialogRoot.Props) => {
+export const AsideMenuRoot = (props: AsideMenuRoot.Props) => {
 	const {
 		children,
 		initialOpen = false,
 		open: externalOpen,
 		setOpen: externalSetOpen,
-		role: roleProp = 'dialog',
+		modal = true,
 		initialFocus,
 		returnFocus = true,
 		removeScroll = true,
 		animationDuration = 200,
-		modal = true,
 		closeOnFocusOut = true,
-		closeOnOutsidePress = true
+		closeOnOutsidePress = true,
 	} = props;
 
 	const [internalOpen, internalSetOpen] = React.useState<boolean>(initialOpen);
@@ -41,7 +40,7 @@ export const DialogRoot = (props: DialogRoot.Props) => {
 
 	const click = useClick(context);
 	const dismiss = useDismiss(context, { outsidePress: closeOnOutsidePress });
-	const role = useRole(context, { role: roleProp });
+	const role = useRole(context, { role: 'dialog' });
 
 	const { getFloatingProps, getReferenceProps } = useInteractions([click, dismiss, role]);
 
@@ -63,11 +62,12 @@ export const DialogRoot = (props: DialogRoot.Props) => {
 		}
 	}, [status, returnFocus, refs.reference]);
 
-	const contextValue: DialogRootContext = React.useMemo(
+	const contextValue: AsideMenuRootContext = React.useMemo(
 		() => ({
 			open,
 			setOpen,
 			mounted: isMounted,
+			modal,
 			status: status === 'open' ? 'open' : status === 'close' ? 'close' : undefined,
 			titleId,
 			setTitleId,
@@ -82,13 +82,13 @@ export const DialogRoot = (props: DialogRoot.Props) => {
 			returnFocus,
 			removeScroll,
 			closeElementRef,
-			modal,
 			closeOnFocusOut,
 		}),
 		[
 			open,
 			setOpen,
 			isMounted,
+			modal,
 			status,
 			titleId,
 			descriptionId,
@@ -100,22 +100,21 @@ export const DialogRoot = (props: DialogRoot.Props) => {
 			initialFocus,
 			returnFocus,
 			removeScroll,
-			modal,
 			closeOnFocusOut
 		]
 	);
 
-	return <DialogRootContext.Provider value={contextValue}>{children}</DialogRootContext.Provider>;
+	return <AsideMenuRootContext.Provider value={contextValue}>{children}</AsideMenuRootContext.Provider>;
 };
 
-export namespace DialogRoot {
+export namespace AsideMenuRoot {
 	export interface Props {
 		children: React.ReactNode;
 		initialOpen?: boolean;
 		open?: boolean;
 		setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 		/**
-		 * @description 'Елси не передан проп initalFocus, фокус устанавлвиается на DialogClose, если нету DialogClose, фокус устанавливается на DialogPopup'
+		 * @description 'Елси не передан проп initalFocus, фокус устанавлвиается на AsideMenuClose, если нету AsideMenuClose, фокус устанавливается на AsideMenuPopup'
 		 */
 		initialFocus?: number | React.RefObject<HTMLElement | null>;
 		/**
@@ -128,21 +127,15 @@ export namespace DialogRoot {
 		 */
 		removeScroll?: boolean;
 		/**
-		 * @default 'dialog'
+		 * @default true
 		 */
-		role?: 'dialog' | 'alertdialog';
+		modal?: boolean
 		/**
 		 * @default 200
 		 */
 		animationDuration?: number | { open: number; close: number };
 		/**
 		 * @default true
-		 * @description 'При модальном режиме, фокус зациклен внутри popup'
-		 */
-		modal?: boolean
-		/**
-		 * @default true
-		 * @description 'Нужно ли закрыть dialog, если фокус выходит за его пределы, если dialog без modal'
 		 */
 		closeOnFocusOut?: boolean
 		/**

@@ -7,22 +7,25 @@ import {
 	useRole,
 	useTransitionStatus,
 } from '@floating-ui/react';
-import { DialogRootContext } from './dialog-root-context';
+import { DrawerRootContext } from './drawer-root-context';
+import { EMPTY_ARRAY } from '@/shared/constants';
 
-export const DialogRoot = (props: DialogRoot.Props) => {
+export const DrawerRoot = (props: DrawerRoot.Props) => {
 	const {
 		children,
+		position = 'bottom',
 		initialOpen = false,
 		open: externalOpen,
 		setOpen: externalSetOpen,
-		role: roleProp = 'dialog',
+		modal = true,
 		initialFocus,
 		returnFocus = true,
 		removeScroll = true,
 		animationDuration = 200,
-		modal = true,
 		closeOnFocusOut = true,
-		closeOnOutsidePress = true
+		closeOnOutsidePress = true,
+		snapPoints = EMPTY_ARRAY,
+		initialSnapPointIndex = 0
 	} = props;
 
 	const [internalOpen, internalSetOpen] = React.useState<boolean>(initialOpen);
@@ -41,7 +44,7 @@ export const DialogRoot = (props: DialogRoot.Props) => {
 
 	const click = useClick(context);
 	const dismiss = useDismiss(context, { outsidePress: closeOnOutsidePress });
-	const role = useRole(context, { role: roleProp });
+	const role = useRole(context, { role: 'dialog' });
 
 	const { getFloatingProps, getReferenceProps } = useInteractions([click, dismiss, role]);
 
@@ -63,11 +66,12 @@ export const DialogRoot = (props: DialogRoot.Props) => {
 		}
 	}, [status, returnFocus, refs.reference]);
 
-	const contextValue: DialogRootContext = React.useMemo(
+	const contextValue: DrawerRootContext = React.useMemo(
 		() => ({
 			open,
 			setOpen,
 			mounted: isMounted,
+			modal,
 			status: status === 'open' ? 'open' : status === 'close' ? 'close' : undefined,
 			titleId,
 			setTitleId,
@@ -82,13 +86,16 @@ export const DialogRoot = (props: DialogRoot.Props) => {
 			returnFocus,
 			removeScroll,
 			closeElementRef,
-			modal,
 			closeOnFocusOut,
+			position,
+			snapPoints,
+			initialSnapPointIndex
 		}),
 		[
 			open,
 			setOpen,
 			isMounted,
+			modal,
 			status,
 			titleId,
 			descriptionId,
@@ -100,22 +107,35 @@ export const DialogRoot = (props: DialogRoot.Props) => {
 			initialFocus,
 			returnFocus,
 			removeScroll,
-			modal,
-			closeOnFocusOut
+			closeOnFocusOut,
+			position,
+			snapPoints,
+			initialSnapPointIndex
 		]
 	);
 
-	return <DialogRootContext.Provider value={contextValue}>{children}</DialogRootContext.Provider>;
+	return <DrawerRootContext.Provider value={contextValue}>{children}</DrawerRootContext.Provider>;
 };
 
-export namespace DialogRoot {
+export namespace DrawerRoot {
+	export type SnapPoint = { type: 'percent', value: number } | { type: 'pixel', value: number }
+
 	export interface Props {
 		children: React.ReactNode;
 		initialOpen?: boolean;
 		open?: boolean;
 		setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 		/**
-		 * @description 'Елси не передан проп initalFocus, фокус устанавлвиается на DialogClose, если нету DialogClose, фокус устанавливается на DialogPopup'
+		 *	@example [150px, 300px, 1]
+		 */
+		snapPoints?: (string | number)[]
+		initialSnapPointIndex?: number
+		/**
+		 * @default 'bottom'
+		 */
+		position?: 'top' | 'right' | 'bottom' | 'left'
+		/**
+		 * @description 'Елси не передан проп initalFocus, фокус устанавлвиается на DrawerClose, если нету DrawerClose, фокус устанавливается на DrawerPopup'
 		 */
 		initialFocus?: number | React.RefObject<HTMLElement | null>;
 		/**
@@ -128,21 +148,15 @@ export namespace DialogRoot {
 		 */
 		removeScroll?: boolean;
 		/**
-		 * @default 'dialog'
+		 * @default true
 		 */
-		role?: 'dialog' | 'alertdialog';
+		modal?: boolean
 		/**
 		 * @default 200
 		 */
 		animationDuration?: number | { open: number; close: number };
 		/**
 		 * @default true
-		 * @description 'При модальном режиме, фокус зациклен внутри popup'
-		 */
-		modal?: boolean
-		/**
-		 * @default true
-		 * @description 'Нужно ли закрыть dialog, если фокус выходит за его пределы, если dialog без modal'
 		 */
 		closeOnFocusOut?: boolean
 		/**

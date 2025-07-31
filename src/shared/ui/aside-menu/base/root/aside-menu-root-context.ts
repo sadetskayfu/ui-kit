@@ -1,10 +1,11 @@
 import * as React from 'react'
 import { FloatingContext, ReferenceType } from "@floating-ui/react"
 
-export interface DialogRootContext {
+export interface AsideMenuRootContext {
     open: boolean
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
     mounted: boolean
+    modal: boolean
     titleId: string | undefined
     setTitleId: React.Dispatch<React.SetStateAction<string | undefined>>
     descriptionId: string | undefined
@@ -19,17 +20,16 @@ export interface DialogRootContext {
     getReferenceProps: (userProps?: React.HTMLProps<Element>) => Record<string, unknown>
     closeElementRef: React.RefObject<HTMLElement | null>
     status: 'close' | 'open' | undefined
-    modal: boolean
     closeOnFocusOut: boolean
 }
 
-export const DialogRootContext = React.createContext<DialogRootContext | undefined>(undefined)
+export const AsideMenuRootContext = React.createContext<AsideMenuRootContext | undefined>(undefined)
 
-export function useDialogRootContext() {
-    const context = React.useContext(DialogRootContext)
+export function useAsideMenuRootContext() {
+    const context = React.useContext(AsideMenuRootContext)
 
     if (!context) {
-        throw new Error('DialogRootContext is missing. Dialog parts must be used within <Dialog.Root>')
+        throw new Error('AsideMenuRootContext is missing. AsideMenu parts must be used within <AsideMenu.Root>')
     }
 
     return context

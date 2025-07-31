@@ -1,19 +1,26 @@
 import { classNames } from '@/shared/helpers/class-names';
-import { BaseDialog } from '../../base';
+import { BaseDialog, useDialogRootContext } from '../../base';
 import styles from './default-dialog-popup.module.scss';
+import { Backdrop } from '@/shared/ui/backdrop';
 
 export const DefaultDialogPopup = (props: DefaultDialogPopup.Props) => {
-	const { className, contentClassName, children, root, contentStyle, ...otherProps } = props;
+	const {
+		className,
+		contentClassName,
+		children,
+		root,
+		contentStyle,
+		visibleBackdrop = true,
+		...otherProps
+	} = props;
+
+	const { modal } = useDialogRootContext();
 
 	return (
 		<BaseDialog.Portal root={root}>
-			<BaseDialog.Backdrop
-				className={state =>
-					classNames(styles['backdrop'], [], {
-						[styles['open']]: state.status === 'open',
-					})
-				}
-			/>
+			{modal && (
+				<BaseDialog.Backdrop render={(props, state) => <Backdrop open={state.status === 'open'} visible={visibleBackdrop} {...props} /> }/>
+			)}
 			<BaseDialog.Popup
 				className={state =>
 					classNames(styles['popup'], [className], {
@@ -24,9 +31,7 @@ export const DefaultDialogPopup = (props: DefaultDialogPopup.Props) => {
 				{...otherProps}
 			>
 				<div
-					className={classNames(styles['content'], [
-						contentClassName
-					])}
+					className={classNames(styles['content'], [contentClassName])}
 					style={contentStyle}
 				>
 					{children}
@@ -41,5 +46,10 @@ export namespace DefaultDialogPopup {
 		contentClassName?: string;
 		root?: BaseDialog.Portal.Props['root'];
 		contentStyle?: React.CSSProperties;
+		/**
+		 * @default 'true'
+		 * @description 'Иммеет ли backdrop визуальные стили, такие как blur и backgroundColor'
+		 */
+		visibleBackdrop?: boolean;
 	}
 }
