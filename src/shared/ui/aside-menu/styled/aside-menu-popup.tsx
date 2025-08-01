@@ -32,6 +32,7 @@ export const AsideMenuPopup = (props: AsideMenuPopup.Props) => {
 				className={state =>
 					classNames(styles['popup'], [className, styles[`position-${position}`]], {
 						[styles['open']]: state.status === 'open',
+						[styles['close']]: state.status === 'close'
 					})
 				}
 				{...otherProps}

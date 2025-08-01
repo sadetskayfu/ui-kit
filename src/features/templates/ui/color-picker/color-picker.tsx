@@ -1,4 +1,3 @@
-import { Popover, PopoverContent, PopoverTrigger } from '@/shared/ui/popover';
 import { memo, useCallback, useState } from 'react';
 import { ChromePicker, type ColorResult } from 'react-color';
 import styles from './color-picker.module.scss';
@@ -21,7 +20,7 @@ export const ColorPicker = memo(
 			<div className={styles['color-picker']}>
 				<span className={styles['color-label']}>{value}</span>
 				{cssVariable}
-				<Popover offset={12} arrow>
+				{/* <Popover offset={12} arrow>
 					<PopoverTrigger>
 						<button
 							className={styles['button']}
@@ -36,7 +35,7 @@ export const ColorPicker = memo(
 							onChangeComplete={onChange}
 						/>
 					</PopoverContent>
-				</Popover>
+				</Popover> */}
 			</div>
 		);
 	}

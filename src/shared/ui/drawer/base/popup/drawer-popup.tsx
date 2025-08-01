@@ -33,7 +33,6 @@ function findClosestNumber(arr: number[], targetValue: number) {
 	return closest;
 }
 
-
 /**
  * Renders a `<div>` element.
  */
@@ -143,7 +142,7 @@ export const DrawerPopup = React.forwardRef(
 				rs.disconnect();
 				window.removeEventListener('resize', updateSnapPoints);
 			};
-		}, [snapPointsProp.length, isVertical]);
+		}, [snapPointsProp, isVertical, position]);
 
 		const isFirstSnapPoint = () => {
 			return activeSnapPointIndex === 0

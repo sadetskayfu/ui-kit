@@ -14,17 +14,4 @@
     &.position-top {
         margin-top: var(--padding-20);
     }
-
-    &.position-left,
-    &.position-right {
-        width: 4px;
-        height: 40px;
-    }
-
-    &.position-left {
-        margin-left: var(--padding-20);
-    }
-    &.position-right {
-        margin-right: var(--padding-20);
-    }
 }

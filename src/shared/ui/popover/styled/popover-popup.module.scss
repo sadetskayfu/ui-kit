@@ -1,21 +1,15 @@
 .popup {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    translate: -50% -50%;
-    padding-inline: var(--container-padding-x);
+    max-width: calc(100vw - var(--container-padding-x) * 2);
 
     &.open {
         .content {
-            transform: translateX(0);
+            transform: scale(1);
             opacity: 1;
         }
     }
 
     &.close {
         .content {
-            transform: translateY(-40px);
-            opacity: 0;
             pointer-events: none;
         }
     }
@@ -27,9 +21,6 @@
     box-shadow: var(--box-shadow-paper);
     transition: transform 0.2s, opacity 0.2s;
     opacity: 0;
-    transform: translateY(40px);
+    transform: scale(0.9);
     border-radius: var(--border-radius-m);
 }
-
-
-

@@ -6,19 +6,19 @@
 	box-shadow: var(--box-shadow-paper);
 	clip-path: polygon(0 0, 0 100%, 100% 100%);
 
-	&.top {
+	&.side-top {
 		transform: rotate(-45deg);
 		bottom: -5px;
 	}
-	&.bottom {
+	&.side-bottom {
 		transform: rotate(-225deg);
 		top: -5px;
 	}
-	&.left {
+	&.side-left {
 		transform: rotate(-135deg);
 		right: -5px;
 	}
-	&.right {
+	&.side-right {
 		transform: rotate(-315deg);
 		left: -5px;
 	}

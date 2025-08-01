@@ -25,6 +25,7 @@ export const DrawerPopup = (props: DrawerPopup.Props) => {
 				className={state =>
 					classNames(styles['popup'], [className, styles[`position-${state.position}`]], {
 						[styles['open']]: state.status === 'open',
+						[styles['close']]: state.status === 'close'
 					})
 				}
 				{...otherProps}

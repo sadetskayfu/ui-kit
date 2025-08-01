@@ -2,7 +2,7 @@ import { useEffect, type ReactNode } from 'react';
 import { useTooltipContext } from '../model/use-tooltip-context';
 import { FloatingPortal, useDelayGroup, useTransitionStatus } from '@floating-ui/react';
 import { classNames, type Mods } from '@/shared/helpers/class-names';
-import { TooltipArrow, type TooltipArrowSide } from '@/shared/ui/tooltip-arrow';
+import { TooltipArrow, type TooltipArrowSide } from '@/shared/ui/popup-arrow';
 import styles from './tooltip.module.scss';
 
 export interface TooltipContentProps {

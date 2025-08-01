@@ -6,7 +6,7 @@ const meta: Meta<typeof AsideMenu.Root> = {
 	title: 'shared/aside-menu',
 	component: AsideMenu.Root,
 	args: {
-		removeScroll: true,
+		removeScroll: false,
 		returnFocus: true,
 		initialOpen: false,
         modal: true,

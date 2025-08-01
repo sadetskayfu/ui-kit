@@ -1,5 +1,11 @@
 import * as React from 'react';
 import {
+	arrow,
+	autoUpdate,
+	flip,
+	offset,
+	Placement,
+	shift,
 	useClick,
 	useDismiss,
 	useFloating,
@@ -7,35 +13,59 @@ import {
 	useRole,
 	useTransitionStatus,
 } from '@floating-ui/react';
-import { AsideMenuRootContext } from './aside-menu-root-context';
+import { PopoverRootContext } from './popover-root-context';
 
-export const AsideMenuRoot = (props: AsideMenuRoot.Props) => {
+export const PopoverRoot = (props: PopoverRoot.Props) => {
 	const {
 		children,
+		placement = 'bottom-start',
 		initialOpen = false,
 		open: externalOpen,
 		setOpen: externalSetOpen,
-		modal = true,
 		initialFocus,
 		returnFocus = true,
 		removeScroll = false,
 		animationDuration = 200,
+		modal = true,
 		closeOnFocusOut = true,
 		closeOnOutsidePress = true,
+		referenceRef,
+		offset: offsetValue = 5,
+		flipPadding = 5,
 	} = props;
 
 	const [internalOpen, internalSetOpen] = React.useState<boolean>(initialOpen);
 	const [titleId, setTitleId] = React.useState<string | undefined>();
 	const [descriptionId, setDescriptionId] = React.useState<string | undefined>();
+	const [showArrow, setShowArrow] = React.useState<boolean>(false);
+	const [arrowPadding, setArrowPadding] = React.useState<number>(0);
 
 	const closeElementRef = React.useRef<HTMLElement>(null);
+	const arrowRef = React.useRef<HTMLSpanElement>(null);
 
 	const open = externalOpen ?? internalOpen;
 	const setOpen = externalSetOpen ?? internalSetOpen;
 
 	const { context, refs } = useFloating({
+		placement,
 		open,
 		onOpenChange: setOpen,
+		whileElementsMounted: autoUpdate,
+		middleware: [
+			offset(offsetValue),
+			flip({
+				crossAxis: placement.includes('-'),
+				fallbackAxisSideDirection: 'end',
+				padding: flipPadding,
+			}),
+			shift({ padding: offsetValue }),
+			showArrow
+				? arrow({
+						element: arrowRef,
+						padding: arrowPadding,
+					})
+				: null,
+		],
 	});
 
 	const click = useClick(context);
@@ -47,6 +77,12 @@ export const AsideMenuRoot = (props: AsideMenuRoot.Props) => {
 	const { isMounted, status } = useTransitionStatus(context, {
 		duration: animationDuration,
 	});
+
+	React.useEffect(() => {
+		if (referenceRef) {
+			refs.setReference(referenceRef.current)
+		}
+	}, [referenceRef, refs])
 
 	// FocusManager из floating-ui возвращает фокус после завершения анимации удаления, мы хотим вернуть фокус не дожидаясь завершения анимации
 	React.useEffect(() => {
@@ -62,12 +98,11 @@ export const AsideMenuRoot = (props: AsideMenuRoot.Props) => {
 		}
 	}, [status, returnFocus, refs.reference]);
 
-	const contextValue: AsideMenuRootContext = React.useMemo(
+	const contextValue: PopoverRootContext = React.useMemo(
 		() => ({
 			open,
 			setOpen,
 			mounted: isMounted,
-			modal,
 			status: status === 'open' ? 'open' : status === 'close' ? 'close' : undefined,
 			titleId,
 			setTitleId,
@@ -82,13 +117,16 @@ export const AsideMenuRoot = (props: AsideMenuRoot.Props) => {
 			returnFocus,
 			removeScroll,
 			closeElementRef,
+			arrowRef,
+			modal,
 			closeOnFocusOut,
+			setArrowPadding,
+			setShowArrow
 		}),
 		[
 			open,
 			setOpen,
 			isMounted,
-			modal,
 			status,
 			titleId,
 			descriptionId,
@@ -100,21 +138,28 @@ export const AsideMenuRoot = (props: AsideMenuRoot.Props) => {
 			initialFocus,
 			returnFocus,
 			removeScroll,
-			closeOnFocusOut
+			modal,
+			closeOnFocusOut,
 		]
 	);
 
-	return <AsideMenuRootContext.Provider value={contextValue}>{children}</AsideMenuRootContext.Provider>;
+	return (
+		<PopoverRootContext.Provider value={contextValue}>{children}</PopoverRootContext.Provider>
+	);
 };
 
-export namespace AsideMenuRoot {
+export namespace PopoverRoot {
 	export interface Props {
 		children: React.ReactNode;
 		initialOpen?: boolean;
 		open?: boolean;
 		setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 		/**
-		 * @description 'Елси не передан проп initalFocus, фокус устанавлвиается на AsideMenuClose, если нету AsideMenuClose, фокус устанавливается на AsideMenuPopup'
+		 * @default 'bottom-start'
+		 */
+		placement?: Placement;
+		/**
+		 * @description 'Елси не передан проп initalFocus, фокус устанавлвиается на PopoverClose, если нету PopoverClose, фокус устанавливается на PopoverPopup'
 		 */
 		initialFocus?: number | React.RefObject<HTMLElement | null>;
 		/**
@@ -127,20 +172,36 @@ export namespace AsideMenuRoot {
 		 */
 		removeScroll?: boolean;
 		/**
-		 * @default true
-		 */
-		modal?: boolean
-		/**
 		 * @default 200
 		 */
 		animationDuration?: number | { open: number; close: number };
 		/**
 		 * @default true
+		 * @description 'При модальном режиме, фокус зациклен внутри popup'
 		 */
-		closeOnFocusOut?: boolean
+		modal?: boolean;
+		/**
+		 * @default true
+		 * @description 'Нужно ли закрыть dialog, если фокус выходит за его пределы, если dialog без modal'
+		 */
+		closeOnFocusOut?: boolean;
 		/**
 		 * @default true
 		 */
-		closeOnOutsidePress?: boolean
-	}
+		closeOnOutsidePress?: boolean;
+		/**
+		 * @description 'Если не используем PopoverTrigger, то нужно передать referenceRef для позиционирования'
+		 */
+		referenceRef?: React.RefObject<HTMLElement | null>;
+		/**
+		 * @default 5
+		 * @description 'Расстояние от trigger до popup'
+		 */
+		offset?: number;
+		/**
+		 * @default 5
+		 * @description 'Расстояние от края экрана, при котором происходит переворачивание'
+		 */
+		flipPadding?: number;
+	} 
 }
