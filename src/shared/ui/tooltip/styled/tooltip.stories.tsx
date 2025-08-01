@@ -1,36 +1,33 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Button } from '@/shared/ui/button';
 import { useId, useRef, useState } from 'react';
-import { Tooltip } from './tooltip';
-import { TooltipTrigger } from './tooltip-trigger';
-import { TooltipContent } from './tooltip-content';
-import { DelayGroup } from '@/shared/ui/delay-group';
+import { Tooltip } from '.';
 
-const meta: Meta<typeof Tooltip> = {
+const meta: Meta<typeof Tooltip.Root> = {
 	title: 'shared/tooltip',
-	component: Tooltip,
+	component: Tooltip.Root,
 	args: {
 		placement: 'top',
-		offset: 12,
-		arrowPadding: 10,
 		flipPadding: 5,
-		interactive: false,
+		interactive: true,
 		followCursor: false,
 		describeChild: false,
 		disableFocus: false,
 		disableClick: true,
 		disableHover: false,
-		disableTouch: false,
+		disableLongTouch: false,
+        openTimeAfterLongTouch: 5000,
+        closeOnOutsidePress: false
 	},
 };
 
 export default meta;
 
-type Story = StoryObj<typeof Tooltip>;
+type Story = StoryObj<typeof Tooltip.Root>;
 
-const SharedTooltipContent = ({ contentSize }: { contentSize: 'min' | 'max' }) => {
+const SharedTooltipPopup = ({ contentSize }: { contentSize: 'min' | 'max' }) => {
 	return (
-		<TooltipContent>
+		<Tooltip.Popup>
 			{contentSize === 'max' ? (
 				<span>
 					Солнце сегодня какое-то ленивое. Вроде и светит, но как-то нехотя, сквозь пелену
@@ -41,70 +38,44 @@ const SharedTooltipContent = ({ contentSize }: { contentSize: 'min' | 'max' }) =
 			) : (
 				<span>1</span>
 			)}
-		</TooltipContent>
+            <Tooltip.Arrow />
+		</Tooltip.Popup>
 	);
 };
 
 const UncontrolledTooltipWrapper = (args: any) => {
 	return (
 		<div style={{ display: 'flex', columnGap: '10px' }}>
-			<Tooltip {...args}>
-				<TooltipTrigger>
-					<Button>Min content</Button>
-				</TooltipTrigger>
-				<SharedTooltipContent contentSize="min" />
-			</Tooltip>
-			<Tooltip {...args}>
-				<TooltipTrigger>
-					<Button>Max content</Button>
-				</TooltipTrigger>
-				<SharedTooltipContent contentSize="max" />
-			</Tooltip>
+			<Tooltip.Root {...args}>
+				<Tooltip.Trigger render={<Button>Min content</Button>} />
+				<SharedTooltipPopup contentSize="min" />
+			</Tooltip.Root>
+			<Tooltip.Root {...args}>
+            <Tooltip.Trigger render={<Button>Max content</Button>} />
+				<SharedTooltipPopup contentSize="max" />
+			</Tooltip.Root>
 		</div>
 	);
 };
 
-const WithDelayGroupWrapper = (args: any) => {
+const WithGroupWrapper = (args: any) => {
 	return (
 		<div style={{ display: 'flex', columnGap: '10px' }}>
-			<DelayGroup>
-				<Tooltip {...args}>
-					<TooltipTrigger>
-						<Button>Tooltip 1</Button>
-					</TooltipTrigger>
-					<SharedTooltipContent contentSize="min" />
-				</Tooltip>
-				<Tooltip {...args}>
-					<TooltipTrigger>
-						<Button>Tooltip 2</Button>
-					</TooltipTrigger>
-					<SharedTooltipContent contentSize="min" />
-				</Tooltip>
-				<Tooltip {...args}>
-					<TooltipTrigger>
-						<Button>Tooltip 3</Button>
-					</TooltipTrigger>
-					<SharedTooltipContent contentSize="min" />
-				</Tooltip>
-			</DelayGroup>
+			<Tooltip.Group delay={300}>
+				<Tooltip.Root {...args}>
+					<Tooltip.Trigger render={<Button>Tooltip 1</Button>} />
+					<SharedTooltipPopup contentSize="min" />
+				</Tooltip.Root>
+				<Tooltip.Root {...args}>
+                    <Tooltip.Trigger render={<Button>Tooltip 2</Button>} />
+					<SharedTooltipPopup contentSize="min" />
+				</Tooltip.Root>
+				<Tooltip.Root {...args}>
+                    <Tooltip.Trigger render={<Button>Tooltip 3</Button>} />
+					<SharedTooltipPopup contentSize="min" />
+				</Tooltip.Root>
+			</Tooltip.Group>
 		</div>
-	);
-};
-
-const ControlledTooltipWrapper = (args: any) => {
-	const [isOpen, setIsOpen] = useState<boolean>(false);
-
-	const handleToggle = () => {
-		setIsOpen((prev) => !prev);
-	};
-
-	return (
-		<Tooltip open={isOpen} setOpen={setIsOpen} {...args}>
-			<TooltipTrigger>
-				<Button onClick={handleToggle}>{isOpen ? 'Close' : 'Open'}</Button>
-			</TooltipTrigger>
-			<SharedTooltipContent contentSize="max" />
-		</Tooltip>
 	);
 };
 
@@ -130,15 +101,16 @@ const WithCustomTriggerWrapper = (args: any) => {
 				onFocus={handleOpen}
 				onBlur={handleClose}
 			/>
-			<Tooltip
-				id={tooltipId}
+			<Tooltip.Root
 				referenceRef={inputRef}
 				open={isOpen}
 				setOpen={setIsOpen}
 				{...args}
 			>
-				<SharedTooltipContent contentSize="max" />
-			</Tooltip>
+				<Tooltip.Popup id={tooltipId}>
+                    <p>Hello world</p>
+                </Tooltip.Popup>
+			</Tooltip.Root>
 		</>
 	);
 };
@@ -147,16 +119,12 @@ export const Uncontrolled: Story = {
 	render: args => UncontrolledTooltipWrapper(args),
 };
 
-export const Controlled: Story = {
-	render: args => ControlledTooltipWrapper(args),
-};
-
 export const WithCustomTrigger: Story = {
     render: args => WithCustomTriggerWrapper(args),
 }
 
-export const WithDelayGroup: Story = {
-	render: args => WithDelayGroupWrapper(args),
+export const WithGroup: Story = {
+	render: args => WithGroupWrapper(args),
 };
 
 export const OpenOnClick: Story = {
@@ -165,6 +133,13 @@ export const OpenOnClick: Story = {
 		disableClick: false,
 		disableFocus: true,
 		disableHover: true,
-		disableTouch: true,
+		disableLongTouch: true,
 	},
 };
+
+export const FollowCursor: Story = {
+    render: args => UncontrolledTooltipWrapper(args),
+	args: {
+        followCursor: true
+	}, 
+}

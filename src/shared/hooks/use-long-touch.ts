@@ -1,53 +1,32 @@
-import { useCallback, useEffect, useRef } from "react"
+import * as React from "react"
+import { useTimeout } from "./use-timeout"
+import { useEventCallback } from "./use-event-callback"
 
-type UseLongTouchProps = {
-    onTouchStart: React.TouchEventHandler<HTMLElement>
-    onTouchEnd?: React.TouchEventHandler<HTMLElement>
-    timeToStart?: number
-    timeToEnd?: number
+type UseLongTouchParams = {
+    callback: React.TouchEventHandler<HTMLElement>
+    /**
+     * @default 500
+     */
+    touchTime?: number
     enabled?: boolean
 }
 
-export function useLongTouch(props: UseLongTouchProps) {
-    const { onTouchStart, onTouchEnd, timeToStart = 500, timeToEnd = 2000, enabled = true } = props
+export function useLongTouch(params: UseLongTouchParams) {
+    const { callback, touchTime = 500, enabled = true } = params
 
-	const startTimeoutIdRef = useRef<NodeJS.Timeout | null>(null)
-	const endTimeoutIdRef = useRef<NodeJS.Timeout | null>(null)
+    const timeout = useTimeout()
 
-    const handleTouchStart = useCallback((event: React.TouchEvent<HTMLElement>) => {
+    const handleTouchStart = useEventCallback(() => {
         if(!enabled) return
 
-        if(endTimeoutIdRef.current) {
-            clearTimeout(endTimeoutIdRef.current)
-        }
-        startTimeoutIdRef.current = setTimeout(() => {
-            onTouchStart(event)
-        }, timeToStart)
-    }, [onTouchStart, timeToStart, enabled])
+        timeout.start(touchTime, callback)
+    })
 
-    const handleTouchEnd = useCallback((event: React.TouchEvent<HTMLElement>) => {
+    const handleTouchEnd = useEventCallback(() => {
         if(!enabled) return
 
-        if (startTimeoutIdRef.current) {
-            clearTimeout(startTimeoutIdRef.current)
-        }
-        if (onTouchEnd) {
-            endTimeoutIdRef.current = setTimeout(() => {
-                onTouchEnd(event)
-            }, timeToEnd)
-        }
-    }, [onTouchEnd, timeToEnd, enabled])
+        timeout.clear()
+    })
 
-    useEffect(() => {
-		return () => {
-			if (startTimeoutIdRef.current) {
-				clearTimeout(startTimeoutIdRef.current)
-			}
-			if (endTimeoutIdRef.current) {
-				clearTimeout(endTimeoutIdRef.current)
-			}
-		}
-	}, [])
-
-    return { handleTouchStart, handleTouchEnd }
+    return { onTouchStart: handleTouchStart, onTouchEnd: handleTouchEnd }
 }

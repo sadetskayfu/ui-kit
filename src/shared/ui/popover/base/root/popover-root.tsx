@@ -30,7 +30,7 @@ export const PopoverRoot = (props: PopoverRoot.Props) => {
 		closeOnFocusOut = true,
 		closeOnOutsidePress = true,
 		referenceRef,
-		offset: offsetValue = 5,
+		offset: offsetValueProp,
 		flipPadding = 5,
 	} = props;
 
@@ -45,6 +45,8 @@ export const PopoverRoot = (props: PopoverRoot.Props) => {
 
 	const open = externalOpen ?? internalOpen;
 	const setOpen = externalSetOpen ?? internalSetOpen;
+
+	const offsetValue = offsetValueProp ?? (showArrow ? 12 : 5)
 
 	const { context, refs } = useFloating({
 		placement,
@@ -194,10 +196,10 @@ export namespace PopoverRoot {
 		 */
 		referenceRef?: React.RefObject<HTMLElement | null>;
 		/**
-		 * @default 5
-		 * @description 'Расстояние от trigger до popup'
+		 * 'Расстояние от trigger до popup'
+		 * @default 'withArrow : 12, withoutArrow: 5'
 		 */
-		offset?: number;
+		offset?: number
 		/**
 		 * @default 5
 		 * @description 'Расстояние от края экрана, при котором происходит переворачивание'

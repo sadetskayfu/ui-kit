@@ -1,34 +1,37 @@
-.tooltip {
+.popup {
 	min-width: 40px;
 	max-width: calc(100vw - var(--container-padding-x) * 2);
+
+	&:not(.instant-phase) {
+		.content {
+			transition: opacity 0.2s, transform 0.2s;
+		}
+	}
+
+    &.open {
+        .content {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    &.close {
+        pointer-events: none;
+    }
 }
 
 .content {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-inline: 8px;
+	padding-inline: 8px;
 	padding-block: 5px;
 	background-color: var(--theme-color-grey-light);
 	color: var(--font-color-hard);
 	box-shadow: var(--box-shadow-paper);
-    border-radius: var(--border-radius-s);
+	border-radius: var(--border-radius-s);
 	opacity: 0;
 	transform: scale(0.8);
-	&:not(.instant-phase) {
-		transition:
-			opacity 0.2s,
-			transform 0.2s;
-	}
-	&.open {
-		opacity: 1;
-		transform: scale(1);
-	}
-	&.close {
-		opacity: 0;
-		transform: scale(0.8);
-		pointer-events: none;
-	}
 
 	&.centering-text {
 		text-align: center;
