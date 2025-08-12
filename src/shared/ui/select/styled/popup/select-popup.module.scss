@@ -1,0 +1,16 @@
+.popup {
+    width: 100%;
+    background-color: var(--theme-color-grey-dark);
+    opacity: 0;
+    transition: opacity 0.2s;
+    padding: 5px;
+    box-shadow: var(--box-shadow-paper);
+
+    &.open {
+        opacity: 1;
+    }
+
+    &.close {
+        pointer-events: none;
+    }
+}

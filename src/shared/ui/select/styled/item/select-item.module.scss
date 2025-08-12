@@ -1,0 +1,40 @@
+.item {
+    --select-item-padding-inline: ;
+    display: flex;
+    column-gap: var(--select-item-padding-inline);
+    align-items: center;
+    padding-block: calc(var(--select-item-padding-inline) / 2);
+    padding-inline: var(--select-item-padding-inline);
+    position: relative;
+    overflow: hidden;
+    @include user-select-off;
+
+    &.size-m {
+        --select-item-padding-inline: calc(var(--field-padding-inline-m) - 5px);
+    }
+    &.size-l {
+        --select-item-padding-inline: calc(var(--field-padding-inline-l) - 5px);
+    }
+
+    &.selected {
+        color: var(--theme-color-primary-main);
+        background-color: var(--color-primary-opacity-soft);
+    }
+
+    &.active {
+        background-color: var(--color-grey-opacity-soft);
+
+        &.selected {
+            background-color: var(--color-primary-opacity-hard);
+        }
+    }
+
+    &.disabled {
+        @include disabled;
+    }
+}
+
+.indicator {
+    margin-left: auto;
+    display: inline-flex;
+}

@@ -1,0 +1,139 @@
+.container {
+    --field-height: ;
+    --field-padding-inline: ;
+    --field-border-color: var(--border-color-grey);
+    --field-border-weight: var(--border-weight-soft);
+    --field-actions-padding-left: var(--field-padding-inline);
+    --field-actions-padding-right: var(--field-padding-inline);
+    --field-start-adornment-padding-left: var(--field-padding-inline);
+    --field-start-adornment-padding-right: var(--field-padding-inline);
+    --field-control-padding-inline: var(--field-padding-inline);
+    --field-control-padding-block: ;
+    --field-label-translate: calc(-10.5px + var(--border-weight-soft) / 2);
+    --field-helper-text-padding-left: var(--field-padding-inline);
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+.field {
+    position: relative;
+    width: 100%;
+    min-height: var(--field-height);
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+
+    fieldset {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        border: var(--field-border-weight) solid var(--field-border-color);
+        border-radius: inherit;
+        margin: 0px;
+        height: var(--field-height);
+        width: 100%;
+        pointer-events: none;
+        z-index: 1;
+    }
+    
+    legend {
+        padding-inline: 7px;
+        margin-left: calc(var(--field-padding-inline) - 20px);
+        font-size: var(--font-size-2);
+        line-height: 0;
+        opacity: 0;
+        z-index: 1;
+        pointer-events: none;
+    }
+}
+
+.label {
+    position: absolute;
+    font-size: var(--font-size-2);
+    left: 0px;
+    top: 0px;
+    translate: var(--field-padding-inline) var(--field-label-translate);
+    pointer-events: none;
+}
+
+.helper-text {
+    padding-left: var(--field-padding-inline);
+}
+
+.container {
+    &.size-m {
+        --field-height: var(--field-height-m);
+        --field-padding-inline: var(--field-padding-inline-m);
+        --field-control-padding-block: calc(var(--field-padding-inline-m) / 2);
+	}
+	&.size-l {
+        --field-height: var(--field-height-l);
+        --field-padding-inline: var(--field-padding-inline-l);
+        --field-control-padding-block: calc(var(--field-padding-inline-l) / 2);
+	}
+
+    &.focused {
+        --field-border-color: var(--theme-color-primary-main);
+        --field-border-weight: var(--border-weight-hard);
+
+        .field {
+            fieldset {
+                height: calc(var(--field-height) +  (var(--border-weight-hard) - var(--border-weight-soft)) * 2);
+                width: calc(100% + (var(--border-weight-hard) - var(--border-weight-soft)) * 2);
+            }
+        }
+    }
+
+    &.errored {
+        --field-border-color: var(--border-color-red);
+        &.focused {
+            --field-border-color: var(--font-color-red-hard);
+        }
+    }
+
+    &:not(.focused) {
+        &.errored {
+            .field {
+                @include hover {
+                    fieldset {
+                        border-color: var(--font-color-red-soft);
+                    }
+                }
+            }
+        }
+        .field {
+            @include hover {
+                fieldset {
+                    border-color: var(--font-color-soft);
+                }
+            }
+        }
+    }
+
+    &.with-actions {
+        [data-field-control]{
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+            padding-right: 5px;
+        }
+    }
+
+    &.with-start-adornment {
+        [data-field-control] {
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;  
+        }
+    }
+
+    &.disabled {
+        .field {
+            @include disabled;
+        }
+    }
+
+    &.full-width {
+		width: 100%;
+	}
+}
+

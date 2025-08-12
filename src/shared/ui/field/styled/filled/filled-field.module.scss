@@ -1,0 +1,91 @@
+.container {
+    --field-height: ;
+    --field-padding-inline: ;
+    --field-border-color: var(--border-color-grey);
+    --field-border-weight: var(--border-weight-soft);
+    --field-actions-padding-left: var(--field-padding-inline);
+    --field-actions-padding-right: var(--field-padding-inline);
+    --field-start-adornment-padding-left: var(--field-padding-inline);
+    --field-start-adornment-padding-right: var(--field-padding-inline);
+    --field-control-padding-inline: var(--field-padding-inline);
+    --field-control-padding-block: ;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+.field {
+    width: 100%;
+    min-height: var(--field-height);
+    background-color: var(--theme-color-grey-dark);
+    display: flex;
+    align-items: center;
+    outline: var(--field-border-weight) solid var(--field-border-color);
+    outline-offset: var(--outline-offset);
+}
+
+.container {
+    &.size-m {
+        --field-height: var(--field-height-m);
+        --field-padding-inline: var(--field-padding-inline-m);
+        --field-control-padding-block: calc(var(--field-padding-inline-m) / 2);
+	}
+	&.size-l {
+        --field-height: var(--field-height-l);
+        --field-padding-inline: var(--field-padding-inline-l);
+        --field-control-padding-block: calc(var(--field-padding-inline-l) / 2);
+	}
+
+    &.focused {
+        --field-border-color: var(--theme-color-primary-main);
+        --field-border-weight: var(--border-weight-hard);
+    }
+
+    &.errored {
+        --field-border-color: var(--border-color-red);
+        &.focused {
+            --field-border-color: var(--font-color-red-hard);
+        }
+    }
+
+    &:not(.focused) {
+        &.errored {
+            .field {
+                @include hover {
+                    outline-color: var(--font-color-red-soft);
+                }
+            }
+        }
+        .field {
+            @include hover {
+                outline-color: var(--font-color-soft);
+            }
+        }
+    }
+
+    &.with-actions {
+        [data-field-control]{
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+            padding-right: 5px;
+        }
+    }
+
+    &.with-start-adornment {
+        [data-field-control] {
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;  
+        }
+    }
+
+    &.disabled {
+        .field {
+            @include disabled;
+        }
+    }
+
+    &.full-width {
+		width: 100%;
+	}
+}
+

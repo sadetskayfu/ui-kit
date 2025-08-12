@@ -1,0 +1,17 @@
+.group-label {
+    --select-group-label-padding-inline: ;
+    display: flex;
+    column-gap: var(--select-item-padding-inline);
+    align-items: center;
+    padding-inline: var(--select-group-label-padding-inline);
+    padding-block: calc(var(--select-group-label-padding-inline) / 2);
+    color: var(--font-color-soft);
+    @include user-select-off;
+
+    &.size-m {
+        --select-group-label-padding-inline: calc(var(--field-padding-inline-m) - 5px);
+    }
+    &.size-l {
+        --select-group-label-padding-inline: calc(var(--field-padding-inline-l) - 5px);
+    }
+}

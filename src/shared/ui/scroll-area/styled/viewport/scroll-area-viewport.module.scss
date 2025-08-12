@@ -1,0 +1,17 @@
+.viewport {
+    height: 100%;
+    width: 100%;
+    max-width: inherit;
+    max-height: inherit;
+	overscroll-behavior: contain;
+    
+    &.border {
+        border-radius: var(--border-radius-m);
+        outline: var(--border-weight-soft) solid var(--border-color-grey);
+        outline-offset: var(--outline-offset);
+    }
+
+    &:focus-visible {
+        @include focus-outline;
+    }
+}

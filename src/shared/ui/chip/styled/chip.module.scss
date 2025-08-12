@@ -1,0 +1,105 @@
+.chip {
+    --chip-height: ;
+    --chip-padding: 2px;
+    --chip-color: ;
+    --chip-bg-color: ;
+    --chip-border-color: ;
+    --chip-outline-offset: var(--outline-offset);
+    --chip-close-button-color: var(--chip-color);
+    --chip-close-button-bg-color: var(--chip-color);
+    --chip-avatar-color: ;
+    --chip-avatar-bg-color: ;
+    height: var(--chip-height);
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: var(--chip-padding);
+    transition: color 0.2s, background-color 0.2s;
+    background-color: var(--chip-bg-color);
+    color: var(--chip-color);
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: var(--border-radius-full);
+    @include user-select-off;
+
+    &.interactive {
+        @include hover {
+            background-color: var(--chip-hover-bg-color);
+        }
+    }
+
+    &.size-s {
+        --chip-height: var(--button-height-xs);
+        font-size: var(--font-size-1);
+    }
+    &.size-m {
+        --chip-height: var(--button-height-s);
+        font-size: var(--font-size-3);
+    }
+
+    &.color-primary {
+        --chip-avatar-bg-color: var(--border-color-primary);
+        --chip-avatar-color: var(--theme-color-primary-main);
+    }
+    &.color-secondary {
+        --chip-avatar-bg-color: var(--theme-color-grey-main);
+        --chip-avatar-color: var(--theme-color-grey-light);
+    }
+
+    &.variant-filled {
+        --chip-hover-bg-color: ;
+
+        &.color-primary {
+            --chip-color: var(--font-color-hard-invert);
+            --chip-bg-color: var(--theme-color-primary-main);
+            --chip-hover-bg-color: var(--theme-color-primary-main-light);
+            --chip-outline-offset: 3px;
+            --chip-close-button-color: var(--theme-color-primary-main);
+        }
+        &.color-secondary {
+			--chip-color: var(--font-color-hard);
+			--chip-bg-color: var(--theme-color-grey-light);
+			--chip-hover-bg-color: var(--theme-color-grey-dark);
+            --chip-close-button-color: var(--theme-color-grey-light);
+		}
+    }
+    &.variant-outlined {
+        --chip-border-color: ;
+        --chip-bg-color: transparent;
+        --chip-close-button-color: var(--theme-color-dark);
+        outline: var(--border-weight-soft) solid var(--chip-border-color);
+        outline-offset: var(--outline-offset);
+
+        &.interactive {
+            @include hover {
+                outline-color: var(--chip-color);
+            }
+        }
+
+        &.color-primary {
+            --chip-color: var(--theme-color-primary-main);
+            --chip-border-color: var(--border-color-primary);
+        }
+        &.color-secondary {
+			--chip-color: var(--font-color-hard);
+			--chip-border-color: var(--border-color-grey);
+		}
+    }
+
+	&:focus-visible {
+		outline: var(--border-weight-hard) solid var(--theme-color-primary-main) !important;
+		outline-offset: var(--chip-outline-offset);
+	}
+
+	&.disabled {
+		@include disabled;
+	}
+}
+
+.label {
+    padding-inline: calc(var(--chip-height) / 2 - var(--chip-padding));
+}
+
+

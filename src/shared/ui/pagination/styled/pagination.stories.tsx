@@ -1,8 +1,7 @@
 import * as React from 'react'
 import type { Meta, StoryObj } from '@storybook/react';
 import { Pagination } from './pagination';
-import { ButtonVariantProvider } from '../../button';
-import { BorderProvider } from '../../border-provider';
+import { BorderProvider } from '@/shared/ui/border-provider';
 
 const meta: Meta<typeof Pagination> = {
 	title: 'shared/pagination',

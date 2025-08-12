@@ -1,0 +1,14 @@
+.icon {
+    height: var(--button-height-xs);
+    width: var(--button-height-xs);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    rotate: 90deg;
+    transition: transform 0.2s;
+    font-size: calc(var(--button-height-xs) / 2);
+
+    &.open {
+        transform: rotate(180deg);
+    }
+}

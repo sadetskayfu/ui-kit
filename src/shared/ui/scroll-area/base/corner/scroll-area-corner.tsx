@@ -1,21 +1,28 @@
-import React from 'react';
+import * as React from 'react';
 import type { ModernComponentProps } from '@/shared/helpers/types';
 import { useScrollAreaRootContext } from '../root/scroll-area-root-context';
 import { useRenderElement } from '@/shared/hooks';
+import { classNames } from '@/shared/helpers/class-names';
+import { useDirection } from '@/app/providers/direction-provider';
 import styles from './scroll-area-corner.module.scss'
 
+/**
+ * Renders a `<div>` element.
+ */
 export const ScrollAreaCorner = React.forwardRef(
 	(props: ScrollAreaCorner.Props, forwardedRef: React.ForwardedRef<HTMLDivElement>) => {
-		const { className, ...otherProps } = props;
+		const { render, className, ...otherProps } = props;
 
 		const { cornerRef, hiddenState } = useScrollAreaRootContext();
+		const direction = useDirection()
 
 		const element = useRenderElement('div', {
+			render,
 			className,
             ref: [forwardedRef, cornerRef],
 			props: [
 				{
-					className: styles['base-corner'],
+					className: classNames(styles['base-corner'], [styles[`direction-${direction}`]]),
 				},
 				otherProps,
 			],
@@ -30,5 +37,6 @@ export const ScrollAreaCorner = React.forwardRef(
 );
 
 export namespace ScrollAreaCorner {
-	export interface Props extends ModernComponentProps<'div'> {}
+	export interface State {}
+	export interface Props extends ModernComponentProps<'div', State> {}
 }

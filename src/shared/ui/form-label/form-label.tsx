@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { classNames, type AdditionalClasses, type Mods } from '@/shared/helpers/class-names';
 import { useRenderElement } from '@/shared/hooks';
-import { activeElement, getTarget } from '@floating-ui/react/utils';
-import { ownerDocument } from '@/shared/helpers/owner';
 import styles from './form-label.module.scss';
 
 /**
@@ -13,7 +11,6 @@ export const FormLabel = React.memo(React.forwardRef((props: FormLabel.Props, fo
 		className,
 		children,
 		Tag = 'span',
-		focusTargetRef,
 		color = 'soft',
 		required,
 		focused,
@@ -21,19 +18,6 @@ export const FormLabel = React.memo(React.forwardRef((props: FormLabel.Props, fo
 		hidden,
 		...otherProps
 	} = props;
-
-	const handleClick = React.useCallback(
-		(event: React.MouseEvent<HTMLElement>) => {
-			if (
-				focusTargetRef?.current &&
-				focusTargetRef.current !==
-					activeElement(ownerDocument(getTarget(event.nativeEvent) as HTMLElement | null))
-			) {
-				focusTargetRef.current.focus();
-			}
-		},
-		[focusTargetRef]
-	);
 
 	const additionalClasses: AdditionalClasses = [className, hidden ? 'visually-hidden' : undefined, styles[`color-${color}`]];
 
@@ -47,7 +31,6 @@ export const FormLabel = React.memo(React.forwardRef((props: FormLabel.Props, fo
 		props: [
 			{
 				className: classNames(styles['form-label'], additionalClasses, mods),
-				onClick: handleClick,
 				children: (
 					<>
 						{children}
@@ -66,10 +49,6 @@ export namespace FormLabel {
 		 * @default 'span'
 		 */
 		Tag?: keyof React.JSX.IntrinsicElements;
-		/**
-		 * Ref элемента, на который нужно установить фокус при клике по лейблу
-		 */
-		focusTargetRef?: React.RefObject<HTMLElement | null>;
 		/**
 		 * @default 'soft'
 		 */

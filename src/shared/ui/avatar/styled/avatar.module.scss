@@ -1,7 +1,5 @@
 .avatar {
     position: relative;
-    width: var(--avatar-size);
-    height: var(--avatar-size);
     background-color: var(--theme-color-grey-light);
     overflow: hidden;
     @include user-select-off;
@@ -31,6 +29,4 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: calc(var(--avatar-size) / 2);
-    color: var(--font-color-hard);
 }

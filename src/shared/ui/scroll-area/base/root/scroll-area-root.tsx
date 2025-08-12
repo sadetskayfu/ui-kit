@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import type { HTMLProps, ModernComponentProps } from '@/shared/helpers/types';
 import { useEventCallback, useTimeout } from '@/shared/hooks';
 import { MIN_THUMB_SIZE, SCROLL_TIMEOUT } from '../constants';
@@ -28,9 +28,12 @@ export type Size = {
 	height: number;
 };
 
+/**
+ * Renders a `<div>` element.
+ */
 export const ScrollAreaRoot = React.forwardRef(
 	(props: ScrollAreaRoot.Props, forwardedRef: React.ForwardedRef<HTMLDivElement>) => {
-		const { className, ...otherProps } = props;
+		const { render, className, ...otherProps } = props;
 
 		const [hovering, setHovering] = React.useState(false);
 		const [scrollingX, setScrollingX] = React.useState(false);
@@ -88,7 +91,6 @@ export const ScrollAreaRoot = React.forwardRef(
 
 		const handlePointerDown = useEventCallback((event: React.PointerEvent) => {
 			thumbDraggingRef.current = true;
-			console.log('down')
 			startYRef.current = event.clientY;
 			startXRef.current = event.clientX;
 			currentOrientationRef.current = event.currentTarget.getAttribute(ScrollAreaScrollbarDataAttributes.orientation) as Orientation
@@ -107,7 +109,6 @@ export const ScrollAreaRoot = React.forwardRef(
 
 		const handlePointerUp = useEventCallback((event: React.PointerEvent) => {
 			thumbDraggingRef.current = false;
-			console.log('up')
 
 			if (thumbYRef.current && currentOrientationRef.current === 'vertical') {
 				thumbYRef.current.releasePointerCapture(event.pointerId);
@@ -121,7 +122,7 @@ export const ScrollAreaRoot = React.forwardRef(
 			if (!thumbDraggingRef.current || !viewportRef.current) {
 				return;
 			}
-			console.log('move')
+	
 			const deltaY = event.clientY - startYRef.current;
 			const deltaX = event.clientX - startXRef.current;
 
@@ -328,6 +329,7 @@ export const ScrollAreaRoot = React.forwardRef(
 		};
 
 		const element = useRenderElement('div', {
+			render,
 			className,
 			ref: forwardedRef,
 			props: [localProps, otherProps],
@@ -389,5 +391,7 @@ export const ScrollAreaRoot = React.forwardRef(
 );
 
 export namespace ScrollAreaRoot {
-	export interface Props extends ModernComponentProps<'div'> {}
+	export interface State {}
+
+	export interface Props extends ModernComponentProps<'div', State> {}
 }

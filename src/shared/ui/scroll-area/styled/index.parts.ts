@@ -1,0 +1,5 @@
+export { ScrollAreaRoot as Root } from './root/scroll-area-root'
+export { ScrollAreaViewport as Viewport } from './viewport/scroll-area-viewport'
+export { ScrollAreaContent as Content } from './content/scroll-area-content'
+export { ScrollAreaScrollbar as Scrollbar } from './scrollbar/scroll-area-scrollbar'
+export { Corner } from '../base/index.parts'

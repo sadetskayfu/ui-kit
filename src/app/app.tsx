@@ -2,8 +2,8 @@ import { Header } from '@/widgets/header';
 import { AlertSection } from '@/widgets/alert-section';
 
 import './styles/main.scss';
-import { VariablesSection } from '@/features/templates';
 import { ToastSection } from '@/widgets/toast-section';
+import { FilledSelect } from '@/shared/ui/select/styled/filled-select/filled-select';
 
 
 export function App() {
@@ -11,9 +11,10 @@ export function App() {
 		<div>
 			<Header />
 			<div className="container" style={{paddingBottom: '30px'}}>
-				<VariablesSection />
+				
 				<AlertSection />
 				<ToastSection />
+				<FilledSelect />
 			</div>
 		</div>
 	);

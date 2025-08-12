@@ -1,0 +1,1 @@
+export * as BaseChip from './index.parts'

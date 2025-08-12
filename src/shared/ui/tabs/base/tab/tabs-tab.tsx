@@ -58,7 +58,6 @@ export const TabsTab = React.forwardRef(
 			}
 		});
 
-		// Синхронизируем выбранный таб с индексом, если value изменилось извне, чтобы при возврате сфокусироваться на выбранном табе
 		useModernLayoutEffect(() => {
 			if (isNavigationRef.current) {
 				isNavigationRef.current = false;

@@ -1,0 +1,42 @@
+.content {
+	--scroll-area-content-padding: 0px;
+	padding: var(--scroll-area-content-padding);
+
+	&.padding-m {
+		--scroll-area-content-padding: var(--field-padding-inline-m);
+	}
+	&.padding-l {
+		--scroll-area-content-padding: var(--field-padding-inline-l);
+	}
+
+	&.visible-scrollbar-x {
+		&.orientation-horizontal,
+		&.orientation-both {
+			padding-bottom: max(
+				var(--scroll-area-clickable-scrollbar-width),
+				var(--scroll-area-content-padding)
+			);
+		}
+	}
+
+	&.visible-scrollbar-y {
+		&.direction-ltr {
+			&.orientation-vertical,
+			&.orientation-both {
+				padding-right: max(
+					var(--scroll-area-clickable-scrollbar-width),
+					var(--scroll-area-content-padding)
+				);
+			}
+		}
+		&.direction-rtl {
+			&.orientation-vertical,
+			&.orientation-both {
+				padding-left: max(
+					var(--scroll-area-clickable-scrollbar-width),
+					var(--scroll-area-content-padding)
+				);
+			}
+		}
+	}
+}

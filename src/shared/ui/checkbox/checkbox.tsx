@@ -33,7 +33,6 @@ export const Checkbox = React.forwardRef(
 			required,
 			checked,
 			disableRipple,
-			disableDefaultIconStyle,
 			value,
 			onChange,
 			...otherProps
@@ -49,7 +48,12 @@ export const Checkbox = React.forwardRef(
 		const formLabelContext = useFormControlLabelContext();
 
 		const isChecked = checked || (value ? groupContext?.value.includes(value) : undefined);
-		const isDisabled = disabled || formLabelContext?.disabled || variantContext?.disabled || groupContext?.disabled || false
+		const isDisabled =
+			disabled ||
+			formLabelContext?.disabled ||
+			variantContext?.disabled ||
+			groupContext?.disabled ||
+			false;
 
 		const mergedProps = mergeProps(rippleHandlers, otherProps);
 
@@ -91,20 +95,12 @@ export const Checkbox = React.forwardRef(
 				)}
 				<span className={styles['body']}>
 					{uncheckedIcon ? (
-						disableDefaultIconStyle ? (
-							uncheckedIcon
-						) : (
-							<span className={styles['unchecked-icon']}>{uncheckedIcon}</span>
-						)
+						<span className={styles['unchecked-icon']}>{uncheckedIcon}</span>
 					) : (
 						<span className={styles['blank']} />
 					)}
 					{checkedIcon ? (
-						disableDefaultIconStyle ? (
-							checkedIcon
-						) : (
-							<span className={styles['checked-icon']}>{checkedIcon}</span>
-						)
+						<span className={styles['checked-icon']}>{checkedIcon}</span>
 					) : (
 						<span className={styles['checked-icon']}>
 							<CheckMarkIcon variant="clear" />
@@ -136,6 +132,5 @@ export namespace Checkbox {
 		uncheckedIcon?: React.ReactElement;
 		checkedIcon?: React.ReactElement;
 		disableRipple?: boolean;
-		disableDefaultIconStyle?: boolean;
 	}
 }

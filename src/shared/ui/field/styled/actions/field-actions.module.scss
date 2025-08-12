@@ -1,0 +1,22 @@
+.field-actions {
+	display: flex;
+	align-items: center;
+	padding-left: var(--field-actions-padding-left);
+	padding-right: var(--field-actions-padding-right);
+
+	&.offset-xs {
+		--padding: calc(var(--field-actions-padding-left) - var(--button-height-xs) / 4);
+		padding-left: var(--padding);
+		padding-right: var(--padding);
+	}
+	&.offset-s {
+		--padding: calc(var(--field-actions-padding-left) - var(--button-height-s) / 4);
+		padding-left: var(--padding);
+		padding-right: var(--padding);
+	}
+	&.offset-m {
+		--padding: calc(var(--field-actions-padding-left) - var(--button-height-m) / 4);
+		padding-left: var(--padding);
+		padding-right: var(--padding);
+	}
+}

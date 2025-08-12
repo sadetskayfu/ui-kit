@@ -1,0 +1,10 @@
+.field-start-adornment {
+    padding-left: var(--field-start-adornment-padding-left);
+    padding-right: var(--field-start-adornment-padding-right);
+    border-right: var(--border-weight-soft) solid var(--border-color-grey);
+    display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-shrink: 0;
+    @include user-select-off;
+}

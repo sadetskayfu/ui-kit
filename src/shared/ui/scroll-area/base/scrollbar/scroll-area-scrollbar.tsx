@@ -1,5 +1,5 @@
-import React from 'react';
-import type { HTMLProps, ModernComponentPropsWithClassName } from '@/shared/helpers/types';
+import * as React from 'react';
+import type { HTMLProps, ModernComponentProps } from '@/shared/helpers/types';
 import { useScrollAreaRootContext } from '../root/scroll-area-root-context';
 import { useRenderElement } from '@/shared/hooks';
 import { getOffset } from '../helpers/get-offset';
@@ -12,9 +12,12 @@ import styles from './scroll-area-scrollbar.module.scss'
 
 export type Orientation = 'vertical' | 'horizontal';
 
+/**
+ * Renders a `<div>` element.
+ */
 export const ScrollAreaScrollbar = React.forwardRef(
 	(props: ScrollAreaScrollbar.Props, forwardedRef: React.ForwardedRef<HTMLDivElement>) => {
-		const { className, orientation = 'vertical', ...otherProps } = props;
+		const { render, className, orientation = 'vertical', ...otherProps } = props;
 
 		const {
 			hovering,
@@ -95,7 +98,7 @@ export const ScrollAreaScrollbar = React.forwardRef(
 		}, [orientation, scrollbarXRef, scrollbarYRef, viewportRef]);
 
 		const localProps: HTMLProps = {
-			className: classNames(styles['base-scrollbar'], [styles[`orientation-${orientation}`]]),
+			className: classNames(styles['base-scrollbar'], [styles[`orientation-${orientation}`], styles[`direction-${direction}`]]),
 			style: {
 				...(orientation === 'vertical' && {
 					[ScrollAreaScrollbarCssVars.scrollAreaThumbHeight as string]: `${thumbSize.height}px`,
@@ -188,6 +191,7 @@ export const ScrollAreaScrollbar = React.forwardRef(
 		};
 
 		const element = useRenderElement('div', {
+			render,
 			className,
 			ref: [forwardedRef, orientation === 'vertical' ? scrollbarYRef : scrollbarXRef],
 			state,
@@ -214,7 +218,7 @@ export const ScrollAreaScrollbar = React.forwardRef(
 );
 
 export namespace ScrollAreaScrollbar {
-	export interface Props extends ModernComponentPropsWithClassName<'div', State> {
+	export interface Props extends ModernComponentProps<'div', State> {
 		/**
 		 * @default 'vertical'
 		 */

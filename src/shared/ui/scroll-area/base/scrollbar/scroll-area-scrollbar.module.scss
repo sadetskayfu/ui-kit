@@ -6,12 +6,27 @@
     &.orientation-vertical {
         top: 0;
         bottom: var(--scroll-area-corner-height);
-        inset-inline-end: 0;
+        
+        &.direction-ltr {
+            right: 0;
+        }
+        &.direction-rtl {
+            left: 0;
+        }
     }
 
     &.orientation-horizontal {
         inset-inline-start: 0;
         inset-inline-end: var(--scroll-area-corner-width);
-        bottom: 0,
+        bottom: 0;
+
+        &.direction-ltr {
+            left: 0;
+            right: var(--scroll-area-corner-width);
+        }
+        &.direction-rtl {
+            right: 0;
+            left: var(--scroll-area-corner-width);
+        }
     }
 }

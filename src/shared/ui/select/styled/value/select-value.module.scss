@@ -1,0 +1,7 @@
+.value {
+    @include user-select-off;
+    
+    &.is-placeholder {
+        color: var(--font-color-soft);
+    }
+}

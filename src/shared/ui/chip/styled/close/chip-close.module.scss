@@ -1,0 +1,26 @@
+.close-button {
+    --chip-close-button-height: calc(var(--chip-height) / 2);
+    height: var(--chip-close-button-height);
+    aspect-ratio: 1;
+    font-size: calc(var(--chip-close-button-height) / 1.75);
+    margin-right: calc(var(--chip-close-button-height) / 2 - var(--chip-padding));
+    display: flex;
+	align-items: center;
+	justify-content: center;
+    padding: 0px;
+    border: none;
+    opacity: 0.5;
+	flex-shrink: 0;
+    transition: opacity 0.2s;
+    background-color: var(--chip-close-button-bg-color);
+    color: var(--chip-close-button-color);
+    border-radius: 50%;
+
+	@include hover {
+        opacity: 1;
+	}
+
+    &:focus-visible {
+        @include focus-outline;
+    }
+}

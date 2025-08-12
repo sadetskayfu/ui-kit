@@ -85,6 +85,7 @@
 		
 		@include hover {
 			outline-color: var(--button-color);
+			background-color: var(--button-hover-bg-color);
 		}
 
 		&.color-primary {

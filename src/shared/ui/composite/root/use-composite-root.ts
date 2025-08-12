@@ -241,7 +241,6 @@ export function useCompositeRoot(params: UseCompositeRootParams) {
 							// use a corner matching the edge closest to the direction we're
 							// moving in so we don't end up in the same item. Prefer
 							// top/left over bottom/right.
-							// eslint-disable-next-line no-nested-ternary
 							event.key === ARROW_DOWN
 								? 'bl'
 								: event.key === ARROW_RIGHT

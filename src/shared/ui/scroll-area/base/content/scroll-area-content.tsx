@@ -1,16 +1,27 @@
-import React from 'react';
+import * as React from 'react';
 import type { ModernComponentProps } from '@/shared/helpers/types';
 import { useModernLayoutEffect, useRenderElement } from '@/shared/hooks';
 import { useScrollAreaRootContext } from '../root/scroll-area-root-context';
-import styles from './scroll-area-content.module.scss'
+import styles from './scroll-area-content.module.scss';
 
+/**
+ * Renders a `<div>` element.
+ */
 export const ScrollAreaContent = React.forwardRef(
 	(props: ScrollAreaContent.Props, forwardedRef: React.ForwardedRef<HTMLDivElement>) => {
-		const { className, ...otherProps } = props;
+		const { render, className, ...otherProps } = props;
 
 		const contentRef = React.useRef<HTMLDivElement>(null);
 
-		const { computeThumbPosition } = useScrollAreaRootContext();
+		const { computeThumbPosition, hiddenState } = useScrollAreaRootContext();
+
+		const state: ScrollAreaContent.State = React.useMemo(
+			() => ({
+				hiddenScrollbarX: hiddenState.scrollbarXHidden,
+				hiddenScrollbarY: hiddenState.scrollbarYHidden,
+			}),
+			[hiddenState.scrollbarXHidden, hiddenState.scrollbarYHidden]
+		);
 
 		useModernLayoutEffect(() => {
 			if (typeof ResizeObserver === 'undefined') {
@@ -29,12 +40,14 @@ export const ScrollAreaContent = React.forwardRef(
 		}, [computeThumbPosition]);
 
 		const element = useRenderElement('div', {
+			render,
 			className,
+			state,
 			ref: [forwardedRef, contentRef],
 			props: [
 				{
 					className: styles['base-content'],
-                    role: 'presentation',
+					role: 'presentation',
 				},
 				otherProps,
 			],
@@ -45,5 +58,9 @@ export const ScrollAreaContent = React.forwardRef(
 );
 
 export namespace ScrollAreaContent {
-	export interface Props extends ModernComponentProps<'div'> {}
+	export interface State {
+		hiddenScrollbarX: boolean;
+		hiddenScrollbarY: boolean;
+	}
+	export interface Props extends ModernComponentProps<'div', State> {}
 }

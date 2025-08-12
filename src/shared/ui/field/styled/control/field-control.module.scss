@@ -1,0 +1,14 @@
+.field-control {
+    min-height: var(--field-height);
+    width: 100%;
+    padding-inline: var(--field-control-padding-inline);
+    padding-block: var(--field-control-padding-block);
+    border-radius: inherit;
+	border: none;
+    outline: none;
+    background-color: transparent;
+    color: var(--font-color-hard);
+    display: flex;
+    align-items: center;
+    //background-color: red;
+}

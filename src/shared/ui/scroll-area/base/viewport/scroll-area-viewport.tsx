@@ -9,19 +9,17 @@ import {
 import { useScrollAreaRootContext } from '../root/scroll-area-root-context';
 import { useDirection } from '@/app/providers/direction-provider';
 import { onVisible } from '../helpers/on-visible';
-import styles from './scroll-area-viewport.module.scss'
+import styles from './scroll-area-viewport.module.scss';
 
+/**
+ * Renders a `<div>` element.
+ */
 export const ScrollAreaViewport = React.forwardRef(
 	(props: ScrollAreaViewport.Props, forwardedRef: React.ForwardedRef<HTMLDivElement>) => {
-		const { className, ...otherProps } = props;
+		const { render, className, ...otherProps } = props;
 
-		const {
-			viewportRef,
-			hiddenState,
-			handleScroll,
-			setHovering,
-			computeThumbPosition,
-		} = useScrollAreaRootContext();
+		const { viewportRef, hiddenState, handleScroll, setHovering, computeThumbPosition } =
+			useScrollAreaRootContext();
 
 		const direction = useDirection();
 
@@ -72,9 +70,8 @@ export const ScrollAreaViewport = React.forwardRef(
 		});
 
 		const localProps: HTMLProps = {
-      className: styles['base-viewport'],
+			className: styles['base-viewport'],
 			role: 'presentation',
-			// https://accessibilityinsights.io/info-examples/web/scrollable-region-focusable/
 			...((!hiddenState.scrollbarXHidden || !hiddenState.scrollbarYHidden) && {
 				tabIndex: 0,
 			}),
@@ -110,8 +107,9 @@ export const ScrollAreaViewport = React.forwardRef(
 		};
 
 		const element = useRenderElement('div', {
-      className,
-      ref: [forwardedRef, viewportRef],
+			render,
+			className,
+			ref: [forwardedRef, viewportRef],
 			props: [localProps, otherProps],
 		});
 
@@ -120,5 +118,6 @@ export const ScrollAreaViewport = React.forwardRef(
 );
 
 export namespace ScrollAreaViewport {
-	export interface Props extends ModernComponentProps<'div'> {}
+	export interface State {}
+	export interface Props extends ModernComponentProps<'div', State> {}
 }

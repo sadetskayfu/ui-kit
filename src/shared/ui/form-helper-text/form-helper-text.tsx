@@ -25,7 +25,7 @@ export const FormHelperText = React.memo((props: FormHelperText.Props) => {
 
 export namespace FormHelperText {
 	export interface Props {
-		children: string
+		children: React.ReactNode
 		id?: string
 		className?: string
 		error?: boolean
